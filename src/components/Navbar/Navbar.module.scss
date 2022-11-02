@@ -1,0 +1,10 @@
+@import 'src/scss/variables';
+
+.container{
+    background-color: $nav-color;
+    height: 70px;
+    display: grid;
+    grid-row: 1fr;
+    padding: 0 20px;
+}
+

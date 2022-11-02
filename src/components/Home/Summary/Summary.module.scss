@@ -1,0 +1,10 @@
+@import 'src/scss/mixins';
+@import 'src/scss/variables';
+
+.container {
+  @include home-page-container;
+}
+
+.summary_table {
+  @include main-tables;
+}

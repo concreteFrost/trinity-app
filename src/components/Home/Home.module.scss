@@ -1,0 +1,17 @@
+@import "src/scss/mixins.scss";
+@import "src/scss/variables.scss";
+
+
+.container {
+  
+  header {
+    @include page-title;
+  }
+  
+  main {
+    height: $grid-height;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+}

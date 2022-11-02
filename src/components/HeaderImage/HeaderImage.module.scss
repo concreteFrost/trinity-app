@@ -1,0 +1,10 @@
+.container{
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: center;
+    img{
+        height: 60px;
+        filter: drop-shadow(5px 5px 5px rgb(156, 156, 156));
+    }
+}

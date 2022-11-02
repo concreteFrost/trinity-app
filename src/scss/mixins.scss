@@ -1,0 +1,112 @@
+@import './variables.scss';
+
+//Comment
+
+//Page Titles
+@mixin page-title {
+  padding-top: 20px;
+  font-family: $central-header;
+  text-align: center;
+  color: rgb(156, 156, 156);
+}
+
+//Home Page Container
+@mixin home-page-container{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+//Doorstaff container
+@mixin doorstaff-table-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+//Buttons
+@mixin btn($bgColor){
+  margin-left: 10px;
+  border-radius: 5px;
+  border: 0;
+  color: white;
+  padding: 5px 10px;
+  font-weight: bold;
+  background-color: $bgColor;
+}
+
+//Tables
+@mixin main-tables{
+  font-family: $table-font;
+  background-color: $nav-color;
+  border-radius: 5px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: left;
+
+  th {
+    color: white;
+    font-weight: 100;
+  }
+
+  th,
+  td {
+    padding: 5px 15px;
+  }
+
+  td {
+    font-weight: 500;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: $table-main-odd;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: $table-main-even;
+  }
+}
+
+//Forms
+@mixin form-template{
+  height: 300px;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: $form-color;
+  font-size: .9rem;
+  color: rgb(81, 120, 145);
+  box-shadow: 5px;
+  box-shadow: $soft-shadow;
+
+  input,
+  label {
+      display: block;
+
+  }
+
+  label{
+      font-family: $form-font;
+  }
+
+  select,
+  input {
+      @include form-input;
+      color: rgb(104, 104, 104);
+      font-family: $form-font;
+  }
+
+}
+
+//Inputs
+@mixin  form-input {
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 3px;
+  min-height: 20px;
+  margin-top: 5px;
+  background-color: rgb(252, 252, 252);
+  min-width: 185px;
+}

@@ -1,0 +1,25 @@
+@import 'src/scss/mixins';
+@import 'src/scss/variables';
+
+.container {
+ @include doorstaff-table-container;
+}
+
+.doorstaff_table {
+  @include main-tables;
+  width: 80%;
+
+
+  thead{
+    display: table-header-group;
+  }
+
+  tbody{
+    display: table-row-group ;
+  }
+
+  button{
+    @include btn(rgb(212, 29, 29));
+    margin-left: 0;
+  }
+}

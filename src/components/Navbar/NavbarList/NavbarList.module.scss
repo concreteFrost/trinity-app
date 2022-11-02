@@ -1,0 +1,28 @@
+
+@import "src/scss/variables.scss";
+@import "src/scss/mixins.scss";
+
+.navbar_list{
+
+    text-align: right;
+    font-family: $font-nav;
+
+    a{
+        color: white;
+        text-decoration: none;
+        margin-left: 10px;
+    }
+
+    button{
+        @include btn(red);  
+    }
+
+    .active{
+        color:red;
+    }
+
+    .default{
+        color:white;
+    }
+   
+}
