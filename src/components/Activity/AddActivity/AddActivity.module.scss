@@ -1,0 +1,79 @@
+@import 'src/scss/variables';
+@import "src/scss/mixins";
+
+.container {
+
+    display: flex;
+    justify-content: center;
+
+    form {
+        @include form-template;
+
+        display: grid;
+        grid-template-areas: "type rates hours date"
+            "notes notes notes notes "
+            "buttons buttons buttons buttons";
+
+
+        gap: 10px;
+    }
+
+    textarea {
+        @include form-textarea;
+    }
+
+    .general {
+        grid-area: type;
+    }
+
+    .date {
+        grid-area: date;
+    }
+
+    .rate {
+        grid-area: rates;
+        margin-left: 20px;
+        margin-right: 20px;
+
+    }
+
+    .radio {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+
+        input {
+            min-width: auto;
+
+        }
+
+
+    }
+
+
+    .hours {
+        grid-area: hours;
+    }
+
+    .notes {
+        grid-area: notes;
+    }
+
+    .buttons {
+        grid-area: buttons;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+
+    .clear {
+        @include btn($button-cancel);
+    }
+
+    .add {
+        @include btn($button-submit);
+    }
+
+
+}

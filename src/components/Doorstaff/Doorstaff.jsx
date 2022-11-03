@@ -9,7 +9,7 @@ export const Doorstaff = () => (
         </header>
         <main>
             <SignIn></SignIn>
-            <DoorstaffTable></DoorstaffTable>
+            <DoorstaffTable isVisible={true}></DoorstaffTable>
         </main>
 
     </div>

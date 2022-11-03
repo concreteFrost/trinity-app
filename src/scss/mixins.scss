@@ -15,15 +15,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-//Doorstaff container
-@mixin doorstaff-table-container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 }
@@ -43,7 +34,7 @@
 @mixin main-tables{
   font-family: $table-font;
   background-color: $nav-color;
-  border-radius: 5px;
+
   border-collapse: collapse;
   table-layout: fixed;
   text-align: left;
@@ -69,23 +60,35 @@
   tbody tr:nth-child(even) {
     background-color: $table-main-even;
   }
+
+  thead{
+    display: table-header-group;
+  }
+
+  tbody{
+    display: table-row-group ;
+  }
+
+  button{
+    @include btn(rgb(212, 29, 29));
+    margin-left: 0;
+  }
 }
 
 //Forms
 @mixin form-template{
-  height: 300px;
+  
   padding: 15px;
   border-radius: 5px;
   background-color: $form-color;
   font-size: .9rem;
-  color: rgb(81, 120, 145);
+  color: $form-input;
   box-shadow: 5px;
   box-shadow: $soft-shadow;
 
   input,
   label {
       display: block;
-
   }
 
   label{
@@ -95,18 +98,27 @@
   select,
   input {
       @include form-input;
-      color: rgb(104, 104, 104);
-      font-family: $form-font;
-  }
 
+  }
 }
 
 //Inputs
 @mixin  form-input {
-  border: 1px solid rgb(224, 224, 224);
+  border: $form-border;
   border-radius: 3px;
   min-height: 20px;
   margin-top: 5px;
   background-color: rgb(252, 252, 252);
   min-width: 185px;
+  color: $form-input;
+  font-family: $form-font;
+}
+
+//Text Areas
+@mixin form-textarea{
+  width: 100%;
+  resize: none;
+  border: $form-border;
+  border-radius: 3px;
+  box-shadow: rgb(204, 219, 232) 1px 1px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }

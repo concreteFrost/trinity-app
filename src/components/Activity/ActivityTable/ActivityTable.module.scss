@@ -8,4 +8,7 @@
 .doorstaff_table {
     @include main-tables;
     width: 50%;   
+    button{
+        background-color:$button-submit;
+    }
 }

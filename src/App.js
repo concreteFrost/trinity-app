@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './components/Home/Home';
 import { HeaderImage } from './components/HeaderImage/HeaderImage';
 import { Doorstaff } from './components/Doorstaff/Doorstaff';
+import { Activity } from './components/Activity/Activity';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Navigate to="/home" />}></Route>
           <Route path='/home' element={<Home />}></Route>
+          <Route path='/activity' element={<Activity/>}></Route>
           <Route path='/doorstaff' element={<Doorstaff/>}></Route>
         </Routes>
       </BrowserRouter>

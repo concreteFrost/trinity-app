@@ -9,21 +9,21 @@ export const Summary = () => (
     <table className={s.summary_table}>
       <thead>
         <tr>
-          <th colSpan={2}>Daily Summary Information</th>
-          <th colSpan={2}>Weekly Summary Information</th>
+          <th colSpan={2}>DAILY SUMMARY INFORMATION</th>
+          <th colSpan={2}>WEEKLY SUMMARY INFORMATION</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Staff onsite</td>
+          <td>STAFF ONSITE</td>
           <td>0</td>
-          <td>Total onsite</td>
+          <td>TOTAL ONSITE</td>
           <td>0</td>
         </tr>
         <tr>
-          <td>Cost</td>
+          <td>COST</td>
           <td>0</td>
-          <td>Current Spend</td>
+          <td>CURRENT SPENT</td>
           <td>0</td>
         </tr>
       </tbody>

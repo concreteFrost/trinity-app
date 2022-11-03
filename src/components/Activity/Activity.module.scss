@@ -2,22 +2,16 @@
 @import "src/scss/variables.scss";
 
 .container {
-
-    @include home-page-container;
-
     header {
         @include page-title;
-
     }
 
     main {
         display: grid;
         gap: 10px;
         height: $grid-height;
-        grid-template-rows: 1fr 2fr;
+        grid-template-rows: 1fr 2fr 2fr;
 
     }
-
-
 
 }
