@@ -8,7 +8,7 @@
 
     form {
         @include form-template;
-
+        width: 825px;
         display: grid;
         grid-template-areas: "type rates hours date"
             "notes notes notes notes "

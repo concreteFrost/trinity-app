@@ -1,0 +1,11 @@
+@import 'src/scss/mixins';
+@import 'src/scss/variables';
+
+.container {
+    table{
+       
+        @include main-tables;
+    }
+    
+}
+

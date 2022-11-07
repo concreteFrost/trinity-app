@@ -6,6 +6,8 @@ import { Home } from './components/Home/Home';
 import { HeaderImage } from './components/HeaderImage/HeaderImage';
 import { Doorstaff } from './components/Doorstaff/Doorstaff';
 import { Activity } from './components/Activity/Activity';
+import { Costs } from './components/Costs/Costs';
+import { Search } from './components/Search/Search';
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
           <Route path='/home' element={<Home />}></Route>
           <Route path='/activity' element={<Activity/>}></Route>
           <Route path='/doorstaff' element={<Doorstaff/>}></Route>
+          <Route path='/costs' element={<Costs/>}></Route>
+          <Route path='/search' element={<Search/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

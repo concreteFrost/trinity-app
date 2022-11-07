@@ -1,6 +1,11 @@
+@font-face {
+    font-family: "Jura";
+    src: url("../fonts/Jura-VariableFont_wght.ttf");
+}
+
 //Fonts
 $font-nav: "Roboto", sans-serif;
-$central-header: "Roboto", sans-serif;
+$central-header: "Jura", sans-serif;
 $table-font : "Roboto", sans-serif;
 $form-font: "Roboto", sans-serif;
 

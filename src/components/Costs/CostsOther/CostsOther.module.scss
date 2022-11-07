@@ -1,0 +1,22 @@
+@import 'src/scss/mixins';
+@import 'src/scss/variables';
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    
+    h4 {
+        font-family: $central-header;
+        color: rgb(156, 156, 156);
+    }
+
+    table {
+        @include main-tables;
+        min-width: 500px;
+        button {
+            background-color: $button-submit;
+        }
+    }
+
+}
+

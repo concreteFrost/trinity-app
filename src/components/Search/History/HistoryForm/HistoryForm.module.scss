@@ -1,0 +1,40 @@
+@import 'src/scss/variables';
+@import "src/scss/mixins";
+
+.container {
+
+    display: flex;
+    justify-content: center;
+
+    form {
+        @include form-template; 
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr ;
+
+        .button_col {
+            grid-column: 1/3;
+           
+            button{
+                margin-top: 10px;
+                float: right;
+                @include btn($button-submit);
+            }
+        }
+    
+        .dates{
+            grid-column: 1/3;
+            display: flex;
+        }
+    
+        .reference{
+            grid-column: 1/3;
+            margin-top: 10px;
+        }
+    }
+    
+
+
+
+}
