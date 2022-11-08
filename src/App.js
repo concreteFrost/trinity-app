@@ -8,6 +8,7 @@ import { Doorstaff } from './components/Doorstaff/Doorstaff';
 import { Activity } from './components/Activity/Activity';
 import { Costs } from './components/Costs/Costs';
 import { Search } from './components/Search/Search';
+import {Authorise} from "./components/Authorise/Authorise"
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path='/doorstaff' element={<Doorstaff/>}></Route>
           <Route path='/costs' element={<Costs/>}></Route>
           <Route path='/search' element={<Search/>}></Route>
+          <Route path='/authorise' element={<Authorise/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

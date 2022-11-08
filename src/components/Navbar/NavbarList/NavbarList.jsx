@@ -34,6 +34,12 @@ export const NavbarList = () => {
       >
         SEARCH
       </NavLink>
+      <NavLink
+        className={({ isActive }) => (isActive ? s.active : s.default)}
+        to="/authorise"
+      >
+        AUTHORISE
+      </NavLink>
       <button>LOGOUT</button>
     </div>
   );

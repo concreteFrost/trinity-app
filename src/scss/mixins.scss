@@ -71,9 +71,12 @@
     display: table-row-group ;
   }
 
+
+
   button{
-    @include btn(rgb(212, 29, 29));
+    @include btn($button-submit);
     margin-left: 0;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
   }
 
   font-size: 0.9em;
@@ -89,7 +92,7 @@
   color: $form-input;
   box-shadow: 5px;
   box-shadow: $soft-shadow;
-
+  max-height: 320px;
   input,
   label {
       display: block;

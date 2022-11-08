@@ -24,6 +24,7 @@ $table-main-even:rgb(211, 226, 243);
 //Buttons
 $button-cancel: rgb(236, 0, 0);
 $button-submit:rgb(96, 145, 202);
+$button-list:rgb(189, 66, 66);
 
 //Shadows
 $soft-shadow:rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
@@ -34,5 +35,13 @@ $form-color: rgb(240, 240, 240);
 $form-input: rgb(104, 104, 104);
 $form-input-border: 1px solid rgb(224, 224, 224);
 $form-border: 1px solid rgb(224, 224, 224);
+
+
+//Screen Sizes
+$screen-mobile: 480px;
+$screen-tablet: 768px;
+$screen-laptop: 1024px;
+$screen-large: 1200px;
+$screen-xl:1201px;
 
 

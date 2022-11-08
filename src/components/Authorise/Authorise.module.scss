@@ -10,17 +10,14 @@
     main {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 20px 1fr 1fr;
         gap: 10px;
         margin-left: 20px;
         margin-right: 20px;
 
-        
         @media  only screen and (max-width: $screen-large) {
-            grid-template-columns: 1fr;
-          }
-    
+        grid-template-columns: 1fr;
+      }
 
     }
-
 }
+
