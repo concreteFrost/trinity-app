@@ -2,35 +2,36 @@
 @import 'src/scss/variables';
 
 .container {
-    table{
-       
+    table {
+
         @include main-tables;
         width: 100%;
     }
 
-    .locations_select{
+    .locations_select {
         @include form-template;
         width: 200px;
         margin-bottom: 10px;
+        
     }
 
-    select{
+    select {
         @include form-input;
     }
 
-    ul{
-        
+    ul {
+
         display: flex;
         justify-content: flex-end;
     }
 
-    li{
+    li {
         list-style: none;
 
-        button{
+        button {
             margin-left: 10px;
             @include btn($button-list)
         }
     }
-    
+
 }

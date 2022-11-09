@@ -1,10 +1,19 @@
-.container{
-    margin-top: 20px;
 
-    display: flex;
-    justify-content: center;
+@import "src/scss/variables.scss";
+@import "src/scss/mixins.scss";
+
+
+.container{
+
+    h1{
+        font-family: $nav-logo-font;
+        color: rgb(218, 218, 218);
+        letter-spacing: 0.5cm;
+        font-weight: 100;
+        
+    }
     img{
         height: 60px;
-        filter: drop-shadow(5px 5px 5px rgb(156, 156, 156));
+      
     }
 }

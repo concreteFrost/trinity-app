@@ -2,7 +2,7 @@ import s from "./ApproveCosts.module.scss"
 
 export const ApproveCosts = () => (
         <div className={s.container}>
-                <header><h2>APPROVE COSTS</h2></header>
+                <header><h2>Approve Costs</h2></header>
                 <div className={s.locations_select}>
                         <label htmlFor="select-doorstaff">LOCATIONS</label>
                         <select name="select-doorstaff" id="selecet-doorstaff">

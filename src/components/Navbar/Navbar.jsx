@@ -1,12 +1,14 @@
 import s from "./Navbar.module.scss";
 import { NavbarList } from "./NavbarList/NavbarList";
 import { NavbarHeader } from "./NavbarHeader/NavbarHeader";
+import { HeaderImage } from '../HeaderImage/HeaderImage'
 
 export const Navbar = () => {
   return (
     <div className={s.container}>
-        <NavbarHeader></NavbarHeader>
-        <NavbarList></NavbarList>
+      <div className={s.logo}><HeaderImage></HeaderImage></div>
+      <div className={s.welcome}><NavbarHeader></NavbarHeader></div>
+      <div className={s.navlist}><NavbarList></NavbarList></div>
     </div>
   );
 };

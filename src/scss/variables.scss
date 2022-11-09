@@ -1,6 +1,12 @@
 @font-face {
     font-family: "Jura";
     src: url("../fonts/Jura-VariableFont_wght.ttf");
+
+}
+
+@font-face{
+    font-family: "Raleway";
+    src: url("../fonts/Raleway-ExtraLight.ttf");
 }
 
 //Fonts
@@ -8,6 +14,7 @@ $font-nav: "Roboto", sans-serif;
 $central-header: "Jura", sans-serif;
 $table-font : "Roboto", sans-serif;
 $form-font: "Roboto", sans-serif;
+$nav-logo-font: "Raleway",sans-serif;
 
 //Grid full height
 $grid-height: 75vh;
@@ -40,7 +47,7 @@ $form-border: 1px solid rgb(224, 224, 224);
 //Screen Sizes
 $screen-mobile: 480px;
 $screen-tablet: 768px;
-$screen-laptop: 1024px;
+$screen-laptop: 1127px;
 $screen-large: 1200px;
 $screen-xl:1201px;
 

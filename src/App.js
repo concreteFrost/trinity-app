@@ -16,7 +16,7 @@ function App() {
     <div className={s.container}>
       <BrowserRouter>
         <Navbar className={s.nav} />
-        <HeaderImage className={s.logo} />
+        {/* <HeaderImage className={s.logo} /> */}
         <Routes>
           <Route exact path="/" element={<Navigate to="/home" />}></Route>
           <Route path='/home' element={<Home />}></Route>

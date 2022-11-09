@@ -3,6 +3,7 @@ import Logo from "../../images/central_logo/trinity_logo.png"
 
 export const HeaderImage = () => (
             <div className={s.container}>
-               <img src={Logo} alt="Logo" />
+               {/* <img src={Logo} alt="Logo" /> */}
+               <h1>TRINITY</h1>
             </div>
     );

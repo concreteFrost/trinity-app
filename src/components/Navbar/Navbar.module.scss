@@ -4,7 +4,26 @@
     background-color: $nav-color;
     height: 70px;
     display: grid;
-    grid-row: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     padding: 0 20px;
+
+    .logo{
+      
+        grid-row: 1/3;
+        align-self: center;
+    }
+
+    .navlist{
+        justify-self: end;
+        grid-column: 2/4;
+        grid-row:2/3;
+    }
+
+    .welcome{
+        justify-self: end;
+        grid-column: 2/4;
+
+    }
 }
 

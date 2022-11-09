@@ -2,7 +2,7 @@ import s from "./ApproveDoorstaff.module.scss"
 
 export const ApproveDoorstaff = () => (
      <div className={s.container}>
-          <header><h2>APPROVE DOORSTAFF</h2></header>
+          <header><h2>Approve Doorstaff</h2></header>
           <div className={s.locations_select}>
                <label htmlFor="select-doorstaff">LOCATIONS</label>
                <select name="select-doorstaff" id="selecet-doorstaff">
@@ -99,15 +99,14 @@ export const ApproveDoorstaff = () => (
                     </tr>
                </tbody>
           </table>
-
           <div>
-                        <ul>
-                                <li><button>NONE</button></li>
-                                <li><button>SELECT ALL</button></li>
-                                <li><button>DISPUTE</button></li>
-                                <li><button>APPROVE</button> </li>
-                        </ul>
-                </div>
+               <ul>
+                    <li><button>NONE</button></li>
+                    <li><button>SELECT ALL</button></li>
+                    <li><button>DISPUTE</button></li>
+                    <li><button>APPROVE</button> </li>
+               </ul>
+          </div>
      </div>
 );
 

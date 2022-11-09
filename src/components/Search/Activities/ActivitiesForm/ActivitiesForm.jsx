@@ -11,9 +11,9 @@ export const ActivitiesForm = () => (
                 <select name="staff-group-2" id="staff-group-2">
                     <option value="staff-group-2">Test 1</option>
                 </select>
-            </div>
 
-            <div >
+
+          
             <label htmlFor="location-group">LOCATION/GROUP</label>
                 <select name="location-group" id="location-group">
                     <option value="test1">Test 1</option>
@@ -23,9 +23,11 @@ export const ActivitiesForm = () => (
                 <select name="location-group-2" id="location-group-2">
                     <option value="location-group-2">Test 1</option>
                 </select>
+          
             </div>
 
-            <div >
+            <div>
+           
             <label htmlFor="supplier-group">SUPPLIER/GROUP</label>
                 <select name="supplier-group" id="supplier-group">
                     <option value="test1">Test 1</option>
@@ -36,14 +38,6 @@ export const ActivitiesForm = () => (
                     <option value="location-group-2">Test 1</option>
                 </select>
             </div>
-
-            <div >
-            <label htmlFor="payment-status" className={s.payment_status}>PAYMENT STATUS</label>
-                <select name="payment-status" id="payment-status">
-                    <option value="test1">Test 1</option>
-                </select>
-            </div>
-
 
             <div className={s.reference}>
                 <label htmlFor="reference">REFERENCE NUMBER</label>

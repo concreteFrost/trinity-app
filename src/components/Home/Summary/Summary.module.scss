@@ -3,9 +3,10 @@
 
 .container {
   @include home-page-container;
+
 }
 
 .summary_table {
   @include main-tables;
-  width: 40%;
+  width: 600px;
 }
