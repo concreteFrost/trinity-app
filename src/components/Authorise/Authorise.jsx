@@ -13,7 +13,7 @@ export const Authorise = ()=>{
     }
 
     return (<div className={s.container}>
-        <header><h1>Authorise</h1>
+        <header><h1>AUTHORISE</h1>
             <SwitchView defineView={DefineView} currentView={view}></SwitchView>
         </header>
         <main>
