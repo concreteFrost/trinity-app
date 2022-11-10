@@ -1,32 +1,81 @@
+import s from "./App.module.css";
+import { Navbar } from "./components/Navbar/Navbar";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { Home } from "./components/Home/Home";
+import { Doorstaff } from "./components/Doorstaff/Doorstaff";
+import { Activity } from "./components/Activity/Activity";
+import { Costs } from "./components/Costs/Costs";
+import { Search } from "./components/Search/Search";
+import { Authorise } from "./components/Authorise/Authorise";
+import { Login } from "./components/Login/Login";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import { useSelector } from "react-redux";
 
-import s from './App.module.css';
-import { Navbar } from './components/Navbar/Navbar';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Home } from './components/Home/Home';
-import { HeaderImage } from './components/HeaderImage/HeaderImage';
-import { Doorstaff } from './components/Doorstaff/Doorstaff';
-import { Activity } from './components/Activity/Activity';
-import { Costs } from './components/Costs/Costs';
-import { Search } from './components/Search/Search';
-import {Authorise} from "./components/Authorise/Authorise"
 
 
 function App() {
+  
+  const user = useSelector((state)=> state.userReducer)
   return (
     <div className={s.container}>
-      <BrowserRouter>
-        <Navbar className={s.nav} />
-        {/* <HeaderImage className={s.logo} /> */}
-        <Routes>
-          <Route exact path="/" element={<Navigate to="/home" />}></Route>
-          <Route path='/home' element={<Home />}></Route>
-          <Route path='/activity' element={<Activity/>}></Route>
-          <Route path='/doorstaff' element={<Doorstaff/>}></Route>
-          <Route path='/costs' element={<Costs/>}></Route>
-          <Route path='/search' element={<Search/>}></Route>
-          <Route path='/authorise' element={<Authorise/>}></Route>
-        </Routes>
-      </BrowserRouter>
+      {user.isLoggedIn ? <Navbar className={s.nav} /> : null}
+      {/* <HeaderImage className={s.logo} /> */}
+      <Routes>
+        <Route
+          exact
+          path="/login"
+          element={<Login/>}
+        ></Route>
+        <Route exact path="/" element={<Navigate to="/login" />}></Route>
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/activity"
+          element={
+            <ProtectedRoute>
+              <Activity />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/doorstaff"
+          element={
+            <ProtectedRoute>
+              <Doorstaff />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/costs"
+          element={
+            <ProtectedRoute>
+              <Costs />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/search"
+          element={
+            <ProtectedRoute>
+              <Search />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/authorise"
+          element={
+            <ProtectedRoute>
+              <Authorise />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
     </div>
   );
 }

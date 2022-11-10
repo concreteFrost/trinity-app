@@ -15,6 +15,7 @@
 
     button{
         @include btn(red);  
+        margin-left: 20px;
     }
 
     .active{

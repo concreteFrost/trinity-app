@@ -3,7 +3,7 @@ import { NavbarList } from "./NavbarList/NavbarList";
 import { NavbarHeader } from "./NavbarHeader/NavbarHeader";
 import { HeaderImage } from '../HeaderImage/HeaderImage'
 
-export const Navbar = () => {
+export const Navbar = (props) => {
   return (
     <div className={s.container}>
       <div className={s.logo}><HeaderImage></HeaderImage></div>

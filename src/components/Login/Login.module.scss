@@ -1,0 +1,30 @@
+@import "src/scss/mixins.scss";
+@import "src/scss/variables.scss";
+
+.container{
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    form{
+        @include form-template;
+        display: grid;
+        justify-items: center;
+        gap: 10px;
+    }
+
+    button{
+        @include btn($button-submit);
+    
+        
+        
+    }
+
+    .error{
+        color: red;
+    }
+}

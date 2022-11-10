@@ -24,6 +24,12 @@
     .buttons {
         grid-row-start: 5;
         grid-column-end: 4;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        button{
+            margin-left: 5px;
+        }
     }
 
     .clear {
