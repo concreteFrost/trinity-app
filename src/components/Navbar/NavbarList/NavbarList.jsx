@@ -1,6 +1,5 @@
 import s from "./NavbarList.module.scss";
-import { Navigate, NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { UserLogOff } from "../../../redux/actions";
 

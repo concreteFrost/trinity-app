@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { SetLoginDetails } from "../../redux/actions";
 
 export const Login = (props) => {
@@ -23,7 +23,7 @@ export const Login = (props) => {
   if (!clientID) {
     axios
       .get(
-        "http://trinitytest.uksouth.cloudapp.azure.com/TrinityWebAPI/api/Auth/GenerateUniqueReference"
+        "https://testapi.etrinity.services/TrinityWebApi/api/Auth/GenerateUniqueReference"
       )
       .then((res) => {
         localStorage.setItem("clientID", res.data.message);
@@ -35,7 +35,7 @@ export const Login = (props) => {
     e.preventDefault();
     axios({
       method: "POST",
-      url: "http://trinitytest.uksouth.cloudapp.azure.com/TrinityWebAPI/api/Login",
+      url: "https://testapi.etrinity.services/TrinityWebApi/api/Login",
       data: {
         username: e.target[0].value,
         client_id: clientID,
@@ -49,8 +49,10 @@ export const Login = (props) => {
         dispatch(SetLoginDetails(res.data));
         navigate("/home");
       })
-      .catch((e) =>{ setErrorMessage(true)
-      console.log(e) });
+      .catch((e) => {
+        setErrorMessage(true)
+        console.log(e)
+      });
   }
   return (
     <div className={s.container}>

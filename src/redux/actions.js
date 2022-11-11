@@ -6,3 +6,7 @@ export function SetLoginDetails(data) {
 export function UserLogOff(){
     return {type: "LOGOFF" }
 }
+
+export function GetSiaData(data){
+    return {type: "LOOKUP", data}
+}
