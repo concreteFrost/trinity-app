@@ -15,7 +15,7 @@ export const SIA = () => {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(res =>{ dispatch(GetSiaData(res.data))
-        console.log(res.data)
+
         }).catch(e=>console.log(e))
     }
 

@@ -3,7 +3,7 @@ const initialState = {
 };
 
 export const siaReducer = (state = initialState, action) => {
-    console.log("siaReducer: ", state.doorstaff)
+  
     switch (action.type) {
         case "LOOKUP":
             return {
