@@ -14,8 +14,8 @@ export const SIA = () => {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/x-www-form-urlencoded"
             }
-        }).then(res =>{ dispatch(GetSiaData(res.data))
-
+        }).then(res =>{ 
+            dispatch(GetSiaData(res.data))
         }).catch(e=>console.log(e))
     }
 

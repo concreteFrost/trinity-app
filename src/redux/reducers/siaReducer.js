@@ -1,15 +1,22 @@
 const initialState = {
-    doorstaff: {}
+  doorstaff:{}
 };
 
 export const siaReducer = (state = initialState, action) => {
-  
-    switch (action.type) {
-        case "LOOKUP":
-            return {
-                ...state, doorstaff: action.data
-            }
-        default:
-            return state;
-    }
+
+  switch (action.type) {
+    case "LOOKUP":
+      return {
+        ...state, doorstaff: action.data
+      }
+
+    case "CLEAR":
+      return {
+        ...state,
+        doorstaff: {},
+      };
+
+    default:
+      return state;
+  }
 };

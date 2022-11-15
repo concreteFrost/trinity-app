@@ -6,12 +6,11 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { SetLoginDetails } from "../../redux/actions";
 
-export const Login = (props) => {
+export const Login = () => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [clientID, setClientID] = useState(localStorage.getItem("clientID"));
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   useEffect(() => {
     if (errorMessage) {
       setTimeout(() => {
@@ -29,8 +28,10 @@ export const Login = (props) => {
         localStorage.setItem("clientID", res.data.message);
         setClientID(res.data.message);
       });
-  }
 
+      console.log('the new client id was generated')
+  }
+  
   function submitLogin(e) {
     e.preventDefault();
     axios({

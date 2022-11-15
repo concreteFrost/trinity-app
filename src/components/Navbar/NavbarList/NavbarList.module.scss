@@ -14,12 +14,12 @@
     }
 
     button{
-        @include btn(red);  
+        @include btn(rgb(242, 119, 29));  
         margin-left: 20px;
     }
 
     .active{
-        color:red;
+        color:rgb(242, 119, 29)
     }
 
     .default{
