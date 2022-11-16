@@ -3,9 +3,9 @@ import s from "./SignIn.module.scss";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import {ClearSiaData, GetDoorStaff} from '../../../redux/actions'
+import { ClearSiaData, GetDoorstaff} from '../../../redux/actions'
 
-export const SignIn = () => {
+export const SignIn = (props) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userReducer.user.access_token);
 
@@ -37,6 +37,8 @@ export const SignIn = () => {
     })
   );
 
+  let data = {}
+
   //GET NAME
   useEffect(() => {
     //GET SUPPLIER
@@ -46,7 +48,7 @@ export const SignIn = () => {
       axios
         .get(
           "https://testapi.etrinity.services/TrinityWebApi/api/Activity/LookupSuppliers/" +
-            doorstaffData.position,
+          doorstaffData.position,
           {
             headers: headers,
           }
@@ -71,22 +73,22 @@ export const SignIn = () => {
         })
         .catch((e) => console.log("no positions available"));
     }
-    else{
-        Clear()
+    else {
+      Clear()
     }
   }, [doorstaffData.staffId]);
 
   //GET RATE
   useEffect(() => {
-    if(position.positionId && supplier.supplierId)
+    if (position.positionId && supplier.supplierId)
       axios
         .get(
           "https://testapi.etrinity.services/TrinityWebApi/api/Activity/LookupRates/" +
-            position.positionId +
-            "/" +
-            supplier.supplierId +
-            "/" +
-            new Date(date).getTime(),
+          position.positionId +
+          "/" +
+          supplier.supplierId +
+          "/" +
+          new Date(date).getTime(),
           {
             headers: headers,
           }
@@ -98,8 +100,52 @@ export const SignIn = () => {
         .catch((e) => {
           console.log("no rates");
         });
-    
+
   }, [position.positionId, supplier.supplierId]);
+
+  function Submit() {
+    if (rate.rateGroupId) {
+      data = {
+        staffId: doorstaffData.staffId,
+        staffName: doorstaffData.firstName + " " + doorstaffData.lastName,
+        positionId: parseInt(position.positionId),
+        position: position.positionName,
+        locationId: token.locationId,
+        supplierId: supplier.supplierId,
+        supplierName: supplier.supplierName,
+        startTime: date + "T" + time + ":00.7826209+00:00",
+        rateGroupId: rate.rateGroupId,
+      }
+      axios({
+        method: "POST",
+        url: "https://testapi.etrinity.services/TrinityWebApi/api/Activity/SignOnMember",
+        data: data,
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      }).then((res) => {
+         dispatch(GetDoorstaff(token))
+      }).then(() => Clear())
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }
+
+  function Clear() {
+    setStoredRates([])
+    setStoredPositions([])
+    setStorredSuppliers([])
+    setPosition({})
+    setSupplier({})
+    setName('')
+    setSecondName('')
+    setRate('')
+    dispatch(ClearSiaData())
+  }
+
+
 
   function SetSupplier(e) {
     let data = {
@@ -125,48 +171,7 @@ export const SignIn = () => {
     setRate(data);
   }
 
-  function Clear(){
-    setStoredRates([])
-    setStoredPositions([])
-    setStorredSuppliers([])
-    setPosition({})
-    setSupplier({})
-    setName('')
-    setSecondName('')
-    setRate('')
-    dispatch(ClearSiaData())   
-  }
 
-  function Submit() {
-    if (rate.rateGroupId) {
-      const data={ staffId: doorstaffData.staffId,
-        staffName: doorstaffData.firstName + " " + doorstaffData.lastName,
-        positionId: parseInt(position.positionId),
-        position: position.positionName,
-        locationId: token.locationId,
-        supplierId: supplier.supplierId,
-        supplierName: supplier.supplierName,
-        startTime: date + "T" + time + ":00.7826209+00:00",
-        rateGroupId: rate.rateGroupId,}
-      axios({
-        method: "POST",
-        url: "https://testapi.etrinity.services/TrinityWebApi/api/Activity/SignOnMember",
-        data: data,
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          console.log(res);
-          dispatch(GetDoorStaff(data))
-          Clear()
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  }
 
   return (
     <div className={s.container}>
@@ -191,10 +196,10 @@ export const SignIn = () => {
           <select name="position" id="position" onChange={SetPosition}>
             {storedPositions
               ? storedPositions.map((e) => (
-                  <option key={e.positionId} value={e.positionId}>
-                    {e.positionName}
-                  </option>
-                ))
+                <option key={e.positionId} value={e.positionId}>
+                  {e.positionName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -204,10 +209,10 @@ export const SignIn = () => {
           <select name="supplier" id="supplier" onChange={SetSupplier}>
             {storedSuppliers
               ? storedSuppliers.map((e) => (
-                  <option key={e.supplierId} value={e.supplierId}>
-                    {e.supplierName}
-                  </option>
-                ))
+                <option key={e.supplierId} value={e.supplierId}>
+                  {e.supplierName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -217,10 +222,10 @@ export const SignIn = () => {
           <select name="rate" id="rate" onChange={SetRate}>
             {storedRates
               ? storedRates.map((e) => (
-                  <option key={e.rateGroupId} value={e.rateGroupId}>
-                    {e.rateGroupName}
-                  </option>
-                ))
+                <option key={e.rateGroupId} value={e.rateGroupId}>
+                  {e.rateGroupName}
+                </option>
+              ))
               : null}
           </select>
         </div>

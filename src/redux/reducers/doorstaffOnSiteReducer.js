@@ -1,23 +1,23 @@
 const initialState = {
-    doorstaff:{}
-  };
-  
-  export const doorstaffOnSite = (state = initialState, action) => {
-  
+    doorstaff: []
+};
+
+
+
+export const doorstaffOnSiteReducer = (state = initialState, action) => {
+
     switch (action.type) {
-      case "GET_DOORSTAFF":
-        return {
-          ...state, doorstaff: action.data
-        }
-  
-      case "CLEAR":
-        return {
-          ...state,
-          doorstaff: {},
-        };
-  
-      default:
-        return state;
+        case "SET_DOORSTAFF":
+            return {
+                ...state,    
+                doorstaff : action.data       
+            };
+        case "DELETE_DOORSTAFF":
+            return {
+                ...state,
+                doorstaff: {},
+            };
+        default:
+            return state;
     }
-  };
-  
+};

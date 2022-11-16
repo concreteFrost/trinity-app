@@ -10,6 +10,7 @@
         @include form-template;
         width: 827px;
         display: grid;
+        height: 230px;
         grid-template-columns: 1fr 1fr 1fr;
         gap: 10px;
         grid-template-rows: 50px 50px 50px 50px 50px;
@@ -22,7 +23,7 @@
     }
 
     .buttons {
-        grid-row-start: 5;
+        grid-row-start: 4;
         grid-column-end: 4;
         display: flex;
         justify-content: flex-end;

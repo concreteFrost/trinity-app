@@ -1,17 +1,15 @@
 import { userReducer } from "./userReducer";
 import {siaReducer} from "./siaReducer";
+import { doorstaffOnSiteReducer } from "./doorstaffOnSiteReducer";
 import { combineReducers } from "redux";
-import { doorstaffOnSite } from "./doorstaffOnSiteReducer";
-
 
 
 const appReducer = combineReducers({
-  userReducer,siaReducer, doorstaffOnSite
+  userReducer,siaReducer,doorstaffOnSiteReducer
 })
 
 export const rootReducer = (state, action) => {
   if(action.type === 'LOGOFF'){
-    console.log('logout')
     return appReducer(undefined, action)
   }
   return appReducer(state, action)
