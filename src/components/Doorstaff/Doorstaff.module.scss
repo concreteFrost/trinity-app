@@ -14,8 +14,12 @@
         display: grid;
         gap: 10px;
         height: $grid-height;
-        grid-template-rows: 85px 1fr 2fr;
+        grid-template-rows: 85px 1fr 1fr 2fr;
 
+    }
+
+    button{
+        margin-bottom: 10px;
     }
 
 

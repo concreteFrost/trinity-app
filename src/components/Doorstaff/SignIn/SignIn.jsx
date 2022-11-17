@@ -3,11 +3,15 @@ import s from "./SignIn.module.scss";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { ClearSiaData, GetDoorstaff} from '../../../redux/actions'
+import { SetDoorStaff} from '../../../redux/api/doorstaffAPI'
+import { ClearSiaData } from "../../../redux/actions";
 
 export const SignIn = (props) => {
   const dispatch = useDispatch();
+  
+
   const token = useSelector((state) => state.userReducer.user.access_token);
+  const errorMessage = useSelector((state)=> state.siaReducer.errorMessage)
 
   const headers = {
     Authorization: "Bearer " + token,
@@ -73,9 +77,7 @@ export const SignIn = (props) => {
         })
         .catch((e) => console.log("no positions available"));
     }
-    else {
-      Clear()
-    }
+
   }, [doorstaffData.staffId]);
 
   //GET RATE
@@ -116,21 +118,10 @@ export const SignIn = (props) => {
         startTime: date + "T" + time + ":00.7826209+00:00",
         rateGroupId: rate.rateGroupId,
       }
-      axios({
-        method: "POST",
-        url: "https://testapi.etrinity.services/TrinityWebApi/api/Activity/SignOnMember",
-        data: data,
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      }).then((res) => {
-         dispatch(GetDoorstaff(token))
-      }).then(() => Clear())
-        .catch((e) => {
-          console.log(e);
-        });
+      dispatch(SetDoorStaff(token,data))
+      Clear()
     }
+
   }
 
   function Clear() {
@@ -144,8 +135,6 @@ export const SignIn = (props) => {
     setRate('')
     dispatch(ClearSiaData())
   }
-
-
 
   function SetSupplier(e) {
     let data = {
@@ -170,9 +159,6 @@ export const SignIn = (props) => {
     };
     setRate(data);
   }
-
-
-
   return (
     <div className={s.container}>
       <form onSubmit={(e) => e.preventDefault()}>
@@ -180,7 +166,7 @@ export const SignIn = (props) => {
           <label htmlFor="first_name">FIRST NAME</label>
           <input type="text" name="first_name" value={name || ""} readOnly />
         </div>
-
+       
         <div className={s.l_name}>
           <label htmlFor="last_name">LAST NAME</label>
           <input
@@ -266,6 +252,12 @@ export const SignIn = (props) => {
           </button>
         </div>
       </form>
+      {errorMessage.length>0 ? <div className={s.error_message}>
+         {errorMessage}
+         </div> : null }
+      
     </div>
+
+    
   );
 };
