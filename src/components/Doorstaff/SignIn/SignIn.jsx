@@ -42,6 +42,7 @@ export const SignIn = (props) => {
   );
 
   let data = {}
+  console.log(token)
 
   //GET NAME
   useEffect(() => {

@@ -11,7 +11,7 @@ export const DoorstaffTable = (props) => {
   const doorstaff = useSelector(
     (state) => state.doorstaffOnSiteReducer.doorstaff
   );
-  const errorMessage = useSelector((state=> state.doorstaffOnSiteReducer.errorMessage))
+  const errorMessage = useSelector((state => state.doorstaffOnSiteReducer.errorMessage))
 
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
 
@@ -27,26 +27,23 @@ export const DoorstaffTable = (props) => {
   }, []);
 
   function SignOut(e) {
-    const data = JSON.parse(e.target.dataset.staff);
-    const signOutTIme = date + "T" +  time
-    dispatch(DeleteDoorStaff(data, token.access_token, signOutTIme));
+   
   }
 
-  function AddSignOffTime(staff,element){
-      const match = time.find(i=> i.staffId === staff.staffId)
-      element.target.value = time.sTime
-      if(!match){
-        setTime(curr => [...curr,{staffId: staff.staffId, sTime: element.target.value}])
-        element.target.value = time.sTime
-      }
+  function SubmitForm(e){
+    e.preventDefault()
 
-      
+    if(e.target[0].value && e.target[1].value){
+      const data = JSON.parse(e.target.dataset.staff);
+      const signOutTIme = e.target[1].value + "T" + e.target[0].value
+      dispatch(DeleteDoorStaff(data, token.access_token, signOutTIme));
+    }
+
   }
-
 
   return (
     <div className={s.container}>
-      {errorMessage.length>0 ? <div className={s.error}>{errorMessage}</div> : null}
+      {errorMessage.length > 0 ? <div className={s.error}>{errorMessage}</div> : null}
       <table className={s.doorstaff_table}>
         <thead>
           <tr>
@@ -65,45 +62,37 @@ export const DoorstaffTable = (props) => {
                 <td>{e.staffName.split(" ")[0]}</td>
                 <td>{e.staffName.split(" ")[1]}</td>
                 <td>{e.position}</td>
-                <td>{e.startTime.split('T')[1].substring(0,5) }</td>
+                <td>{e.startTime.split('T')[1].substring(0, 5)}</td>
                 <td>{e.startTime.split('T')[0]}</td>
                 {props.isVisible ? (
                   <td>
-                    <div className={s.signoff}>
-                      <div className={s.time}>
-                        <div>
-                          <label htmlFor="sign_off_time">TIME</label>
-                          <input
-                            type="time"
-                            name="sign_off_time"
-                            value={null}
-                            onChange={(x) => {
-                              AddSignOffTime(e,x) 
-                            }}
-                          />
+                    <form onSubmit={SubmitForm}   data-staff={JSON.stringify(e)}>
+                      <div className={s.signoff}>
+                        <div className={s.time}>
+                          <div>
+                            <label htmlFor="sign_off_time">TIME</label>
+                            <input
+                              type="time"
+                              name="sign_off_time"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="sign_off_date">DATE</label>
+                            <input
+                              type="date"
+                              name="sign_off_date"
+                              required
+                            />
+                          </div>
                         </div>
                         <div>
-                          <label htmlFor="sign_off_date">DATE</label>
-                          <input
-                            type="date"
-                            name="sign_off_date"
-                            value={date}
-                            onChange={(e) => {
-                              setDate(e.target.value);
-                           
-                            }}
-                          />
+                          <button>
+                            SIGN OUT
+                          </button>
                         </div>
                       </div>
-                      <div>
-                        <button
-                          data-staff={JSON.stringify(e)}
-                          onClick={SignOut}
-                        >
-                          SIGN OUT
-                        </button>
-                      </div>
-                    </div>
+                    </form>
                   </td>
                 ) : null}
               </tr>
