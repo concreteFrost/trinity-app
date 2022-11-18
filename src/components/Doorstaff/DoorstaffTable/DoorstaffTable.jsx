@@ -12,11 +12,6 @@ export const DoorstaffTable = (props) => {
     (state) => state.doorstaffOnSiteReducer.doorstaff
   );
   const errorMessage = useSelector((state => state.doorstaffOnSiteReducer.errorMessage))
-
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
-
-  const [time, setTime] = useState([{}]);
-
   // new Date().toLocaleTimeString("en-US", {
   //   hour: "2-digit",
   //   minute: "2-digit",
@@ -25,10 +20,6 @@ export const DoorstaffTable = (props) => {
   useEffect(() => {
     dispatch(GetDoorstaff(token.access_token));
   }, []);
-
-  function SignOut(e) {
-   
-  }
 
   function SubmitForm(e){
     e.preventDefault()

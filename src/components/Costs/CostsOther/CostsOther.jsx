@@ -39,7 +39,7 @@ export const CostsOther = () => (
             <table>
                 <thead>
                     <tr>
-                        <th>AVARAGE (avg per day)</th>
+                        <th>AVERAGE (avg per day)</th>
                         <th>COST(COUNT)</th>
                     </tr>
                 </thead>
@@ -69,7 +69,7 @@ export const CostsOther = () => (
             <table>
                 <thead>
                     <tr>
-                        <th>AVARAGE (avg per day)</th>
+                        <th>AVERAGE (avg per day)</th>
                         <th>COST(COUNT)</th>
                     </tr>
                 </thead>

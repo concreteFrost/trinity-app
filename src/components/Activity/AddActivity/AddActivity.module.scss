@@ -3,19 +3,26 @@
 
 .container {
 
-    display: flex;
+    display: grid;
+    max-width: 1000px;
     justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
 
     form {
         @include form-template;
-        width: 825px;
+
         display: grid;
-        grid-template-areas: "type rates hours date"
+        grid-template-areas: "type  date rates hours"
             "notes notes notes notes "
             "buttons buttons buttons buttons";
 
 
         gap: 10px;
+        
+       select{
+        max-width: 100px;
+       }
     }
 
     textarea {
@@ -71,6 +78,13 @@
         
     }
 
+    .check_rate{
+        display: flex;
+        align-items: flex-end;
+        button{
+            @include btn($button-submit);
+        }
+    }
 
     .clear {
         @include btn($button-cancel);

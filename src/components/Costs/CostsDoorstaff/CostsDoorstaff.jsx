@@ -10,7 +10,7 @@ export const CostsDoorstaff = () => {
     return (
         <div className={s.container}>
             <div>
-                <h4>DAILY: {doorstaff.daily[0] ? doorstaff.daily[0].dateFrom.split('T')[0] : '0'}</h4>
+                <h4>DAILY {doorstaff.daily[0] ? doorstaff.daily[0].dateFrom.split('T')[0] : null}</h4>
                 <table>
                     <thead>
                         <tr>
@@ -30,11 +30,11 @@ export const CostsDoorstaff = () => {
             </div>
 
             <div>
-                <h4>WEEKLY: {doorstaff.weekly[0] ? doorstaff.weekly[0].dateFrom.split('T')[0] + "/" + doorstaff.weekly[0].dateTo.split('T')[0] : '0'}</h4>
+                <h4>WEEKLY {doorstaff.weekly[0] ? doorstaff.weekly[0].dateFrom.split('T')[0] + "/" + doorstaff.weekly[0].dateTo.split('T')[0] : null}</h4>
                 <table>
                     <thead>
                         <tr>
-                            <th>AVARAGE (avg per day)</th>
+                            <th>AVERAGE (avg per day)</th>
                             <th>COST(COUNT)</th>
                         </tr>
                     </thead>
@@ -49,11 +49,11 @@ export const CostsDoorstaff = () => {
                 </table></div>
 
             <div>
-                <h4>MONTHLY: {doorstaff.monthly[0] ? doorstaff.monthly[0].dateFrom.split('T')[0] + "/" + doorstaff.monthly[0].dateTo.split('T')[0] : '0'}</h4>
+                <h4>MONTHLY {doorstaff.monthly[0] ? doorstaff.monthly[0].dateFrom.split('T')[0] + "/" + doorstaff.monthly[0].dateTo.split('T')[0] : null}</h4>
                 <table>
                     <thead>
                         <tr>
-                            <th>AVARAGE (avg per day)</th>
+                            <th>AVERAGE (avg per day)</th>
                             <th>COST(COUNT)</th>
                         </tr>
                     </thead>

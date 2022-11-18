@@ -3,12 +3,18 @@ const initialState = {
         daily:{},
         weekly:{},
         monthly:{}
-    }
+    },
+
+    date: new Date().toLocaleDateString('en-CA')
     
 };
 
 export const costsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case "SET_COSTS_DATE":
+            return{
+                ...state, date: action.data
+            }
         case "GET_DOORSTAFF_DAILY":
             return {
                 ...state,
