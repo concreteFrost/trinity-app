@@ -38,6 +38,8 @@
   table-layout: fixed;
   box-shadow: $soft-shadow;
   text-align: left;
+  width: auto;
+  overflow-x: auto;
 
   th {
     color: white;
@@ -79,6 +81,11 @@
   }
 
   font-size: 0.9em;
+
+  @media screen and (max-width: $screen-laptop) {
+      table-layout:unset;
+
+  }
 }
 
 //Forms
@@ -106,6 +113,11 @@
       @include form-input;
 
   }
+
+  @media screen and (max-width: $screen-laptop) {
+    max-width: 500px;
+
+  }
 }
 
 //Inputs
@@ -118,6 +130,11 @@
   min-width: 185px;
   color: $form-input;
   font-family: $form-font;
+
+  @media screen and (max-width: $screen-laptop) {
+    min-width: 100px;
+
+  }
 }
 
 //Text Areas

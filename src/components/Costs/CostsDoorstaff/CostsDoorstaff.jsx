@@ -39,11 +39,11 @@ export const CostsDoorstaff = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>{doorstaff.weekly[0] ? doorstaff.weekly[0].averageDetail : '0'}</td>
+                        <tr><td>{doorstaff.weekly[0] ? doorstaff.weekly[0].averageValue : '0'}</td>
                             <td>{doorstaff.weekly[0] ? doorstaff.weekly[0].actualDetail : '0'}</td></tr>
-                        <tr><td>{doorstaff.weekly[1] ? doorstaff.weekly[1].averageDetail : '0'}</td>
+                        <tr><td>{doorstaff.weekly[1] ? doorstaff.weekly[1].averageValue : '0'}</td>
                             <td>{doorstaff.weekly[1] ? doorstaff.weekly[1].actualDetail : '0'}</td></tr>
-                        <tr><td>{doorstaff.weekly[2] ? doorstaff.weekly[2].averageDetail : '0'}</td>
+                        <tr><td>{doorstaff.weekly[2] ? doorstaff.weekly[2].averageValue : '0'}</td>
                             <td>{doorstaff.weekly[2] ? doorstaff.weekly[2].actualDetail : '0'}</td></tr>
                     </tbody>
                 </table></div>
@@ -58,11 +58,11 @@ export const CostsDoorstaff = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>{doorstaff.monthly[0] ? doorstaff.monthly[0].averageDetail : '0'}</td>
+                        <tr><td>{doorstaff.monthly[0] ? doorstaff.monthly[0].averageValue : '0'}</td>
                             <td>{doorstaff.monthly[0] ? doorstaff.monthly[0].actualDetail : '0'}</td></tr>
-                        <tr><td>{doorstaff.monthly[1] ? doorstaff.monthly[1].averageDetail : '0'}</td>
+                        <tr><td>{doorstaff.monthly[1] ? doorstaff.monthly[1].averageValue : '0'}</td>
                             <td>{doorstaff.monthly[1] ? doorstaff.monthly[1].actualDetail : '0'}</td></tr>
-                        <tr><td>{doorstaff.monthly[2] ? doorstaff.monthly[2].averageDetail : '0'}</td>
+                        <tr><td>{doorstaff.monthly[2] ? doorstaff.monthly[2].averageValue : '0'}</td>
                             <td>{doorstaff.monthly[2] ? doorstaff.monthly[2].actualDetail : '0'}</td></tr>
                     </tbody>
                 </table></div>

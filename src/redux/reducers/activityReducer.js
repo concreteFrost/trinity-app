@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 const initialState = {
     setOpt:{
         activityTypeOpt:[],
@@ -8,14 +10,14 @@ const initialState = {
     activityType: null,
     supplier:null,
 
-    date: new Date().toLocaleDateString('en-CA'),
+    date: new Date().toISOString(),
     time: null
 
     
   };
   
   export const activityReducer = (state = initialState, action) => {
-    console.log('state of activity', state.setOpt)
+   
     switch (action.type) {
       case "SET_ACTIVITY_TYPE_OPT":
         return{

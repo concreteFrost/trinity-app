@@ -90,7 +90,7 @@ export const DoorstaffTable = (props) => {
             ))
           ) : (
             <tr>
-              <td colSpan={5}>Nothing to show</td>
+              <td colSpan={6}>Nothing to show</td>
             </tr>
           )}
         </tbody>

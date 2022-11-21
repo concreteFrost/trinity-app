@@ -27,41 +27,41 @@ export const AddActivity = () => {
         dispatch(GetActivityTypeOpt(token))
     }, [])
 
-    function FirstSubmit(e){
+    function FirstSubmit(e) {
         e.preventDefault();
-        const activityID =e.target[0].value
+        const activityID = e.target[0].value
         const supplierID = e.target[1].value
-        const _time = e.target[2].value +"T"+ e.target[3].value + ":00.7826209+00:00"
+        const _time = e.target[2].value + "T" + e.target[3].value + ":00.7826209+00:00"
         const data = {
-            activityID : activityID,
-            supplierID : supplierID,
-            time : _time
+            activityID: activityID,
+            supplierID: supplierID,
+            time: _time
         }
 
         axios
-          .get(
-            "https://testapi.etrinity.services/TrinityWebApi/api/CentralCosts/LookupRate",     
-            {
-              headers: {
-               Authorization: "Bearer " + token,       
-              },
+            .get(
+                "https://testapi.etrinity.services/TrinityWebApi/api/CentralCosts/LookupRate",
+                {
+                    headers: {
+                        Authorization: "Bearer " + token,
+                        'Content-Type': 'application/json'
+                    },
 
-            }
-          )
-          .then((res) => {
-            console.log(data)
-            console.log(res)
-          })
-          .catch((e) => {
-            console.log(e)
+                }
+            )
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((e) => {
+                console.log('eee')
+                console.log(data)
+            });
 
-          });
-      
     }
 
     return (
         <div className={s.container}>
-            <form  onSubmit={FirstSubmit}>
+            <form onSubmit={FirstSubmit} className={s.first_form}>
                 <div className={s.general}>
                     <label htmlFor="type">TYPE</label>
                     <select name="type" onChange={(e) => { dispatch(GetSupplierOpt(token, e.target.value)) }}>
@@ -87,10 +87,8 @@ export const AddActivity = () => {
                 </div>
 
                 <div className={s.check_rate}>
-                <button>CHECK RATE</button>
+                    <button>CHECK RATE</button>
                 </div>
-
-              
             </form>
             <form >
                 <div className={s.rate}>

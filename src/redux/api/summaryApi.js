@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export function GetCosts(token,date,summaryCode) {
+export function GetDoorstaffSummary(token,date,summaryCode) {
     return function (dispatch) {
       return axios
         .get(
@@ -13,13 +13,11 @@ export function GetCosts(token,date,summaryCode) {
           }
         )
         .then((res) => {
-          console.log(res)
+          
           switch(summaryCode){
-            case "D": dispatch({type:"GET_DOORSTAFF_DAILY", data:res.data.summaryRecords})
+            case "D": dispatch({type:"GET_DOORSTAFF_SUMMARY_DAILY", data:res.data.summaryRecords})
             break;
-            case "W": dispatch({type:"GET_DOORSTAFF_WEEKLY", data:res.data.summaryRecords})
-            break;
-            case "M": dispatch({type:"GET_DOORSTAFF_MONTHLY", data:res.data.summaryRecords})
+            case "W": dispatch({type:"GET_DOORSTAFF_SUMMARY_WEEKLY", data:res.data.summaryRecords})
           }
         })
         .catch((e) => {

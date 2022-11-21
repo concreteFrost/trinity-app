@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 const initialState = {
     doorstaff: {
         daily:{},
@@ -5,11 +7,12 @@ const initialState = {
         monthly:{}
     },
 
-    date: new Date().toLocaleDateString('en-CA')
+    date: new Date().toISOString()
     
 };
 
 export const costsReducer = (state = initialState, action) => {
+    console.log('costsreducer', state)
     switch (action.type) {
         case "SET_COSTS_DATE":
             return{

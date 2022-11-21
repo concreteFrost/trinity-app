@@ -4,11 +4,12 @@ import { doorstaffOnSiteReducer } from "./doorstaffOnSiteReducer";
 import { costsReducer } from "./costsReducer";
 import { activityReducer } from "./activityReducer";
 import { combineReducers } from "redux";
+import { summaryReducer } from "./summaryReducer";
 
 
 const appReducer = combineReducers({
   userReducer,siaReducer,doorstaffOnSiteReducer,
-  costsReducer, activityReducer
+  costsReducer, activityReducer, summaryReducer
 })
 
 export const rootReducer = (state, action) => {

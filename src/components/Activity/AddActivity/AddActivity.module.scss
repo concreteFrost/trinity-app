@@ -4,8 +4,6 @@
 .container {
 
     display: grid;
-    max-width: 1000px;
-    justify-content: center;
     margin-left: auto;
     margin-right: auto;
 
@@ -13,61 +11,19 @@
         @include form-template;
 
         display: grid;
-        grid-template-areas: "type  date rates hours"
-            "notes notes notes notes "
-            "buttons buttons buttons buttons";
-
-
+        grid-template-rows: 1fr ;
+        grid-template-columns: 1fr 1fr ;
         gap: 10px;
-        
-       select{
-        max-width: 100px;
-       }
+        margin-bottom: 10px;
     }
 
     textarea {
         @include form-textarea;
     }
-
-    .general {
-        grid-area: type;
-    }
-
-    .date {
-        grid-area: date;
-    }
-
-    .rate {
-        grid-area: rates;
-        margin-left: 20px;
-        margin-right: 20px;
-
-    }
-
-    .radio {
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-
-        input {
-            min-width: auto;
-
-        }
-
-
-    }
-
-
-    .hours {
-        grid-area: hours;
-    }
-
-    .notes {
-        grid-area: notes;
-    }
-
+  
     .buttons {
-        grid-area: buttons;
+
+        grid-column: 1/4;
         display: flex;
         justify-content: flex-end;
         align-items: flex-end;
@@ -78,8 +34,27 @@
         
     }
 
-    .check_rate{
+    .notes{
+        grid-column: 1/4;
+    }
+
+    .radio {
         display: flex;
+
+        align-items: flex-end;
+
+        input {
+            min-width: auto;
+        }
+
+    }
+
+
+    .check_rate{
+        grid-row: 2/3;
+        grid-column: 1/4;
+        display: flex;
+        justify-content: center;
         align-items: flex-end;
         button{
             @include btn($button-submit);
