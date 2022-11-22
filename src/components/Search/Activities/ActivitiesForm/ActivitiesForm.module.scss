@@ -42,7 +42,32 @@
             }
         }
 
+        @media screen and (max-width: $screen-laptop) {
+        
+        
+            .reference{
+                grid-column: 1/3;
+                margin-top: 10px;
+            }
+    
+            
+            .button_col {
+                grid-column: 1/4;
+                display: flex;
+                justify-content: flex-end;
+              
+                button{
+                    margin-top: 10px;
+        
+                    @include btn($button-submit);
+                }
+            }
 
+            .dates{
+                grid-column: 1/3;
+                display: flex;
+            }
+        }
     }
     
 

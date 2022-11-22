@@ -1,78 +1,72 @@
 import axios from "axios";
 
 export function GetActivityTypeOpt(token) {
-    return function (dispatch) {
-      return axios
-        .get(
-          `https://testapi.etrinity.services/TrinityWebAPI/api/CentralCosts/LookupCostGroups`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          }
-        )
-        .then((res) => {
-            dispatch({type:"SET_ACTIVITY_TYPE_OPT", data : res.data.record})
-            dispatch({type:"SET_ACTIVITY", data : res.data.record[0]})
-            dispatch(GetSupplierOpt(token, res.data.record[0].id))
-        })
-        .catch((e) => {
-         
-        });
-    };
-  }
-
-export function GetSupplierOpt(token, activityId){
-
-    return function (dispatch) {
-        return axios
-          .get(
-            `https://testapi.etrinity.services/TrinityWebAPI/api/CentralCosts/LookupSuppliers/` + activityId,
-            {
-              headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/x-www-form-urlencoded",
-              },
-            }
-          )
-          .then((res) => {
-            dispatch({type:"SET_SUPPLIER_OPT", data : res.data.suppliers})
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      };
+  return function (dispatch) {
+    return axios
+      .get(
+        `https://testapi.etrinity.services/TrinityWebAPI/api/CentralCosts/LookupCostGroups`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then((res) => {
+        dispatch({ type: "GET_ACTIVITY_TYPE_OPT", data: res.data.record });
+        dispatch({ type: "SET_ACTIVITY_TYPE", data: res.data.record[0].id });
+        dispatch(GetSupplierOpt(token, res.data.record[0].id));
+      })
+      .catch((e) => {});
+  };
 }
 
-// export function GetRate(token, data){
+export function GetSupplierOpt(token, activityId) {
+  return function (dispatch) {
+    return axios
+      .get(
+        `https://testapi.etrinity.services/TrinityWebAPI/api/CentralCosts/LookupSuppliers/` +
+          activityId,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then((res) => {
+        dispatch({ type: "GET_SUPPLIER_OPT", data: res.data.suppliers }); 
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+}
 
-//     return function (dispatch) {
-//         return axios
-//           .get(
-//             "https://testapi.etrinity.services/TrinityWebApi/api/CentralCosts/LookupRate",
-         
-//             {
-//               headers: {
-//                 Authorization: "Bearer " + token,
-//                 "Content-Type": "application/json",
-//               },
-//               body:{
-//                 costGroupId : parseInt(data.activityID),
-//                 supplierId : parseInt(data.supplierID),
-//                 costEntryTime: new Date().toLocaleDateString("en-US")
-//               }
-//             }
-
-//           )
-//           .then((res) => {
-//             console.log(data)
-//             console.log(res)
-//           })
-//           .catch((e) => {
-//             console.log(parseInt(data.activityID))
-//             console.log(parseInt(data.supplierID))
-//             console.log(new Date().toLocaleDateString("en-US"))
-//           });
-//       };
-// }
+export function GetRate(token, data) {
+  return function (dispatch) {
+    return axios({
+      url: "https://testapi.etrinity.services/TrinityWebApi/api/CentralCosts/LookupRate",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      data: {
+        costGroupId: data.activityID,
+        supplierId: data.supplierID,
+        costEntryTime: data.time,
+      },
+    })
+      .then((res) => {
+        console.log(res)
+        dispatch({type:"GET_RATE", data: res.data})
+        dispatch({type:"SET_ACTIVITY_SUPPLIER", data : data.supplierID})
+        dispatch({type:"SET_ACTIVITY_COST_VALUE", data : res.data.costValue})
+        
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+}

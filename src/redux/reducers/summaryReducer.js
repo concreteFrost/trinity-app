@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const summaryReducer = (state = initialState, action) => {
-    console.log("summaryReducer:", state)
+
     switch (action.type) {
         case "GET_DOORSTAFF_SUMMARY_DAILY":
             return {

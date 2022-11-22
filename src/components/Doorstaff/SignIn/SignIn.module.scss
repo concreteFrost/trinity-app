@@ -9,29 +9,64 @@
 
     form {
         @include form-template;
-        width: 827px;
+        width: 600px;
         display: grid;
-        height: 230px;
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 10px;
-        grid-template-rows: 50px 50px 50px 50px ;
+        gap: 5px;
+        grid-template-rows: 50px 50px 50px ;
+
+    
     }
     
 
-    .sia {
-        grid-column-start: 1;
-        grid-column-end: 4;
-    }
-
     .buttons {
-        grid-row-start: 4;
-        grid-column-end: 4;
+        grid-row: 3;
+        grid-column: 3;
         display: flex;
         justify-content: flex-end;
         align-items: flex-end;
         button{
             margin-left: 5px;
         }
+    }
+
+    .f_name{
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .l_name{
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .rate{
+        grid-column: 3;
+        grid-row:1;
+
+        
+    }
+
+    .position{
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .supplier{
+        grid-column: 2;
+        grid-row:2;
+    }
+
+
+
+    .date_started{
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .start_time{
+        grid-column: 2;
+        grid-row:3;
     }
 
     .clear {
@@ -44,6 +79,49 @@
 
     .error_message{
         text-align: center;
+    }
+
+    @media screen and (max-width: $screen-laptop) {
+
+      form{
+        grid-template-columns: 1fr 1fr;  
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        max-width: 300px;
+      }
+
+        .rate{
+            grid-column: 1;
+            grid-row: 3;
+        }
+
+        .supplier{
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .position{
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .date_started{
+            grid-column: 1;
+            grid-row: 4;
+        }
+    
+        .start_time{
+            grid-column: 2;
+            grid-row:3;
+        }
+
+        .buttons{
+            
+            grid-column: 2;
+            grid-row: 4;
+
+            justify-content: flex-start;
+            align-items: flex-end;
+        }
     }
 
 

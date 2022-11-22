@@ -7,7 +7,7 @@
 
 .doorstaff_table {
     @include main-tables;
-    width: 855px;  
+    max-width: 855px;  
     button{
         background-color:$button-submit;
     }

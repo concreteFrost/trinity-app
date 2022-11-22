@@ -1,4 +1,4 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 //Comment
 
@@ -8,10 +8,14 @@
   font-family: $central-header;
   text-align: center;
   color: rgb(156, 156, 156);
+
+  @media screen and (max-width: $screen-laptop) {
+    font-size: 0.7rem;
+  }
 }
 
 //Home Page Container
-@mixin home-page-container{
+@mixin home-page-container {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -20,17 +24,21 @@
 }
 
 //Buttons
-@mixin btn($bgColor){
+@mixin btn($bgColor) {
   border-radius: 5px;
   border: 0;
   color: white;
   padding: 5px 10px;
   font-weight: bold;
   background-color: $bgColor;
+
+  @media screen and (max-width: $screen-laptop) {
+    font-size: 0.6rem;
+  }
 }
 
 //Tables
-@mixin main-tables{
+@mixin main-tables {
   font-family: $table-font;
   background-color: $nav-color;
   border-radius: 5px;
@@ -40,6 +48,17 @@
   text-align: left;
   width: auto;
   overflow-x: auto;
+  min-width: 400px;
+
+  @media screen and (max-width: $screen-laptop) {
+    font-size: 0.6rem;
+    max-width: 600px;
+    overflow-x: scroll;
+  }
+
+  @media screen and (max-width: $screen-mobile) {
+    max-width: 200px;
+  }
 
   th {
     color: white;
@@ -55,6 +74,14 @@
     font-weight: 500;
   }
 
+  @media screen and (max-width: $screen-laptop) {
+    td {
+      font-weight: 100;
+      font-weight: bold;
+    }
+  }
+
+
   tbody tr:nth-child(odd) {
     background-color: $table-main-odd;
   }
@@ -63,68 +90,74 @@
     background-color: $table-main-even;
   }
 
-  tbody > tr:last-child { border-radius: 10px; }
-  thead{
+  tbody > tr:last-child {
+    border-radius: 10px;
+  }
+  thead {
     display: table-header-group;
   }
 
-  tbody{
-    display: table-row-group ;
+  tbody {
+    display: table-row-group;
   }
 
-
-
-  button{
+  button {
     @include btn($button-submit);
     margin-left: 0;
-    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
+      rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
   }
 
   font-size: 0.9em;
 
   @media screen and (max-width: $screen-laptop) {
-      table-layout:unset;
-
+    table-layout: unset;
   }
 }
 
 //Forms
-@mixin form-template{
-  
+@mixin form-template {
   padding: 15px;
   border-radius: 5px;
   background-color: $form-color;
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: $form-input;
   box-shadow: 5px;
   box-shadow: $soft-shadow;
   max-height: 320px;
   input,
   label {
-      display: block;
+    display: block;
   }
 
-  label{
-      font-family: $form-font;
+  label {
+    font-family: $form-font;
   }
+
+  
 
   select,
   input {
-      @include form-input;
-
+    @include form-input;
   }
 
   @media screen and (max-width: $screen-laptop) {
     max-width: 500px;
+    label {
+      font-size: 0.7rem;
+    }
 
+    input {
+      font-size: 0.7rem;
+    }
   }
 }
 
 //Inputs
-@mixin  form-input {
+@mixin form-input {
   border: $form-border;
   border-radius: 3px;
-  min-height: 20px;
+  max-height: 20px;
   margin-top: 5px;
   background-color: rgb(252, 252, 252);
   min-width: 185px;
@@ -133,15 +166,16 @@
 
   @media screen and (max-width: $screen-laptop) {
     min-width: 100px;
-
+    font-size: $font-laptop;
   }
 }
 
 //Text Areas
-@mixin form-textarea{
+@mixin form-textarea {
   width: 100%;
   resize: none;
   border: $form-border;
   border-radius: 3px;
-  box-shadow: rgb(204, 219, 232) 1px 1px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  box-shadow: rgb(204, 219, 232) 1px 1px 6px 0px inset,
+    rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }

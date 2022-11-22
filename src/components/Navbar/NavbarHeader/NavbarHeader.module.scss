@@ -1,4 +1,13 @@
-.header{
-    color: white;
-    text-align: right;
+@import "src/scss/variables.scss";
+@import "src/scss/mixins.scss";
+
+.header {
+  color: white;
+  text-align: right;
+}
+
+@media screen and (max-width: $screen-laptop) {
+  .header {
+    font-size: $font-laptop;
+  }
 }

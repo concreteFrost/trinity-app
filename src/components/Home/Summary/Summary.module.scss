@@ -4,9 +4,11 @@
 .container {
   @include home-page-container;
 
+  .summary_table {
+    @include main-tables;
+    max-width: 600px;
+  }
+  
+
 }
 
-.summary_table {
-  @include main-tables;
-  width: 600px;
-}

@@ -12,12 +12,16 @@
         display: grid;
         gap: 10px;
         height: $grid-height;
-        grid-template-rows: 1fr 2fr 4fr;
+        grid-template-rows: 1fr 2fr 3fr;
        
     }
 
     h2{
         @include page-title;
+    }
+
+    @media screen  and (max-width:$screen-laptop){
+            
     }
 
 }

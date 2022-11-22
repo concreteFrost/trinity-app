@@ -1,129 +1,240 @@
-import s from "./AddActivity.module.scss"
-import { useSelector, useDispatch } from 'react-redux'
+import s from "./AddActivity.module.scss";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { GetActivityTypeOpt, GetSupplierOpt } from "../../../redux/api/activityApi";
+import {
+  GetActivityTypeOpt,
+  GetRate,
+  GetSupplierOpt,
+} from "../../../redux/api/activityApi";
 import axios from "axios";
 
 export const AddActivity = () => {
+  const activityOpt = useSelector(
+    (state) => state.activityReducer.GetOpt.activityTypeOpt
+  );
+  const supplierOpt = useSelector(
+    (state) => state.activityReducer.GetOpt.supplierOpt
+  );
+  const rate = useSelector((state) => state.activityReducer.getRate);
+  const token = useSelector((state) => state.userReducer.user.access_token);
+  const locationId = useSelector((state) => state.userReducer.user.locationId);
+  const supplierId = useSelector((state) => state.activityReducer.supplier);
+  const costGroupId = useSelector(
+    (state) => state.activityReducer.activityType
+  );
 
-    const activityOpt = useSelector(state => state.activityReducer.setOpt.activityTypeOpt);
+  const costValue = useSelector((state) => state.activityReducer.costValue);
+  const hoursWorked = useSelector((state) => state.activityReducer.hoursWorked);
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [time, setTime] = useState(
+    new Date().toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    })
+  );
+  const [noteIsRequired, setNoteIsRequired] = useState(false);
+  const [notes, setNotes] = useState("");
 
-    const supplierOpt = useSelector(state => state.activityReducer.setOpt.supplierOpt);
+  const dispatch = useDispatch();
 
-    const token = useSelector((state) => state.userReducer.user.access_token);
+  useEffect(() => {
+    dispatch(GetActivityTypeOpt(token));
+  }, []);
 
-    const [date, setDate] = useState(new Date().toISOString().split("T")[0])
-    const [time, setTime] = useState(
-        new Date().toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-        })
-    );
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(GetActivityTypeOpt(token))
-    }, [])
-
-    function FirstSubmit(e) {
-        e.preventDefault();
-        const activityID = e.target[0].value
-        const supplierID = e.target[1].value
-        const _time = e.target[2].value + "T" + e.target[3].value + ":00.7826209+00:00"
-        const data = {
-            activityID: activityID,
-            supplierID: supplierID,
-            time: _time
-        }
-
-        axios
-            .get(
-                "https://testapi.etrinity.services/TrinityWebApi/api/CentralCosts/LookupRate",
-                {
-                    headers: {
-                        Authorization: "Bearer " + token,
-                        'Content-Type': 'application/json'
-                    },
-
-                }
-            )
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((e) => {
-                console.log('eee')
-                console.log(data)
-            });
-
+  function CompareRates() {
+    if (parseInt(costValue) !== rate.costValue) {
+      alert("NOTES input is now required");
+      setNoteIsRequired(true);
+    } else {
+      setNoteIsRequired(false);
     }
+    dispatch({ type: "SET_ACTIVITY_VALUE", costValue });
+  }
 
-    return (
-        <div className={s.container}>
-            <form onSubmit={FirstSubmit} className={s.first_form}>
-                <div className={s.general}>
-                    <label htmlFor="type">TYPE</label>
-                    <select name="type" onChange={(e) => { dispatch(GetSupplierOpt(token, e.target.value)) }}>
-                        {activityOpt.length > 0 ?
-                            activityOpt.map((e) => {
-                                return <option key={e.id} value={e.id}>{e.name}</option>
-                            })
-                            : null}
-                    </select>
+  function FirstSubmit(e) {
+    e.preventDefault();
+    const activityID = e.target[0].value;
+    const supplierID = e.target[1].value;
+    const _time = e.target[2].value;
+    const data = {
+      activityID: activityID,
+      supplierID: supplierID,
+      time: _time,
+    };
+    dispatch(GetRate(token, data));
+  }
 
-                    <label htmlFor="supplier">SUPPLIER</label>
-                    <select name="supplier">
-                        {supplierOpt.length > 0 ? supplierOpt.map((e) => { return <option key={e.supplierId} value={e.supplierId}>{e.supplierName}</option> }) : null}
-                    </select>
-                </div>
+  function SecondSubmit(e) {
+    e.preventDefault();
+    const _data = {
+      locationId: parseInt(locationId),
+      supplierId: parseInt(supplierId),
+      costGroupId: parseInt(costGroupId),
+      rateGroupId: rate.rateGroupId,
+      rateTypeId: rate.rateTypeId,
+      startTime: date + "T" + time + ":00Z",
+      costValue: parseFloat(costValue),
+      description: notes,
+      hoursWorked: parseFloat(hoursWorked),
+    };
 
-                <div className={s.date}>
-                    <label htmlFor="date">DATE</label>
-                    <input type="date" name="date" value={date} onChange={(e) => setDate(e.target.value)} />
+    axios({
+      url: "https://testapi.etrinity.services/TrinityWebApi/api/CentralCosts/CostEntry",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      data: _data,
+    })
+      .then((res) => {
+        console.log(res);
+        console.log(_data);
+        dispatch({ type: "CLEAR_ACTIVITY" });
+        dispatch(GetActivityTypeOpt(token));
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log(_data);
+      });
+  }
 
-                    <label htmlFor="time">TIME</label>
-                    <input type="time" name="time" value={time} onChange={(e) => setTime(e.target.value)} />
-                </div>
+  return (
+    <div className={s.container}>
+      <form onSubmit={FirstSubmit} className={s.first_form}>
+        <div className={s.general}>
+          <label htmlFor="type">TYPE</label>
+          <select
+            name="type"
+            onChange={(e) => {
+              dispatch(GetSupplierOpt(token, e.target.value));
+              dispatch({ type: "SET_ACTIVITY_TYPE", data: e.target.value });
+              console.log(e.target.value);
+            }}
+          >
+            {activityOpt.length > 0
+              ? activityOpt.map((e) => {
+                  return (
+                    <option key={e.id} value={e.id}>
+                      {e.name}
+                    </option>
+                  );
+                })
+              : null}
+          </select>
 
-                <div className={s.check_rate}>
-                    <button>CHECK RATE</button>
-                </div>
-            </form>
-            <form >
-                <div className={s.rate}>
-                    <label >RATE</label>
-                    <div className={s.radio}>
-                        <label htmlFor="fixed">fixed</label>
-                        <input type="radio" name="rate" id="fixed" value="fixed" />
-
-                        <label htmlFor="custom">custom</label>
-                        <input type="radio" name="rate" id="custom" value="custom" />
-                    </div>
-                </div>
-
-                <div className={s.hours}>
-
-                    <label htmlFor="hours-worked">HOURS WORKED</label>
-                    <input type="number" name="hours-worked" />
-
-                    <label htmlFor="value">VALUE</label>
-                    <input type="number" name="value" />
-                </div>
-
-
-                <div className={s.notes}>
-                    <label htmlFor="notes">NOTES</label>
-                    <textarea name="notes" cols="30" rows="10"></textarea>
-                </div>
-
-                <div className={s.buttons}>
-                    <button className={s.clear}>CLEAR</button>
-                    <button className={s.add}>ADD</button>
-                </div>
-            </form>
+          <label htmlFor="supplier">SUPPLIER</label>
+          <select name="supplier">
+            {supplierOpt.length > 0
+              ? supplierOpt.map((e) => {
+                  return (
+                    <option key={e.supplierId} value={e.supplierId}>
+                      {e.supplierName}
+                    </option>
+                  );
+                })
+              : null}
+          </select>
         </div>
 
-    )
-};
+        <div className={s.date}>
+          <label htmlFor="date">DATE</label>
+          <input
+            type="date"
+            name="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
 
+          <label htmlFor="time">TIME</label>
+          <input
+            type="time"
+            name="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          />
+        </div>
+
+        <div className={s.check_rate}>
+          <button>CHECK RATE</button>
+        </div>
+      </form>
+      <form onSubmit={SecondSubmit}>
+        <div className={s.rate}>
+          <label>RATE</label>
+          <div className={s.radio}>
+            <label htmlFor="fixed">fixed</label>
+            <input
+              type="radio"
+              name="rate"
+              id="fixed"
+              checked={rate.rateTypeId === 4 ? true : false}
+              readOnly
+            />
+
+            <label htmlFor="custom">custom</label>
+            <input
+              type="radio"
+              name="rate"
+              id="custom"
+              checked={rate.rateTypeId === 5 ? true : false}
+              readOnly
+            />
+          </div>
+        </div>
+
+        <div className={s.hours}>
+          <label htmlFor="hours-worked">HOURS WORKED</label>
+          <input
+            type="number"
+            name="hours-worked"
+            step={0.01}
+            value={hoursWorked ? hoursWorked : ""}
+            onChange={(e) => {
+              dispatch({
+                type: "SET_ACTIVITY_HOURS_WORKED",
+                data: e.target.value,
+              });
+            }}
+            required
+          />
+
+          <label htmlFor="value">VALUE</label>
+          <input
+            type="number"
+            name="value"
+            readOnly={rate.rateTypeId === 4 ? true : false}
+            value={costValue ? costValue : ""}
+            onChange={(e) => {
+              dispatch({
+                type: "SET_ACTIVITY_COST_VALUE",
+                data: e.target.value,
+              });
+            }}
+            onBlur={CompareRates}
+          />
+        </div>
+
+        <div className={s.notes}>
+          <label htmlFor="notes">NOTES</label>
+          <textarea
+            name="notes"
+            cols="30"
+            rows="10"
+            required={noteIsRequired ? true : false}
+            value={notes}
+            onChange={(e) => {
+              setNotes(e.target.value);
+            }}
+          ></textarea>
+        </div>
+
+        <div className={s.buttons}>
+          <button className={s.clear}>CLEAR</button>
+          <button className={s.add}>ADD</button>
+        </div>
+      </form>
+    </div>
+  );
+};

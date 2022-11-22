@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export const costsReducer = (state = initialState, action) => {
-    console.log('costsreducer', state)
+
     switch (action.type) {
         case "SET_COSTS_DATE":
             return{

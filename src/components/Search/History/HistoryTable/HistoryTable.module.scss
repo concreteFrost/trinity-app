@@ -2,6 +2,9 @@
 @import 'src/scss/variables';
 
 .container {
+
+    display: flex;
+    justify-content: center;
     table{
        
         @include main-tables;
