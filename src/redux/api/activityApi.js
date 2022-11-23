@@ -59,14 +59,42 @@ export function GetRate(token, data) {
       },
     })
       .then((res) => {
-        console.log(res)
+        console.log('result of get rate',res)
+        if(res.data.message){
+          dispatch({type:"SHOW_MODAL_MESSAGE", data: res.data.message})
+        }
+        else{
         dispatch({type:"GET_RATE", data: res.data})
         dispatch({type:"SET_ACTIVITY_SUPPLIER", data : data.supplierID})
         dispatch({type:"SET_ACTIVITY_COST_VALUE", data : res.data.costValue})
+        }
         
       })
       .catch((e) => {
         console.log(e);
       });
   };
+}
+
+export function SubmitActivity(token,_data){
+  return function (dispatch){
+    return   axios({
+      url: "https://testapi.etrinity.services/TrinityWebApi/api/CentralCosts/CostEntry",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      data: _data,
+    })
+      .then((res) => {
+          dispatch({ type: "CLEAR_ACTIVITY" });
+          dispatch(GetActivityTypeOpt(token));
+        
+      })
+      .catch((e) => {
+        console.log(e)
+        dispatch({type:"SHOW_MODAL_MESSAGE", data: e.message})
+      });
+  }
 }

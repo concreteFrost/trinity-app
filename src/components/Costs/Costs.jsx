@@ -1,24 +1,28 @@
 import s from "./Costs.module.scss"
 import { CostsForm } from "./CostsForm/CostsForm"
-import { CostsDoorstaff } from "./CostsDoorstaff/CostsDoorstaff";
-import { CostsOther } from "./CostsOther/CostsOther";
+import { CostsTable } from "./CostsTable/CostsTable";
+import { useSelector } from "react-redux";
+export const Costs = () => {
 
-export const Costs = () => (
-    <div className={s.container}>
-        <header><h1>COSTS</h1></header>
+    const doorstaff = useSelector(state=>state.costsReducer.doorstaff)
+    const costs = useSelector(state=>state.costsReducer.costs)
+    return (
+        <div className={s.container}>
+            <header><h1>COSTS</h1></header>
 
-        <main>
-            <CostsForm></CostsForm>
-            <div>
-                <h2>DOORSTAFF</h2>
-                <CostsDoorstaff></CostsDoorstaff>
-            </div>
-            <div>
-                <h2>OTHER</h2>
-                <CostsOther></CostsOther>
-            </div>
-        </main>
+            <main>
+                <CostsForm></CostsForm>
+                <div>
+                    <h2>DOORSTAFF</h2>
+                    <CostsTable doorstaff={doorstaff}></CostsTable>
+                </div>
+                <div>
+                    <h2>OTHER</h2>
+                    <CostsTable doorstaff={costs}></CostsTable>
+                </div>
+            </main>
 
-    </div>
-);
+        </div>
+    );
+}
 

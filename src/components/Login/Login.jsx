@@ -31,6 +31,7 @@ export const Login = () => {
 
       console.log('the new client id was generated')
   }
+
   
   function submitLogin(e) {
     e.preventDefault();

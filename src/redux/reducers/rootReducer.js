@@ -5,11 +5,13 @@ import { costsReducer } from "./costsReducer";
 import { activityReducer } from "./activityReducer";
 import { combineReducers } from "redux";
 import { summaryReducer } from "./summaryReducer";
+import { modalMessageReducer } from "./modalMessageReducer";
 
 
 const appReducer = combineReducers({
   userReducer,siaReducer,doorstaffOnSiteReducer,
-  costsReducer, activityReducer, summaryReducer
+  costsReducer, activityReducer, summaryReducer,
+  modalMessageReducer
 })
 
 export const rootReducer = (state, action) => {

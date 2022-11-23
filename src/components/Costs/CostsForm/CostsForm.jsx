@@ -6,18 +6,17 @@ export const CostsForm = () => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.userReducer.user.access_token);
     const date = useSelector(state => state.costsReducer.date);
-    console.log(date)
 
     function ChangeDate(e) {
 
         dispatch({ type: "SET_COSTS_DATE", data: e.target.value })
+       
+
     }
 
     function SubmitForm(e) {
         e.preventDefault();
-        dispatch(GetCosts(token, date, 'D'))
-        dispatch(GetCosts(token, date, 'W'))
-        dispatch(GetCosts(token, date, 'M'))
+        dispatch(GetCosts(token, date))
     }
     return (
         <div className={s.container}>

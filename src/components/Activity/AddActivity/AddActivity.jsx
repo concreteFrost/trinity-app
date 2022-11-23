@@ -5,6 +5,7 @@ import {
   GetActivityTypeOpt,
   GetRate,
   GetSupplierOpt,
+  SubmitActivity
 } from "../../../redux/api/activityApi";
 import axios from "axios";
 
@@ -22,6 +23,7 @@ export const AddActivity = () => {
   const costGroupId = useSelector(
     (state) => state.activityReducer.activityType
   );
+  console.log(token)
 
   const costValue = useSelector((state) => state.activityReducer.costValue);
   const hoursWorked = useSelector((state) => state.activityReducer.hoursWorked);
@@ -44,7 +46,7 @@ export const AddActivity = () => {
 
   function CompareRates() {
     if (parseInt(costValue) !== rate.costValue) {
-      alert("NOTES input is now required");
+      dispatch({ type: "SHOW_MODAL_MESSAGE", data: "NOTES input is now required" })
       setNoteIsRequired(true);
     } else {
       setNoteIsRequired(false);
@@ -79,27 +81,10 @@ export const AddActivity = () => {
       hoursWorked: parseFloat(hoursWorked),
     };
 
-    axios({
-      url: "https://testapi.etrinity.services/TrinityWebApi/api/CentralCosts/CostEntry",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      data: _data,
-    })
-      .then((res) => {
-        console.log(res);
-        console.log(_data);
-        dispatch({ type: "CLEAR_ACTIVITY" });
-        dispatch(GetActivityTypeOpt(token));
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log(_data);
-      });
-  }
+    dispatch(SubmitActivity(token, _data))
 
+
+  }
   return (
     <div className={s.container}>
       <form onSubmit={FirstSubmit} className={s.first_form}>
@@ -115,12 +100,12 @@ export const AddActivity = () => {
           >
             {activityOpt.length > 0
               ? activityOpt.map((e) => {
-                  return (
-                    <option key={e.id} value={e.id}>
-                      {e.name}
-                    </option>
-                  );
-                })
+                return (
+                  <option key={e.id} value={e.id}>
+                    {e.name}
+                  </option>
+                );
+              })
               : null}
           </select>
 
@@ -128,12 +113,12 @@ export const AddActivity = () => {
           <select name="supplier">
             {supplierOpt.length > 0
               ? supplierOpt.map((e) => {
-                  return (
-                    <option key={e.supplierId} value={e.supplierId}>
-                      {e.supplierName}
-                    </option>
-                  );
-                })
+                return (
+                  <option key={e.supplierId} value={e.supplierId}>
+                    {e.supplierName}
+                  </option>
+                );
+              })
               : null}
           </select>
         </div>

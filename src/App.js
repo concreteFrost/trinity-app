@@ -10,6 +10,8 @@ import { Authorise } from "./components/Authorise/Authorise";
 import { Login } from "./components/Login/Login";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { useSelector } from "react-redux";
+import { ModalMessage } from "./components/Modal/ModalMessage/ModalMessage";
+
 
 
 
@@ -18,6 +20,7 @@ function App() {
   const user = useSelector((state)=> state.userReducer)
   return (
     <div className={s.container}>
+          <ModalMessage></ModalMessage>
       {user.isLoggedIn ? <Navbar className={s.nav} /> : null}
       {/* <HeaderImage className={s.logo} /> */}
       <Routes>
@@ -76,6 +79,7 @@ function App() {
           }
         ></Route>
       </Routes>
+
     </div>
   );
 }

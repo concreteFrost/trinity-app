@@ -9,6 +9,7 @@ export const Home = () => (
       <h1> SIA DOORSTAFF & CENTRAL COSTS MANAGEMENT SYSTEM</h1>
     </header>
     <main>
+      
       <Summary></Summary>
       <div>
         <header><h2>Doorstaff onsite</h2></header>
