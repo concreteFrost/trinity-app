@@ -20,6 +20,7 @@ const initialState = {
 export const costsReducer = (state = initialState, action) => {
 
     switch (action.type) {
+       
         case "SET_COSTS_DATE":
             return {
                 ...state, date: action.data
@@ -27,7 +28,7 @@ export const costsReducer = (state = initialState, action) => {
         case "GET_DOORSTAFF_DAILY":
             return {
                 ...state,
-                doorstaff: { ...state.doorstaff, daily: action.data }
+                doorstaff: { ...state.doorstaff,daily: action.data }
             };
         case "GET_DOORSTAFF_WEEKLY":
             return {

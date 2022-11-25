@@ -14,8 +14,8 @@ export const Summary = () => {
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    dispatch(GetDoorstaffSummary(token, date, 'D'))
-    dispatch(GetDoorstaffSummary(token, date, 'W'))
+    // dispatch(GetDoorstaffSummary(token, date, 'D'))
+    // dispatch(GetDoorstaffSummary(token, date, 'W'))
   },[])
 
   return (

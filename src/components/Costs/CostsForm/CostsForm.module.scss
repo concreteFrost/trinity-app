@@ -16,4 +16,11 @@
         @include btn($button-submit);
     }
 
+    .spinner{
+        position: absolute;
+        top: 50vh;
+        left: 50vw;
+ 
+    }
+
 }

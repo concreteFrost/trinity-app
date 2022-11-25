@@ -42,7 +42,7 @@ export const SignIn = (props) => {
   );
 
   let data = {}
-  console.log(token)
+
 
   //GET NAME
   useEffect(() => {
@@ -99,9 +99,10 @@ export const SignIn = (props) => {
         .then((res) => {
           setStoredRates(res.data.rates);
           setRate(res.data.rates[0]);
+          console.log(date)
         })
         .catch((e) => {
-          console.log("no rates");
+          
         });
 
   }, [position.positionId, supplier.supplierId]);

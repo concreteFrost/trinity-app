@@ -1,48 +1,48 @@
 import s from "./ActivityTable.module.scss"
+import axios from "axios";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-export const ActivityTable = (props) => (
+export const ActivityTable = (props) => {
+  const token = useSelector((state) => state.userReducer.user.access_token);
+  useEffect(() => {
+    axios({
+      url: "https://testapi.etrinity.services/TrinityWebApi/api/Report/CostReview",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      data: {
+       dateFrom : "2022-11-01T12:29:51.5866765+00:00",
+       dateTo : "2022-11-23T12:29:51.5866765+00:00"
+      },
+    })
+      .then((res) => {
+
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+  }, [])
+
+  return (
     <div className={s.container}>
-    <table className={s.doorstaff_table}>
+      <table className={s.doorstaff_table}>
         <thead>
-            <tr>
-              <th>DATE</th>
-              <th>COST</th>
-              <th>SUPPLIER</th>
-              <th>VALUE</th>
-            {props.isVisible ? <th>EDIT</th> : null }  
-            </tr>
+          <tr>
+            <th>DATE</th>
+            <th>COST</th>
+            <th>SUPPLIER</th>
+            <th>VALUE</th>
+            {props.isVisible ? <th>EDIT</th> : null}
+          </tr>
         </thead>
         <tbody>
-            <tr>
-              <td>11/3/2022 9:28:07 AM</td>
-              <td>WINDOWS</td>
-              <td>D H WINDOW CLEANING</td>
-              <td>90.00</td>
-              {props.isVisible ? <td><button>EDIT</button></td> : null }    
-            </tr>
-            <tr>
-              <td>11/3/2022 9:28:07 AM</td>
-              <td>WINDOWS</td>
-              <td>D H WINDOW CLEANING</td>
-              <td>90.00</td>
-              {props.isVisible ? <td><button>EDIT</button></td> : null } 
-            </tr>
-            <tr>
-              <td>11/3/2022 9:28:07 AM</td>
-              <td>WINDOWS</td>
-              <td>D H WINDOW CLEANING</td>
-              <td>90.00</td>
-             {props.isVisible ? <td><button>EDIT</button></td> : null } 
-            </tr>
-            <tr>
-              <td>11/3/2022 9:28:07 AM</td>
-              <td>WINDOWS</td>
-              <td>D H WINDOW CLEANING</td>
-              <td>90.00</td>
-             {props.isVisible ? <td><button>EDIT</button></td> : null } 
-            </tr>
-        </tbody>
-    </table>
-</div>
-    );
 
+        </tbody>
+      </table>
+    </div>
+  );
+}

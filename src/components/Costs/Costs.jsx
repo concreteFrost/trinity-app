@@ -14,11 +14,11 @@ export const Costs = () => {
                 <CostsForm></CostsForm>
                 <div>
                     <h2>DOORSTAFF</h2>
-                    <CostsTable doorstaff={doorstaff}></CostsTable>
+                    <CostsTable data={doorstaff}></CostsTable>
                 </div>
                 <div>
                     <h2>OTHER</h2>
-                    <CostsTable doorstaff={costs}></CostsTable>
+                    <CostsTable data={costs}></CostsTable>
                 </div>
             </main>
 
