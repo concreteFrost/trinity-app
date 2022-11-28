@@ -8,7 +8,7 @@
     @include main-tables;
     input {
       @include form-input;
-      max-width: 10px;
+      
     }
   }
   .signoff {

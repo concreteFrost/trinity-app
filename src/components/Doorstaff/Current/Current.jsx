@@ -1,10 +1,9 @@
-import s from "./DoorstaffTable.module.scss";
+import s from "./Current.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { GetDoorstaff, DeleteDoorStaff } from "../../../redux/api/doorstaffAPI";
 import { useEffect } from "react";
-import { useState } from "react";
 
-export const DoorstaffTable = (props) => {
+export const Current = (props) => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.userReducer.user);
@@ -12,11 +11,7 @@ export const DoorstaffTable = (props) => {
     (state) => state.doorstaffOnSiteReducer.doorstaff
   );
   const errorMessage = useSelector((state => state.doorstaffOnSiteReducer.errorMessage))
-  // new Date().toLocaleTimeString("en-US", {
-  //   hour: "2-digit",
-  //   minute: "2-digit",
-  //   hour12: false,
-  // })
+
   useEffect(() => {
     dispatch(GetDoorstaff(token.access_token));
   }, []);

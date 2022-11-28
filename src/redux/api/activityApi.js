@@ -1,4 +1,10 @@
 import axios from "axios";
+import {
+  GET_ACTIVITY_TYPE_OPT, GET_ACTIVITY_SUPPLIER_OPT,
+  GET_ACTIVITY_RATE, SET_ACTIVITY_TYPE,
+  SET_ACTIVITY_SUPPLIER,
+  SET_ACTIVITY_COST_VALUE,CLEAR_ACTIVITY
+} from "../types";
 
 export function GetActivityTypeOpt(token) {
   return function (dispatch) {
@@ -13,8 +19,8 @@ export function GetActivityTypeOpt(token) {
         }
       )
       .then((res) => {
-        dispatch({ type: "GET_ACTIVITY_TYPE_OPT", data: res.data.record });
-        dispatch({ type: "SET_ACTIVITY_TYPE", data: res.data.record[0].id });
+        dispatch({ type: GET_ACTIVITY_TYPE_OPT, data: res.data.record });
+        dispatch({ type: SET_ACTIVITY_TYPE, data: res.data.record[0].id });
         dispatch(GetSupplierOpt(token, res.data.record[0].id));
       })
       .catch((e) => {});
@@ -35,7 +41,7 @@ export function GetSupplierOpt(token, activityId) {
         }
       )
       .then((res) => {
-        dispatch({ type: "GET_SUPPLIER_OPT", data: res.data.suppliers }); 
+        dispatch({ type: GET_ACTIVITY_SUPPLIER_OPT, data: res.data.suppliers }); 
       })
       .catch((e) => {
         console.log(e);
@@ -64,9 +70,9 @@ export function GetRate(token, data) {
           dispatch({type:"SHOW_MODAL_MESSAGE", data: res.data.message})
         }
         else{
-        dispatch({type:"GET_RATE", data: res.data})
-        dispatch({type:"SET_ACTIVITY_SUPPLIER", data : data.supplierID})
-        dispatch({type:"SET_ACTIVITY_COST_VALUE", data : res.data.costValue})
+        dispatch({type:GET_ACTIVITY_RATE, data: res.data})
+        dispatch({type:SET_ACTIVITY_SUPPLIER, data : data.supplierID})
+        dispatch({type:SET_ACTIVITY_COST_VALUE, data : res.data.costValue})
         }
         
       })
@@ -88,7 +94,7 @@ export function SubmitActivity(token,_data){
       data: _data,
     })
       .then((res) => {
-          dispatch({ type: "CLEAR_ACTIVITY" });
+          dispatch({ type: CLEAR_ACTIVITY });
           dispatch(GetActivityTypeOpt(token));
         
       })

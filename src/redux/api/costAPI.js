@@ -1,4 +1,10 @@
 import axios from 'axios'
+import {
+    GET_COSTS_DOORSTAFF_DAILY, GET_COSTS_DOORSTAFF_WEEKLY,
+    GET_COSTS_DOORSTAFF_MONTHLY, GET_COSTS_ACTIVITY_DAILY,
+    GET_COSTS_ACTIVITY_WEEKLY, GET_COSTS_ACTIVITY_MONTHLY,
+
+} from "../types";
 
 export function GetCosts(token, date, system) {
     let summaryCode = "D"
@@ -7,22 +13,24 @@ export function GetCosts(token, date, system) {
             .then((res) => {
                 switch (system) {
                     case "S":
-                        dispatch({ type: "GET_DOORSTAFF_DAILY", data: res.data.summaryRecords })
+                        dispatch({ type: GET_COSTS_DOORSTAFF_DAILY, data: res.data.summaryRecords })
                         break;
                     case "A":
-                        dispatch({ type: "GET_COSTS_DAILY", data: res.data.summaryRecords })
+                        dispatch({ type: GET_COSTS_ACTIVITY_DAILY, data: res.data.summaryRecords })
                         break;
+                    default: break;
                 }
                 summaryCode = "W"
             })
             .then(() => GetByParameter(token, date, summaryCode, system).then((res) => {
                 switch (system) {
                     case "S":
-                        dispatch({ type: "GET_DOORSTAFF_WEEKLY", data: res.data.summaryRecords })
+                        dispatch({ type: GET_COSTS_DOORSTAFF_WEEKLY, data: res.data.summaryRecords })
                         break;
                     case "A":
-                        dispatch({ type: "GET_COSTS_WEEKLY", data: res.data.summaryRecords })
+                        dispatch({ type: GET_COSTS_ACTIVITY_WEEKLY, data: res.data.summaryRecords })
                         break;
+                    default: break;
                 }
                 summaryCode = "M"
             }))
@@ -30,11 +38,12 @@ export function GetCosts(token, date, system) {
                 GetByParameter(token, date, summaryCode, system).then((res) => {
                     switch (system) {
                         case "S":
-                            dispatch({ type: "GET_DOORSTAFF_MONTHLY", data: res.data.summaryRecords })
+                            dispatch({ type: GET_COSTS_DOORSTAFF_MONTHLY, data: res.data.summaryRecords })
                             break;
                         case "A":
-                            dispatch({ type: "GET_COSTS_MONTHLY", data: res.data.summaryRecords })
+                            dispatch({ type: GET_COSTS_ACTIVITY_MONTHLY, data: res.data.summaryRecords })
                             break;
+                        default: break;
                     }
                 })
             )

@@ -1,7 +1,8 @@
 import s from "./Home.module.scss";
 import { Summary } from "./Summary/Summary";
-import { DoorstaffTable } from "../Doorstaff/DoorstaffTable/DoorstaffTable"
+
 import { ActivityTable } from "../Activity/ActivityTable/ActivityTable";
+import { Current } from "../Doorstaff/Current/Current";
 
 export const Home = () => (
   <div className={s.container}>
@@ -13,7 +14,7 @@ export const Home = () => (
       <Summary></Summary>
       <div>
         <header><h2>Doorstaff onsite</h2></header>
-        <DoorstaffTable ></DoorstaffTable>
+        <Current ></Current>
       </div>
       <div>
         <header><h2>Activity list</h2></header>

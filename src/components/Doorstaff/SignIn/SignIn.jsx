@@ -3,187 +3,87 @@ import s from "./SignIn.module.scss";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { SetDoorStaff} from '../../../redux/api/doorstaffAPI'
+import { GetDoorstaffPositions, GetDoorstaffRates, GetDoorstaffSuppliers, SetDoorStaff } from '../../../redux/api/doorstaffAPI'
 import { ClearSiaData } from "../../../redux/actions";
 
 export const SignIn = (props) => {
   const dispatch = useDispatch();
-  
 
-  const token = useSelector((state) => state.userReducer.user.access_token);
-  const errorMessage = useSelector((state)=> state.siaReducer.errorMessage)
+  const token = useSelector((state) => state.userReducer.user);
+  const errorMessage = useSelector((state) => state.siaReducer.errorMessage)
 
   const headers = {
-    Authorization: "Bearer " + token,
+    Authorization: "Bearer " + token.access_token,
     "Content-Type": "application/x-www-form-urlencoded",
   };
   const doorstaffData = useSelector((state) => state.siaReducer.doorstaff);
 
-  const [name, setName] = useState();
-  const [secondName, setSecondName] = useState();
+  const options = useSelector((state => state.siaReducer.options));
 
-  const [storedSuppliers, setStorredSuppliers] = useState([]);
-  const [supplier, setSupplier] = useState({});
+  const supplier = useSelector(state => state.siaReducer.supplier)
+  const position = useSelector(state => state.siaReducer.position)
+  const rate = useSelector(state => state.siaReducer.rate)
 
-  const [storedPositions, setStoredPositions] = useState([]);
-  const [position, setPosition] = useState({});
+  const date = useSelector(state => state.siaReducer.date)
+  const time = useSelector(state => state.siaReducer.time)
 
-  const [storedRates, setStoredRates] = useState([]);
-  const [rate, setRate] = useState({});
-
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
-
-  const [time, setTime] = useState(
-    new Date().toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    })
-  );
-
-  let data = {}
-
-
-  //GET NAME
   useEffect(() => {
-    //GET SUPPLIER
-    if (doorstaffData.staffId) {
-      setName(doorstaffData.firstName);
-      setSecondName(doorstaffData.lastName);
-      axios
-        .get(
-          "https://testapi.etrinity.services/TrinityWebApi/api/Activity/LookupSuppliers/" +
-          doorstaffData.position,
-          {
-            headers: headers,
-          }
-        )
-        .then((res) => {
-          setStorredSuppliers(res.data.suppliers);
-          setSupplier(res.data.suppliers[0]);
-        })
-        .catch((e) => console.log("no supplier ID"));
+    if (doorstaffData.staffId)
+      dispatch(GetDoorstaffPositions(headers))
+  }, [doorstaffData.staffId])
 
-      //GET POSITIONS
-      axios
-        .get(
-          "https://testapi.etrinity.services/TrinityWebApi/api/Activity/LookupPositions",
-          {
-            headers: headers,
-          }
-        )
-        .then((res) => {
-          setStoredPositions(res.data.position);
-          setPosition(res.data.position[0]);
-        })
-        .catch((e) => console.log("no positions available"));
-    }
-
-  }, [doorstaffData.staffId]);
+  useEffect(() => {
+    if (position !== null)
+      dispatch(GetDoorstaffSuppliers(headers, position.positionId))
+  }, [position])
 
   //GET RATE
   useEffect(() => {
-    if (position.positionId && supplier.supplierId)
-      axios
-        .get(
-          "https://testapi.etrinity.services/TrinityWebApi/api/Activity/LookupRates/" +
-          position.positionId +
-          "/" +
-          supplier.supplierId +
-          "/" +
-          new Date(date).getTime(),
-          {
-            headers: headers,
-          }
-        )
-        .then((res) => {
-          setStoredRates(res.data.rates);
-          setRate(res.data.rates[0]);
-          console.log(date)
-        })
-        .catch((e) => {
-          
-        });
-
-  }, [position.positionId, supplier.supplierId]);
+    if (position !== null && supplier !== null)
+      dispatch(GetDoorstaffRates(position.positionId, supplier.supplierId, date, headers))
+  }, [position, supplier]);
 
   function Submit() {
-    if (rate.rateGroupId) {
-      data = {
+    if (rate !== null) {
+      const data = {
         staffId: doorstaffData.staffId,
         staffName: doorstaffData.firstName + " " + doorstaffData.lastName,
         positionId: parseInt(position.positionId),
         position: position.positionName,
-        locationId: token.locationId,
-        supplierId: supplier.supplierId,
+        locationId: parseInt(token.locationId),
+        supplierId: parseInt(supplier.supplierId),
         supplierName: supplier.supplierName,
         startTime: date + "T" + time + ":00.7826209+00:00",
-        rateGroupId: rate.rateGroupId,
+        rateGroupId: rate,
+
       }
-      dispatch(SetDoorStaff(token,data))
-      Clear()
+      dispatch(SetDoorStaff(token.access_token, data))
     }
-
   }
 
-  function Clear() {
-    setStoredRates([])
-    setStoredPositions([])
-    setStorredSuppliers([])
-    setPosition({})
-    setSupplier({})
-    setName('')
-    setSecondName('')
-    setRate('')
-    dispatch(ClearSiaData())
-  }
-
-  function SetSupplier(e) {
-    let data = {
-      supplierId: e.target.value,
-      supplierName: e.target.options[e.target.selectedIndex].innerHTML,
-    };
-    setSupplier(data);
-  }
-
-  function SetPosition(e) {
-    const data = {
-      positionId: e.target.value,
-      positionName: e.target.options[e.target.selectedIndex].innerHTML,
-    };
-    setPosition(data);
-  }
-
-  function SetRate(e) {
-    const data = {
-      rateGroupId: e.target.value,
-      rateGroupName: e.target.options[e.target.selectedIndex].innerHTML,
-    };
-    setRate(data);
-  }
   return (
     <div className={s.container}>
       <form onSubmit={(e) => e.preventDefault()}>
         <div className={s.f_name}>
           <label htmlFor="first_name">FIRST NAME</label>
-          <input type="text" name="first_name" value={name || ""} readOnly />
+          <input type="text" name="first_name" value={doorstaffData.firstName || ""} readOnly />
         </div>
-       
+
         <div className={s.l_name}>
           <label htmlFor="last_name">LAST NAME</label>
           <input
             type="text"
             name="last_name"
-            value={secondName || ""}
+            value={doorstaffData.lastName || ""}
             readOnly
           />
         </div>
 
         <div className={s.position}>
           <label htmlFor="position">POSITION</label>
-          <select name="position" id="position" onChange={SetPosition}>
-            {storedPositions
-              ? storedPositions.map((e) => (
+          <select name="position" id="position" onChange={(e) => { dispatch({ type: "SET_DOORSTAFF_POSITION", data: { positionId: e.target.value, positionName: e.target.options[e.target.selectedIndex].text } }) }}>
+            {options.positions.length > 0
+              ? options.positions.map((e) => (
                 <option key={e.positionId} value={e.positionId}>
                   {e.positionName}
                 </option>
@@ -194,9 +94,9 @@ export const SignIn = (props) => {
 
         <div className={s.supplier}>
           <label htmlFor="supplier">SUPPLIER</label>
-          <select name="supplier" id="supplier" onChange={SetSupplier}>
-            {storedSuppliers
-              ? storedSuppliers.map((e) => (
+          <select name="supplier" id="supplier" onChange={(e) => { dispatch({ type: "SET_DOORSTAFF_SUPPLIER", data: { supplierId: e.target.value, supplierName: e.target.options[e.target.selectedIndex].text } }) }}>
+            {options.suppliers.length > 0
+              ? options.suppliers.map((e) => (
                 <option key={e.supplierId} value={e.supplierId}>
                   {e.supplierName}
                 </option>
@@ -207,9 +107,9 @@ export const SignIn = (props) => {
 
         <div className={s.rate}>
           <label htmlFor="rate">RATE</label>
-          <select name="rate" id="rate" onChange={SetRate}>
-            {storedRates
-              ? storedRates.map((e) => (
+          <select name="rate" id="rate" onChange={(e) => dispatch({ type: "SET_DOORSTAFF_RATE", data: e.target.value })}>
+            {options.rates.length > 0
+              ? options.rates.map((e) => (
                 <option key={e.rateGroupId} value={e.rateGroupId}>
                   {e.rateGroupName}
                 </option>
@@ -226,7 +126,7 @@ export const SignIn = (props) => {
             id="date_started"
             value={date}
             onChange={(e) => {
-              setDate(e.target.value);
+              dispatch({ type: "SET_DOORSTAFF_START_DATE", data: e.target.value })
             }}
           />
         </div>
@@ -239,14 +139,14 @@ export const SignIn = (props) => {
             id="start_time"
             value={time}
             onChange={(e) => {
-              setTime(e.target.value);
+              dispatch({ type: "SET_DOORSTAFF_START_TIME", data: e.target.value })
             }}
             required
           />
         </div>
 
         <div className={s.buttons}>
-          <button className={s.clear} onClick={Clear}>
+          <button className={s.clear} onClick={()=>dispatch(ClearSiaData())}>
             CLEAR
           </button>
           <button className={s.submit} onClick={Submit}>
@@ -254,12 +154,12 @@ export const SignIn = (props) => {
           </button>
         </div>
       </form>
-      {errorMessage.length>0 ? <div className={s.error_message}>
-         {errorMessage}
-         </div> : null }
-      
+      {errorMessage.length > 0 ? <div className={s.error_message}>
+        {errorMessage}
+      </div> : null}
+
     </div>
 
-    
+
   );
 };

@@ -7,7 +7,7 @@ import {
   GetSupplierOpt,
   SubmitActivity
 } from "../../../redux/api/activityApi";
-import axios from "axios";
+import { SET_ACTIVITY_COST_VALUE, SET_ACTIVITY_HOURS_WORKED, SET_ACTIVITY_TYPE } from "../../../redux/types";
 
 export const AddActivity = () => {
   const activityOpt = useSelector(
@@ -51,7 +51,7 @@ export const AddActivity = () => {
     } else {
       setNoteIsRequired(false);
     }
-    dispatch({ type: "SET_ACTIVITY_VALUE", costValue });
+    dispatch({ type: SET_ACTIVITY_COST_VALUE, costValue });
   }
 
   function FirstSubmit(e) {
@@ -94,7 +94,7 @@ export const AddActivity = () => {
             name="type"
             onChange={(e) => {
               dispatch(GetSupplierOpt(token, e.target.value));
-              dispatch({ type: "SET_ACTIVITY_TYPE", data: e.target.value });
+              dispatch({ type: SET_ACTIVITY_TYPE, data: e.target.value });
               console.log(e.target.value);
             }}
           >
@@ -178,7 +178,7 @@ export const AddActivity = () => {
             value={hoursWorked ? hoursWorked : ""}
             onChange={(e) => {
               dispatch({
-                type: "SET_ACTIVITY_HOURS_WORKED",
+                type:SET_ACTIVITY_HOURS_WORKED,
                 data: e.target.value,
               });
             }}
@@ -193,7 +193,7 @@ export const AddActivity = () => {
             value={costValue ? costValue : ""}
             onChange={(e) => {
               dispatch({
-                type: "SET_ACTIVITY_COST_VALUE",
+                type: SET_ACTIVITY_COST_VALUE,
                 data: e.target.value,
               });
             }}
