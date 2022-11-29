@@ -1,4 +1,5 @@
 import axios from "axios";
+import { baseUrl } from "../../contexts/baseUrl";
 import { SetDoorStaffList, ClearSiaData } from "../actions";
 import { SET_DOORSTAFF_ERROR_MESSAGE, CLEAR_DOORSTAFF_ERROR_MESSAGE } from "../types";
 import { SET_SIA_ERROR_MESSAGE, CLEAR_SIA_ERROR_MESSAGE } from "../types";
@@ -8,7 +9,7 @@ export function DeleteDoorStaff(data, token, signOutTIme) {
   return function (dispatch) {
     return axios({
       method: "POST",
-      url: "https://testapi.etrinity.services/TrinityWebApi/api/Activity/SignOffMembers",
+      url: `${baseUrl}/Activity/SignOffMembers`,
       data: {
         staffLogin: [
           {
@@ -50,7 +51,7 @@ export function GetDoorstaffPositions(headers) {
   return function (dispatch) {
     return axios
       .get(
-        "https://testapi.etrinity.services/TrinityWebApi/api/Activity/LookupPositions",
+        `${baseUrl}/Activity/LookupPositions`,
         {
           headers: headers,
         }
@@ -68,7 +69,7 @@ export function GetDoorstaffSuppliers(headers, positionId) {
   return function (dispatch) {
     return axios
       .get(
-        "https://testapi.etrinity.services/TrinityWebApi/api/Activity/LookupSuppliers/" +
+        `${baseUrl}/Activity/LookupSuppliers/` +
           positionId,
         {
           headers: headers,
@@ -86,7 +87,7 @@ export function GetDoorstaffRates(position,supplier,date,headers){
   return function(dispatch){
     return axios
     .get(
-      "https://testapi.etrinity.services/TrinityWebApi/api/Activity/LookupRates/" +
+      `${baseUrl}/Activity/LookupRates/` +
       position +
       "/" +
       supplier +
@@ -113,7 +114,7 @@ export function GetDoorstaff(token) {
   return function (dispatch) {
     return axios
       .get(
-        "https://testapi.etrinity.services/TrinityWebApi/api/Activity/LookupCurrentMembers",
+        `${baseUrl}/Activity/LookupCurrentMembers`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -134,7 +135,7 @@ export function SetDoorStaff(token, data) {
   return function (dispatch) {
     return axios({
       method: "POST",
-      url: "https://testapi.etrinity.services/TrinityWebApi/api/Activity/SignOnMember",
+      url: `${baseUrl}/Activity/SignOnMember`,
       data: data,
       headers: {
         Authorization: "Bearer " + token,

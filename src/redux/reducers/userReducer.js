@@ -4,18 +4,13 @@ const initialState = {
 };
 
 export const userReducer = (state = initialState, action) => {
+  console.log('user reducer', state)
   switch (action.type) {
     case "LOGIN":
       return {
         ...state,
         user: action.data,
         isLoggedIn:true
-      };
-    case "LOGOFF":
-      return {
-        ...state,
-        user: null,
-        isLoggedIn:false
       };
     default:
       return state;

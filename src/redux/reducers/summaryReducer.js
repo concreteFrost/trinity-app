@@ -2,8 +2,8 @@ import moment from 'moment';
 
 const initialState = {
     doorstaff: {
-        daily:{},
-        weekly:{},
+        daily:[],
+        weekly:[],
     },
 
     date: new Date().toISOString()

@@ -1,3 +1,23 @@
-header{
-    font-family: "J";
+header {
+  font-family: "J";
+}
+
+.tail_spin {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.tail_spin_container{
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 200vw;
+  height: 200vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  overflow-y:visible;
+  transform: translate(-50%, -50%);
+  position: fixed;
 }

@@ -2,14 +2,15 @@ import s from "./NavbarList.module.scss";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { UserLogOff } from "../../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 export const NavbarList = (props) => {
-
-
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const Logout=()=>{
-    dispatch(UserLogOff())
+  function Logout() {
+     dispatch(UserLogOff());
+     localStorage.removeItem('user')
+    navigate('/login')
   }
   return (
     <div className={s.navbar_list}>
@@ -49,7 +50,7 @@ export const NavbarList = (props) => {
       >
         AUTHORISE
       </NavLink>
-      <button onClick={Logout} >LOGOUT</button>
+      <button onClick={Logout}>LOGOUT</button>
     </div>
   );
 };

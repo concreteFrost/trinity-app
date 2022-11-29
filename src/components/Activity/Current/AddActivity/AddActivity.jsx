@@ -6,8 +6,8 @@ import {
   GetRate,
   GetSupplierOpt,
   SubmitActivity
-} from "../../../redux/api/activityApi";
-import { SET_ACTIVITY_COST_VALUE, SET_ACTIVITY_HOURS_WORKED, SET_ACTIVITY_TYPE } from "../../../redux/types";
+} from "../../../../redux/api/activityApi";
+import { SET_ACTIVITY_COST_VALUE, SET_ACTIVITY_HOURS_WORKED, SET_ACTIVITY_TYPE } from "../../../../redux/types";
 
 export const AddActivity = () => {
   const activityOpt = useSelector(
@@ -54,7 +54,7 @@ export const AddActivity = () => {
     dispatch({ type: SET_ACTIVITY_COST_VALUE, costValue });
   }
 
-  function FirstSubmit(e) {
+  async function FirstSubmit(e) {
     e.preventDefault();
     const activityID = e.target[0].value;
     const supplierID = e.target[1].value;
@@ -64,7 +64,10 @@ export const AddActivity = () => {
       supplierID: supplierID,
       time: _time,
     };
-    dispatch(GetRate(token, data));
+
+    await dispatch({type:"SHOW_LOADER"})
+    await dispatch(GetRate(token, data));
+    await dispatch({type:"HIDE_LOADER"})
   }
 
   function SecondSubmit(e) {
@@ -95,7 +98,6 @@ export const AddActivity = () => {
             onChange={(e) => {
               dispatch(GetSupplierOpt(token, e.target.value));
               dispatch({ type: SET_ACTIVITY_TYPE, data: e.target.value });
-              console.log(e.target.value);
             }}
           >
             {activityOpt.length > 0

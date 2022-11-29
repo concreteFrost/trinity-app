@@ -1,7 +1,7 @@
 import s from "./Home.module.scss";
 import { Summary } from "./Summary/Summary";
 
-import { ActivityTable } from "../Activity/ActivityTable/ActivityTable";
+import { ActivityTable } from "../Activity/Current/ActivityTable/ActivityTable";
 import { Current } from "../Doorstaff/Current/Current";
 
 export const Home = () => (

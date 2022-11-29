@@ -11,25 +11,23 @@ import { Login } from "./components/Login/Login";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { useSelector } from "react-redux";
 import { ModalMessage } from "./components/Modal/ModalMessage/ModalMessage";
-
-
-
+import { TailSpin } from "react-loader-spinner";
+import { useState, useEffect } from "react";
 
 function App() {
-  
-  const user = useSelector((state)=> state.userReducer)
+
+  const isLoggedIn = useSelector(state=> state.userReducer.isLoggedIn)
+  const isLoading = useSelector((state) => state.loaderReducer.isLoading);
+  const [showNav,setShowNav] = useState(false);
+
   return (
     <div className={s.container}>
-          <ModalMessage></ModalMessage>
-      {user.isLoggedIn ? <Navbar className={s.nav} /> : null}
+      <ModalMessage></ModalMessage>
+      { isLoggedIn === true ? <Navbar className={s.nav} /> : null}
       {/* <HeaderImage className={s.logo} /> */}
       <Routes>
-        <Route
-          exact
-          path="/login"
-          element={<Login/>}
-        ></Route>
-        <Route exact path="/" element={<Navigate to="/login" />}></Route>
+        <Route exact path="/login" element={<Login />}></Route>
+        <Route exact path="/" element={<Navigate to="/login"/>}></Route>
         <Route
           path="/home"
           element={
@@ -79,7 +77,13 @@ function App() {
           }
         ></Route>
       </Routes>
-
+      {isLoading === true ? (
+        <div className={s.tail_spin_container}>
+          <div className={s.tail_spin}>
+            <TailSpin width={150} height={150} color={"#42aaf5"}></TailSpin>
+          </div>{" "}
+        </div>
+      ) : null}
     </div>
   );
 }

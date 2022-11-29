@@ -1,0 +1,1 @@
+export  const baseUrl = "https://testapi.etrinity.services/TrinityWebAPI/api"

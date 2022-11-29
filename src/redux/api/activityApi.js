@@ -1,4 +1,5 @@
 import axios from "axios";
+import { baseUrl } from "../../contexts/baseUrl";
 import {
   GET_ACTIVITY_TYPE_OPT, GET_ACTIVITY_SUPPLIER_OPT,
   GET_ACTIVITY_RATE, SET_ACTIVITY_TYPE,
@@ -10,7 +11,7 @@ export function GetActivityTypeOpt(token) {
   return function (dispatch) {
     return axios
       .get(
-        `https://testapi.etrinity.services/TrinityWebAPI/api/CentralCosts/LookupCostGroups`,
+        `${baseUrl}/CentralCosts/LookupCostGroups`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -31,7 +32,7 @@ export function GetSupplierOpt(token, activityId) {
   return function (dispatch) {
     return axios
       .get(
-        `https://testapi.etrinity.services/TrinityWebAPI/api/CentralCosts/LookupSuppliers/` +
+        `${baseUrl}/CentralCosts/LookupSuppliers/` +
           activityId,
         {
           headers: {
@@ -52,7 +53,7 @@ export function GetSupplierOpt(token, activityId) {
 export function GetRate(token, data) {
   return function (dispatch) {
     return axios({
-      url: "https://testapi.etrinity.services/TrinityWebApi/api/CentralCosts/LookupRate",
+      url: `${baseUrl}/CentralCosts/LookupRate`,
       headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",
@@ -85,7 +86,7 @@ export function GetRate(token, data) {
 export function SubmitActivity(token,_data){
   return function (dispatch){
     return   axios({
-      url: "https://testapi.etrinity.services/TrinityWebApi/api/CentralCosts/CostEntry",
+      url: `${baseUrl}/CentralCosts/CostEntry`,
       headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",

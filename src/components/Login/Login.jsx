@@ -1,5 +1,5 @@
 import s from "./Login.module.scss";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -9,8 +9,11 @@ import { SetLoginDetails } from "../../redux/actions";
 export const Login = () => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [clientID, setClientID] = useState(localStorage.getItem("clientID"));
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
   useEffect(() => {
     if (errorMessage) {
       setTimeout(() => {
@@ -28,11 +31,8 @@ export const Login = () => {
         localStorage.setItem("clientID", res.data.message);
         setClientID(res.data.message);
       });
-
-      console.log('the new client id was generated')
   }
 
-  
   function submitLogin(e) {
     e.preventDefault();
     axios({
@@ -48,12 +48,14 @@ export const Login = () => {
       },
     })
       .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.data));
         dispatch(SetLoginDetails(res.data));
         navigate("/home");
+        console.log(JSON.parse(localStorage.getItem("user")));
       })
       .catch((e) => {
-        setErrorMessage(true)
-        console.log(e)
+        setErrorMessage(true);
+        console.log(e);
       });
   }
   return (

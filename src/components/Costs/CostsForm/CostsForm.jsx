@@ -5,6 +5,7 @@ import { TailSpin } from "react-loader-spinner";
 import { SET_COSTS_DATE } from "../../../redux/types";
 
 
+
 export const CostsForm = () => {
   const dispatch = useDispatch();
 
@@ -15,10 +16,14 @@ export const CostsForm = () => {
     dispatch({ type: SET_COSTS_DATE, data: e.target.value })
   }
 
-  function SubmitForm(e) {
+  async function SubmitForm(e) {
     e.preventDefault();
-    dispatch(GetCosts(token, date, "S"))
-    dispatch(GetCosts(token, date, "A"))
+
+    dispatch({type:"SHOW_LOADER"})
+    await dispatch(GetCosts(token, date))
+    await dispatch({type:"HIDE_LOADER"})
+  
+   
   }
   return (
     <div className={s.container}>

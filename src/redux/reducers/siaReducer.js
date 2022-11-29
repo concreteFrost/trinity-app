@@ -26,7 +26,6 @@ const initialState = {
 };
 
 export const siaReducer = (state = initialState, action) => {
-  console.log("SIA REDUCER", state)
   switch (action.type) {
     case SET_SIA_NUMBER:
       return {
