@@ -1,19 +1,33 @@
 import s from "./Login.module.scss";
-import { json, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { GetToken } from "../../redux/api/loginApi";
 import { SetLoginDetails } from "../../redux/actions";
+import axios from "axios";
+import { baseUrl } from "../../contexts/baseUrl";
 
 export const Login = () => {
   const [errorMessage, setErrorMessage] = useState(false);
-  const [clientID, setClientID] = useState(localStorage.getItem("clientID"));
-
-  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  let clientID = localStorage.getItem("clientID");
+  let user = JSON.parse(localStorage.getItem('user'))
 
-
+  if (!clientID){
+    axios
+    .get(
+        baseUrl+"/Auth/GenerateUniqueReference"
+    )
+    .then((res) => {
+        console.log(res.data)
+        localStorage.setItem("clientID", res.data.message);
+        clientID = res.data.message;
+    });
+  } 
+      
   useEffect(() => {
     if (errorMessage) {
       setTimeout(() => {
@@ -22,41 +36,22 @@ export const Login = () => {
     }
   }, [errorMessage]);
 
-  if (!clientID) {
-    axios
-      .get(
-        "https://testapi.etrinity.services/TrinityWebApi/api/Auth/GenerateUniqueReference"
-      )
-      .then((res) => {
-        localStorage.setItem("clientID", res.data.message);
-        setClientID(res.data.message);
-      });
-  }
+  useEffect(() => {
+    if (isLoggedIn)
+      navigate('/home')
+
+    if (user) {
+      if (new Date() < new Date(user['.expires']))
+        dispatch(SetLoginDetails(user))
+    }
+   
+  }, [isLoggedIn])
+
 
   function submitLogin(e) {
     e.preventDefault();
-    axios({
-      method: "POST",
-      url: "https://testapi.etrinity.services/TrinityWebApi/api/Login",
-      data: {
-        username: e.target[0].value,
-        client_id: clientID,
-        grant_type: "password",
-      },
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    })
-      .then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.data));
-        dispatch(SetLoginDetails(res.data));
-        navigate("/home");
-        console.log(JSON.parse(localStorage.getItem("user")));
-      })
-      .catch((e) => {
-        setErrorMessage(true);
-        console.log(e);
-      });
+    dispatch(GetToken(e.target[0].value, clientID))
+    console.log(clientID)
   }
   return (
     <div className={s.container}>

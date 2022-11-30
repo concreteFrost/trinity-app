@@ -4,7 +4,7 @@ const initialState = {
 };
 
 export const userReducer = (state = initialState, action) => {
-  console.log('user reducer', state)
+
   switch (action.type) {
     case "LOGIN":
       return {
@@ -12,6 +12,7 @@ export const userReducer = (state = initialState, action) => {
         user: action.data,
         isLoggedIn:true
       };
+    
     default:
       return state;
   }

@@ -97,11 +97,43 @@ export function SubmitActivity(token,_data){
       .then((res) => {
           dispatch({ type: CLEAR_ACTIVITY });
           dispatch(GetActivityTypeOpt(token));
-        
+          dispatch(GetActivity(token))
       })
       .catch((e) => {
         console.log(e)
         dispatch({type:"SHOW_MODAL_MESSAGE", data: e.message})
       });
+  }
+}
+
+export function GetActivity(token, dateFrom, dateTo, activityType){
+  const today = new Date()
+  const yesterday = new Date(new Date().setDate(today.getDate() - 1));
+  return function(dispatch){
+    return  axios({
+      url: "https://testapi.etrinity.services/TrinityWebApi/api/Report/CostReview",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      data: {
+        dateFrom: dateFrom,
+        dateTo: dateTo
+      },
+    })
+      .then((res) => {
+
+        switch(activityType){
+          case "C":dispatch({ type: "GET_CURRENT_ACTIVITY", data: res.data.records })
+          break;
+          case "R":dispatch({ type: "GET_RECENT_ACTIVITY", data: res.data.records })
+          break;
+          case "D":dispatch({ type: "GET_DISPUTED_ACTIVITY", data: res.data.records })
+          break;
+
+        }
+        
+      })
   }
 }

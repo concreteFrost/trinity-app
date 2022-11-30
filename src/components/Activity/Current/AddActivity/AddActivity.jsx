@@ -23,7 +23,6 @@ export const AddActivity = () => {
   const costGroupId = useSelector(
     (state) => state.activityReducer.activityType
   );
-  console.log(token)
 
   const costValue = useSelector((state) => state.activityReducer.costValue);
   const hoursWorked = useSelector((state) => state.activityReducer.hoursWorked);

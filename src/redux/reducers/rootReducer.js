@@ -7,18 +7,20 @@ import { combineReducers } from "redux";
 import { summaryReducer } from "./summaryReducer";
 import { modalMessageReducer } from "./modalMessageReducer";
 import { loaderReducer } from "./loaderReducer";
+import { getActivityReducer } from "./getActivityReducer";
 
 
 const appReducer = combineReducers({
   userReducer,siaReducer,doorstaffOnSiteReducer,
-  costsReducer, activityReducer, summaryReducer,
+  costsReducer, activityReducer, getActivityReducer, summaryReducer,
   modalMessageReducer, loaderReducer
 })
 
 export const rootReducer = (state, action) => {
-  console.log('app reducer',state)
   if(action.type === 'LOGOFF'){
-    return appReducer(undefined, action)
+    localStorage.removeItem('user')
+    return appReducer(undefined, action) 
+    
   }
   return appReducer(state, action)
 }

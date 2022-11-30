@@ -9,25 +9,41 @@ import { Search } from "./components/Search/Search";
 import { Authorise } from "./components/Authorise/Authorise";
 import { Login } from "./components/Login/Login";
 import ProtectedRoute from "./utils/ProtectedRoute";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ModalMessage } from "./components/Modal/ModalMessage/ModalMessage";
 import { TailSpin } from "react-loader-spinner";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function App() {
 
-  const isLoggedIn = useSelector(state=> state.userReducer.isLoggedIn)
+  const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn)
+  const location = useLocation();
   const isLoading = useSelector((state) => state.loaderReducer.isLoading);
-  const [showNav,setShowNav] = useState(false);
+  let user = JSON.parse(localStorage.getItem('user'))
+  const  dispatch = useDispatch()
+ 
+
+
+  //LOGOFF AUTOMATICALLY IF TOKEN EXPIRES
+  useEffect(() => {
+    if(user)
+    if (new Date() > new Date(user['.expires'])){
+      dispatch({type:"LOGOFF"})
+      console.log('hehehoiefhpwehfpewohf')
+    }
+      
+  }, [location])
+
 
   return (
     <div className={s.container}>
       <ModalMessage></ModalMessage>
-      { isLoggedIn === true ? <Navbar className={s.nav} /> : null}
+      {isLoggedIn === true ? <Navbar className={s.nav} /> : null}
       {/* <HeaderImage className={s.logo} /> */}
       <Routes>
         <Route exact path="/login" element={<Login />}></Route>
-        <Route exact path="/" element={<Navigate to="/login"/>}></Route>
+        <Route exact path="/" element={<Navigate to="/login" />}></Route>
         <Route
           path="/home"
           element={

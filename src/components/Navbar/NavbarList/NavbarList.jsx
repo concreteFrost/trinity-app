@@ -9,7 +9,7 @@ export const NavbarList = (props) => {
   const dispatch = useDispatch();
   function Logout() {
      dispatch(UserLogOff());
-     localStorage.removeItem('user')
+     
     navigate('/login')
   }
   return (
