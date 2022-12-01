@@ -18,7 +18,7 @@ const initialState = {
         monthly: []
     },
 
-    date: new Date().toISOString()
+    date: new Date().toISOString().split("T")[0]
 
 };
 

@@ -1,7 +1,6 @@
 import s from "./CostsForm.module.scss"
 import { useDispatch, useSelector } from "react-redux";
 import { GetCosts } from "../../../redux/api/costAPI";
-import { TailSpin } from "react-loader-spinner";
 import { SET_COSTS_DATE } from "../../../redux/types";
 
 
@@ -18,11 +17,9 @@ export const CostsForm = () => {
 
   async function SubmitForm(e) {
     e.preventDefault();
-
     dispatch({type:"SHOW_LOADER"})
     await dispatch(GetCosts(token, date))
     await dispatch({type:"HIDE_LOADER"})
-  
    
   }
   return (

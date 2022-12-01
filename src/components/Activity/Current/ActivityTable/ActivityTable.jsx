@@ -3,9 +3,45 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { GetActivity } from "../../../../redux/api/activityApi";
+import { TableTemplate } from "../../../TableTemplate/TableTemplate";
 
 
 export const ActivityTable = (props) => {
+
+  const tableHeader = [
+    {
+      Header: "TIME",
+      accessor:"startTime",
+      Cell: ({ value }) => {
+        return value.split('T')[0];
+      }
+    },
+    {
+      Header: "HOURS WORKED",
+      accessor:'hoursWorked'
+    },
+    {
+      Header: "COST",
+      accessor:"costValue"
+    },
+    {
+      Header: "SUPPLIER",
+      accessor:"supplierName"
+    },
+    {
+      Header: "ANALYSIS",
+      accessor:"staffGroupName"
+    },
+    {
+      Header: "STATUS LEVEL",
+      accessor:"paymentStatusDesc"
+    },
+    {
+      Header: "NOTE",
+      accessor:"description"
+    },
+
+    ,]
 
   const token = useSelector((state) => state.userReducer.user.access_token);
   const currentActivity = useSelector(s => s.getActivityReducer.current)
@@ -20,36 +56,8 @@ export const ActivityTable = (props) => {
 
   return (
     <div className={s.container}>
-      <table className={s.doorstaff_table}>
-        <thead>
-          <tr>
-            <th>TIME</th>
-            <th>HOURS WORKED</th>
-            <th>COST</th>
-            <th>SUPPLIER</th>
-            <th>ANALYSIS</th>
-            <th>STATUS LEVEL</th>
-            <th>NOTE</th>
-            {props.isVisible ? <th>EDIT</th> : null}
-          </tr>
-        </thead>
-        <tbody>
-          {currentActivity.length > 0 ? currentActivity.map((e) =>
+         <TableTemplate columns={tableHeader} data={currentActivity}></TableTemplate>
 
-            <tr key={e.centralCostId}>
-              <td>{e.startTime.split("T").join('/')}</td>
-            
-              <td>{e.hoursWorked}</td>
-              <td>{e.costValue}</td>
-              <td>{e.supplierName}</td>
-              <td>{e.staffGroupName}</td>
-              <td>{e.paymentStatusDesc}</td>
-              <td>{e.description}</td>
-              <td><button>EDIT</button></td></tr>
-
-          ) : null}
-        </tbody>
-      </table>
     </div>
   );
 }

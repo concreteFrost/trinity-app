@@ -5,10 +5,3 @@
  @include home-page-container;
 }
 
-.doorstaff_table {
-    @include main-tables;
-     max-width: 1000px;
-    button{
-        background-color:$button-submit;
-    }
-}

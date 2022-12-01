@@ -1,6 +1,6 @@
 import { userReducer } from "./userReducer";
 import {siaReducer} from "./siaReducer";
-import { doorstaffOnSiteReducer } from "./doorstaffOnSiteReducer";
+import { doorstaffReducer } from "./doorstaffReducer";
 import { costsReducer } from "./costsReducer";
 import { activityReducer } from "./activityReducer";
 import { combineReducers } from "redux";
@@ -11,7 +11,7 @@ import { getActivityReducer } from "./getActivityReducer";
 
 
 const appReducer = combineReducers({
-  userReducer,siaReducer,doorstaffOnSiteReducer,
+  userReducer,siaReducer,doorstaffReducer,
   costsReducer, activityReducer, getActivityReducer, summaryReducer,
   modalMessageReducer, loaderReducer
 })

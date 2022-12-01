@@ -1,57 +1,99 @@
 import s from "./Recent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { GetDoorstaff, DeleteDoorStaff } from "../../../redux/api/doorstaffAPI";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { GET_RECENT_DOORSTAFF } from "../../../redux/types";
+import axios from "axios";
+import { TableTemplate } from "../../TableTemplate/TableTemplate";
 
 export const Recent = (props) => {
+  const tableHeader = [
+    {
+      Header: "NAME",
+      accessor:"staffName",
+    },
+    {
+      Header: "SUPPLIER",
+      accessor:'supplierName'
+    },
+    {
+      Header: "JOB",
+      accessor:"rateGroupName"
+    },
+    {
+      Header: "START TIME",
+      accessor:"start",
+      Cell: ({ value }) => {
+        return value.split('T').join('/');
+      }
+    },
+    {
+      Header: "END TIME",
+      accessor:"finish",
+      Cell: ({ value }) => {
+        return value.split('T').join('/');
+      }
+    },
+    {
+      Header: "APPROVAL LEVEL",
+      accessor:"status"
+    },
 
-  const token = useSelector((state) => state.userReducer.user);
+
+    ,]
+
+  const user = useSelector((state) => state.userReducer.user);
+
+  const recent = useSelector((state) => state.doorstaffReducer.recent);
+  const dispatch = useDispatch();
+    console.log(recent)
+  const [fDate, setFromDate] = useState(new Date().toISOString().split("T")[0]);
+  const [tDate, setToDate] = useState(new Date().toISOString().split("T")[0]);
+
+  function Submit(e) {
+    e.preventDefault()
+
+    const fromDate = new Date(e.target[0].value).toISOString();
+    const toDate = new Date(e.target[1].value).toISOString();
+
+    axios({
+      url: "https://testapi.etrinity.services/TrinityWebApi/api/Report/ActivityList",
+      headers: {
+        Authorization: "Bearer " + user.access_token,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      data: {
+        dateFrom: fromDate,
+        dateTo: toDate,
+        locationId: parseInt(user.locationId),
+        locationGroupId: 0,
+        supplierId: 0,
+        reference: 0,
+        paymentStatusId:0
+      },
+    })
+      .then((res) => {
+        dispatch({type: GET_RECENT_DOORSTAFF, data : res.data.reportRecord})
+      })
+  }
+
+  
 
   return (
     <div className={s.container}>
-      <form >
+      <form onSubmit={Submit}>
         <div>
           <label htmlFor="">FROM</label>
-          <input type="date" name="from-date" id="from-date" />
+          <input type="date" name="from-date" id="from-date" value={fDate} onChange={(e) => setFromDate(e.target.value)} />
         </div>
         <div>
           <label htmlFor="">TO</label>
-          <input type="date" name="to-date" id="to-date" />
+          <input type="date" name="to-date" id="to-date" value={tDate} onChange={(e) => setToDate(e.target.value)} />
         </div>
         <div className={s.view_btn}> <button>VIEW</button></div>
-
       </form>
-      <table className={s.doorstaff_table}>
-        <thead>
-          <tr>
-            <th>FIRST NAME</th>
-            <th>FIRST NAME</th>
-            <th>SUPPLIER</th>
-            <th>JOB ROLE</th>
-            <th>START TIME</th>
-            <th>END TIME</th>
-            <th>STATUS LEVEL</th>
-            <th>NOTES</th>
-            <th>PRINTS</th>
-            <th>PRINT</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Name</td>
-            <td>Name</td>
-            <td>Supplier name</td>
-            <td>Job Role name</td>
-            <td>---</td>
-            <td>---</td>
+      <TableTemplate columns={tableHeader} data={recent}></TableTemplate>
 
-            <td>Approved</td>
-            <td><button>VIEW</button></td>
-            <td>0</td>
-            <td><button>PRINT</button></td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   );
 };

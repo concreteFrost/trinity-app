@@ -1,0 +1,37 @@
+@import 'src/scss/mixins';
+@import 'src/scss/variables';
+
+
+.table_template{
+    @include main-tables;
+     max-width: 1000px;
+    button{
+        background-color:$button-submit;
+    }
+    
+}
+
+.footer{
+    button:disabled{
+        @include btn('red');
+        display:none;
+    }
+    button{
+        @include btn($button-submit)
+    }
+    input,select{
+        border-radius: 5px;
+    }
+    
+
+    background-color: rgb(235, 235, 235);
+    padding: 5px;
+    padding-bottom: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: $soft-shadow;
+    border-top: 1px solid rgb(194, 194, 194);
+
+    
+
+}

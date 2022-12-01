@@ -16,7 +16,7 @@ export const CostsTable = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.data.daily.length>0 ? props.data.daily.map((e) => { return <tr key={uuid()}><td>{e.staffGroupName}</td><td>{e.actualDetail}</td></tr> }) : null}
+                        {props.data.daily.length>0 ? props.data.daily.map((e) => { return <tr key={uuid()}><td>{e.staffGroupName}</td><td>{e.actualDetail}</td></tr> }) : <tr> <td colSpan={3}>Nothing to show...</td></tr>}
                     </tbody>
                 </table>
             </div>
@@ -31,7 +31,7 @@ export const CostsTable = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.data.weekly.length>0 ? props.data.weekly.map((e) => { return <tr key={uuid()}><td>{e.averageValue}</td><td>{e.actualDetail}</td></tr> }) : null}
+                        {props.data.weekly.length>0 ? props.data.weekly.map((e) => { return <tr key={uuid()}><td>{e.averageValue}</td><td>{e.actualDetail}</td></tr> }) : <tr> <td colSpan={3}>Nothing to show...</td></tr>}
                     </tbody>
                 </table></div>
 
@@ -45,7 +45,7 @@ export const CostsTable = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.data.monthly.length>0 ? props.data.monthly.map((e) => { return <tr key={uuid()}><td>{e.averageValue}</td><td>{e.actualDetail}</td></tr> }) : null}
+                        {props.data.monthly.length>0 ? props.data.monthly.map((e) => { return <tr key={uuid()}><td>{e.averageValue}</td><td>{e.actualDetail}</td></tr> }) : <tr> <td colSpan={3}>Nothing to show...</td></tr>}
                     </tbody>
                 </table></div>
 

@@ -4,13 +4,7 @@
 .container {
   @include home-page-container;
 
-  table {
-    @include main-tables;
-    input {
-      @include form-input;
-      
-    }
-  }
+
 
   form{
     @include form-template;

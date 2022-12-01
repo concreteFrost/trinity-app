@@ -4,13 +4,16 @@ import { GetDoorstaff, DeleteDoorStaff } from "../../../redux/api/doorstaffAPI";
 import { useEffect } from "react";
 
 export const Current = (props) => {
+
+  
+
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.userReducer.user);
   const doorstaff = useSelector(
-    (state) => state.doorstaffOnSiteReducer.doorstaff
+    (state) => state.doorstaffReducer.current
   );
-  const errorMessage = useSelector((state => state.doorstaffOnSiteReducer.errorMessage))
+  const errorMessage = useSelector((state => state.doorstaffReducer.errorMessage))
 
   useEffect(() => {
     dispatch(GetDoorstaff(token.access_token));
