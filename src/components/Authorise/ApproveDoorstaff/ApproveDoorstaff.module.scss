@@ -40,4 +40,14 @@
         }
     }
 
+    table{
+        .button_dispute{
+            @include btn($button-list)
+        }
+
+        .button_view{
+            @include btn($button-submit)
+        }
+    }
+
 }

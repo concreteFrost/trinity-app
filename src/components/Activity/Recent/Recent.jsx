@@ -44,7 +44,7 @@ export const Recent = (props) => {
     ,]
 
   const token = useSelector((state) => state.userReducer.user.access_token);
-
+    console.log(token)
   const recentActivity = useSelector(s => s.getActivityReducer.recent)
   const dispatch = useDispatch();
 

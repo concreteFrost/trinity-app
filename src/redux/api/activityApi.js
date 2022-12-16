@@ -107,8 +107,6 @@ export function SubmitActivity(token,_data){
 }
 
 export function GetActivity(token, dateFrom, dateTo, activityType){
-  const today = new Date()
-  const yesterday = new Date(new Date().setDate(today.getDate() - 1));
   return function(dispatch){
     return  axios({
       url: "https://testapi.etrinity.services/TrinityWebApi/api/Report/CostReview",
@@ -123,7 +121,6 @@ export function GetActivity(token, dateFrom, dateTo, activityType){
       },
     })
       .then((res) => {
-
         switch(activityType){
           case "C":dispatch({ type: "GET_CURRENT_ACTIVITY", data: res.data.records })
           break;

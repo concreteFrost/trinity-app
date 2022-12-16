@@ -8,11 +8,12 @@ import { summaryReducer } from "./summaryReducer";
 import { modalMessageReducer } from "./modalMessageReducer";
 import { loaderReducer } from "./loaderReducer";
 import { getActivityReducer } from "./getActivityReducer";
+import { authoriseReducer } from "./authoriseReducer";
 
 
 const appReducer = combineReducers({
   userReducer,siaReducer,doorstaffReducer,
-  costsReducer, activityReducer, getActivityReducer, summaryReducer,
+  costsReducer, activityReducer, getActivityReducer, authoriseReducer,summaryReducer,
   modalMessageReducer, loaderReducer
 })
 
