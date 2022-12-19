@@ -4,7 +4,7 @@ import {
   GET_ACTIVITY_TYPE_OPT, GET_ACTIVITY_SUPPLIER_OPT,
   GET_ACTIVITY_RATE, SET_ACTIVITY_TYPE,
   SET_ACTIVITY_SUPPLIER,
-  SET_ACTIVITY_COST_VALUE,CLEAR_ACTIVITY
+  SET_ACTIVITY_COST_VALUE, CLEAR_ACTIVITY
 } from "../types";
 
 export function GetActivityTypeOpt(token) {
@@ -24,7 +24,7 @@ export function GetActivityTypeOpt(token) {
         dispatch({ type: SET_ACTIVITY_TYPE, data: res.data.record[0].id });
         dispatch(GetSupplierOpt(token, res.data.record[0].id));
       })
-      .catch((e) => {});
+      .catch((e) => { });
   };
 }
 
@@ -33,7 +33,7 @@ export function GetSupplierOpt(token, activityId) {
     return axios
       .get(
         `${baseUrl}/CentralCosts/LookupSuppliers/` +
-          activityId,
+        activityId,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -42,7 +42,7 @@ export function GetSupplierOpt(token, activityId) {
         }
       )
       .then((res) => {
-        dispatch({ type: GET_ACTIVITY_SUPPLIER_OPT, data: res.data.suppliers }); 
+        dispatch({ type: GET_ACTIVITY_SUPPLIER_OPT, data: res.data.suppliers });
       })
       .catch((e) => {
         console.log(e);
@@ -66,16 +66,16 @@ export function GetRate(token, data) {
       },
     })
       .then((res) => {
-        console.log('result of get rate',res)
-        if(res.data.message){
-          dispatch({type:"SHOW_MODAL_MESSAGE", data: res.data.message})
+        console.log('result of get rate', res)
+        if (res.data.message) {
+          dispatch({ type: "SHOW_MODAL_MESSAGE", data: res.data.message })
         }
-        else{
-        dispatch({type:GET_ACTIVITY_RATE, data: res.data})
-        dispatch({type:SET_ACTIVITY_SUPPLIER, data : data.supplierID})
-        dispatch({type:SET_ACTIVITY_COST_VALUE, data : res.data.costValue})
+        else {
+          dispatch({ type: GET_ACTIVITY_RATE, data: res.data })
+          dispatch({ type: SET_ACTIVITY_SUPPLIER, data: data.supplierID })
+          dispatch({ type: SET_ACTIVITY_COST_VALUE, data: res.data.costValue })
         }
-        
+
       })
       .catch((e) => {
         console.log(e);
@@ -83,9 +83,9 @@ export function GetRate(token, data) {
   };
 }
 
-export function SubmitActivity(token,_data){
-  return function (dispatch){
-    return   axios({
+export function SubmitActivity(token, _data) {
+  return function (dispatch) {
+    return axios({
       url: `${baseUrl}/CentralCosts/CostEntry`,
       headers: {
         Authorization: "Bearer " + token,
@@ -95,20 +95,26 @@ export function SubmitActivity(token,_data){
       data: _data,
     })
       .then((res) => {
-          dispatch({ type: CLEAR_ACTIVITY });
-          dispatch(GetActivityTypeOpt(token));
-          dispatch(GetActivity(token))
+        dispatch({ type: CLEAR_ACTIVITY });
+        dispatch(GetActivityTypeOpt(token));
+
+
+
+      }).then(() => {
+        const today = new Date()
+        const yesterday = new Date(new Date().setDate(today.getDate() - 1));
+        dispatch(GetActivity(token, yesterday, today, "C"))
       })
       .catch((e) => {
         console.log(e)
-        dispatch({type:"SHOW_MODAL_MESSAGE", data: e.message})
+        dispatch({ type: "SHOW_MODAL_MESSAGE", data: e.message })
       });
   }
 }
 
-export function GetActivity(token, dateFrom, dateTo, activityType){
-  return function(dispatch){
-    return  axios({
+export function GetActivity(token, dateFrom, dateTo, activityType) {
+  return function (dispatch) {
+    return axios({
       url: "https://testapi.etrinity.services/TrinityWebApi/api/Report/CostReview",
       headers: {
         Authorization: "Bearer " + token,
@@ -121,16 +127,17 @@ export function GetActivity(token, dateFrom, dateTo, activityType){
       },
     })
       .then((res) => {
-        switch(activityType){
-          case "C":dispatch({ type: "GET_CURRENT_ACTIVITY", data: res.data.records })
-          break;
-          case "R":dispatch({ type: "GET_RECENT_ACTIVITY", data: res.data.records })
-          break;
-          case "D":dispatch({ type: "GET_DISPUTED_ACTIVITY", data: res.data.records })
-          break;
+        switch (activityType) {
+          case "C": dispatch({ type: "GET_CURRENT_ACTIVITY", data: res.data.records })
+            break;
+          case "R": dispatch({ type: "GET_RECENT_ACTIVITY", data: res.data.records })
+            break;
+          case "D": dispatch({ type: "GET_DISPUTED_ACTIVITY", data: res.data.records })
+            break;
 
         }
-        
+
       })
   }
 }
+

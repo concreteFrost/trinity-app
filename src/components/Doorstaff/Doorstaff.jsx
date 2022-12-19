@@ -5,9 +5,10 @@ import { SIA } from "./SIA/SIA";
 import { useState } from "react";
 import { SwitchView } from "./SwitchView/SwitchView";
 import { Recent } from "./Recent/Recent";
+import { Disputed } from "./Disputed/Disputed";
 
 export const Doorstaff = () => {
-  const [list, showList] = useState(true);
+
 
   const [view, setView] = useState('current');
 
@@ -21,18 +22,7 @@ export const Doorstaff = () => {
         <h1>DOORSTAFF MANAGEMENT</h1>
         <SwitchView defineView={DefineView} currentView={view}></SwitchView>
       </header>
-      {/* <button onClick={() => showList(!list)}>{list ? 'hide sia' : 'show sia'}</button>
-      {list ? (
-        <div>
-          <ul>
-            <li>1018248700079102</li>
-            <li>1011954658948319</li>
-            <li>1014172466223788</li>
-            <li>1015590288854388</li>
-            <li>1011611024824106</li>
-          </ul>
-        </div>
-      ) : null} */}
+
       <main>
 
         {view === 'current' ? <>
@@ -41,7 +31,7 @@ export const Doorstaff = () => {
         <Current isVisible={true}></Current>
         </> : null }
         {view === 'recent' ? <Recent isVisible={true}></Recent> : null }
-        {view === 'disputed' ? <Current isVisible={true}></Current> : null }
+        {view === 'disputed' ? <Disputed isVisible={true}></Disputed> : null }
         
       </main>
     </div>

@@ -4,6 +4,8 @@ import { ActivityTable } from "./Current/ActivityTable/ActivityTable";
 import { SwitchView } from "./SwitchView/SwitchView";
 import { useState } from "react";
 import { Recent } from "./Recent/Recent";
+import { Disputed } from "./Disputed/Disputed";
+
 
 
 export const Activity = () => {
@@ -22,6 +24,7 @@ export const Activity = () => {
         {view ==='current'? <><AddActivity></AddActivity>
         <ActivityTable isVisible={true}></ActivityTable></> : null}
         {view ==='recent'?<><Recent></Recent></> : null}
+        {view ==='disputed'?<><Disputed></Disputed></> : null}
       </main>
     </div>
   );

@@ -50,7 +50,8 @@ export const AddActivity = () => {
     } else {
       setNoteIsRequired(false);
     }
-    dispatch({ type: SET_ACTIVITY_COST_VALUE, costValue });
+    dispatch({ type: SET_ACTIVITY_COST_VALUE, data: costValue});
+    console.log(costValue)
   }
 
   async function FirstSubmit(e) {
@@ -191,7 +192,7 @@ export const AddActivity = () => {
             type="number"
             name="value"
             readOnly={rate.rateTypeId === 4 ? true : false}
-            value={costValue ? costValue : ""}
+            value={costValue ? costValue : 0}
             onChange={(e) => {
               dispatch({
                 type: SET_ACTIVITY_COST_VALUE,

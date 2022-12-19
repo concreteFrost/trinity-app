@@ -11,6 +11,7 @@ import { Login } from "./components/Login/Login";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import { useSelector, useDispatch } from "react-redux";
 import { ModalMessage } from "./components/Modal/ModalMessage/ModalMessage";
+
 import { TailSpin } from "react-loader-spinner";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -39,6 +40,7 @@ function App() {
   return (
     <div className={s.container}>
       <ModalMessage></ModalMessage>
+   
       {isLoggedIn === true ? <Navbar className={s.nav} /> : null}
       {/* <HeaderImage className={s.logo} /> */}
       <Routes>

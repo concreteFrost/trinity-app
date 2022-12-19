@@ -9,12 +9,13 @@ import { modalMessageReducer } from "./modalMessageReducer";
 import { loaderReducer } from "./loaderReducer";
 import { getActivityReducer } from "./getActivityReducer";
 import { authoriseReducer } from "./authoriseReducer";
+import { modalPromptReducer } from "./modalPromptReducer";
 
 
 const appReducer = combineReducers({
   userReducer,siaReducer,doorstaffReducer,
   costsReducer, activityReducer, getActivityReducer, authoriseReducer,summaryReducer,
-  modalMessageReducer, loaderReducer
+  modalMessageReducer, modalPromptReducer, loaderReducer
 })
 
 export const rootReducer = (state, action) => {
