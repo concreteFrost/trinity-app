@@ -25,7 +25,7 @@ export const modalPromptReducer = (state = initialState, action) => {
             }
             case "RESET_MODAL_ACTIVITY":
                 return{
-                   initialState
+                   ...initialState
                 }
         default:
             return state;

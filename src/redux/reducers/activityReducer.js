@@ -17,8 +17,7 @@ const initialState = {
   supplier: null,
   costValue: null,
   hoursWorked: null,
-
-
+  
 };
 
 export const activityReducer = (state = initialState, action) => {

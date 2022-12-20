@@ -14,7 +14,6 @@ export function GetDoorstaffSummary(token, date, summaryCode) {
         }
       )
       .then((res) => {
-        console.log(res);
         switch (summaryCode) {
           case "D":
             dispatch({

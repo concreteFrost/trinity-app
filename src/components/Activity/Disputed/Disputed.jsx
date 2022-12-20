@@ -2,10 +2,10 @@ import s from "./Disputed.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { TableTemplate } from "../../TableTemplate/TableTemplate";
 import { useEffect } from "react";
-import axios from "axios";
-import { baseUrl } from "../../../contexts/baseUrl";
-import { GET_DISPUTED_ACTIVITY } from "../../../redux/types";
 import { ViewDisputeNote } from "../../../redux/api/notesApi";
+import { ModalPrompt } from "../../Modal/ModalPrompt/ModalPrompt";
+import { GetDisputedActivity, SendBackDisputed } from "../../../redux/api/disputedApi";
+ 
 
 export const Disputed = (props) => {
 
@@ -28,40 +28,52 @@ export const Disputed = (props) => {
       accessor:"status"
     },
     {
-      Header:"NOTE",
+      Header:"ACTIONS",
       accessor:"activityId",
       style:{
         color:'red'
       },
       Cell: ({value})=>(
-        <div><button value={value} onClick={()=>{viewNote(value); console.log(value)}}>VIEW</button> </div> 
+        <div className={s.actions}>
+        <div><button value={value} onClick={()=>{viewNote(value)}}>NOTE</button> </div> 
+        <div><button className={s.dispute_btn} onClick={()=>{showDisputeModal(value)}}>DISPUTE</button> </div> 
+        </div>
+        
       )
-      
-    }
-    ,]
+    },
+  
+    ]
 
   const token = useSelector((state) => state.userReducer.user.access_token);
   const disputedctivity = useSelector(s => s.getActivityReducer.disputed)
+  const currentDisputed = useSelector(state=> state.modalPromptReducer);
   const dispatch = useDispatch();
 
-  console.log(disputedctivity)
+  function showDisputeModal(id){
+    dispatch({type:"SHOW_MODAL_PROMPT"})
+    dispatch({ type: "SET_DISPUTED_PAYMENT_ID", data: id })
+
+  }
+
   useEffect(()=>{
-      axios.get(baseUrl+'/Disputed/ActivityList?system=A',{
-        headers:{
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/x-www-form-urlencoded",
-        }
-      }).then(res=>dispatch({type:GET_DISPUTED_ACTIVITY, data: res.data.reportRecord}))
+      dispatch(GetDisputedActivity(token,"A"))
   },[])
 
   function viewNote(e){
    dispatch(ViewDisputeNote(token,"A",e))
   }
+
+  function DisputeBack(){
+    dispatch(SendBackDisputed(token, currentDisputed,"A"))
+  }
     
 
   return (
+    <>
+    <ModalPrompt submitForm ={DisputeBack}></ModalPrompt>
     <div className={s.container}>
-      <TableTemplate columns={tableHeader} data={disputedctivity}></TableTemplate>
+      <TableTemplate columns={tableHeader} data={disputedctivity} ></TableTemplate>
     </div>
+    </>
   );
 };

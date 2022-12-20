@@ -35,7 +35,7 @@ export function ApproveActivity(system, token, element) {
     }
 }
 
-export function ViewNote(token, system, activityId) {
+export function ViewNote(token,activityId) {
     return function (dispatch) {
         return axios.get(`https://testapi.etrinity.services/TrinityWebApi/api/CentralCosts/GetNote/${activityId}`, {
             headers: {
@@ -45,6 +45,8 @@ export function ViewNote(token, system, activityId) {
         }).then(res => {
             if (res.data.message.length > 0)
                 dispatch({ type: "SHOW_MODAL_MESSAGE", data: res.data.message })
+
+            console.log(res.data)
         })
     }
 }

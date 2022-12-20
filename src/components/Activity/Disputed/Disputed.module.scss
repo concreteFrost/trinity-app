@@ -28,5 +28,17 @@
   
   }
 
+  .actions{
+    display: flex;
+
+    button {
+      margin-right: 5px;
+    }
+
+    .dispute_btn{
+      @include btn($button-list)
+    }
+  }
+
 
 }

@@ -26,10 +26,6 @@ export const TableTemplate = ({ columns, data }) => {
         usePagination
     )
 
-    function onEditClick(e) {
-        console.log(e)
-    }
-
 
     const { pageIndex, pageSize } = state;
     return (
@@ -46,7 +42,7 @@ export const TableTemplate = ({ columns, data }) => {
                                     </span>
                                 </th>
                             ))}
-                            <th>EDIT</th>
+                  
                         </tr>
                     ))}
                 </thead>
@@ -58,7 +54,7 @@ export const TableTemplate = ({ columns, data }) => {
                                 {row.cells.map(cell => {
                                     return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                                 })}
-                                <td><button onClick={() => onEditClick(row)}>EDIT</button></td>
+                              
                             </tr>
 
                         )

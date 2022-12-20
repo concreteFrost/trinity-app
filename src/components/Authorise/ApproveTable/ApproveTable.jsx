@@ -2,26 +2,24 @@ import s from "./ApproveTable.module.scss"
 import { ModalPrompt } from "../../Modal/ModalPrompt/ModalPrompt";
 import { useDispatch, useSelector } from "react-redux";
 import { GetAuthorise, ApproveActivity, ViewNote } from "../../../redux/api/authoriseApi";
-import axios from "axios";
+import { SendDisputed } from "../../../redux/api/disputedApi";
 import { useEffect } from "react";
 
 export const ApproveTable = (props) => {
 
-     const paymentActivityID = useSelector(state => state.modalPromptReducer.paymentActivityID)
-     const disputedNote = useSelector(state => state.modalPromptReducer.disputedNote)
+     const toDispute = useSelector(state => state.modalPromptReducer)
      const token = useSelector((state) => state.userReducer.user.access_token);
 
      const dispatch = useDispatch()
 
      useEffect(()=>{
           dispatch(GetAuthorise(props.system, token))
-          console.log('here')
      },[])
 
 
 
      function viewNote(e) {
-          dispatch(ViewNote(token, props.system, e))
+          dispatch(ViewNote(token, e))
      }
 
      function Approve() {
@@ -57,23 +55,7 @@ export const ApproveTable = (props) => {
      }
 
      function DisputeActivity() {
-
-          axios({
-               url: "https://testapi.etrinity.services/TrinityWebApi/api/AreaManager/DisputeActivity?system=" + props.system,
-               headers: {
-                    Authorization: "Bearer " + token,
-                    "Content-Type": "application/json",
-               },
-               method: "POST",
-               data: {
-                    id: paymentActivityID,
-                    name: disputedNote
-               },
-          })
-               .then((res) => {
-                    dispatch({ type: 'RESET_MODAL_ACTIVITY' })
-                    dispatch(GetAuthorise(props.system, token))
-               }).catch(e => console.log(e))
+          dispatch(SendDisputed(props.system, token, toDispute))
      }
 
 
