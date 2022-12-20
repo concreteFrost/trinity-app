@@ -2,9 +2,8 @@ import s from "./Disputed.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { TableTemplate } from "../../TableTemplate/TableTemplate";
 import { useEffect } from "react";
-import { ViewDisputeNote } from "../../../redux/api/notesApi";
 import { ModalPrompt } from "../../Modal/ModalPrompt/ModalPrompt";
-import { GetDisputedActivity, SendBackDisputed } from "../../../redux/api/disputedApi";
+import { GetDisputedActivity, SendBackDisputed,ViewDisputedNote  } from "../../../redux/api/disputedApi";
  
 
 export const Disputed = (props) => {
@@ -60,7 +59,7 @@ export const Disputed = (props) => {
   },[])
 
   function viewNote(e){
-   dispatch(ViewDisputeNote(token,"A",e))
+   dispatch(ViewDisputedNote(token,"A",e))
   }
 
   function DisputeBack(){

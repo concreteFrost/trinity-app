@@ -2,13 +2,15 @@ import s from "./ApproveTable.module.scss"
 import { ModalPrompt } from "../../Modal/ModalPrompt/ModalPrompt";
 import { useDispatch, useSelector } from "react-redux";
 import { GetAuthorise, ApproveActivity, ViewNote } from "../../../redux/api/authoriseApi";
-import { SendDisputed } from "../../../redux/api/disputedApi";
+import { SendDisputed,ViewAreaDisputedNote } from "../../../redux/api/disputedApi";
 import { useEffect } from "react";
 
 export const ApproveTable = (props) => {
 
      const toDispute = useSelector(state => state.modalPromptReducer)
      const token = useSelector((state) => state.userReducer.user.access_token);
+
+    
 
      const dispatch = useDispatch()
 
@@ -19,7 +21,8 @@ export const ApproveTable = (props) => {
 
 
      function viewNote(e) {
-          dispatch(ViewNote(token, e))
+          dispatch(ViewAreaDisputedNote(token,props.system,e))
+       
      }
 
      function Approve() {
@@ -86,7 +89,7 @@ export const ApproveTable = (props) => {
                                    <td>{e.staffName}</td>
                                    <td>{e.jobRoleName}</td>
                                    <td>{e.cost}</td>
-                                   <td><button className={s.button_view} onClick={() => { viewNote(e.activityId) }}>VIEW</button></td>
+                                   <td><button className={s.button_view} onClick={() => { viewNote(e.paymentAuthId) }}>VIEW</button></td>
                                    <td><input type="checkbox" name={e.activityId} id={e.activityId} onChange={handleCheck} checked={e.selected} /></td>
                                    <td><button className={s.button_dispute} onClick={() => { showDisputeModal(e.paymentAuthId) }} >DISPUTE</button></td>
                               </tr>

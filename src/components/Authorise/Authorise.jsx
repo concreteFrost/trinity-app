@@ -14,6 +14,7 @@ export const Authorise = () => {
     }
 
     const doorstaff = useSelector(state => state.authoriseReducer.doorstaff);
+    console.log(doorstaff)
     const costs = useSelector(state => state.authoriseReducer.costs);
 
     const doorstaffActions = [

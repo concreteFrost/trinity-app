@@ -75,3 +75,34 @@ export function SendDisputed(system, token, dispute) {
 }
 
 
+//FOR PUB MANAGER
+export function ViewDisputedNote(token,system,activityID) {
+    return function (dispatch) {
+      return axios.get(baseUrl + `/Disputed/GetNotes/${system}/${activityID}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/x-www-form-urlencoded",
+        }
+      }).then(res => {
+        if(res.data.record.length > 0)
+        dispatch({ type: "SHOW_MODAL_MESSAGE", data: res.data.record[res.data.record.length-1].name })
+      })
+    }
+  }
+
+//FOR AREA MANAGER
+export function ViewAreaDisputedNote(token,system,activityID) {
+    return function (dispatch) {
+      return axios.get(baseUrl + `/AreaManager/GetNotes/${system}/${parseInt(activityID)}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/x-www-form-urlencoded",
+        }
+      }).then(res => {
+        if(res.data.record.length > 0)
+        dispatch({ type: "SHOW_MODAL_MESSAGE", data: res.data.record[res.data.record.length-1].name })
+      })
+    }
+  }
+
+
