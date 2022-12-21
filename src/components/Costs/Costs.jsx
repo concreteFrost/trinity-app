@@ -10,8 +10,7 @@ export const Costs = () => {
         <div className={s.container}>
             <header><h1>COSTS</h1></header>
            
-            <main>
-                
+            <main> 
                 <CostsForm></CostsForm>
                 <div>
                     <h2>DOORSTAFF</h2>

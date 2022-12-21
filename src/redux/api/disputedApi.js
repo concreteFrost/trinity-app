@@ -1,6 +1,6 @@
 import axios from "axios";
 import { baseUrl } from "../../contexts/baseUrl";
-import { GET_DISPUTED_ACTIVITY, GET_DISPUTED_DOORSTAFF } from '../types'
+import { GET_DISPUTED_ACTIVITY, GET_DISPUTED_DOORSTAFF, SHOW_MODAL_MESSAGE,RESET_MODAL_ACTIVITY } from '../types'
 import { GetAuthorise } from "./authoriseApi";
 
 //FOR PUB MANAGER
@@ -43,7 +43,7 @@ export function SendBackDisputed(token, returnDisputed, system) {
             },
         })
             .then((res) => {
-                dispatch({ type: 'RESET_MODAL_ACTIVITY' })
+                dispatch({ type: RESET_MODAL_ACTIVITY })
                 dispatch(GetDisputedActivity(token, system ))
                 console.log(res)
 
@@ -56,7 +56,7 @@ export function SendBackDisputed(token, returnDisputed, system) {
 export function SendDisputed(system, token, dispute) {
     return function (dispatch) {
         return axios({
-            url: "https://testapi.etrinity.services/TrinityWebApi/api/AreaManager/DisputeActivity?system=" + system,
+            url: `${baseUrl}/AreaManager/DisputeActivity?system=` + system,
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export function SendDisputed(system, token, dispute) {
             },
         })
             .then(() => {
-                dispatch({ type: 'RESET_MODAL_ACTIVITY' })
+                dispatch({ type: RESET_MODAL_ACTIVITY })
                 dispatch(GetAuthorise(system, token))
             }).catch(e => console.log(e))
     }
@@ -85,7 +85,7 @@ export function ViewDisputedNote(token,system,activityID) {
         }
       }).then(res => {
         if(res.data.record.length > 0)
-        dispatch({ type: "SHOW_MODAL_MESSAGE", data: res.data.record[res.data.record.length-1].name })
+        dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.record[res.data.record.length-1].name })
       })
     }
   }
@@ -100,7 +100,7 @@ export function ViewAreaDisputedNote(token,system,activityID) {
         }
       }).then(res => {
         if(res.data.record.length > 0)
-        dispatch({ type: "SHOW_MODAL_MESSAGE", data: res.data.record[res.data.record.length-1].name })
+        dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.record[res.data.record.length-1].name })
       })
     }
   }

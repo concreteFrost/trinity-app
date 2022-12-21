@@ -1,6 +1,7 @@
-header {
-  font-family: "J";
-}
+@import "src/scss/mixins.scss";
+@import "src/scss/variables.scss";
+
+
 
 .tail_spin {
   position: fixed;

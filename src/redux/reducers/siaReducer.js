@@ -1,7 +1,9 @@
 import {
   GET_SIA_DATA, SET_SIA_NUMBER,
   SET_SIA_ERROR_MESSAGE, CLEAR_SIA_ERROR_MESSAGE,
-  CLEAR_SIA_DATA
+  CLEAR_SIA_DATA, GET_DOORSTAFF_SUPPLIER_OPT, GET_DOORSTAFF_POSITION_OPT,
+  GET_DOORSTAFF_RATE_OPT, SET_DOORSTAFF_SUPPLIER, SET_DOORSTAFF_POSITION,
+  SET_DOORSTAFF_RATE, SET_DOORSTAFF_START_DATE, SET_DOORSTAFF_START_TIME
 } from "../types";
 
 const initialState = {
@@ -40,38 +42,38 @@ export const siaReducer = (state = initialState, action) => {
       return {
         ...initialState
       };
-    case "GET_DOORSTAFF_SUPPLIER_OPT":
+    case GET_DOORSTAFF_SUPPLIER_OPT:
       return {
         ...state,
         options: { ...state.options, suppliers: action.data }
       };
-    case "GET_DOORSTAFF_POSITION_OPT":
+    case GET_DOORSTAFF_POSITION_OPT:
       return {
         ...state,
         options: { ...state.options, positions: action.data }
       };
-    case "GET_DOORSTAFF_RATE_OPT":
+    case GET_DOORSTAFF_RATE_OPT:
       return {
         ...state,
         options: { ...state.options, rates: action.data }
       };
-    case "SET_DOORSTAFF_SUPPLIER":
+    case SET_DOORSTAFF_SUPPLIER:
       return {
         ...state, supplier: action.data
       }
-    case "SET_DOORSTAFF_POSITION":
+    case SET_DOORSTAFF_POSITION:
       return {
         ...state, position: action.data
       }
-    case "SET_DOORSTAFF_RATE":
+    case SET_DOORSTAFF_RATE:
       return {
         ...state, rate: action.data
       }
-    case "SET_DOORSTAFF_START_TIME":
+    case SET_DOORSTAFF_START_TIME:
       return {
         ...state, time: action.data
       }
-    case "SET_DOORSTAFF_START_DATE":
+    case SET_DOORSTAFF_START_DATE:
       return {
         ...state, date: action.data
       }

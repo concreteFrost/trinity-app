@@ -21,6 +21,8 @@ export const Summary = () => {
       <header>
         <h2>Summary</h2>
       </header>
+
+      <div className={s.wrapper}>
       <table className={s.summary_table}>
         <thead>
           <tr>
@@ -67,6 +69,7 @@ export const Summary = () => {
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { GetActivity } from "../../../../redux/api/activityApi";
-import { TableTemplate } from "../../../TableTemplate/TableTemplate";
+import { TableTemplate } from "../../../Shared/TableTemplate/TableTemplate";
 
 
 export const ActivityTable = (props) => {
@@ -56,6 +56,7 @@ export const ActivityTable = (props) => {
 
   return (
     <div className={s.container}>
+      
          <TableTemplate columns={tableHeader} data={currentActivity}></TableTemplate>
 
     </div>

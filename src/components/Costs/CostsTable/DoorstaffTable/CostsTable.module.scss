@@ -1,28 +1,49 @@
-@import 'src/scss/mixins';
-@import 'src/scss/variables';
+@import "src/scss/mixins";
+@import "src/scss/variables";
 
 .container {
-    display: flex;
-    justify-content:center;
-    
-    
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  
+
+  justify-items: center;
+
+  .table_and_header {
+    text-align: center;
+    display: grid;
+    grid-template-rows: 1fr auto;
+  }
+
+  h4 {
+    font-family: $central-header;
+    color: rgb(156, 156, 156);
+  }
+
+  table {
+    @include main-tables;
+    min-width: 500px !important;
+
+    button {
+      background-color: $button-submit;
+    }
+  }
+
+  .wrapper {
+    @include table_wrapper;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  @media screen and (max-width: $screen-laptop) {
+    grid-template-columns: 1fr;
+  }
+
+  @media screen and (max-width: $screen-tablet) {
     h4 {
-        font-family: $central-header;
-        color: rgb(156, 156, 156);
-        text-align: center;
+      font-size: $font-laptop;
     }
 
-    table {
-        @include main-tables;
-        
-        margin-left: 20px;
-        margin-right: 20px;
-        button {
-            background-color: $button-submit;
-        }
+    grid-template-columns: 1fr;
 
-
-    }
-
-
+  }
 }

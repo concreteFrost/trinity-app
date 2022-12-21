@@ -4,12 +4,13 @@
 .container {
   @include home-page-container;
 
+  .wrapper{
+    @include table_wrapper
+  }
+
   .doorstaff_table {
     @include main-tables;
-    input {
-      @include form-input;
-      
-    }
+    
   }
   .signoff {
     display: flex;

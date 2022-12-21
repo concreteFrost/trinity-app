@@ -147,7 +147,7 @@ export const AddActivity = () => {
           <button>CHECK RATE</button>
         </div>
       </form>
-      <form onSubmit={SecondSubmit}>
+      <form onSubmit={SecondSubmit} className={s.rate_form}>
         <div className={s.rate}>
           <label>RATE</label>
           <div className={s.radio}>

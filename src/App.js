@@ -1,4 +1,4 @@
-import s from "./App.module.css";
+import s from "./App.module.scss";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "./components/Home/Home";
@@ -21,6 +21,7 @@ function App() {
   const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn)
   const location = useLocation();
   const isLoading = useSelector((state) => state.loaderReducer.isLoading);
+  
   let user = JSON.parse(localStorage.getItem('user'))
   const  dispatch = useDispatch()
  

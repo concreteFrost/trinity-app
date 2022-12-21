@@ -1,3 +1,6 @@
+import {SHOW_MODAL_PROMPT, HIDE_MODAL_PROMPT, SET_DISPUTED_PAYMENT_ID,
+SET_DISPUTED_NOTE, RESET_MODAL_ACTIVITY} from '../types'
+
 const initialState = {
     showModal: false,
     message: "",
@@ -8,22 +11,22 @@ const initialState = {
 export const modalPromptReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case "SHOW_MODAL_PROMPT":
+        case SHOW_MODAL_PROMPT:
             return {
                 ...state, showModal: true, message: action.data
             }
-        case "HIDE_MODAL_PROMPT": {
+        case HIDE_MODAL_PROMPT: {
             return { ...state, showModal: false, message: '' }
         }
-        case "SET_DISPUTED_PAYMENT_ID":
+        case SET_DISPUTED_PAYMENT_ID:
             return{
                 ...state, paymentActivityID : action.data
             }
-        case "SET_DISPUTED_NOTE":
+        case SET_DISPUTED_NOTE:
             return{
                 ...state, disputedNote: action.data
             }
-            case "RESET_MODAL_ACTIVITY":
+            case RESET_MODAL_ACTIVITY:
                 return{
                    ...initialState
                 }

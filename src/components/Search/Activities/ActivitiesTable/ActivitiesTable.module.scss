@@ -3,11 +3,6 @@
 @import 'src/scss/variables';
 
 .container {
-    table{
-       
-        @include main-tables;
-        width: 100%;
-    }
-    
+    @include home-page-container;
 }
 

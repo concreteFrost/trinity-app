@@ -1,0 +1,47 @@
+@import "src/scss/mixins";
+@import "src/scss/variables";
+
+.table_template {
+  @include main-tables;
+  max-width: 1000px;
+  button {
+    background-color: $button-submit;
+  }
+  
+}
+
+.wrapper{
+  @include table_wrapper
+}
+
+.footer {
+  button:disabled {
+    @include btn("red");
+    display: none;
+  }
+  button {
+    @include btn($button-submit);
+  }
+  input,
+  select {
+    border-radius: 5px;
+  }
+
+  background-color: rgb(235, 235, 235);
+
+  td{
+    text-align: center;
+  }
+
+  box-shadow: $soft-shadow;
+  border-top: 1px solid rgb(194, 194, 194);
+
+  
+
+  @media screen and (max-width: $screen-laptop) {
+    * {
+      font-weight: 100;
+      font-size: small;
+    }
+  }
+}

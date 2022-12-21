@@ -1,0 +1,11 @@
+@import "src/scss/mixins.scss";
+@import "src/scss/variables.scss";
+
+.container{
+   margin-bottom: 20px;
+}
+.countedActivity{
+   @include notification;
+
+   
+}

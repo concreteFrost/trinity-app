@@ -1,3 +1,5 @@
+import { SHOW_MODAL_MESSAGE, HIDE_MODAL_MESSAGE } from "../types";
+
 const initialState = {
     showModal: false,
     message: ""
@@ -6,11 +8,11 @@ const initialState = {
 export const modalMessageReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case "SHOW_MODAL_MESSAGE":
+        case SHOW_MODAL_MESSAGE:
             return {
                 ...state, showModal: true, message: action.data
             }
-        case "HIDE_MODAL_MESSAGE": {
+        case HIDE_MODAL_MESSAGE: {
             return { ...state, showModal: false, message: '' }
         }
         default:

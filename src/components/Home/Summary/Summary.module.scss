@@ -8,6 +8,10 @@
     @include main-tables;
     max-width: 600px;
   }
+
+  .wrapper{
+    @include table_wrapper;
+  }
   
 
 }

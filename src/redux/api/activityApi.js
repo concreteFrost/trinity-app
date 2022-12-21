@@ -5,7 +5,7 @@ import {
   GET_ACTIVITY_RATE, SET_ACTIVITY_TYPE,
   SET_ACTIVITY_SUPPLIER,
   SET_ACTIVITY_COST_VALUE, CLEAR_ACTIVITY,
-  GET_DISPUTED_ACTIVITY
+  GET_DISPUTED_ACTIVITY, SHOW_MODAL_MESSAGE, GET_CURRENT_ACTIVITY, GET_RECENT_ACTIVITY
 } from "../types";
 
 export function GetActivityTypeOpt(token) {
@@ -69,7 +69,7 @@ export function GetRate(token, data) {
       .then((res) => {
         console.log('result of get rate', res)
         if (res.data.message) {
-          dispatch({ type: "SHOW_MODAL_MESSAGE", data: res.data.message })
+          dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.message })
         }
         else {
           dispatch({ type: GET_ACTIVITY_RATE, data: res.data })
@@ -108,7 +108,7 @@ export function SubmitActivity(token, _data) {
       })
       .catch((e) => {
         console.log(e)
-        dispatch({ type: "SHOW_MODAL_MESSAGE", data: e.message })
+        dispatch({ type: SHOW_MODAL_MESSAGE, data: e.message })
       });
   }
 }
@@ -116,7 +116,7 @@ export function SubmitActivity(token, _data) {
 export function GetActivity(token, dateFrom, dateTo, activityType) {
   return function (dispatch) {
     return axios({
-      url: "https://testapi.etrinity.services/TrinityWebApi/api/Report/CostReview",
+      url: `${baseUrl}/Report/CostReview`,
       headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",
@@ -129,11 +129,11 @@ export function GetActivity(token, dateFrom, dateTo, activityType) {
     })
       .then((res) => {
         switch (activityType) {
-          case "C": dispatch({ type: "GET_CURRENT_ACTIVITY", data: res.data.records })
+          case "C": dispatch({ type: GET_CURRENT_ACTIVITY, data: res.data.records })
             break;
-          case "R": dispatch({ type: "GET_RECENT_ACTIVITY", data: res.data.records })
+          case "R": dispatch({ type: GET_RECENT_ACTIVITY, data: res.data.records })
             break;
-          case "D": dispatch({ type: "GET_DISPUTED_ACTIVITY", data: res.data.records })
+          case "D": dispatch({ type: GET_DISPUTED_ACTIVITY, data: res.data.records })
             break;
 
         }

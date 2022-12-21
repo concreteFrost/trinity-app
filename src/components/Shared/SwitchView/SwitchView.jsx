@@ -5,6 +5,7 @@ export const SwitchView = (props) => (
           <input type="radio" value="current"  onChange={()=> props.defineView('current')} checked={props.currentView==="current"} /> Current
         <input type="radio" value="recent"  onChange={()=> props.defineView('recent')} checked={props.currentView==="recent"} /> Recent
         <input type="radio" value="disputed"  onChange={()=> props.defineView('disputed')} checked={props.currentView==="disputed"} /> Disputed
+        {props.countedActivity > 0 ? <span className={s.countedActivity}>{props.countedActivity}</span> : null}
     </div>
 );
 

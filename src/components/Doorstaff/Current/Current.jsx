@@ -33,6 +33,7 @@ export const Current = (props) => {
   return (
     <div className={s.container}>
       {errorMessage.length > 0 ? <div className={s.error}>{errorMessage}</div> : null}
+      <div className={s.wrapper}>
       <table className={s.doorstaff_table}>
         <thead>
           <tr>
@@ -93,6 +94,7 @@ export const Current = (props) => {
           )}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import axios from "axios";
 import { baseUrl } from "../../contexts/baseUrl";
+import { GET_DOORSTAFF_SUMMARY_DAILY, 
+  GET_DOORSTAFF_SUMMARY_WEEKLY } from "../types";
 
 export function GetDoorstaffSummary(token, date, summaryCode) {
   return function (dispatch) {
@@ -17,13 +19,13 @@ export function GetDoorstaffSummary(token, date, summaryCode) {
         switch (summaryCode) {
           case "D":
             dispatch({
-              type: "GET_DOORSTAFF_SUMMARY_DAILY",
+              type: GET_DOORSTAFF_SUMMARY_DAILY,
               data: res.data.summaryRecords,
             });
             break;
           case "W":
             dispatch({
-              type: "GET_DOORSTAFF_SUMMARY_WEEKLY",
+              type: GET_DOORSTAFF_SUMMARY_WEEKLY,
               data: res.data.summaryRecords,
             });
             break;

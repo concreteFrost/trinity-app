@@ -1,12 +1,13 @@
 import s from "./NavbarList.module.scss";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserLogOff } from "../../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 export const NavbarList = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userReducer = useSelector(state=> state.userReducer.user);
   function Logout() {
      dispatch(UserLogOff());
      
@@ -20,18 +21,19 @@ export const NavbarList = (props) => {
       >
         HOME
       </NavLink>
-      <NavLink
+      {userReducer.userRole ==3 ?  <NavLink
         className={({ isActive }) => (isActive ? s.active : s.default)}
         to="/activity"
       >
-        ACTIVITY
-      </NavLink>
-      <NavLink
+       ACTIVITY
+      </NavLink> : null}
+     
+      {userReducer.userRole ==3 ? <NavLink
         className={({ isActive }) => (isActive ? s.active : s.default)}
         to="/doorstaff"
       >
         DOORSTAFF
-      </NavLink>
+      </NavLink> : null }
       <NavLink
         className={({ isActive }) => (isActive ? s.active : s.default)}
         to="/costs"
@@ -44,12 +46,12 @@ export const NavbarList = (props) => {
       >
         SEARCH
       </NavLink>
-      <NavLink
+      {userReducer.userRole == 2 ? <NavLink
         className={({ isActive }) => (isActive ? s.active : s.default)}
         to="/authorise"
       >
         AUTHORISE
-      </NavLink>
+      </NavLink> : null}
       <button onClick={Logout}>LOGOUT</button>
     </div>
   );

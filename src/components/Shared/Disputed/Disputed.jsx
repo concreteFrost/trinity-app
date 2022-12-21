@@ -1,11 +1,9 @@
 import s from "./Disputed.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { TableTemplate } from "../../TableTemplate/TableTemplate";
-import { useEffect } from "react";
+import { TableTemplate } from "../TableTemplate/TableTemplate";
 import { ModalPrompt } from "../../Modal/ModalPrompt/ModalPrompt";
-import { GetDisputedActivity, SendBackDisputed,ViewDisputedNote  } from "../../../redux/api/disputedApi";
+import { SendBackDisputed,ViewDisputedNote  } from "../../../redux/api/disputedApi";
  
-
 export const Disputed = (props) => {
 
   const tableHeader = [
@@ -44,7 +42,6 @@ export const Disputed = (props) => {
     ]
 
   const token = useSelector((state) => state.userReducer.user.access_token);
-  const disputedctivity = useSelector(s => s.getActivityReducer.disputed)
   const currentDisputed = useSelector(state=> state.modalPromptReducer);
   const dispatch = useDispatch();
 
@@ -54,16 +51,14 @@ export const Disputed = (props) => {
 
   }
 
-  useEffect(()=>{
-      dispatch(GetDisputedActivity(token,"A"))
-  },[])
+
 
   function viewNote(e){
-   dispatch(ViewDisputedNote(token,"A",e))
+   dispatch(ViewDisputedNote(token,props.system,e))
   }
 
   function DisputeBack(){
-    dispatch(SendBackDisputed(token, currentDisputed,"A"))
+    dispatch(SendBackDisputed(token, currentDisputed,props.system))
   }
     
 
@@ -71,7 +66,7 @@ export const Disputed = (props) => {
     <>
     <ModalPrompt submitForm ={DisputeBack}></ModalPrompt>
     <div className={s.container}>
-      <TableTemplate columns={tableHeader} data={disputedctivity} ></TableTemplate>
+      <TableTemplate columns={tableHeader} data={props.data} ></TableTemplate>
     </div>
     </>
   );

@@ -2,9 +2,6 @@
 @import "src/scss/variables";
 
 .container {
-  @include home-page-container;
-
-
 
   form{
     @include form-template;

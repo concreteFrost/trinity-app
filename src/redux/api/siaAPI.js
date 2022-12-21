@@ -10,7 +10,7 @@ export function GetSIAdataAPI(token,sia){
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(res =>{ 
-            console.log(res)
+          
             dispatch(GetSiaData(res.data))
         }).catch(e=>console.log(e))
     }

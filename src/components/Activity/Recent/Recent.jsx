@@ -2,8 +2,7 @@ import s from "./Recent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { GetActivity } from "../../../redux/api/activityApi";
 import { useState } from "react";
-
-import { TableTemplate } from "../../TableTemplate/TableTemplate";
+import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
 
 
 export const Recent = (props) => {

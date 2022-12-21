@@ -10,16 +10,19 @@ import { loaderReducer } from "./loaderReducer";
 import { getActivityReducer } from "./getActivityReducer";
 import { authoriseReducer } from "./authoriseReducer";
 import { modalPromptReducer } from "./modalPromptReducer";
+import { searchActivitiesReducer } from "./searchActivitesReducer";
+import { LOGOFF } from "../types";
 
 
 const appReducer = combineReducers({
   userReducer,siaReducer,doorstaffReducer,
-  costsReducer, activityReducer, getActivityReducer, authoriseReducer,summaryReducer,
+  costsReducer, activityReducer, getActivityReducer,
+   authoriseReducer,summaryReducer, searchActivitiesReducer,
   modalMessageReducer, modalPromptReducer, loaderReducer
 })
 
 export const rootReducer = (state, action) => {
-  if(action.type === 'LOGOFF'){
+  if(action.type === LOGOFF){
     localStorage.removeItem('user')
     return appReducer(undefined, action) 
     

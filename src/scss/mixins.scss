@@ -35,6 +35,32 @@
   @media screen and (max-width: $screen-laptop) {
     font-size: 0.6rem;
   }
+  @media screen and (max-width: $screen-tablet) {
+    font-size: 0.5rem;
+  }
+  @media screen and (max-width: $screen-mobile) {
+    font-size: 0.46rem;
+  }
+}
+
+@mixin table_wrapper {
+
+  overflow-x: scroll;
+  box-shadow: $soft-shadow;
+  border-radius: 5px;
+
+  @media screen and (max-width: $screen-laptop) {
+    max-width: 900px;
+  }
+
+  @media screen and (max-width: $screen-tablet) {
+    max-width:500px;
+
+  }
+
+  @media screen and (max-width: $screen-mobile) {
+    max-width: 425px;
+  }
 }
 
 //Tables
@@ -43,21 +69,14 @@
   background-color: $nav-color;
   border-radius: 5px;
   border-collapse: collapse;
-  table-layout: fixed;
-  box-shadow: $soft-shadow;
+  min-width: 400px;
+  
   text-align: left;
   width: auto;
   overflow-x: auto;
-  min-width: 400px;
-
-  @media screen and (max-width: $screen-laptop) {
-    font-size: 0.6rem;
-    max-width: 600px;
-    overflow-x: scroll;
-  }
-
-  @media screen and (max-width: $screen-mobile) {
-    max-width: 200px;
+  select,
+  input {
+    @include form-input;
   }
 
   th {
@@ -73,14 +92,6 @@
   td {
     font-weight: 500;
   }
-
-  @media screen and (max-width: $screen-laptop) {
-    td {
-      font-weight: 100;
-      font-weight: bold;
-    }
-  }
-
 
   tbody tr:nth-child(odd) {
     background-color: $table-main-odd;
@@ -111,14 +122,25 @@
   font-size: 0.9em;
 
   @media screen and (max-width: $screen-laptop) {
-    table-layout: unset;
+    font-size: 0.53rem;
+    max-width: 570px;
+    min-width: 200px;
+    td {
+      font-weight: bolder;
+    }
+
+   
+  }
+
+  @media screen and (max-width: $screen-mobile) {
+    min-width: 100px;
   }
 }
 
 //Forms
 @mixin form-template {
   padding: 15px;
-  border-radius: 5px;
+  
   background-color: $form-color;
   font-size: 0.9rem;
   color: $form-input;
@@ -147,11 +169,23 @@
 
     input {
       font-size: 0.8rem;
-      
     }
 
-    select{
+    select {
       max-width: 150px;
+    }
+  }
+
+  @media screen and (max-width: $screen-mobile) {
+    max-width: 300px;
+    label {
+      font-size: 0.6rem;
+    }
+
+    input,
+    select {
+      font-size: 0.68rem;
+      max-width: 2px !important;
     }
   }
 }
@@ -162,6 +196,7 @@
   border-radius: 3px;
   max-height: 20px;
   margin-top: 5px;
+  margin-left: 5px;
   background-color: rgb(252, 252, 252);
   min-width: 185px;
   color: $form-input;
@@ -169,6 +204,11 @@
 
   @media screen and (max-width: $screen-laptop) {
     min-width: 100px;
+    font-size: $font-laptop;
+  }
+
+  @media screen and (max-width: $screen-mobile) {
+    width: 30px !important;
     font-size: $font-laptop;
   }
 }
@@ -182,3 +222,18 @@
   box-shadow: rgb(204, 219, 232) 1px 1px 6px 0px inset,
     rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }
+
+//Notification badge
+@mixin notification {
+  border-radius: 50%;
+  background: $button-list;
+  color: white;
+  font-weight: bold;
+  font-size: 0.7rem;
+  padding: 2px 5px;
+  margin-left: 5px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+
