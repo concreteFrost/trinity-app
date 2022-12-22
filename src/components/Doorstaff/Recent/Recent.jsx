@@ -37,15 +37,13 @@ export const Recent = (props) => {
       Header: "APPROVAL LEVEL",
       accessor:"status"
     },
-
-
     ,]
 
   const user = useSelector((state) => state.userReducer.user);
 
   const recent = useSelector((state) => state.doorstaffReducer.recent);
   const dispatch = useDispatch();
-    console.log(recent)
+  
   const [fDate, setFromDate] = useState(new Date().toISOString().split("T")[0]);
   const [tDate, setToDate] = useState(new Date().toISOString().split("T")[0]);
 
@@ -74,6 +72,7 @@ export const Recent = (props) => {
     })
       .then((res) => {
         dispatch({type: GET_RECENT_DOORSTAFF, data : res.data.reportRecord})
+        console.log(res.data)
       })
   }
 

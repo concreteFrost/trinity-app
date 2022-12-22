@@ -45,7 +45,7 @@
 
 @mixin table_wrapper {
 
-  overflow-x: scroll;
+  overflow-x: auto;
   box-shadow: $soft-shadow;
   border-radius: 5px;
 
