@@ -41,10 +41,31 @@
   @media screen and (max-width: $screen-mobile) {
     font-size: 0.46rem;
   }
+
+  &:hover {
+    transform: scale(0.99);
+    transition: opacity 0.1s;
+    opacity: 0.8;
+  }
+
+  &:active {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add the echo effect */
+    animation: echo 0.1s;
+  }
+
+  transition: transform 0.2s;
+
+  @keyframes echo {
+    from {
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+    to {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+  }
 }
 
 @mixin table_wrapper {
-
   overflow-x: auto;
   box-shadow: $soft-shadow;
   border-radius: 5px;
@@ -54,23 +75,23 @@
   }
 
   @media screen and (max-width: $screen-tablet) {
-    max-width:500px;
-
+    max-width: 500px;
   }
 
   @media screen and (max-width: $screen-mobile) {
-    max-width: 425px;
+    max-width: 350px;
   }
 }
 
 //Tables
 @mixin main-tables {
   font-family: $table-font;
+  font-size: 0.8rem !important;
   background-color: $nav-color;
   border-radius: 5px;
   border-collapse: collapse;
-  min-width: 400px;
-  
+  min-width: 650px;
+
   text-align: left;
   width: auto;
   overflow-x: auto;
@@ -112,24 +133,30 @@
     display: table-row-group;
   }
 
+  tr{
+    &:hover{
+      opacity: 0.87;
+      transition: opacity 0.5s;
+    }
+    
+  }
+ 
+
   button {
     @include btn($button-submit);
     margin-left: 0;
     box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
       rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+    font-size: 0.7rem;
+    font-weight: lighter;
   }
-
-  font-size: 0.9em;
 
   @media screen and (max-width: $screen-laptop) {
     font-size: 0.53rem;
-    max-width: 570px;
-    min-width: 200px;
+
     td {
       font-weight: bolder;
     }
-
-   
   }
 
   @media screen and (max-width: $screen-mobile) {
@@ -140,7 +167,7 @@
 //Forms
 @mixin form-template {
   padding: 15px;
-  
+
   background-color: $form-color;
   font-size: 0.9rem;
   color: $form-input;
@@ -159,6 +186,12 @@
   select,
   input {
     @include form-input;
+  }
+
+  select:empty {
+    option {
+      opacity: 0;
+    }
   }
 
   @media screen and (max-width: $screen-laptop) {
@@ -204,13 +237,17 @@
 
   @media screen and (max-width: $screen-laptop) {
     min-width: 100px;
+    max-width: 110px;
     font-size: $font-laptop;
   }
 
   @media screen and (max-width: $screen-mobile) {
-    width: 30px !important;
+    min-width: 80px !important;
+    max-width: 100px;
     font-size: $font-laptop;
   }
+
+  @include smooth-input-outline;
 }
 
 //Text Areas
@@ -221,6 +258,8 @@
   border-radius: 3px;
   box-shadow: rgb(204, 219, 232) 1px 1px 6px 0px inset,
     rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+
+  @include smooth-input-outline;
 }
 
 //Notification badge
@@ -236,4 +275,14 @@
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
+@mixin smooth-input-outline {
+  outline: none;
+  &:focus {
+    transition: box-shadow 0.4s;
+    box-shadow: rgba(71, 71, 71, 0.5) 0.3px 0.3px 1.5px 1px inset,
+      rgba(206, 191, 186, 0.5) -0.3px -0.3px 1.5px 1px inset;
+    background-color: rgb(247, 247, 247);
+  }
 
+  transition: box-shadow 0.4s;
+}

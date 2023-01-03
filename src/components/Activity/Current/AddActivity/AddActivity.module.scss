@@ -1,80 +1,85 @@
-@import 'src/scss/variables';
+@import "src/scss/variables";
 @import "src/scss/mixins";
 
 .container {
+  display: grid;
+  margin-left: auto;
+  margin-right: auto;
 
+  form {
+    @include form-template;
     display: grid;
-    margin-left: auto;
-    margin-right: auto;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  textarea {
+    @include form-textarea;
+  }
+
+  .buttons {
+    grid-column: 1/4;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    button {
+      margin-left: 5px;
+    }
+  }
+
+  .notes {
+    grid-column: 1/4;
+  }
+
+  .radio {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
    
 
-    form {
-        @include form-template;
-        display: grid;
-        grid-template-rows: 1fr ;
-        grid-template-columns: 1fr 1fr ;
-        gap: 10px;
-
-
+    input {
+      min-width: auto;
     }
+  }
 
+  .rate_form {
+    margin-top: 10px;
+  }
+
+  .check_rate {
+    grid-row: 2/3;
+    grid-column: 1/4;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    button {
+      @include btn($button-submit);
+    }
+  }
+
+  .clear {
+    @include btn($button-cancel);
+  }
+
+  .add {
+    @include btn($button-submit);
+  }
+
+  @media screen and (max-width: $screen-tablet) {
     textarea {
-        @include form-textarea;
+      max-width: 300px;
+    } 
+  }
+
+  @media screen and (max-width: $screen-mobile) {
+    .radio{
+      grid-template-columns: 50px 50px;
+
+      
     }
-  
-    .buttons {
-
-        grid-column: 1/4;
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-       
-        button{
-            margin-left: 5px;
-        }
-        
-    }
-
-    .notes{
-        grid-column: 1/4;
-    }
-
-    .radio {
-        display: flex;
-
-        align-items: flex-end;
-
-        input {
-            min-width: auto;
-        }
-
-    }
-
-    .rate_form{
-        margin-top: 10px;
-    }
-
-
-    .check_rate{
     
-        grid-row: 2/3;
-        grid-column: 1/4;
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        
-        button{
-            @include btn($button-submit);
-        }
-    }
-
-    .clear {
-        @include btn($button-cancel);
-    }
-
-    .add {
-        @include btn($button-submit);
-    }
-
-
+  }
 }

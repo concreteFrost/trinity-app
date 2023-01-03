@@ -37,8 +37,8 @@ export const Current = (props) => {
       <table className={s.doorstaff_table}>
         <thead>
           <tr>
-            <th>SURNAME</th>
-            <th>FIRST NAME</th>
+            <th>NAME</th>
+           
             <th>JOB ROLE</th>
             <th>START TIME</th>
             <th>DATE</th>
@@ -49,8 +49,8 @@ export const Current = (props) => {
           {doorstaff.length > 0 ? (
             doorstaff.map((e) => (
               <tr key={e.staffId}>
-                <td>{e.staffName.split(" ")[0]}</td>
-                <td>{e.staffName.split(" ")[1]}</td>
+                <td>{e.staffName}</td>
+              
                 <td>{e.position}</td>
                 <td>{e.startTime.split('T')[1].substring(0, 5)}</td>
                 <td>{e.startTime.split('T')[0]}</td>

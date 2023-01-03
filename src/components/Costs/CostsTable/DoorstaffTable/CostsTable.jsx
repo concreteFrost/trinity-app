@@ -1,5 +1,4 @@
 import s from "./CostsTable.module.scss";
-import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 
 export const CostsTable = (props) => {
@@ -8,9 +7,9 @@ export const CostsTable = (props) => {
       <div className={s.table_and_header}>
         <div>
           <h4>
-            DAILY{" "}
+            DAILY
             {props.data.daily.length > 0
-              ? props.data.daily[0].dateFrom.split("T")[0]
+              ? ": " + props.data.daily[0].dateFrom.split("T")[0]
               : null}
           </h4>
         </div>
@@ -35,7 +34,6 @@ export const CostsTable = (props) => {
                 })
               ) : (
                 <tr>
-                  {" "}
                   <td colSpan={3}>Nothing to show...</td>
                 </tr>
               )}
@@ -47,9 +45,9 @@ export const CostsTable = (props) => {
       <div className={s.table_and_header}>
         <div>
           <h4>
-            WEEKLY{" "}
+            WEEKLY
             {props.data.weekly.length > 0
-              ? props.data.weekly[0].dateFrom.split("T")[0] +
+              ?": " +  props.data.weekly[0].dateFrom.split("T")[0] +
                 "/" +
                 props.data.weekly[0].dateTo.split("T")[0]
               : null}
@@ -75,7 +73,7 @@ export const CostsTable = (props) => {
                 })
               ) : (
                 <tr>
-                  {" "}
+
                   <td colSpan={3}>Nothing to show...</td>
                 </tr>
               )}
@@ -87,9 +85,9 @@ export const CostsTable = (props) => {
       <div className={s.table_and_header}>
         <div>
           <h4>
-            MONTHLY{" "}
+            MONTHLY
             {props.data.monthly.length > 0
-              ? props.data.monthly[0].dateFrom.split("T")[0] +
+              ?": " +  props.data.monthly[0].dateFrom.split("T")[0] +
                 "/" +
                 props.data.monthly[0].dateTo.split("T")[0]
               : null}
@@ -115,7 +113,7 @@ export const CostsTable = (props) => {
                 })
               ) : (
                 <tr>
-                  {" "}
+                
                   <td colSpan={3}>Nothing to show...</td>
                 </tr>
               )}

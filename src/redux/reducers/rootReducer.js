@@ -11,6 +11,7 @@ import { getActivityReducer } from "./getActivityReducer";
 import { authoriseReducer } from "./authoriseReducer";
 import { modalPromptReducer } from "./modalPromptReducer";
 import { searchActivitiesReducer } from "./searchActivitesReducer";
+import { searchHistoryReducer } from "./searchHistoryReducer";
 import { LOGOFF } from "../types";
 
 
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
   userReducer,siaReducer,doorstaffReducer,
   costsReducer, activityReducer, getActivityReducer,
    authoriseReducer,summaryReducer, searchActivitiesReducer,
+   searchHistoryReducer,
   modalMessageReducer, modalPromptReducer, loaderReducer
 })
 

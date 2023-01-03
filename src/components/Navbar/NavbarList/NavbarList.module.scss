@@ -8,6 +8,12 @@
     color: white;
     text-decoration: none;
     margin-left: 10px;
+
+    &:hover{
+      opacity: 0.8;
+      transition: opacity 0.3s;
+
+    }
   }
 
   button {
@@ -17,6 +23,7 @@
 
   .active {
     color: rgb(242, 119, 29);
+    transition: color 0.5s;
   }
 
   .default {

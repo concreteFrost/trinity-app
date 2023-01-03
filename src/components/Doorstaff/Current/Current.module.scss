@@ -11,6 +11,13 @@
   .doorstaff_table {
     @include main-tables;
     
+    input{
+      min-width: 100px ;
+      max-width: 100px;
+    }
+
+ 
+    
   }
   .signoff {
     display: flex;
@@ -24,6 +31,8 @@
 
   button{
     margin-left: 10px !important;
+    
+
   }
 
   .error{

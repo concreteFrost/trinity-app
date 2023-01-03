@@ -1,5 +1,12 @@
 import axios from "axios";
 import { baseUrl } from "../../contexts/baseUrl";
+import {GET_ACTIVITIES_SEARCH_LOCATIONS_GROUP_OPT,
+  GET_ACTIVITIES_SEARCH_SUPPLIERS_OPT,
+  GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_GROUP_OPT,
+  GET_ACTIVITIES_SEARCH_LOCATIONS_OPT,
+  GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_OPT,
+  GET_ACTIVITIES_SEARCH_STAFF_OPT,
+} from "../types"
 
 export function GetSearchSuppliers(token) {
   return function (dispatch) {
@@ -12,7 +19,7 @@ export function GetSearchSuppliers(token) {
       })
       .then((res) =>
         dispatch({
-          type: "GET_ACTIVITIES_SEARCH_SUPPLIERS_OPT",
+          type: GET_ACTIVITIES_SEARCH_SUPPLIERS_OPT,
           data: res.data.record,
         })
       )
@@ -31,7 +38,7 @@ export function GetSearchLocations(token) {
       })
       .then((res) =>
         dispatch({
-          type: "GET_ACTIVITIES_SEARCH_LOCATIONS_OPT",
+          type: GET_ACTIVITIES_SEARCH_LOCATIONS_OPT,
           data: res.data.record,
         })
       )
@@ -49,7 +56,7 @@ export function GetSearchLocationsGroup(token) {
       })
       .then((res) =>
         dispatch({
-          type: "GET_ACTIVITIES_SEARCH_LOCATIONS_GROUP_OPT",
+          type: GET_ACTIVITIES_SEARCH_LOCATIONS_GROUP_OPT,
           data: res.data.record,
         })
       )
@@ -68,7 +75,7 @@ export function GetSearchStaff(token) {
       })
       .then((res) =>
         dispatch({
-          type: "GET_ACTIVITIES_SEARCH_STAFF_OPT",
+          type: GET_ACTIVITIES_SEARCH_STAFF_OPT,
           data: res.data.record,
         })
       )
@@ -87,7 +94,7 @@ export function GetSearchPaymentStatus(token) {
       })
       .then((res) =>
         dispatch({
-          type: "GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_OPT",
+          type: GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_OPT,
           data: res.data.record,
         })
       )
@@ -106,7 +113,7 @@ export function GetSearchPaymentStatusGroup(token) {
       })
       .then((res) =>
         dispatch({
-          type: "GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_GROUP_OPT",
+          type: GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_GROUP_OPT,
           data: res.data.record,
         })
       )

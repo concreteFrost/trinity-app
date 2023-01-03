@@ -31,7 +31,7 @@ export const Doorstaff = () => {
     <div className={s.container}>
       <header>
         <h1>DOORSTAFF MANAGEMENT</h1>
-        <SwitchView defineView={DefineView} currentView={view} countedActivity={disputedctivity.length}></SwitchView>
+        <SwitchView defineView={DefineView} inputs={['current','recent','disputed']} currentView={view} countedActivity={disputedctivity.length}></SwitchView>
       </header>
 
       <main>

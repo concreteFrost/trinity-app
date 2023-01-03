@@ -5,9 +5,13 @@ import {
   GetActivityTypeOpt,
   GetRate,
   GetSupplierOpt,
-  SubmitActivity
+  SubmitActivity,
 } from "../../../../redux/api/activityApi";
-import { SET_ACTIVITY_COST_VALUE, SET_ACTIVITY_HOURS_WORKED, SET_ACTIVITY_TYPE } from "../../../../redux/types";
+import {
+  SET_ACTIVITY_COST_VALUE,
+  SET_ACTIVITY_HOURS_WORKED,
+  SET_ACTIVITY_TYPE,
+} from "../../../../redux/types";
 
 export const AddActivity = () => {
   const activityOpt = useSelector(
@@ -45,13 +49,16 @@ export const AddActivity = () => {
 
   function CompareRates() {
     if (parseInt(costValue) !== rate.costValue) {
-      dispatch({ type: "SHOW_MODAL_MESSAGE", data: "NOTES input is now required" })
+      dispatch({
+        type: "SHOW_MODAL_MESSAGE",
+        data: "NOTES input is now required",
+      });
       setNoteIsRequired(true);
     } else {
       setNoteIsRequired(false);
     }
-    dispatch({ type: SET_ACTIVITY_COST_VALUE, data: costValue});
-    console.log(costValue)
+    dispatch({ type: SET_ACTIVITY_COST_VALUE, data: costValue });
+    console.log(costValue);
   }
 
   async function FirstSubmit(e) {
@@ -65,9 +72,9 @@ export const AddActivity = () => {
       time: _time,
     };
 
-    await dispatch({type:"SHOW_LOADER"})
+    await dispatch({ type: "SHOW_LOADER" });
     await dispatch(GetRate(token, data));
-    await dispatch({type:"HIDE_LOADER"})
+    await dispatch({ type: "HIDE_LOADER" });
   }
 
   function SecondSubmit(e) {
@@ -84,15 +91,13 @@ export const AddActivity = () => {
       hoursWorked: parseFloat(hoursWorked),
     };
 
-    dispatch(SubmitActivity(token, _data))
-
-
+    dispatch(SubmitActivity(token, _data));
   }
   return (
     <div className={s.container}>
       <form onSubmit={FirstSubmit} className={s.first_form}>
         <div className={s.general}>
-          <label htmlFor="type">TYPE</label>
+          <label htmlFor="type" disabled={activityOpt.length ===0}>TYPE</label>
           <select
             name="type"
             onChange={(e) => {
@@ -102,25 +107,25 @@ export const AddActivity = () => {
           >
             {activityOpt.length > 0
               ? activityOpt.map((e) => {
-                return (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                );
-              })
+                  return (
+                    <option key={e.id} value={e.id}>
+                      {e.name}
+                    </option>
+                  );
+                })
               : null}
           </select>
 
           <label htmlFor="supplier">SUPPLIER</label>
-          <select name="supplier">
+          <select name="supplier" disabled={supplierOpt.length < 1}>
             {supplierOpt.length > 0
               ? supplierOpt.map((e) => {
-                return (
-                  <option key={e.supplierId} value={e.supplierId}>
-                    {e.supplierName}
-                  </option>
-                );
-              })
+                  return (
+                    <option key={e.supplierId} value={e.supplierId}>
+                      {e.supplierName}
+                    </option>
+                  );
+                })
               : null}
           </select>
         </div>
@@ -151,23 +156,26 @@ export const AddActivity = () => {
         <div className={s.rate}>
           <label>RATE</label>
           <div className={s.radio}>
-            <label htmlFor="fixed">fixed</label>
-            <input
-              type="radio"
-              name="rate"
-              id="fixed"
-              checked={rate.rateTypeId === 4 ? true : false}
-              readOnly
-            />
-
-            <label htmlFor="custom">custom</label>
-            <input
-              type="radio"
-              name="rate"
-              id="custom"
-              checked={rate.rateTypeId === 5 ? true : false}
-              readOnly
-            />
+            <div>
+              <label htmlFor="fixed">fixed</label>
+              <input
+                type="radio"
+                name="rate"
+                id="fixed"
+                checked={rate.rateTypeId === 4 ? true : false}
+                readOnly
+              />
+            </div>
+            <div>
+              <label htmlFor="custom">custom</label>
+              <input
+                type="radio"
+                name="rate"
+                id="custom"
+                checked={rate.rateTypeId === 5 ? true : false}
+                readOnly
+              />
+            </div>
           </div>
         </div>
 
@@ -180,7 +188,7 @@ export const AddActivity = () => {
             value={hoursWorked ? hoursWorked : ""}
             onChange={(e) => {
               dispatch({
-                type:SET_ACTIVITY_HOURS_WORKED,
+                type: SET_ACTIVITY_HOURS_WORKED,
                 data: e.target.value,
               });
             }}

@@ -1,6 +1,6 @@
 import s from "./Authorise.module.scss"
 import { ApproveTable } from "./ApproveTable/ApproveTable";
-import { SwitchView } from "./SwitchView/SwitchView";
+import { SwitchView } from "../Shared/SwitchView/SwitchView";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -48,7 +48,7 @@ export const Authorise = () => {
 
     return (<div className={s.container}>
         <header><h1>AUTHORISE</h1>
-            <SwitchView defineView={DefineView} currentView={view}></SwitchView>
+        <SwitchView defineView={DefineView} inputs={['doorstaff','costs']} currentView={view} ></SwitchView>
         </header>
         <main>
             {view === "doorstaff" ? <ApproveTable data={doorstaff} system={"S"} actions={doorstaffActions} tableHeaders={doorstaffHeaders} /> : null}

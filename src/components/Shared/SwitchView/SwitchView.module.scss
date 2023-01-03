@@ -1,11 +1,49 @@
 @import "src/scss/mixins.scss";
 @import "src/scss/variables.scss";
 
-.container{
-   margin-bottom: 20px;
-}
-.countedActivity{
-   @include notification;
+.container {
+  margin-bottom: 20px;
 
+  input[type="radio"]:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #ffffff;
+    content: "";
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid rgb(175, 175, 175);
+    transition: background-color 0.2s;
+    transition: border-radius 0.5s;
+    
+  }
+
+  input[type="radio"]:checked:after {
+
+    width: 8px;
+    height: 8px;
+    left: 3px;
+    top: 0px;
+
+    content: "";
+    box-shadow: 0 0 0 3px rgb(252, 252, 252), 0 0 0 4.5px rgb(192, 119, 29);;
+    background: rgb(228, 134, 12);
+    transition: background-color  1s;
+    transition: box-shadow 0.3s;
+  }
+
+  input[type="radio"]{
+   accent-color: rgb(192, 119, 29);
+   margin-right: 7px;
    
+  }
+  
 }
+.countedActivity {
+  @include notification;
+}
+
+

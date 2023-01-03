@@ -29,7 +29,7 @@ export const Activity = () => {
     <div className={s.container}>
       <header>
         <h1>ACTIVITY</h1>
-        <SwitchView defineView={DefineView} currentView={view} countedActivity={disputedctivity.length}></SwitchView>
+        <SwitchView defineView={DefineView} inputs={['current','recent','disputed']} currentView={view} countedActivity={disputedctivity.length}></SwitchView>
       </header>
       <main>
         {view ==='current'? <><AddActivity></AddActivity>

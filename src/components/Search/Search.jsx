@@ -2,7 +2,7 @@ import s from "./Search.module.scss"
 import { History } from "./History/History";
 import { Activities } from "./Activities/Activities";
 import { useState } from "react";
-import { SwitchView } from "./SwitchView/SwitchView";
+import { SwitchView } from "../Shared/SwitchView/SwitchView";
 
 export const Search = () => {
 
@@ -16,7 +16,7 @@ export const Search = () => {
 
         <div className={s.container}>
             <header><h1>SEARCH</h1>
-                <SwitchView defineView={DefineView} currentView={view}></SwitchView>
+            <SwitchView defineView={DefineView} inputs={['history','activities']} currentView={view} ></SwitchView>
             </header>
 
             <main>

@@ -109,6 +109,8 @@ export const SignIn = (props) => {
                 },
               });
             }}
+
+            disabled={options.positions.length === 0}
           >
             {options.positions.length > 0
               ? options.positions.map((e) => (
@@ -134,6 +136,7 @@ export const SignIn = (props) => {
                 },
               });
             }}
+            disabled = {options.suppliers.length === 0}
           >
             {options.suppliers.length > 0
               ? options.suppliers.map((e) => (
@@ -153,6 +156,7 @@ export const SignIn = (props) => {
             onChange={(e) =>
               dispatch({ type: "SET_DOORSTAFF_RATE", data: e.target.value })
             }
+            disabled={options.rates.length===0}
           >
             {options.rates.length > 0
               ? options.rates.map((e) => (
