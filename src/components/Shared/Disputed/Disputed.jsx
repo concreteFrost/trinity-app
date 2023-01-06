@@ -33,7 +33,7 @@ export const Disputed = (props) => {
       Cell: ({value})=>(
         <div className={s.actions}>
         <div><button value={value} onClick={()=>{viewNote(value)}}>NOTE</button> </div> 
-        <div><button className={s.dispute_btn} onClick={()=>{showDisputeModal(value)}}>DISPUTE</button> </div> 
+        <div><button className={s.dispute_btn} onClick={()=>{showDisputeModal(value)}}>RETURN</button> </div> 
         </div>
         
       )

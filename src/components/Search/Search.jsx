@@ -6,7 +6,7 @@ import { SwitchView } from "../Shared/SwitchView/SwitchView";
 
 export const Search = () => {
 
-    const [view, setView] = useState('history');
+    const [view, setView] = useState('activities');
 
     function DefineView(target) {
         setView(target)
@@ -16,11 +16,11 @@ export const Search = () => {
 
         <div className={s.container}>
             <header><h1>SEARCH</h1>
-            <SwitchView defineView={DefineView} inputs={['history','activities']} currentView={view} ></SwitchView>
+            {/* <SwitchView defineView={DefineView} inputs={['history','activities']} currentView={view} ></SwitchView> */}
             </header>
 
             <main>
-                {view === "history" ? <History></History> : null}
+                {/* {view === "history" ? <History></History> : null} */}
                 {view === "activities" ? <Activities></Activities> : null}
             </main>
         </div>

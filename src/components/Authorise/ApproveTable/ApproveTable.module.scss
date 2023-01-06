@@ -6,7 +6,7 @@
 
         @include main-tables;
     
-
+        @include table-wrapper;
     }
 
     .locations_select {

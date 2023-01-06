@@ -28,24 +28,27 @@ export const ActivitiesForm = () => {
 
   function Submit(e) {
     e.preventDefault();
-
+    const _data = {
+      staffId: e.target[0].value,
+      locationId: e.target[1].value,
+      locationGroupId: e.target[2].value,
+      supplierId: e.target[3].value,
+      paymentStatusId: e.target[4].value,
+      dateFrom: e.target[5].value,
+      dateTo: e.target[6].value,
+    }
+  
     axios(`${baseUrl}/Report/ActivityList`, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",
       },
-      data: {
-        staffId: e.target[0].value,
-        locationId: e.target[1].value,
-        locationGroupId: e.target[2].value,
-        supplierId: e.target[3].value,
-        paymentStatusId: e.target[4].value,
-        dateFrom: e.target[5].value,
-        dateTo: e.target[6].value,
-      },
+      data: _data,
     }).then((res) => {
-      dispatch({ type: "GET_SEARCHED_ACTIVITES", data: res.data.reportRecord });
+      dispatch({ type: "GET_SEARCHED_ACTIVITES", data: res.data.reportRecord })
+      console.log(res);
+     
     });
   }
 

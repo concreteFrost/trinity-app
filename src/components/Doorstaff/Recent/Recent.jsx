@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { GET_RECENT_DOORSTAFF } from "../../../redux/types";
 import axios from "axios";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
+import { GetActivity } from "../../../redux/api/activityApi";
 
 export const Recent = (props) => {
   const tableHeader = [
@@ -44,7 +45,11 @@ export const Recent = (props) => {
   const recent = useSelector((state) => state.doorstaffReducer.recent);
   const dispatch = useDispatch();
   
-  const [fDate, setFromDate] = useState(new Date().toISOString().split("T")[0]);
+  const today = new Date();
+  const weekBefore = new Date(today);
+  weekBefore.setDate(weekBefore.getDate() - 7);
+  const weekBeforeString = weekBefore.toISOString().split("T")[0];
+  const [fDate, setFromDate] = useState(weekBeforeString);
   const [tDate, setToDate] = useState(new Date().toISOString().split("T")[0]);
 
   function Submit(e) {
@@ -62,7 +67,7 @@ export const Recent = (props) => {
       method: "POST",
       data: {
         dateFrom: fromDate,
-        dateTo: toDate,
+        dateTo: toDate.split("T")[0] + "T23:59:999.000Z",
         locationId: parseInt(user.locationId),
         locationGroupId: 0,
         supplierId: 0,
@@ -73,6 +78,8 @@ export const Recent = (props) => {
       .then((res) => {
         dispatch({type: GET_RECENT_DOORSTAFF, data : res.data.reportRecord})
         console.log(res.data)
+        console.log(fromDate)
+        console.log(toDate.split("T")[0] + "T23:59:99.000Z")
       })
   }
 
