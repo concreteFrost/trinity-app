@@ -70,7 +70,7 @@ export function SendDisputed(system, token, dispute) {
             .then(() => {
                 dispatch({ type: RESET_MODAL_ACTIVITY })
                 dispatch(GetAuthorise(system, token))
-            }).catch(e => console.log(e))
+            }).catch(e => console.log(system,token,dispute))
     }
 }
 
@@ -101,6 +101,7 @@ export function ViewAreaDisputedNote(token,system,activityID) {
       }).then(res => {
         if(res.data.record.length > 0)
         dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.record[res.data.record.length-1].name })
+        console.log(res.data)
       })
     }
   }

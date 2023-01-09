@@ -30,6 +30,7 @@ export function GetAuthorise(system, token) {
             });
             break;
         }
+        console.log(res.data)
       });
   };
 }

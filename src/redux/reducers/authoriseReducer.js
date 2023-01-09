@@ -12,6 +12,7 @@ const initialState = {
 }
 
 export const authoriseReducer = (state = initialState, action) => {
+    console.log(state)
     switch (action.type) {
         case GET_AUTHORISE_DOORSTAFF:
             return {
@@ -23,18 +24,12 @@ export const authoriseReducer = (state = initialState, action) => {
             }
         case CHECK_AUTHORISE_DOORSTAFF:
             return {
-                ...state, doorstaff: [...state.doorstaff.map(e => e.activityId === action.data ? { ...e, selected: true } : e)]
+                ...state, doorstaff: [...state.doorstaff.map(e => e.activityId === action.data.id ? { ...e, selected: action.data.selected } : e)]
             }
         case CHECK_ALL_AUTHORISE_DOORSTAFF:
             return {
                 ...state, doorstaff: [...state.doorstaff.map(e => e.selected === true ? e : { ...e, selected: true })]
             }
-
-        case CHECK_ALL_AUTHORISE_DOORSTAFF: {
-            return {
-                ...state, doorstaff: [...state.doorstaff.map(e => e.activityId === action.data ? { ...e, selected: false } : e)]
-            }
-        }
         case UNCHECK_ALL_AUTHORISE_DOORSTAFF:
             return {
                 ...state, doorstaff: [...state.doorstaff.map(e => e.selected === false ? e : { ...e, selected: false })]
@@ -42,13 +37,8 @@ export const authoriseReducer = (state = initialState, action) => {
 
         case CHECK_AUTHORISE_COSTS:
             return {
-                ...state, costs: [...state.costs.map(e => e.activityId === action.data ? { ...e, selected: true } : e)]
+                ...state, costs: [...state.costs.map(e => e.activityId === action.data.id ? { ...e, selected: action.data.selected } : e)]
             }
-        case UNCHECK_AUTHORISE_COSTS: {
-            return {
-                ...state, costs: [...state.costs.map(e => e.activityId === action.data ? { ...e, selected: false } : e)]
-            }
-        }
         case CHECK_ALL_AUTHORISE_COSTS:
             return {
                 ...state, costs: [...state.costs.map(e => e.selected === true ? e : { ...e, selected: true })]

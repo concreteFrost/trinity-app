@@ -8,14 +8,83 @@
     }
 
     main {
-        display: flex;
+        display: grid;
         justify-content: center;
         gap: 10px;
         margin-left: auto;
-        margin-right:auto;
+        margin-right: auto;
         max-width: 1200px;
 
 
     }
+
+    .locations_select {
+        @include form-template;
+        width: 300px;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+    }
+
+
 }
 
+.container {
+    table {
+
+        @include main-tables;
+
+        @include table-wrapper;
+    }
+
+    .locations_select {
+        @include form-template;
+        width: 300px;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+    }
+
+    select {
+        @include form-input;
+    }
+
+    ul {
+
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    li {
+        list-style: none;
+
+        button {
+            margin-left: 10px;
+            @include btn($button-list)
+        }
+    }
+
+    table {
+        .button_dispute {
+            @include btn($button-list)
+        }
+
+        .button_view {
+            @include btn($button-submit)
+        }
+    }
+
+    .actions{
+        display: flex;   
+      
+    }
+
+}
