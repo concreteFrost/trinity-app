@@ -1,7 +1,7 @@
 import { useTable, usePagination, useSortBy } from "react-table";
 import s from "./TableTemplate.module.scss";
 
-export const TableTemplate = ({ columns, data }) => {
+export const TableTemplate = ({ columns, data, hiddenColumn }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -21,6 +21,9 @@ export const TableTemplate = ({ columns, data }) => {
     {
       columns,
       data,
+      initialState:{
+        hiddenColumns:[hiddenColumn]
+      }
     },
     useSortBy,
     usePagination

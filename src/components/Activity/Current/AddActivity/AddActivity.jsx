@@ -58,7 +58,6 @@ export const AddActivity = () => {
       setNoteIsRequired(false);
     }
     dispatch({ type: SET_ACTIVITY_COST_VALUE, data: costValue });
-    console.log(costValue);
   }
 
   async function FirstSubmit(e) {

@@ -4,7 +4,7 @@
 .container {
 
     @include home-page-container;
-
+    
     header {
         @include page-title;
        
@@ -14,12 +14,12 @@
         display: grid;
         gap: 10px;
 
-
     }   
 
     button{
         margin-bottom: 10px;
     }
+
 
 
 

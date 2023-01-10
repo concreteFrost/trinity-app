@@ -75,7 +75,7 @@
   }
 
   @media screen and (max-width: $screen-tablet) {
-    max-width: 500px;
+    max-width: 480px;
   }
 
   @media screen and (max-width: $screen-mobile) {
@@ -152,28 +152,22 @@
   }
 
   @media screen and (max-width: $screen-laptop) {
-    font-size: 0.53rem;
-
-    td {
-      font-weight: bolder;
+    th,td {
+      font-size: 0.6rem;
+      
     }
-  }
-
-  @media screen and (max-width: $screen-mobile) {
-    min-width: 100px;
   }
 }
 
 //Forms
 @mixin form-template {
   padding: 15px;
-
   background-color: $form-color;
   font-size: 0.9rem;
   color: $form-input;
   box-shadow: 5px;
   box-shadow: $soft-shadow;
-  max-height: 320px;
+  
   input,
   label {
     display: block;
@@ -183,43 +177,29 @@
     font-family: $form-font;
   }
 
-  select,
-  input {
+
+  select, select:empty,
+  input[type="number"],
+  input[type="date"],
+  input[type="time"],
+  input[type="text"] {
     @include form-input;
   }
 
-  select:empty {
-    option {
-      opacity: 0;
-    }
-  }
-
   @media screen and (max-width: $screen-laptop) {
-    max-width: 500px;
+    
     label {
       font-size: 0.7rem;
     }
 
-    input {
-      font-size: 0.8rem;
-    }
-
-    select {
-      max-width: 150px;
-    }
   }
 
   @media screen and (max-width: $screen-mobile) {
-    max-width: 300px;
+   
     label {
       font-size: 0.6rem;
     }
 
-    input,
-    select {
-      font-size: 0.68rem;
-      max-width: 2px !important;
-    }
   }
 }
 
@@ -231,20 +211,18 @@
   margin-top: 5px;
   margin-left: 5px;
   background-color: rgb(252, 252, 252);
-  min-width: 185px;
+  width: 150px ;
   color: $form-input;
   font-family: $form-font;
 
   @media screen and (max-width: $screen-laptop) {
-    min-width: 100px;
-    max-width: 110px;
+    width: 110px;
     font-size: $font-laptop;
   }
 
   @media screen and (max-width: $screen-mobile) {
-    min-width: 80px !important;
-    max-width: 100px;
-    font-size: $font-laptop;
+    width: 100px;
+  
   }
 
   @include smooth-input-outline;

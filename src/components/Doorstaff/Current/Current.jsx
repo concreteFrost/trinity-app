@@ -5,8 +5,6 @@ import { useEffect } from "react";
 
 export const Current = (props) => {
 
-  
-
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.userReducer.user);

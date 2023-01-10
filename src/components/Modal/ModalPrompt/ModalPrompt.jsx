@@ -21,7 +21,7 @@ export const ModalPrompt = (props) => {
     return (
         <>
             {show.showModal === true ? <div className={s.container}>
-                <div className={s.modal_window}>
+                <div className={s.modal_window} >
                     <div className={s.modal_message}>{show.message}
                     </div>
                     <div className={s.input_body}>

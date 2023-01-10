@@ -11,7 +11,7 @@ export const CostsAndPayments=(props)=>{
 
      const toDispute = useSelector(state => state.modalPromptReducer)
      const token = useSelector((state) => state.userReducer.user.access_token);
-     
+     console.log('hide',props)
      const dispatch = useDispatch()
 
      useEffect(() => {
@@ -52,7 +52,7 @@ export const CostsAndPayments=(props)=>{
          <div className={props.container}>
                <ModalPrompt submitForm={DisputeActivity} ></ModalPrompt>
                <header><h2>{props.title}</h2></header>
-          <TableTemplate columns={props.tableHeaders} data={props.data}></TableTemplate>
+          <TableTemplate columns={props.tableHeaders} data={props.data} hiddenColumn={props.tableToHide}></TableTemplate>
 
         <div>
              <ul>

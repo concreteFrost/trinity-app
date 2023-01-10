@@ -9,8 +9,6 @@
   form {
     @include form-template;
     display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
 
@@ -46,6 +44,7 @@
 
   .rate_form {
     margin-top: 10px;
+    grid-template-columns: 1fr;
   }
 
   .check_rate {

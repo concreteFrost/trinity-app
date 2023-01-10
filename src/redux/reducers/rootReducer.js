@@ -6,6 +6,7 @@ import { activityReducer } from "./activityReducer";
 import { combineReducers } from "redux";
 import { summaryReducer } from "./summaryReducer";
 import { modalMessageReducer } from "./modalMessageReducer";
+import { modalLogoutReducer } from "./modalLogoutReducer";
 import { loaderReducer } from "./loaderReducer";
 import { getActivityReducer } from "./getActivityReducer";
 import { authoriseReducer } from "./authoriseReducer";
@@ -20,7 +21,7 @@ const appReducer = combineReducers({
   costsReducer, activityReducer, getActivityReducer,
    authoriseReducer,summaryReducer, searchActivitiesReducer,
    searchHistoryReducer,
-  modalMessageReducer, modalPromptReducer, loaderReducer
+  modalMessageReducer, modalPromptReducer,modalLogoutReducer ,loaderReducer
 })
 
 export const rootReducer = (state, action) => {

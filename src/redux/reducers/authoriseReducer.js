@@ -12,7 +12,7 @@ const initialState = {
 }
 
 export const authoriseReducer = (state = initialState, action) => {
-    console.log(state)
+
     switch (action.type) {
         case GET_AUTHORISE_DOORSTAFF:
             return {

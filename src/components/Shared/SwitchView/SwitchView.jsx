@@ -2,7 +2,7 @@ import s from "./SwitchView.module.scss";
 
 export const SwitchView = (props) => {
   const inputs = [];
-
+  console.log(props.countedActivity)
   for (let i = 0; i < props.inputs.length; i++) {
     inputs.push(
       <>
@@ -20,7 +20,6 @@ export const SwitchView = (props) => {
       </>
     );
   }
-  console.log(props.inputs);
 
-  return <div className={s.container}>{inputs}</div>;
+  return <div className={s.container}>{inputs} <span className={s.countedActivity}>{props.countedActivity}</span></div>;
 };

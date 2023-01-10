@@ -43,7 +43,7 @@ export const Recent = (props) => {
     ,]
 
   const token = useSelector((state) => state.userReducer.user.access_token);
-    console.log(token)
+
   const recentActivity = useSelector(s => s.getActivityReducer.recent)
   const dispatch = useDispatch();
 
@@ -60,8 +60,6 @@ export const Recent = (props) => {
 
     if (fromDate.length > 0 && toDate.length > 0)
       dispatch(GetActivity(token, fromDate, toDate, "R"));
-
-
   }
 
   return (

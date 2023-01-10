@@ -15,12 +15,13 @@ export function GetDisputedActivity(token, system) {
             switch(system){
                 case "S":
                     dispatch({ type: GET_DISPUTED_DOORSTAFF, data: res.data.reportRecord })
+                    
                     break;
                 case "A":
-
                     dispatch({ type: GET_DISPUTED_ACTIVITY, data: res.data.reportRecord })
                     break;
             }
+            dispatch({ type: "GET_DISPUTED_COUNT", data: res.data.reportRecord.length })
         
         }
         )

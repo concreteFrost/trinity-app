@@ -33,7 +33,6 @@ export const Doorstaff = () => {
         <h1>DOORSTAFF MANAGEMENT</h1>
         <SwitchView defineView={DefineView} inputs={['current','recent','disputed']} currentView={view} countedActivity={disputedctivity.length}></SwitchView>
       </header>
-
       <main>
 
         {view === 'current' ? <>
