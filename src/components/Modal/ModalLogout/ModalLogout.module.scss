@@ -44,8 +44,10 @@
 
     text-align: center;
     margin: 10px;
+   
     button{
-    @include btn($button-submit)
+    @include btn($button-submit);
+    margin-left: 5px;
     }
 }
 

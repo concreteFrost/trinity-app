@@ -9,12 +9,12 @@ import { useState } from "react";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  let count = 0;
+
   const token = useSelector((state) => state.userReducer.user.access_token);
   const disputedCount = useSelector(
     (state) => state.modalMessageReducer.disputedCount
   );
-  const [isLoading, setIsLoading] = useState(true);
+
   const shown = JSON.parse(localStorage.getItem("activityShown"));
 
   async function call(system) {
@@ -28,20 +28,19 @@ export const Home = () => {
       .then((res) => {
         if (res.data.reportRecord.length > 0) {
           if (system === "S") {
-            dispatch({ type: "SHOW_DISPUTED_SIA_MODAL", data :res.data.reportRecord.length });
+            dispatch({ type: "SET_DISPUTED_SIA_COUNT_MODAL", data :res.data.reportRecord.length });
           } else {
-            dispatch({ type: "SHOW_DISPUTED_CC_MODAL", data :res.data.reportRecord.length});
+            dispatch({ type: "SET_DISPUTED_CC_COUNT_MODAL", data :res.data.reportRecord.length});
           }
-
+          dispatch({type:"SET_MODAL_MESSAGE_HEADER", data: "Review disputes"})
+          dispatch({ type: "SHOW_MODAL_MESSAGE", data: ""});
         }
       });
   }
-  if (isLoading)
+  if (shown===false)
     Promise.resolve(call("S"))
       .then(call("A"))
       .finally(() => {
-        dispatch({ type: "SHOW_MODAL_MESSAGE", data: ""});
-        setIsLoading(false);
       });
 
   return (

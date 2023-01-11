@@ -8,7 +8,7 @@ export const Costs = () => {
     const costs = useSelector(state=> state.costsReducer.costs)
     return (
         <div className={s.container}>
-            <header><h1>COSTS</h1></header>
+            <header><h1>SUMMARY REVIEW</h1></header>
            
             <main> 
                 <CostsForm></CostsForm>

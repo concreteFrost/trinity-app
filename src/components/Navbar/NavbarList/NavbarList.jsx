@@ -32,7 +32,7 @@ export const NavbarList = (props) => {
         className={({ isActive }) => (isActive ? s.active : s.default)}
         to="/costs"
       >
-        COSTS
+        REVIEW
       </NavLink>
       <NavLink
         className={({ isActive }) => (isActive ? s.active : s.default)}

@@ -16,12 +16,15 @@ export const Doorstaff = () => {
 
   const token = useSelector((state) => state.userReducer.user.access_token);
   const dispatch = useDispatch();
-
+  const currentSection = useSelector((state)=> state.modalMessageReducer.currentSection);
     const disputedctivity = useSelector(s => s.doorstaffReducer.disputed)
     useEffect(()=>{
       dispatch(GetDisputedActivity(token,"S"))
+      if(currentSection ==='disputed')
+      setView('disputed')
   },[])
-
+   
+    console.log(currentSection)
 
   function DefineView(target) {
     setView(target)

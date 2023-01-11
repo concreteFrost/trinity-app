@@ -2,9 +2,11 @@ import { SHOW_MODAL_MESSAGE, HIDE_MODAL_MESSAGE } from "../types";
 
 const initialState = {
   showModal: false,
+  header:"",
   message: "",
   DisputedSIA: 0,
   DisputedСС: 0,
+  currentSection:""
 };
 
 export const modalMessageReducer = (state = initialState, action) => {
@@ -16,17 +18,22 @@ export const modalMessageReducer = (state = initialState, action) => {
         message: action.data,
       };
     case HIDE_MODAL_MESSAGE: {
-      return { ...state, showModal: false, message: "" };
+      return  {...initialState, currentSection: 'disputed'};
     }
-    case "SHOW_DISPUTED_SIA_MODAL":
+    case "SET_MODAL_MESSAGE_HEADER": {
+      return { ...state, showModal: false, header: action.data };
+    }
+    case "SET_DISPUTED_SIA_COUNT_MODAL":
       return {
         ...state,
         DisputedSIA: action.data,
+    
       };
-    case "SHOW_DISPUTED_CC_MODAL":
+    case "SET_DISPUTED_CC_COUNT_MODAL":
       return {
         ...state,
         DisputedCC: action.data,
+    
       };
 
     default:

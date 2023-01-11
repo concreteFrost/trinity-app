@@ -13,14 +13,16 @@ export const ModalMessage = (props) => {
     localStorage.setItem("activityShown", true);
   }
 
-  function viewSIAdisputes(){
+  function viewSIAdisputes() {
     nav('/doorstaff')
-    dispatch({type: HIDE_MODAL_MESSAGE})
+    dispatch({ type: HIDE_MODAL_MESSAGE })
+    localStorage.setItem("activityShown", true);
   }
 
-  function viewCCdisputes(){
+  function viewCCdisputes() {
     nav('/activity')
-    dispatch({type: HIDE_MODAL_MESSAGE})
+    dispatch({ type: HIDE_MODAL_MESSAGE })
+    localStorage.setItem("activityShown", true);
   }
 
   return (
@@ -28,19 +30,23 @@ export const ModalMessage = (props) => {
       {show.showModal === true ? (
         <div className={s.container}>
           <div className={s.modal_window}>
+            <div className={s.modal_header}>{show.header}</div>
             <div className={s.modal_message}>{show.message}</div>
-            {show.DisputedSIA > 0 ? (
-              <div>
-                {show.DisputedSIA} SIA disputes
-                <button onClick={viewSIAdisputes}>view</button>
+            <section>
+              {show.DisputedSIA > 0 ? (
+                <div className={s.modal_dispute_activity}>
+                  <span className={s.dispute_count}>{show.DisputedSIA} </span>SIA disputes
+                  <button onClick={viewSIAdisputes}>view</button>
                 </div>
-            ) : null}
-            {show.DisputedCC > 0 ? (
-              <div>{show.DisputedCC} CC disputes
-              <button onClick={viewCCdisputes}>view</button>
-              </div>
-            ) : null}
-            <div></div>
+              ) : null}
+              {show.DisputedCC > 0 ? (
+                <div className={s.modal_dispute_activity}><span className={s.dispute_count}>{show.DisputedCC}</span>CC disputes
+                  <button onClick={viewCCdisputes}>view</button>
+                </div>
+              ) : null}
+            </section>
+
+
             <div className={s.modal_btn}>
               <button onClick={HideModal}>CLOSE</button>
             </div>

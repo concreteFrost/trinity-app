@@ -17,9 +17,13 @@ export const Activity = () => {
   const token = useSelector((state) => state.userReducer.user.access_token);
   const dispatch = useDispatch();
 
+
+    const currentSection = useSelector((state)=> state.modalMessageReducer.currentSection);
     const disputedctivity = useSelector(s => s.getActivityReducer.disputed)
     useEffect(()=>{
       dispatch(GetDisputedActivity(token,"A"))
+      if(currentSection ==='disputed')
+      setView('disputed')
   },[])
 
     function DefineView(target) {
@@ -28,7 +32,7 @@ export const Activity = () => {
   return (
     <div className={s.container}>
       <header>
-        <h1>ACTIVITY</h1>
+        <h1>CENTRAL COSTS MANAGEMENT</h1>
         <SwitchView defineView={DefineView} inputs={['current','recent','disputed']} currentView={view} countedActivity={disputedctivity.length}></SwitchView>
       </header>
       <main>

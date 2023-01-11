@@ -14,7 +14,7 @@
 
 
 .modal_window{
-    padding: 10px;
+    padding: 20px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -34,6 +34,30 @@
     padding: 10px;
     flex: 1;
     word-wrap: break-word;
+
+  
+}
+
+.modal_dispute_activity{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+    
+
+    button{
+        @include btn($button-submit);
+        margin-left: 5px;
+    }
+
+    span{
+        @include notification;
+        margin-right: 10px;
+    }
+}
+
+.modal_header{
+    text-align:center;
 }
 
 .modal_btn{
