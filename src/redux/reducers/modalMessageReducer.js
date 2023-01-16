@@ -1,4 +1,4 @@
-import { SHOW_MODAL_MESSAGE, HIDE_MODAL_MESSAGE } from "../types";
+import { SHOW_MODAL_MESSAGE, HIDE_MODAL_MESSAGE, SET_MODAL_MESSAGE_HEADER, SET_DISPUTED_CC_COUNT_MODAL, SET_DISPUTED_SIA_COUNT_MODAL } from "../types";
 
 const initialState = {
   showModal: false,
@@ -20,16 +20,16 @@ export const modalMessageReducer = (state = initialState, action) => {
     case HIDE_MODAL_MESSAGE: {
       return  {...initialState, currentSection: 'disputed'};
     }
-    case "SET_MODAL_MESSAGE_HEADER": {
+    case SET_MODAL_MESSAGE_HEADER: {
       return { ...state, showModal: false, header: action.data };
     }
-    case "SET_DISPUTED_SIA_COUNT_MODAL":
+    case SET_DISPUTED_SIA_COUNT_MODAL:
       return {
         ...state,
         DisputedSIA: action.data,
     
       };
-    case "SET_DISPUTED_CC_COUNT_MODAL":
+    case SET_DISPUTED_CC_COUNT_MODAL:
       return {
         ...state,
         DisputedCC: action.data,

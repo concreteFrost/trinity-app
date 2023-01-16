@@ -1,6 +1,6 @@
 import axios from "axios";
 import { baseUrl } from "../../contexts/baseUrl";
-import { GET_DISPUTED_ACTIVITY, GET_DISPUTED_DOORSTAFF, SHOW_MODAL_MESSAGE,RESET_MODAL_ACTIVITY } from '../types'
+import { GET_DISPUTED_ACTIVITY, GET_DISPUTED_DOORSTAFF, SHOW_MODAL_MESSAGE,RESET_MODAL_ACTIVITY, GET_DISPUTED_COUNT } from '../types'
 import { GetAuthorise } from "./authoriseApi";
 
 //FOR PUB MANAGER
@@ -21,7 +21,7 @@ export function GetDisputedActivity(token, system) {
                     dispatch({ type: GET_DISPUTED_ACTIVITY, data: res.data.reportRecord })
                     break;
             }
-            dispatch({ type: "GET_DISPUTED_COUNT", data: res.data.reportRecord.length })
+            dispatch({ type: GET_DISPUTED_COUNT, data: res.data.reportRecord.length })
         
         }
         )

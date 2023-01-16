@@ -1,18 +1,17 @@
 import { GET_DOORSTAFF_LIST } from "./types";
 import {
-  GET_SIA_DATA, SET_SIA_NUMBER,
-  SET_SIA_ERROR_MESSAGE, CLEAR_SIA_ERROR_MESSAGE,
-  CLEAR_SIA_DATA
+  GET_SIA_DATA,
+  CLEAR_SIA_DATA, LOGOFF,LOGIN
 } from "./types";
 
 
 //LOGIN ACTIONS
 export function SetLoginDetails(data) {
-  return { type: "LOGIN", data };
+  return { type: LOGIN, data };
 }
 
 export function UserLogOff() {
-  return { type: "LOGOFF" };
+  return { type: LOGOFF };
 }
 
 //SIA ACTIONS

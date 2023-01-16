@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseUrl } from "../../contexts/baseUrl";
+import {GET_HISTORY_AUDIT_LOCATIONS_OPT, GET_HISTORY_AUDIT_STAFF_OPT,GET_HISTORY_AUDIT_TYPE_OPT} from '../types'
 
 export function GetHistoryAuditType(token){
     return function(dispatch){
@@ -9,7 +10,7 @@ export function GetHistoryAuditType(token){
                 "Content-Type": "application/json",
               },
         }).then((res)=>{dispatch(
-            {type: "GET_HISTORY_AUDIT_TYPE_OPT", data: res.data.record})
+            {type: GET_HISTORY_AUDIT_TYPE_OPT, data: res.data.record})
             console.log(res.data)
         }
         )
@@ -27,7 +28,7 @@ export function GetHistorySearchLocations(token) {
         })
         .then((res) =>
           dispatch({
-            type: "GET_HISTORY_AUDIT_LOCATIONS_OPT",
+            type: GET_HISTORY_AUDIT_LOCATIONS_OPT,
             data: res.data.record,
           })
         )
@@ -46,7 +47,7 @@ export function GetHistorySearchLocations(token) {
         })
         .then((res) =>
           dispatch({
-            type: "GET_HISTORY_AUDIT_STAFF_OPT",
+            type: GET_HISTORY_AUDIT_STAFF_OPT,
             data: res.data.record,
           })
         )
