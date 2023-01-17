@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { GET_RECENT_DOORSTAFF } from "../../../redux/types";
 import axios from "axios";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
-import { GetActivity } from "../../../redux/api/activityApi";
+import { Chart } from "../../Shared/Chart/Chart";
 
 export const Recent = (props) => {
   const tableHeader = [
@@ -59,7 +59,7 @@ export const Recent = (props) => {
     const toDate = new Date(e.target[1].value).toISOString();
 
     axios({
-      url: "https://testapi.etrinity.services/TrinityWebApi/api/Report/ActivityList",
+      url: "https://testapi.etrinity.services/TrinityWebApi/api/Report/ActivityList?system=S",
       headers: {
         Authorization: "Bearer " + user.access_token,
         "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export const Recent = (props) => {
         console.log(res.data)
         console.log(fromDate)
         console.log(toDate.split("T")[0] + "T23:59:99.000Z")
-      })
+      }).catch(e=>console.log(e))
   }
 
   
@@ -99,6 +99,7 @@ export const Recent = (props) => {
         <div className={s.view_btn}> <button>VIEW</button></div>
       </form>
       <TableTemplate columns={tableHeader} data={recent}></TableTemplate>
+      <Chart activity={recent} system={"S"}></Chart>
     </div>
   );
 };

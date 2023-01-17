@@ -11,8 +11,6 @@ import { GetDisputedActivity } from "../../redux/api/disputedApi";
 import { Route, Routes } from "react-router-dom";
 
 export const Activity = () => {
-  const [view, setView] = useState("current");
-
   const token = useSelector((state) => state.userReducer.user.access_token);
   const dispatch = useDispatch();
 
@@ -22,17 +20,13 @@ export const Activity = () => {
   
   }, []);
 
-  function DefineView(target) {
-    setView(target);
-  }
   return (
     <div className={s.container}>
       <header>
         <h1>CENTRAL COSTS MANAGEMENT</h1>
         <SwitchView
-   
           inputs={["current", "recent", "disputed"]}
-          currentView={view}
+          currentView={"current"}
           countedActivity={disputedctivity.length}
         ></SwitchView>
       </header>
