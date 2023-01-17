@@ -3,6 +3,19 @@
 
 .container {
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+
+  label {
+    display: flex;
+    align-items: center;
+  }
+
+  .input_container{
+    margin-right: 5px;
+  }
 
   input[type="radio"]:after {
     width: 15px;
@@ -18,32 +31,28 @@
     border: 1px solid rgb(175, 175, 175);
     transition: background-color 0.2s;
     transition: border-radius 0.5s;
-    
   }
 
   input[type="radio"]:checked:after {
-
     width: 8px;
     height: 8px;
     left: 3px;
     top: 0px;
 
     content: "";
-    box-shadow: 0 0 0 3px rgb(252, 252, 252), 0 0 0 4.5px rgb(192, 119, 29);;
+    box-shadow: 0 0 0 3px rgb(252, 252, 252), 0 0 0 4.5px rgb(192, 119, 29);
     background: rgb(228, 134, 12);
-    transition: background-color  1s;
+    transition: background-color 1s;
     transition: box-shadow 0.3s;
   }
 
-  input[type="radio"]{
-   accent-color: rgb(192, 119, 29);
-   margin-right: 7px;
-   
+  input[type="radio"] {
+    accent-color: rgb(192, 119, 29);
+    margin-right: 7px;
   }
-  
-}
-.countedActivity {
-  @include notification;
-}
 
-
+  .countedActivity {
+    @include notification;
+    
+  }
+}

@@ -10,8 +10,10 @@ import {
   GetSearchStaff,
   GetSearchPaymentStatus,
   GetSearchPaymentStatusGroup,
+  GetSearchedData,
 } from "../../../../redux/api/searchActivitiesApi";
-export const ActivitiesForm = () => {
+import { SHOW_MODAL_MESSAGE } from "../../../../redux/types";
+export const ActivitiesForm = (props) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userReducer.user.access_token);
   const data = useSelector((state) => state.searchActivitiesReducer);
@@ -27,49 +29,57 @@ export const ActivitiesForm = () => {
 
   function Submit(e) {
     e.preventDefault();
-    const _data = {
-      staffId: e.target[0].value,
-      locationId: e.target[1].value,
-      locationGroupId: e.target[2].value,
-      supplierId: e.target[3].value,
-      paymentStatusId: e.target[4].value,
-      dateFrom: e.target[5].value,
-      dateTo: e.target[6].value,
-    };
+    let _data;
 
-    axios(`${baseUrl}/Report/ActivityList`, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "application/json",
-      },
-      data: _data,
-    }).then((res) => {
-      dispatch({ type: "GET_SEARCHED_ACTIVITES", data: res.data.reportRecord });
-      console.log(res);
-    });
+    switch (props.system) {
+      case "S":
+        _data = {
+          staffId: e.target[0].value,
+          locationId: e.target[1].value,
+          locationGroupId: e.target[2].value,
+          supplierId: e.target[3].value,
+          paymentStatusId: e.target[4].value,
+          dateFrom: e.target[5].value,
+          dateTo: e.target[6].value,
+        };
+        break;
+      case "A":
+        _data = {
+          locationId: e.target[0].value,
+          locationGroupId: e.target[1].value,
+          paymentStatusId: e.target[2].value,
+          dateFrom: e.target[3].value,
+          dateTo: e.target[4].value,
+        };
+        break;
+    }
+
+    dispatch(GetSearchedData(props.system, token, _data));
   }
 
   return (
     <div className={s.container}>
+      {/* <header><h2>{props.header}</h2></header> */}
       <form onSubmit={Submit}>
-        <div className={s.staff}>
-          <label htmlFor="staff-group">STAFF/GROUP</label>
-          <select
-            name="staff-group"
-            id="staff-group"
-            disabled={data.options.staff.length === 0}
-          >
-            <option value={0}>All</option>
-            {data.options.staff.length > 0
-              ? data.options.staff.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))
-              : null}
-          </select>
-        </div>
+        {props.currentView === "activities" ? (
+          <div className={s.staff}>
+            <label htmlFor="staff-group">STAFF/GROUP</label>
+            <select
+              name="staff-group"
+              id="staff-group"
+              disabled={data.options.staff.length === 0}
+            >
+              <option value={0}>All</option>
+              {data.options.staff.length > 0
+                ? data.options.staff.map((e) => (
+                    <option key={e.id} value={e.id}>
+                      {e.name}
+                    </option>
+                  ))
+                : null}
+            </select>
+          </div>
+        ) : null}
 
         <div className={s.locations}>
           <label htmlFor="location-group">LOCATION/GROUP</label>
@@ -104,23 +114,25 @@ export const ActivitiesForm = () => {
           </select>
         </div>
 
-        <div className={s.suppliers}>
-          <label htmlFor="supplier-group">SUPPLIER/GROUP</label>
-          <select
-            name="supplier-group"
-            id="supplier-group"
-            disabled={data.options.suppliers.length === 0}
-          >
-            <option value={0}>All</option>
-            {data.options.suppliers.length > 0
-              ? data.options.suppliers.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))
-              : null}
-          </select>
-        </div>
+        {props.currentView === "activities" ? (
+          <div className={s.suppliers}>
+            <label htmlFor="supplier-group">SUPPLIER/GROUP</label>
+            <select
+              name="supplier-group"
+              id="supplier-group"
+              disabled={data.options.suppliers.length === 0}
+            >
+              <option value={0}>All</option>
+              {data.options.suppliers.length > 0
+                ? data.options.suppliers.map((e) => (
+                    <option key={e.id} value={e.id}>
+                      {e.name}
+                    </option>
+                  ))
+                : null}
+            </select>
+          </div>
+        ) : null}
         <div className={s.payment}>
           <label htmlFor="reference">PAYMENT STATUS</label>
           <select

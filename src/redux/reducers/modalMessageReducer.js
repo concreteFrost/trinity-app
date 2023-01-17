@@ -6,7 +6,6 @@ const initialState = {
   message: "",
   DisputedSIA: 0,
   DisputedСС: 0,
-  currentSection:""
 };
 
 export const modalMessageReducer = (state = initialState, action) => {
@@ -18,10 +17,13 @@ export const modalMessageReducer = (state = initialState, action) => {
         message: action.data,
       };
     case HIDE_MODAL_MESSAGE: {
-      return  {...initialState, currentSection: 'disputed'};
+      localStorage.setItem("activityShown", true);
+      return  {...initialState};
     }
     case SET_MODAL_MESSAGE_HEADER: {
-      return { ...state, showModal: false, header: action.data };
+     
+      return { ...state, showModal: false, header: action.data};
+      
     }
     case SET_DISPUTED_SIA_COUNT_MODAL:
       return {

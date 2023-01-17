@@ -22,7 +22,7 @@ export const Login = () => {
         baseUrl+"/Auth/GenerateUniqueReference"
     )
     .then((res) => {
-        console.log(res.data)
+        console.log('clientID')
         localStorage.setItem("clientID", res.data.message);
         clientID = res.data.message;
     });

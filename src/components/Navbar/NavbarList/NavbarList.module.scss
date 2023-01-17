@@ -9,20 +9,19 @@
     text-decoration: none;
     margin-left: 10px;
 
-    &:hover{
+    &:hover {
       opacity: 0.8;
       transition: opacity 0.3s;
-
     }
   }
 
   button {
-    @include btn(rgb(242, 119, 29));
+    @include btn($nav-highlight);
     margin-left: 20px;
   }
 
   .active {
-    color: rgb(242, 119, 29);
+    color: $nav-highlight;
     transition: color 0.5s;
   }
 

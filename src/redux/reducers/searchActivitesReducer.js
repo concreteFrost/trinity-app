@@ -1,13 +1,14 @@
-import {GET_ACTIVITIES_SEARCH_LOCATIONS_GROUP_OPT,
+import {
+  GET_ACTIVITIES_SEARCH_LOCATIONS_GROUP_OPT,
   GET_ACTIVITIES_SEARCH_SUPPLIERS_OPT,
   GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_GROUP_OPT,
   GET_ACTIVITIES_SEARCH_LOCATIONS_OPT,
   GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_OPT,
   GET_ACTIVITIES_SEARCH_STAFF_OPT,
-  GET_SEARCHED_ACTIVITES, 
+  GET_SEARCHED_ACTIVITES,
   SET_ACTIVITIES_SEARCH_FROM_DATE,
-  SET_ACTIVITIES_SEARCH_TO_DATE
-} from "../types"
+  SET_ACTIVITIES_SEARCH_TO_DATE,
+} from "../types";
 
 const initialState = {
   options: {
@@ -19,7 +20,8 @@ const initialState = {
     paymentStatusGroup: [],
   },
 
-  searchedActivities:[],
+  searchedActivities: [],
+  searchedCentralCosts: [],
 
   dateFrom: new Date().toISOString().split("T")[0],
   dateTo: new Date().toISOString().split("T")[0],
@@ -68,11 +70,17 @@ export const searchActivitiesReducer = (state = initialState, action) => {
         ...state,
         dateTo: action.data,
       };
-      case GET_SEARCHED_ACTIVITES:
-        return {
-          ...state,
-          searchedActivities : action.data
-        };
+    case GET_SEARCHED_ACTIVITES:
+      return {
+        ...state,
+        searchedActivities: action.data,
+      };
+
+    case "GET_SEARCHED_COSTS":
+      return {
+        ...state,
+        searchedCentralCosts: action.data,
+      };
 
     default:
       return state;

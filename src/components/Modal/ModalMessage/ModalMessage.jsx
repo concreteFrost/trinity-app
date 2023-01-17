@@ -1,28 +1,25 @@
 import s from "./ModalMessage.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { HIDE_MODAL_MESSAGE } from "../../../redux/types";
 
 export const ModalMessage = (props) => {
   const show = useSelector((state) => state.modalMessageReducer);
   const dispatch = useDispatch();
   const nav = useNavigate();
-  console.log(show);
+
   function HideModal() {
     dispatch({ type: "HIDE_MODAL_MESSAGE" });
-    localStorage.setItem("activityShown", true);
   }
 
   function viewSIAdisputes() {
-    nav('/doorstaff')
+    nav('/doorstaff/disputed')
     dispatch({ type: HIDE_MODAL_MESSAGE })
-    localStorage.setItem("activityShown", true);
   }
 
   function viewCCdisputes() {
-    nav('/activity')
+    nav('/activity/disputed')
     dispatch({ type: HIDE_MODAL_MESSAGE })
-    localStorage.setItem("activityShown", true);
   }
 
   return (

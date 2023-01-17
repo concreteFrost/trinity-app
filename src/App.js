@@ -53,7 +53,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/activity"
+          path="/activity/*"
           element={
             <ProtectedRoute>
               <Activity />
@@ -61,7 +61,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/doorstaff"
+          path="/doorstaff/*"
           element={
             <ProtectedRoute>
               <Doorstaff />
@@ -77,7 +77,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/search"
+          path="/search/*"
           element={
             <ProtectedRoute>
               <Search />
@@ -85,7 +85,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/authorise"
+          path="/authorise/*"
           element={
             <ProtectedRoute>
               <Authorise />

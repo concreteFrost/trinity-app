@@ -1,16 +1,14 @@
 import s from "./Authorise.module.scss";
 import { CostsAndPayments } from "./CostsAndPayments/CostsAndPayments";
 import { SwitchView } from "../Shared/SwitchView/SwitchView";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ViewAreaDisputedNote } from "../../redux/api/disputedApi";
+import { Route,Routes } from "react-router-dom";
 
 export const Authorise = () => {
   const [view, setView] = useState("doorstaff");
   const [_type, setType] = useState("costs");
-  function DefineView(target) {
-    setView(target);
-  }
 
   const doorstaff = useSelector((state) => state.authoriseReducer.doorstaff);
   const token = useSelector((state) => state.userReducer.user.access_token);
@@ -110,7 +108,7 @@ export const Authorise = () => {
       <header>
         <h1>AUTHORISE</h1>
         <SwitchView
-          defineView={DefineView}
+         
           inputs={["doorstaff", "costs"]}
           currentView={view}
         ></SwitchView>
@@ -134,25 +132,34 @@ export const Authorise = () => {
           </select>
         </div>
         <div className={s.table}>
-          {view === "doorstaff" ? (
-            <CostsAndPayments
-              data={doorstaff}
-              tableToHide={showAuthLevel}
-              system="S"
-              tableHeaders={tableHeaders("S", "CHECK_AUTHORISE_DOORSTAFF")}
-              container={s.container}
-              title={"Doorstaff Costs"}
-            />
-          ) : (
-            <CostsAndPayments
-              tableToHide={showAuthLevel}
-              data={costs}
-              system="A"
-              tableHeaders={tableHeaders("A", "CHECK_AUTHORISE_COSTS")}
-              container={s.container}
-              title={"Costs"}
-            />
-          )}
+          <Routes>
+            <Route
+              path="doorstaff"
+              element={
+                <CostsAndPayments
+                  data={doorstaff}
+                  tableToHide={showAuthLevel}
+                  system="S"
+                  tableHeaders={tableHeaders("S", "CHECK_AUTHORISE_DOORSTAFF")}
+                  container={s.container}
+                  title={"Doorstaff Costs"}
+                />
+              }
+            ></Route>
+            <Route
+              path="costs"
+              element={
+                <CostsAndPayments
+                  tableToHide={showAuthLevel}
+                  data={costs}
+                  system="A"
+                  tableHeaders={tableHeaders("A", "CHECK_AUTHORISE_COSTS")}
+                  container={s.container}
+                  title={"Costs"}
+                />
+              }
+            ></Route>
+          </Routes>
         </div>
       </main>
     </div>

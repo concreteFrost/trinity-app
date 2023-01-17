@@ -17,14 +17,14 @@ export const NavbarList = (props) => {
       </NavLink>
       {userReducer.userRole ==3 ?  <NavLink
         className={({ isActive }) => (isActive ? s.active : s.default)}
-        to="/activity"
+        to="/activity/current"
       >
        ACTIVITY
       </NavLink> : null}
      
       {userReducer.userRole ==3 ? <NavLink
         className={({ isActive }) => (isActive ? s.active : s.default)}
-        to="/doorstaff"
+        to="/doorstaff/current"
       >
         DOORSTAFF
       </NavLink> : null }
@@ -36,13 +36,13 @@ export const NavbarList = (props) => {
       </NavLink>
       <NavLink
         className={({ isActive }) => (isActive ? s.active : s.default)}
-        to="/search"
+        to="/search/activities"
       >
         SEARCH
       </NavLink>
       {userReducer.userRole == 2 ? <NavLink
         className={({ isActive }) => (isActive ? s.active : s.default)}
-        to="/authorise"
+        to="/authorise/doorstaff"
       >
         AUTHORISE
       </NavLink> : null}

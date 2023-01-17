@@ -8,39 +8,52 @@ import { Disputed } from "../Shared/Disputed/Disputed";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { GetDisputedActivity } from "../../redux/api/disputedApi";
-
-
+import { Route, Routes } from "react-router-dom";
 
 export const Activity = () => {
-    const [view, setView] = useState('current');
-    
+  const [view, setView] = useState("current");
+
   const token = useSelector((state) => state.userReducer.user.access_token);
   const dispatch = useDispatch();
 
+  const disputedctivity = useSelector((s) => s.getActivityReducer.disputed);
+  useEffect(() => {
+    dispatch(GetDisputedActivity(token, "A"));
+  
+  }, []);
 
-    const currentSection = useSelector((state)=> state.modalMessageReducer.currentSection);
-    const disputedctivity = useSelector(s => s.getActivityReducer.disputed)
-    useEffect(()=>{
-      dispatch(GetDisputedActivity(token,"A"))
-      if(currentSection ==='disputed')
-      setView('disputed')
-  },[])
-
-    function DefineView(target) {
-      setView(target)
-    }
+  function DefineView(target) {
+    setView(target);
+  }
   return (
     <div className={s.container}>
       <header>
         <h1>CENTRAL COSTS MANAGEMENT</h1>
-        <SwitchView defineView={DefineView} inputs={['current','recent','disputed']} currentView={view} countedActivity={disputedctivity.length}></SwitchView>
+        <SwitchView
+   
+          inputs={["current", "recent", "disputed"]}
+          currentView={view}
+          countedActivity={disputedctivity.length}
+        ></SwitchView>
       </header>
-      <main>
-        {view ==='current'? <><AddActivity></AddActivity>
-        <ActivityTable isVisible={true}></ActivityTable></> : null}
-        {view ==='recent'?<><Recent></Recent></> : null}
-        {view ==='disputed'?<><Disputed data={disputedctivity} system={"A"}></Disputed></> : null}
-      </main>
+        <main>
+        <Routes>
+          <Route
+             path="current"
+            element={
+              <>
+                <AddActivity />
+                <ActivityTable isVisible={true} />
+              </>
+            }
+          ></Route>
+          <Route path="recent" element={<Recent></Recent>}></Route>
+          <Route
+            path="disputed"
+            element={<Disputed data={disputedctivity} system={"A"} />}
+          ></Route>
+        </Routes>
+        </main>
     </div>
   );
 };

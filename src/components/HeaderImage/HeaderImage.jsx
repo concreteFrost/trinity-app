@@ -6,9 +6,9 @@ export const HeaderImage = () => {
 
    const nav = useNavigate();
    return (
-      <div className={s.container}>
+      <div className={s.container} onClick={() => { nav('/home') }}> 
          {/* <img src={Logo} alt="Logo" /> */}
-         <h1 onClick={() => { nav('/home') }}>TRINITY</h1>
+         <h1>TRINITY</h1>
       </div>
    );
 }

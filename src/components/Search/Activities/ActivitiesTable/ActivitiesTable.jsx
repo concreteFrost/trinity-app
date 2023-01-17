@@ -1,9 +1,8 @@
 import s from "./ActivitiesTable.module.scss"
-import { useSelector } from "react-redux";
 import { TableTemplate } from "../../../Shared/TableTemplate/TableTemplate";
 
 
-export const ActivitiesTable = () => {
+export const ActivitiesTable = (props) => {
   const tableHeader = [
     {
       Header: "REFERENCE",
@@ -23,10 +22,10 @@ export const ActivitiesTable = () => {
      
     },
     {
-      Header: "TIME",
+      Header: "DATE/TIME",
       accessor:"start",
       Cell: ({ value }) => {
-        return value.split('T');
+        return value.split('T')[0] + " Time: " + value.split("T")[1];
       }
     },
     {
@@ -44,11 +43,10 @@ export const ActivitiesTable = () => {
 
 
     ,]
-  const data = useSelector(state=> state.searchActivitiesReducer.searchedActivities)
-  console.log(data)
+ 
   return(
     <div className={s.container}>   
-     <TableTemplate columns={tableHeader} data={data}></TableTemplate>
+     <TableTemplate columns={tableHeader} data={props.data}></TableTemplate>
   </div>     
     );
 }

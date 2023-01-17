@@ -5,9 +5,11 @@
 //Page Titles
 @mixin page-title {
   padding-top: 20px;
+
   font-family: $central-header;
   text-align: center;
   color: rgb(156, 156, 156);
+
 
   @media screen and (max-width: $screen-laptop) {
     font-size: 0.7rem;
@@ -242,15 +244,18 @@
 
 //Notification badge
 @mixin notification {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
   background: $button-list;
   color: white;
   font-weight: bold;
   font-size: 0.7rem;
-  padding: 2px 5px;
-  margin-left: 5px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  width: 18px;
+  height: 18px;
+  margin-top: 3.5px;
+
 }
 
 @mixin smooth-input-outline {
