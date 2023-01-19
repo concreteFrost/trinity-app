@@ -1,11 +1,11 @@
-import s from "./CostsForm.module.scss"
+import s from "./SummaryForm.module.scss"
 import { useDispatch, useSelector } from "react-redux";
-import { GetCosts } from "../../../redux/api/costAPI";
-import { SET_COSTS_DATE } from "../../../redux/types";
+import {GetCosts} from '../../../../redux/api/costAPI'
+import { SET_COSTS_DATE } from "../../../../redux/types";
 
 
 
-export const CostsForm = () => {
+export const SummaryForm = () => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.userReducer.user.access_token);

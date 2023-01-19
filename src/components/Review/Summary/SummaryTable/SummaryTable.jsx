@@ -1,7 +1,7 @@
-import s from "./CostsTable.module.scss";
+import s from "./SummaryTable.module.scss";
 import { v4 as uuid } from "uuid";
 
-export const CostsTable = (props) => {
+export const SummaryTable = (props) => {
   return (
     <div className={s.container}>
       <div className={s.table_and_header}>

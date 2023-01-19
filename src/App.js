@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "./components/Home/Home";
 import { Doorstaff } from "./components/Doorstaff/Doorstaff";
 import { Activity } from "./components/Activity/Activity";
-import { Costs } from "./components/Costs/Costs";
+import { Review } from "./components/Review/Review";
 import { Search } from "./components/Search/Search";
 import { Authorise } from "./components/Authorise/Authorise";
 import { Login } from "./components/Login/Login";
@@ -69,10 +69,11 @@ function App() {
           }
         ></Route>
         <Route
-          path="/costs"
+          path="/review/*"
+          exact={false}
           element={
             <ProtectedRoute>
-              <Costs />
+              <Review />
             </ProtectedRoute>
           }
         ></Route>

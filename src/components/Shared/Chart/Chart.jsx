@@ -7,6 +7,7 @@ import {
   PointElement,
   LineElement,
   Tooltip,
+  Legend
 } from "chart.js";
 
 ChartJS.register(
@@ -14,7 +15,8 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
-  Tooltip
+  Tooltip,
+  Legend
 );
 
 export const Chart = (props) => {
@@ -50,10 +52,11 @@ export const Chart = (props) => {
     labels: labels,
     datasets: [
       {
+        label:"cost",
         data: payments,
-        backgroundColor: "rgba(75,192,192,0.4)",
-        borderColor: "rgba(75,192,192,1)",
-        borderCapStyle: "butt",
+        backgroundColor: "rgb(76, 105, 138)",
+        borderColor: "rgb(242, 119, 29)",
+
       },
     ],
     options: {

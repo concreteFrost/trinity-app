@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { GET_RECENT_DOORSTAFF } from "../../../redux/types";
 import axios from "axios";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
-import { Chart } from "../../Shared/Chart/Chart";
 
 export const Recent = (props) => {
   const tableHeader = [
@@ -99,7 +98,7 @@ export const Recent = (props) => {
         <div className={s.view_btn}> <button>VIEW</button></div>
       </form>
       <TableTemplate columns={tableHeader} data={recent}></TableTemplate>
-      <Chart activity={recent} system={"S"}></Chart>
+
     </div>
   );
 };

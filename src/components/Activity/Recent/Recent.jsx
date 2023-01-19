@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { GetActivity } from "../../../redux/api/activityApi";
 import { useState } from "react";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
-import { Chart } from "../../Shared/Chart/Chart"
 
 export const Recent = (props) => {
 
@@ -75,7 +74,7 @@ export const Recent = (props) => {
         <div className={s.view_btn}> <button>VIEW</button></div>
       </form>
       <TableTemplate columns={tableHeader} data={recentActivity}></TableTemplate>
-      <Chart activity={recentActivity}></Chart>
+   
     </div>
   );
 };

@@ -3,12 +3,11 @@
 
 .container {
   
-    
     header {
         @include page-title;
     }
 
-    main {
+    .summary_container {
         display: grid;
         gap: 10px;
         height: $grid-height;
@@ -24,11 +23,6 @@
             font-weight: bolder;
             margin-bottom: 10px;
         }
-    }
-
-    .graph{
-        width: 1000px;
-        height: 1000px;
     }
 
 }
