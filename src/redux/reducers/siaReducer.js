@@ -1,6 +1,5 @@
 import {
   GET_SIA_DATA, SET_SIA_NUMBER,
-  SET_SIA_ERROR_MESSAGE, CLEAR_SIA_ERROR_MESSAGE,
   CLEAR_SIA_DATA, GET_DOORSTAFF_SUPPLIER_OPT, GET_DOORSTAFF_POSITION_OPT,
   GET_DOORSTAFF_RATE_OPT, SET_DOORSTAFF_SUPPLIER, SET_DOORSTAFF_POSITION,
   SET_DOORSTAFF_RATE, SET_DOORSTAFF_START_DATE, SET_DOORSTAFF_START_TIME
@@ -24,7 +23,6 @@ const initialState = {
     hour12: false,
   }),
 
-  errorMessage: "",
 };
 
 export const siaReducer = (state = initialState, action) => {
@@ -77,17 +75,6 @@ export const siaReducer = (state = initialState, action) => {
       return {
         ...state, date: action.data
       }
-
-    case SET_SIA_ERROR_MESSAGE:
-      return {
-        ...state,
-        errorMessage: action.data,
-      };
-    case CLEAR_SIA_ERROR_MESSAGE:
-      return {
-        ...state,
-        errorMessage: "",
-      };
 
     default:
       return state;

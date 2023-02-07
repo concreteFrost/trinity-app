@@ -9,9 +9,10 @@
 
     .summary_container {
         display: grid;
-        gap: 10px;
+    
         height: $grid-height;
-        grid-template-rows: 1fr 2fr 3fr;
+        grid-template-rows: 1fr 2fr 2fr;
+       
        
     }
 

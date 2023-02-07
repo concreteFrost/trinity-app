@@ -11,6 +11,7 @@ import {
   SET_ACTIVITY_COST_VALUE,
   SET_ACTIVITY_HOURS_WORKED,
   SET_ACTIVITY_TYPE,
+  SHOW_MODAL_MESSAGE
 } from "../../../../redux/types";
 
 export const AddActivity = () => {
@@ -50,7 +51,7 @@ export const AddActivity = () => {
   function CompareRates() {
     if (parseInt(costValue) !== rate.costValue) {
       dispatch({
-        type: "SHOW_MODAL_MESSAGE",
+        type: SHOW_MODAL_MESSAGE,
         data: "NOTES input is now required",
       });
       setNoteIsRequired(true);

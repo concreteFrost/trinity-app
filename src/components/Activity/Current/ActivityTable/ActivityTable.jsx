@@ -1,5 +1,4 @@
 import s from "./ActivityTable.module.scss"
-import axios from "axios";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { GetActivity } from "../../../../redux/api/activityApi";

@@ -55,7 +55,6 @@ export const Recent = (props) => {
     const fromDate = new Date(e.target[0].value).toISOString();
     const toDate = new Date(e.target[1].value).toISOString();
 
-
     if (fromDate.length > 0 && toDate.length > 0)
       dispatch(GetActivity(token, fromDate, toDate, "R"));
   }

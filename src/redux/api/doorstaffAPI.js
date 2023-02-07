@@ -9,8 +9,6 @@ import {
   SET_DOORSTAFF_RATE,
   SHOW_MODAL_MESSAGE,
   GET_DOORSTAFF_SUPPLIER_OPT,
-  SET_SIA_ERROR_MESSAGE,
-  CLEAR_SIA_ERROR_MESSAGE,
   SET_DOORSTAFF_SUPPLIER,
   GET_DOORSTAFF_RATE_OPT,
 } from "../types";
@@ -67,7 +65,6 @@ export function GetDoorstaffPositions(headers) {
         headers: headers,
       })
       .then((res) => {
-        console.log(res);
         dispatch({ type: GET_DOORSTAFF_POSITION_OPT, data: res.data.position });
         dispatch({ type: SET_DOORSTAFF_POSITION, data: res.data.position[0] });
       })
@@ -107,14 +104,11 @@ export function GetDoorstaffRates(position, supplier, date, headers) {
         }
       )
       .then((res) => {
-        console.log("rates", res);
         if (res.data.success === false) {
-          console.log("false req");
           dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.message });
         }
         dispatch({ type: GET_DOORSTAFF_RATE_OPT, data: res.data.rates });
         dispatch({ type: SET_DOORSTAFF_RATE, data: res.data.rates[0] });
-        console.log(date);
       });
   };
 }
@@ -137,12 +131,22 @@ export function GetDoorstaff(token) {
   };
 }
 
-export function SetDoorStaff(token, data) {
+export function SetDoorStaff(token, sia) {
   return function (dispatch) {
     return axios({
       method: "POST",
       url: `${baseUrl}/Activity/SignOnMember`,
-      data: data,
+      data: {
+        staffId: sia.doorstaff.staffId,
+        staffName: sia.doorstaff.firstName + " " + sia.doorstaff.lastName,
+        positionId: parseInt(sia.position.positionId),
+        position: sia.position.positionName,
+        locationId: parseInt(token.locationId),
+        supplierId: parseInt(sia.supplier.supplierId),
+        supplierName: sia.supplier.supplierName,
+        startTime: sia.date + "T" + sia.time + ":00.7826209+00:00",
+        rateGroupId: sia.rate.rateGroupId,
+      },
       headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",
@@ -150,8 +154,7 @@ export function SetDoorStaff(token, data) {
     })
       .then((res) => {
         if (!res.data.success) {
-          dispatch({ type: SET_SIA_ERROR_MESSAGE, data: res.data.message });
-          setTimeout(() => dispatch({ type: CLEAR_SIA_ERROR_MESSAGE }), 3000);
+          dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.message });
         } else {
           dispatch(GetDoorstaff(token));
           dispatch(ClearSiaData());
@@ -161,8 +164,4 @@ export function SetDoorStaff(token, data) {
         console.log(e.message);
       });
   };
-}
-
-export function GetRecentDoorstaff(){
-  
 }
