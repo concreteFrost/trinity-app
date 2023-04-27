@@ -22,7 +22,6 @@ export const Login = () => {
         baseUrl + "/Auth/GenerateUniqueReference"
       )
       .then((res) => {
-        console.log('clientID')
         localStorage.setItem("clientID", res.data.message);
         clientID = res.data.message;
       });
@@ -37,7 +36,6 @@ export const Login = () => {
   }, [errorMessage]);
 
   useEffect(() => {
-
     if (user) {
       if (new Date() < new Date(user['.expires']))
         dispatch(SetLoginDetails(user))
@@ -48,18 +46,15 @@ export const Login = () => {
         navigate(localStorage.getItem("lastRoute"))
       }
       else {
-        navigate("/home");
+        navigate("/home")
       }
     }
-
-
   }, [isLoggedIn])
-
 
   function submitLogin(e) {
     e.preventDefault();
     dispatch(GetToken(e.target[0].value, clientID))
-    console.log(clientID)
+
   }
   return (
     <div className={s.container}>

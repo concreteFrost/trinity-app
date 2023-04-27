@@ -1,6 +1,6 @@
 import s from "./App.module.scss";
 import { Navbar } from "./components/Navbar/Navbar";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "./components/Home/Home";
 import { Doorstaff } from "./components/Doorstaff/Doorstaff";
 import { Activity } from "./components/Activity/Activity";
@@ -13,14 +13,10 @@ import { useSelector } from "react-redux";
 import { ModalMessage } from "./components/Modal/ModalMessage/ModalMessage";
 import { ModalLogout } from "./components/Modal/ModalLogout/ModalLogout";
 import { TailSpin } from "react-loader-spinner";
-import { useEffect } from "react";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
   const isLoading = useSelector((state) => state.loaderReducer.isLoading);
-
-
-  // useEffect(() => { localStorage.setItem("lastRoute", window.location.pathname) }, [location])
 
   return (
     <div className={s.container}>
@@ -28,6 +24,7 @@ function App() {
       <ModalLogout></ModalLogout>
       {isLoggedIn === true ? <Navbar className={s.nav} /> : null}
       <Routes>
+        <Route path="/" element={isLoggedIn ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route
           path="/home"
@@ -36,7 +33,7 @@ function App() {
               <Home />
             </ProtectedRoute>
           }
-        ></Route>
+        />
         <Route
           path="/activity/*"
           element={
