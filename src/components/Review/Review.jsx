@@ -1,5 +1,6 @@
 import s from "./Review.module.scss";
-import {Analytics} from "./Analytics/Analytics"
+import { PubManagerAnalytics } from "./Analytics/PubManagerAnalytics/PubManagerAnalytics"
+import { AreaManagerAnalytics } from "./Analytics/AreaManagerAnalytics/AreaManagerAnalytics";
 import { SummaryForm } from "./Summary/SummaryForm/SummaryForm";
 import { SummaryTable } from "./Summary/SummaryTable/SummaryTable";
 import { SwitchView } from "../Shared/SwitchView/SwitchView"
@@ -10,6 +11,7 @@ export const Review = () => {
 
   const doorstaff = useSelector((state) => state.costsReducer.doorstaff);
   const costs = useSelector((state) => state.costsReducer.costs);
+  const user = useSelector(state => state.userReducer.user);
 
   return (
     <div className={s.container}>
@@ -33,8 +35,9 @@ export const Review = () => {
             <SummaryTable data={costs}></SummaryTable>
           </div>
         </div >}></Route>
-        <Route path="analytics" element={<Analytics></Analytics>}></Route>
-      </Routes>
+        {user.userRole == 3 ? <Route path="analytics" element={<PubManagerAnalytics></PubManagerAnalytics>}></Route> : null}
+        {user.userRole == 2 ? <Route path="analytics" element={<AreaManagerAnalytics></AreaManagerAnalytics>}></Route> : null}</Routes>
+
 
     </div>
   );

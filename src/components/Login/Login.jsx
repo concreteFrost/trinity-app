@@ -16,18 +16,18 @@ export const Login = () => {
   let clientID = localStorage.getItem("clientID");
   let user = JSON.parse(localStorage.getItem('user'))
 
-  if (!clientID){
+  if (!clientID) {
     axios
-    .get(
-        baseUrl+"/Auth/GenerateUniqueReference"
-    )
-    .then((res) => {
+      .get(
+        baseUrl + "/Auth/GenerateUniqueReference"
+      )
+      .then((res) => {
         console.log('clientID')
         localStorage.setItem("clientID", res.data.message);
         clientID = res.data.message;
-    });
-  } 
-      
+      });
+  }
+
   useEffect(() => {
     if (errorMessage) {
       setTimeout(() => {
@@ -37,14 +37,22 @@ export const Login = () => {
   }, [errorMessage]);
 
   useEffect(() => {
-    if (isLoggedIn)
-      navigate('/home')
 
     if (user) {
       if (new Date() < new Date(user['.expires']))
         dispatch(SetLoginDetails(user))
     }
-   
+
+    if (isLoggedIn) {
+      if (localStorage.getItem("lastRoute")) {
+        navigate(localStorage.getItem("lastRoute"))
+      }
+      else {
+        navigate("/home");
+      }
+    }
+
+
   }, [isLoggedIn])
 
 

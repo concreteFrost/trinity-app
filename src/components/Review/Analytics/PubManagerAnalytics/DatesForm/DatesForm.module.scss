@@ -1,0 +1,28 @@
+@import "src/scss/mixins.scss";
+@import "src/scss/variables.scss";
+
+
+.container {
+  form {
+    @include form-template;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+    width:315px;
+    .view_btn {
+      margin-top: 10px;
+      grid-column: 1/3;
+      grid-row: 2;
+      text-align: center;
+
+      button {
+        @include btn($button-submit)
+      }
+    }
+
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+
+  }
+}

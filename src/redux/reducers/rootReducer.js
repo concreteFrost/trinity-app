@@ -1,5 +1,5 @@
 import { userReducer } from "./userReducer";
-import {siaReducer} from "./siaReducer";
+import { siaReducer } from "./siaReducer";
 import { doorstaffReducer } from "./doorstaffReducer";
 import { costsReducer } from "./costsReducer";
 import { activityReducer } from "./activityReducer";
@@ -14,22 +14,24 @@ import { modalPromptReducer } from "./modalPromptReducer";
 import { searchActivitiesReducer } from "./searchActivitesReducer";
 import { searchHistoryReducer } from "./searchHistoryReducer";
 import { LOGOFF } from "../types";
-import { analyticsReducer } from "./analyticsReducer";
+import { pubManagerAnalyticsReducer } from "./pubManagerAnalyticsReducer";
+import { areaManagerAnalyticsReducer } from "./areaManagerAnalyticsReducer";
 
-
-const appReducer = combineReducers({analyticsReducer,
-  userReducer,siaReducer,doorstaffReducer,
+const appReducer = combineReducers({
+  userReducer, siaReducer, doorstaffReducer,
   costsReducer, activityReducer, getActivityReducer,
-   authoriseReducer,summaryReducer, searchActivitiesReducer,
-   searchHistoryReducer,
-  modalMessageReducer, modalPromptReducer,modalLogoutReducer ,loaderReducer
+  authoriseReducer, summaryReducer, searchActivitiesReducer,
+  searchHistoryReducer,
+  modalMessageReducer, modalPromptReducer, modalLogoutReducer, loaderReducer, pubManagerAnalyticsReducer,
+  areaManagerAnalyticsReducer
 })
 
 export const rootReducer = (state, action) => {
-  if(action.type === LOGOFF){
+  if (action.type === LOGOFF) {
     localStorage.removeItem('user')
-    return appReducer(undefined, action) 
-    
+    localStorage.removeItem("lastRoute")
+    return appReducer(undefined, action)
+
   }
   return appReducer(state, action)
 }

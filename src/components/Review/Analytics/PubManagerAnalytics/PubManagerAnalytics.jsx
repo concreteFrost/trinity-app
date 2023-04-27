@@ -1,12 +1,11 @@
-import s from "./Analytics.module.scss"
+import s from "./PubManagerAnalytics.module.scss"
 import { SwitchType } from "./SwitchType/SwitchType"
 import { DatesForm } from "./DatesForm/DatesForm"
-import { Chart } from "../../Shared/Chart/Chart"
+import { Chart } from "../../../Shared/Chart/Chart"
 import { useSelector } from "react-redux"
 
-export const Analytics = () => {
+export const PubManagerAnalytics = () => {
     const analytics = useSelector(state => state.analyticsReducer);
-    console.log(analytics, 'aaaa')
     return (
         <div className={s.container}>
             <div className={s.switch_type}><SwitchType></SwitchType></div>
@@ -14,7 +13,7 @@ export const Analytics = () => {
             <div className={s.chart}>
                 {analytics.currentType === "S" ? <Chart activity={analytics.doorstaff} system={"S"}></Chart> : null}
                 {analytics.currentType === "A" ? <Chart activity={analytics.costs} system={"A"}></Chart> : null}
-               
+
             </div>
             <button className={s.print_button}>Print</button>
 

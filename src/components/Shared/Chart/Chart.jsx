@@ -52,7 +52,7 @@ export const Chart = (props) => {
     labels: labels,
     datasets: [
       {
-        label:"cost",
+        label: "cost",
         data: payments,
         backgroundColor: "rgb(76, 105, 138)",
         borderColor: "rgb(242, 119, 29)",
@@ -69,7 +69,7 @@ export const Chart = (props) => {
 
   return (
     <div className={s.graph}>
-      <Line data={data} responsive={true} />
+      <Line data={data} />
     </div>
   );
 };

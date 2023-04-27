@@ -6,7 +6,7 @@ const initialState = {
     dateTo: new Date().toISOString().split("T")[0]
 }
 
-export const analyticsReducer = (state = initialState, action) => {
+export const pubManagerAnalyticsReducer = (state = initialState, action) => {
     switch (action.type) {
         case "GET_DOORSTAFF_ANALYTICS":
             return {

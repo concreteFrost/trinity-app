@@ -2,7 +2,7 @@ import s from "./ActivitiesForm.module.scss";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { baseUrl } from "../../../../contexts/baseUrl";
+
 import {
   GetSearchSuppliers,
   GetSearchLocations,
@@ -12,7 +12,6 @@ import {
   GetSearchPaymentStatusGroup,
   GetSearchedData,
 } from "../../../../redux/api/searchActivitiesApi";
-import { SHOW_MODAL_MESSAGE } from "../../../../redux/types";
 export const ActivitiesForm = (props) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userReducer.user.access_token);
@@ -72,10 +71,10 @@ export const ActivitiesForm = (props) => {
               <option value={0}>All</option>
               {data.options.staff.length > 0
                 ? data.options.staff.map((e) => (
-                    <option key={e.id} value={e.id}>
-                      {e.name}
-                    </option>
-                  ))
+                  <option key={e.id} value={e.id}>
+                    {e.name}
+                  </option>
+                ))
                 : null}
             </select>
           </div>
@@ -91,10 +90,10 @@ export const ActivitiesForm = (props) => {
             <option value={0}>All</option>
             {data.options.locations.length > 0
               ? data.options.locations.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))
+                <option key={e.id} value={e.id}>
+                  {e.name}
+                </option>
+              ))
               : null}
           </select>
 
@@ -106,10 +105,10 @@ export const ActivitiesForm = (props) => {
             <option value={0}>All</option>
             {data.options.locationsGroup.length > 0
               ? data.options.locationsGroup.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))
+                <option key={e.id} value={e.id}>
+                  {e.name}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -125,10 +124,10 @@ export const ActivitiesForm = (props) => {
               <option value={0}>All</option>
               {data.options.suppliers.length > 0
                 ? data.options.suppliers.map((e) => (
-                    <option key={e.id} value={e.id}>
-                      {e.name}
-                    </option>
-                  ))
+                  <option key={e.id} value={e.id}>
+                    {e.name}
+                  </option>
+                ))
                 : null}
             </select>
           </div>
@@ -142,10 +141,10 @@ export const ActivitiesForm = (props) => {
           >
             {data.options.paymentStatus.length > 0
               ? data.options.paymentStatus.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))
+                <option key={e.id} value={e.id}>
+                  {e.name}
+                </option>
+              ))
               : null}
           </select>
         </div>

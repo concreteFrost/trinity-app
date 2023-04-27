@@ -1,0 +1,12 @@
+@import "src/scss/mixins.scss";
+@import "src/scss/variables.scss";
+
+.container{
+    display: grid;
+    justify-items: center;
+    
+    .print_button{
+        @include btn($button-submit);
+       
+    }
+}
