@@ -5,7 +5,8 @@ import { Chart } from "../../../Shared/Chart/Chart"
 import { useSelector } from "react-redux"
 
 export const PubManagerAnalytics = () => {
-    const analytics = useSelector(state => state.analyticsReducer);
+    const analytics = useSelector(state => state.pubManagerAnalyticsReducer);
+    console.log(analytics);
     return (
         <div className={s.container}>
             <div className={s.switch_type}><SwitchType></SwitchType></div>

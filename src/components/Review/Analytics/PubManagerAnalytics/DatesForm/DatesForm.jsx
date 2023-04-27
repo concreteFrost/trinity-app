@@ -4,7 +4,7 @@ import { GetDoorstaffAnalytics, GetCostsAnalytics } from "../../../../../redux/a
 
 export const DatesForm = () => {
 
-    const analytics = useSelector(state => state.analyticsReducer);
+    const analytics = useSelector(state => state.pubManagerAnalyticsReducer);
     const user = useSelector(state => state.userReducer.user);
 
     const dispatch = useDispatch();
