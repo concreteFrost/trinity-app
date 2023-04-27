@@ -10,15 +10,15 @@ export const DatesForm = () => {
     const dispatch = useDispatch();
 
     function Submit(e) {
-        // e.preventDefault();
-        // switch (analytics.currentType) {
-        //     case "S":
-        //         dispatch(GetDoorstaffAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo, user))
-        //         break;
-        //     case "A":
-        //         dispatch(GetCostsAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo))
-        //         break;
-        // }
+        e.preventDefault();
+        switch (analytics.currentType) {
+            case "S":
+                dispatch(GetDoorstaffAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo, user))
+                break;
+            case "A":
+                dispatch(GetCostsAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo))
+                break;
+        }
     }
 
     return (
