@@ -1,0 +1,33 @@
+@import "src/scss/mixins.scss";
+@import "src/scss/variables.scss";
+
+.container{
+
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1600px;
+
+    h2{
+        @include page-title;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgb(238, 238, 238);
+        margin: 0;
+    }
+}
+
+.breakdown_lists{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 6fr 6fr;
+    gap: 10px;
+
+    @media screen and (max-width: $screen-tablet) {
+        grid-template-columns: 12fr;
+
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+

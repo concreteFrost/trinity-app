@@ -1,24 +1,18 @@
 @import "src/scss/mixins.scss";
 @import "src/scss/variables.scss";
 
-
 .graph{
 
-    margin-top: 20px;
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+    @include chart;
 
-    @media screen and (max-width: $screen-laptop) {
-        width: 700px;
-    }
+    background-color: rgb(247, 247, 247);
+    border-radius: 5px;
+    border: 1px solid rgb(218, 218, 218);
+    padding: 20px;
+    box-shadow: $soft-shadow;
 
-    @media screen and (max-width: $screen-tablet) {
-        width: 500px;
-    }
 
-    @media screen and (max-width: $screen-mobile) {
-        width: 300px;
-    }
-   
+    font-weight: bolder;
+    color: white;
+
 }

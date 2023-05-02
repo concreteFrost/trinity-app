@@ -41,9 +41,8 @@
    
   }
   .actions {
-    display:flex;
-    justify-content: space-between;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 6fr 6fr;    
 }
 
 }

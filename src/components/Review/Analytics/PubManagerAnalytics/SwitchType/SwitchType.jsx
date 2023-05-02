@@ -16,6 +16,7 @@ export const SwitchType = () => {
       >
         <option value="S">Doorstaff</option>
         <option value="A">Costs</option>
+        <option value="C">Combined</option>
       </select>
     </div>
   )

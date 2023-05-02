@@ -1,14 +1,6 @@
 import s from "./Chart.module.scss";
 import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-  Legend
-} from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(
   CategoryScale,
@@ -20,56 +12,63 @@ ChartJS.register(
 );
 
 export const Chart = (props) => {
-  let labels;
-  let payments;
+  const labels = [
+    ...new Set(props.data.doorstaff.map((item) => item.start.split("T")[0])),
+  ];
 
-  switch (props.system) {
-    case "S": {
-      labels = [
-        ...new Set(props.activity.map((item) => item.start.split("T")[0])),
-      ];
-      payments = labels.map((date) => {
-        return props.activity
-          .filter((item) => item.start.split("T")[0] === date)
-          .reduce((acc, curr) => acc + curr.cost, 0);
-      });
-      break;
-    }
-
-    default: {
-      labels = [
-        ...new Set(props.activity.map((item) => item.startTime.split("T")[0])),
-      ];
-      payments = labels.map((date) => {
-        return props.activity
-          .filter((item) => item.startTime.split("T")[0] === date)
-          .reduce((acc, curr) => acc + curr.costValue, 0);
-      });
-      break;
-    }
-  }
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: "cost",
-        data: payments,
-        backgroundColor: "rgb(76, 105, 138)",
-        borderColor: "rgb(242, 119, 29)",
-
-      },
-    ],
-    options: {
-      tooltips: {
-        mode: "index",
-        intersect: false,
-      },
-    },
+  const calculatePayments = (obj) => {
+    return labels.map((date) => {
+      return obj
+        .filter((item) => item.start.split("T")[0] === date)
+        .reduce((acc, curr) => acc + curr.cost, 0);
+    });
   };
 
+  const doorstaffPayments = calculatePayments(props.data.doorstaff);
+  const costsPayments = calculatePayments(props.data.costs);
+
+  const dataSets = [];
+
+  const doorstaffDataSet = {
+    label: "doorstaff",
+    data: doorstaffPayments,
+    backgroundColor: "#eb3a34",
+    borderColor: "#eb3a34",
+  };
+
+  const costsDataSet = {
+    label: "costs",
+    data: costsPayments,
+    backgroundColor: "rgb(76, 105, 138)",
+    borderColor: "rgb(76, 105, 138)",
+  };
+
+  switch (props.data.currentType) {
+    case "S":
+      dataSets.push(doorstaffDataSet);
+      break;
+    case "A":
+      dataSets.push(costsDataSet);
+      break;
+    case "C":
+      dataSets.push(doorstaffDataSet);
+      dataSets.push(costsDataSet);
+      break;
+  }
+
+  const data = {
+    labels: labels,
+    datasets: dataSets,
+  };
+
+  const options = {
+    responsive: true, // Make the chart responsive
+    maintainAspectRatio: false, // Disable maintaining aspect ratio
+  };
   return (
     <div className={s.graph}>
-      <Line data={data} />
+      <Line data={data} options={options} />
+      {/* <button className={s.print_button}>Print</button> */}
     </div>
   );
 };

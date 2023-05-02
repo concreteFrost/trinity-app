@@ -1,6 +1,6 @@
 import s from "./DatesForm.module.scss"
 import { useSelector, useDispatch } from "react-redux"
-import { GetDoorstaffAnalytics, GetCostsAnalytics } from "../../../../../redux/api/pubManagerAnalyticsAPI"
+import { GetAnalytics } from "../../../../../redux/api/pubManagerAnalyticsAPI"
 
 export const DatesForm = () => {
 
@@ -13,10 +13,10 @@ export const DatesForm = () => {
         e.preventDefault();
         switch (analytics.currentType) {
             case "S":
-                dispatch(GetDoorstaffAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo, user))
+                dispatch(GetAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo, user))
                 break;
             case "A":
-                dispatch(GetCostsAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo))
+                dispatch(GetAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo))
                 break;
         }
     }

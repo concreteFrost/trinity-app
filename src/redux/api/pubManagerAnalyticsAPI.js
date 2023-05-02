@@ -2,7 +2,7 @@ import axios from "axios"
 import {baseUrl} from "../../contexts/baseUrl"
 
 
-export function GetDoorstaffAnalytics(token, fromDate, toDate, user) {
+export function GetAnalytics(token, fromDate, toDate, user,system) {
     return function (dispatch) {
         const _data ={
             dateFrom: fromDate,
@@ -14,7 +14,7 @@ export function GetDoorstaffAnalytics(token, fromDate, toDate, user) {
             paymentStatusId: 0
         }
         return axios({
-            url: "https://testapi.etrinity.services/TrinityWebApi/api/Report/ActivityList?system=S",
+            url: baseUrl+ "/Report/ActivityList?system=" + system,
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
@@ -23,29 +23,16 @@ export function GetDoorstaffAnalytics(token, fromDate, toDate, user) {
             data: _data
         })
             .then((res) => {
-                dispatch({ type: "GET_DOORSTAFF_ANALYTICS", data: res.data.reportRecord })
 
+                switch(system){
+                    case "S":
+                        dispatch({ type: "GET_DOORSTAFF_ANALYTICS", data: res.data.reportRecord })
+                        break;
+                    case "A":
+                        dispatch({ type: "GET_COSTS_ANALYTICS", data: res.data.reportRecord })
+                        break;                
+                }
+            
             })
-    }
-}
-
-export function GetCostsAnalytics(token,dateFrom,dateTo) {
-    return function (dispatch) {
-        return axios({
-            url: `${baseUrl}/Report/CostReview`,
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            method: "POST",
-            data: {
-                dateFrom: dateFrom,
-                dateTo: dateTo
-            },
-        })
-            .then((res) => {
-                dispatch({ type: "GET_COSTS_ANALYTICS", data: res.data.records })
-            })
-
     }
 }

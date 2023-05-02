@@ -1,0 +1,52 @@
+@import "src/scss/mixins.scss";
+@import "src/scss/variables.scss";
+
+.breakdown_list_container{
+  display: grid;
+  grid-template-columns: 3fr 9fr;
+
+}
+
+h3 {
+  margin-top: 0;
+  @include page-title;
+}
+
+.breakdown_list {
+
+  ul {
+    list-style: none;
+  }
+  li {
+    display: grid;
+    grid-template-columns: 6fr 6fr;
+    border-bottom: 1px solid rgb(235, 235, 235);
+    font-family: $central-header;
+    p {
+      margin: 0;
+      display: inline;
+    }
+    span {
+      font-weight: bolder;
+      padding: 5px 10px;
+    }
+  }
+}
+
+.breakdown_total{
+  font-family: $central-header;
+  font-size: 0.85rem;
+  ul{
+    margin-top: 12px;
+    
+    list-style: none;
+  }
+
+  span{
+    font-weight: bold;
+  }
+}
+
+.no_data {
+  font-family: $central-header;
+}

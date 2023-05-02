@@ -1,6 +1,7 @@
 const initialState = {
     doorstaff: [],
     costs: [],
+
     currentType: "S",
     dateFrom: new Date().toISOString().split("T")[0],
     dateTo: new Date().toISOString().split("T")[0]
