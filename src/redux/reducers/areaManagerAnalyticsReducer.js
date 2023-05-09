@@ -1,6 +1,7 @@
 const initialState = {
     locations: [],
     currentLocation: { id: 0, name: null },
+    costs:[],
     dateFrom: new Date().toISOString().split("T")[0],
     dateTo: new Date().toISOString().split("T")[0]
 }
@@ -14,6 +15,9 @@ export const areaManagerAnalyticsReducer = (state = initialState, action) => {
         case "SET_AREA_MANAGER_ANALYTICS_CURRENT_LOCATION": {
             return { ...state, currentLocation: { id: action.data.id, name: action.data.name } }
 
+        }
+        case "GET_AREA_MANAGER_ANALYTICS_COSTS":{
+            return { ...state, costs: action.data }
         }
         case "SET_AREA_MANAGER_ANALYTICS_DATE_FROM": {
             return { ...state, dateFrom: action.data }

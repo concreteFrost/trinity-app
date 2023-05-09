@@ -10,12 +10,13 @@ export function GetAreaManagerLocations(token) {
                     "Content-Type": "application/json",
                 },
             })
-            .then((res) => console.log(res, 'res isssss')
-                //   dispatch({
-                //     type: GET_HISTORY_AUDIT_LOCATIONS_OPT,
-                //     data: res.data.record,
-                //   })
-            )
+            .then((res) => {
+            console.log('locations data',res.data.record)
+                  dispatch({
+                    type: "GET_AREA_MANAGER_ANALYTICS_LOCATIONS",
+                    data: res.data.record,
+                  })
+                })
             .catch((e) => console.log(e));
     };
 }

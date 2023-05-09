@@ -13,19 +13,7 @@ export const LocationList = () => {
     const user = useSelector(state => state.userReducer.user);
 
     useEffect(() => {
-        axios
-            .get(`${baseUrl}/Report/CriteriaLocationGroupList`, {
-                headers: {
-                    Authorization: "Bearer " + user.access_token,
-                    "Content-Type": "application/json",
-                },
-            })
-            .then((res) => {
-                dispatch({ type: "GET_AREA_MANAGER_ANALYTICS_LOCATIONS", data: res.data.record })
-                dispatch({ type: "SET_AREA_MANAGER_ANALYTICS_CURRENT_LOCATION", data: { id: res.data.record[0].id, name: res.data.record[0].name } })
-            }
-            )
-            .catch((e) => console.log(e));
+        dispatch(GetAreaManagerLocations(user.access_token))
     }, [])
 
     function SetCurrentLocation(e) {

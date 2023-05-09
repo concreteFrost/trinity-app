@@ -17,7 +17,7 @@ export const Breakdown = () => {
   };
   return (
     <div className={s.container} id="component-to-export">
-      <h2  >BREAKDOWN</h2>
+      <h2>BREAKDOWN</h2>
       <div className={s.breakdown_lists} >
         <BreakdownList payments={analytics.doorstaff} title={"Doorstaff"} ></BreakdownList>
         <BreakdownList payments={analytics.costs} title={"Costs"}></BreakdownList>

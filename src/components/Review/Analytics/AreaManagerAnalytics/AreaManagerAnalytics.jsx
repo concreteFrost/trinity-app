@@ -1,24 +1,26 @@
-import s from "./AreaManagerAnalytics.module.scss"
-import { LocationList } from "./LocationList/LocationList"
-import { DatesForm } from "./DatesForm/DatesForm"
-import { Chart } from "../../../Shared/Chart/Chart"
-import { useSelector } from "react-redux"
-import { useEffect } from "react"
+import s from "./AreaManagerAnalytics.module.scss";
+import { LocationList } from "./LocationList/LocationList";
+import { DatesForm } from "./DatesForm/DatesForm";
+import { Chart } from "./Chart/Chart";
+import { useSelector } from "react-redux";
 
 export const AreaManagerAnalytics = () => {
-    const location = useSelector(state => state.areaManagerAnalyticsReducer.currentLocation);
+  const costs = useSelector((state) => state.areaManagerAnalyticsReducer);
 
-    useEffect(() => { }, [location])
-    return (
-        <div className={s.container}>
-            <div className={s.switch_type}><LocationList></LocationList></div>
-            <div className={s.form}><DatesForm></DatesForm></div>
-            <div className={s.chart}>
-                {/* <Chart activity={analytics.doorstaff} system={"S"}></Chart> */}
-            </div>
-            <div>{location.name}</div>
-            <button className={s.print_button}>Print</button>
-
+  return (
+    <div className={s.container}>
+      <div className={s.grid_area}>
+        <div className={s.switch_type}>
+          <LocationList></LocationList>
         </div>
-    )
-}
+        <div className={s.form}>
+          <DatesForm></DatesForm>
+        </div>
+        <div className={s.chart}>
+          <Chart activity={costs.costs}></Chart>
+        </div>
+      </div>
+    <div className={s.breakdown}>BREAKDOWN</div>  
+    </div>
+  );
+};

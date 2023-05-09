@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "gh-pages": "^4.0.0",
+    "nodemon": "^2.0.22",
     "react-router-dom": "^6.4.2"
   }
 }
