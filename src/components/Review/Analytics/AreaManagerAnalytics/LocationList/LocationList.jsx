@@ -2,8 +2,7 @@ import s from "./LocationList.module.scss"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react";
 import { GetAreaManagerLocations } from "../../../../../redux/api/areaManagerAnalyticsAPI";
-import { baseUrl } from "../../../../../contexts/baseUrl.js";
-import axios from "axios"
+import { useState } from "react";
 
 
 export const LocationList = () => {
@@ -11,27 +10,25 @@ export const LocationList = () => {
     const dispatch = useDispatch();
     const locationsList = useSelector(state => state.areaManagerAnalyticsReducer.locations);
     const user = useSelector(state => state.userReducer.user);
+    const [showDropdown, setShowDropdown] = useState(true);
 
     useEffect(() => {
         dispatch(GetAreaManagerLocations(user.access_token))
     }, [])
 
-    function SetCurrentLocation(e) {
-        const name = e.target[e.target.selectedIndex].text;
-        const id = e.target.value;
-        dispatch({ type: "SET_AREA_MANAGER_ANALYTICS_CURRENT_LOCATION", data: { id: id, name: name } })
+    function toggleShowLocations() {
+        setShowDropdown(!showDropdown);
     }
 
     return (
         <div className={s.location}>
-            <label htmlFor="select-doorstaff">LOCATION</label>
-            <select
-                name="select-type"
-                id="selecet-type"
-                onChange={SetCurrentLocation}
-            >
-                {locationsList.length > 0 ? locationsList.map((e) => { return <option key={e.id} value={e.id}>{e.name}</option> }) : null}
-            </select>
+            <label htmlFor="select-doorstaff">LOCATIONS</label>
+            <div className={s.dropdown}>
+                <button onClick={toggleShowLocations} className={s.dropdown_button}>Select</button>
+                {showDropdown ? <div className={s.dropdown_content}>
+                    {locationsList.length > 0 ? locationsList.map((e) => { return <label key={e.id} ><input type="checkbox" name={e.name} value={e.id} checked={e.isChecked} onChange={() => dispatch({ type: "TOGGLE_ARREA_MANAGER_ANALYTICS_LOCATIONS", data: e.id })} />{e.name} </label> }) : null}
+                </div> : null}
+            </div>
         </div>
     )
 }

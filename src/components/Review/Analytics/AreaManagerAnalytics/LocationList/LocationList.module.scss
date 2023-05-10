@@ -6,7 +6,7 @@
     @include form-template;
 
     width: 315px;
-
+    text-align: center;
     display: grid;
     justify-content: center;
 
@@ -16,5 +16,37 @@
 
     margin-bottom: 10px;
 
+}
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+
+    .dropdown_button {
+        @include btn($button-submit);
+        margin-top: 5px;
+    }
+
+    .dropdown_content {
+        border-radius: 5px;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        padding: 12px 16px;
+        z-index: 1;
+
+        label {
+            display: flex;
+            margin-bottom: 8px;
+
+            input[type="checkbox"] {
+                margin-right: 8px;
+            }
+        }
+
+        label:last-child {
+            margin-bottom: 0;
+        }
+    }
 }

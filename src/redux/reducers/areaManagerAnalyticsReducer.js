@@ -1,7 +1,7 @@
 const initialState = {
     locations: [],
-    currentLocation: { id: 0, name: null },
-    costs:[],
+    costs: [],
+    doorstaff: [],
     dateFrom: new Date().toISOString().split("T")[0],
     dateTo: new Date().toISOString().split("T")[0]
 }
@@ -9,15 +9,20 @@ const initialState = {
 export const areaManagerAnalyticsReducer = (state = initialState, action) => {
     switch (action.type) {
         case "GET_AREA_MANAGER_ANALYTICS_LOCATIONS": {
-            return { ...state, locations: action.data }
-
+            const updatedLocations = action.data.map((location) => ({
+                ...location,
+                isChecked: false
+            }));
+            return { ...state, locations: updatedLocations };
         }
-        case "SET_AREA_MANAGER_ANALYTICS_CURRENT_LOCATION": {
-            return { ...state, currentLocation: { id: action.data.id, name: action.data.name } }
-
+        case "TOGGLE_ARREA_MANAGER_ANALYTICS_LOCATIONS": {
+            return { ...state, locations: [...state.locations.map(e => e.id === action.data ? { ...e, isChecked: !e.isChecked } : e)] }
         }
-        case "GET_AREA_MANAGER_ANALYTICS_COSTS":{
+        case "GET_AREA_MANAGER_ANALYTICS_COSTS": {
             return { ...state, costs: action.data }
+        }
+        case "GET_AREA_MANAGER_ANALYTICS_DOORSTAFF": {
+            return { ...state, doorstaff: action.data }
         }
         case "SET_AREA_MANAGER_ANALYTICS_DATE_FROM": {
             return { ...state, dateFrom: action.data }
@@ -29,3 +34,5 @@ export const areaManagerAnalyticsReducer = (state = initialState, action) => {
         default: return initialState;
     }
 }
+
+// ...state, doorstaff: [...state.doorstaff.map(e => e.activityId === action.data.id ? { ...e, selected: action.data.selected } : e)]

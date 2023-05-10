@@ -11,42 +11,69 @@ ChartJS.register(
   Legend
 );
 
+const generateRandomColor = () => {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
+
 export const Chart = (props) => {
 
+  console.log(props)
   const labels = [
-    ...new Set(props.activity.map((item) => item.start.split("T")[0])),
+    ...new Set(props.data.map((item) => item.start.split("T")[0]))
   ];
 
-  const calculatePayments = (obj) => {
+  const calculatePayments = (group) => {
     return labels.map((date) => {
-      return obj
+      return group
         .filter((item) => item.start.split("T")[0] === date)
         .reduce((acc, curr) => acc + curr.cost, 0);
     });
   };
 
-  const payments = calculatePayments(props.activity);
+  const groups = {};
 
-const dSet = {
-  labels: labels,
-  datasets: [
-    {
-      label: "Payments",
+  props.data.forEach(obj => {
+    const groupKey = obj.locationName;
+    if (groups[groupKey]) {
+      groups[groupKey].push(obj);
+    } else {
+      groups[groupKey] = [obj];
+    }
+  });
+
+  const datasets = Object.entries(groups).map(([groupName, group]) => {
+    const payments = calculatePayments(group);
+    const backgroundColor = generateRandomColor();
+    const borderColor = backgroundColor;
+    return {
+      label: groupName,
       data: payments,
-      backgroundColor: "#eb3a34",
-      borderColor: "#eb3a34",
-    },
-  ],
-};
+      backgroundColor: backgroundColor,
+      borderColor: borderColor,
+    };
+  });
+
+  const dSet = {
+    labels: labels,
+    datasets: datasets,
+  };
 
   const options = {
-    responsive: true, // Make the chart responsive
-    maintainAspectRatio: false, // Disable maintaining aspect ratio
+    responsive: true,
+    maintainAspectRatio: false,
   };
+
   return (
-    <div className={s.graph}>
-      <Line data={dSet } options={options} />
-      {/* <button className={s.print_button}>Print</button> */}
+    <div>
+      <h3>{props.title}</h3>
+      <div className={s.graph}>
+        <Line data={dSet} options={options} />
+      </div>
     </div>
   );
 };

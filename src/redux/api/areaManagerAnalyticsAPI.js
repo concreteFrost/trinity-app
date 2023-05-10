@@ -11,12 +11,12 @@ export function GetAreaManagerLocations(token) {
                 },
             })
             .then((res) => {
-            console.log('locations data',res.data.record)
-                  dispatch({
+
+                dispatch({
                     type: "GET_AREA_MANAGER_ANALYTICS_LOCATIONS",
                     data: res.data.record,
-                  })
                 })
+            })
             .catch((e) => console.log(e));
     };
 }

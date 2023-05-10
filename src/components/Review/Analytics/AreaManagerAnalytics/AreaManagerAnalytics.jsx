@@ -5,7 +5,8 @@ import { Chart } from "./Chart/Chart";
 import { useSelector } from "react-redux";
 
 export const AreaManagerAnalytics = () => {
-  const costs = useSelector((state) => state.areaManagerAnalyticsReducer);
+  const costs = useSelector((state) => state.areaManagerAnalyticsReducer.costs);
+  const doorstaff = useSelector((state) => state.areaManagerAnalyticsReducer.doorstaff);
 
   return (
     <div className={s.container}>
@@ -17,10 +18,11 @@ export const AreaManagerAnalytics = () => {
           <DatesForm></DatesForm>
         </div>
         <div className={s.chart}>
-          <Chart activity={costs.costs}></Chart>
+          <Chart data={doorstaff} title={"doorstaff"}></Chart>
+          <Chart data={costs} title={"costs"}></Chart>
         </div>
       </div>
-    <div className={s.breakdown}>BREAKDOWN</div>  
+      <div className={s.breakdown}>BREAKDOWN</div>
     </div>
   );
 };
