@@ -52,7 +52,10 @@ export function DeleteDoorStaff(data, token, signOutTIme) {
             dispatch({ type: CLEAR_DOORSTAFF_ERROR_MESSAGE });
           }, 3000);
         }
-        dispatch(GetDoorstaff(token));
+        else {
+          dispatch(GetDoorstaff(token));
+        }
+
       })
       .catch((e) => console.log(e));
   };
@@ -65,6 +68,9 @@ export function GetDoorstaffPositions(headers) {
         headers: headers,
       })
       .then((res) => {
+        console.log(res.data.position[0])
+        // const sortedRes = res.data.position.sort((a, b) => a.localeCompare(b));
+        // console.log('sorted', sortedRes)
         dispatch({ type: GET_DOORSTAFF_POSITION_OPT, data: res.data.position });
         dispatch({ type: SET_DOORSTAFF_POSITION, data: res.data.position[0] });
       })
@@ -94,18 +100,18 @@ export function GetDoorstaffRates(position, supplier, date, headers) {
     return axios
       .get(
         `${baseUrl}/Activity/LookupRates/` +
-          position +
-          "/" +
-          supplier +
-          "/" +
-          new Date(date).getTime(),
+        position +
+        "/" +
+        supplier +
+        "/" +
+        new Date(date).getTime(),
         {
           headers: headers,
         }
       )
       .then((res) => {
         if (res.data.success === false) {
-          dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.message });
+          dispatch({ type: SHOW_MODAL_MESSAGE, data: "There are no suppliers associated with this pub" });
         }
         dispatch({ type: GET_DOORSTAFF_RATE_OPT, data: res.data.rates });
         dispatch({ type: SET_DOORSTAFF_RATE, data: res.data.rates[0] });
@@ -120,7 +126,7 @@ export function GetDoorstaff(token) {
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/x-www-form-urlencoded",
-        },
+        }
       })
       .then((res) => {
         dispatch(SetDoorStaffList(res.data.staffLogin));
@@ -144,7 +150,7 @@ export function SetDoorStaff(token, sia) {
         locationId: parseInt(token.locationId),
         supplierId: parseInt(sia.supplier.supplierId),
         supplierName: sia.supplier.supplierName,
-        startTime: sia.date + "T" + sia.time + ":00.7826209+00:00",
+        startTime: sia.date + "T" + sia.time,
         rateGroupId: sia.rate.rateGroupId,
       },
       headers: {

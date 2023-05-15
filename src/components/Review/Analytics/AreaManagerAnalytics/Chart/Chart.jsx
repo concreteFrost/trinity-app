@@ -20,9 +20,9 @@ const generateRandomColor = () => {
   return color;
 };
 
-export const Chart = (props) => {
+const colors = {};
 
-  console.log(props)
+export const Chart = (props) => {
   const labels = [
     ...new Set(props.data.map((item) => item.start.split("T")[0]))
   ];
@@ -48,8 +48,17 @@ export const Chart = (props) => {
 
   const datasets = Object.entries(groups).map(([groupName, group]) => {
     const payments = calculatePayments(group);
-    const backgroundColor = generateRandomColor();
-    const borderColor = backgroundColor;
+
+    let backgroundColor, borderColor;
+    if (colors[groupName]) {
+      backgroundColor = colors[groupName].backgroundColor;
+      borderColor = colors[groupName].borderColor;
+    } else {
+      backgroundColor = generateRandomColor();
+      borderColor = backgroundColor;
+      colors[groupName] = { backgroundColor, borderColor };
+    }
+
     return {
       label: groupName,
       data: payments,
@@ -57,6 +66,7 @@ export const Chart = (props) => {
       borderColor: borderColor,
     };
   });
+
 
   const dSet = {
     labels: labels,
@@ -68,11 +78,13 @@ export const Chart = (props) => {
     maintainAspectRatio: false,
   };
 
+  console.log(datasets.length > 0)
+
   return (
     <div>
       <h3>{props.title}</h3>
       <div className={s.graph}>
-        <Line data={dSet} options={options} />
+        {datasets.length > 0 ? <Line data={dSet} options={options} /> : <span className={s.no_data}>No data available...</span>}
       </div>
     </div>
   );

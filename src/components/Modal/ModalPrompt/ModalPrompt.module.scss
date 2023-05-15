@@ -13,7 +13,7 @@
 }
 
 
-.modal_window{
+.modal_window {
     padding: 10px;
     position: fixed;
     top: 50%;
@@ -21,45 +21,45 @@
     transform: translate(-50%, -50%);
     background: white;
 
-    
+
     color: rgb(0, 0, 0);
     z-index: 9999;
     border-radius: 16px;
     box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
     overflow: wrap;
-   
-    
-    
+
+
+
 }
 
 
-.modal_header{
+.modal_header {
     text-align: center;
     font-weight: 500;
 }
 
-.modal_message{
- 
+.modal_message {
+
     padding: 10px;
     flex: 1;
     word-wrap: break-word;
 }
 
-.modal_btn{
+.modal_btn {
 
     text-align: center;
     margin: 10px;
-    button{
-    @include btn($button-submit)
+
+    button {
+        @include btn($button-submit)
     }
 }
 
-.input_body{
+.input_body {
 
-    textarea{
+    textarea {
         @include form-textarea;
 
-        
+
     }
 }
-

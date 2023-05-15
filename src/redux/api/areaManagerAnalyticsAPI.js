@@ -1,4 +1,5 @@
 import { baseUrl } from "../../contexts/baseUrl";
+import { GET_AREA_MANAGER_ANALYTICS_LOCATIONS } from "../types";
 import axios from "axios";
 
 export function GetAreaManagerLocations(token) {
@@ -13,7 +14,7 @@ export function GetAreaManagerLocations(token) {
             .then((res) => {
 
                 dispatch({
-                    type: "GET_AREA_MANAGER_ANALYTICS_LOCATIONS",
+                    type: GET_AREA_MANAGER_ANALYTICS_LOCATIONS,
                     data: res.data.record,
                 })
             })

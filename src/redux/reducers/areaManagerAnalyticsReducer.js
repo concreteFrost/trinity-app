@@ -1,3 +1,12 @@
+import {
+    GET_AREA_MANAGER_ANALYTICS_COSTS,
+    GET_AREA_MANAGER_ANALYTICS_DOORSTAFF,
+    GET_AREA_MANAGER_ANALYTICS_LOCATIONS,
+    TOGGLE_ARREA_MANAGER_ANALYTICS_LOCATIONS,
+    SET_AREA_MANAGER_ANALYTICS_DATE_FROM,
+    SET_AREA_MANAGER_ANALYTICS_DATE_TO
+} from "../types";
+
 const initialState = {
     locations: [],
     costs: [],
@@ -8,31 +17,29 @@ const initialState = {
 
 export const areaManagerAnalyticsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "GET_AREA_MANAGER_ANALYTICS_LOCATIONS": {
+        case GET_AREA_MANAGER_ANALYTICS_LOCATIONS: {
             const updatedLocations = action.data.map((location) => ({
                 ...location,
-                isChecked: false
+                isChecked: true
             }));
             return { ...state, locations: updatedLocations };
         }
-        case "TOGGLE_ARREA_MANAGER_ANALYTICS_LOCATIONS": {
+        case TOGGLE_ARREA_MANAGER_ANALYTICS_LOCATIONS: {
             return { ...state, locations: [...state.locations.map(e => e.id === action.data ? { ...e, isChecked: !e.isChecked } : e)] }
         }
-        case "GET_AREA_MANAGER_ANALYTICS_COSTS": {
+        case GET_AREA_MANAGER_ANALYTICS_COSTS: {
             return { ...state, costs: action.data }
         }
-        case "GET_AREA_MANAGER_ANALYTICS_DOORSTAFF": {
+        case GET_AREA_MANAGER_ANALYTICS_DOORSTAFF: {
             return { ...state, doorstaff: action.data }
         }
-        case "SET_AREA_MANAGER_ANALYTICS_DATE_FROM": {
+        case SET_AREA_MANAGER_ANALYTICS_DATE_FROM: {
             return { ...state, dateFrom: action.data }
         }
-        case "SET_AREA_MANAGER_ANALYTICS_DATE_TO": {
+        case SET_AREA_MANAGER_ANALYTICS_DATE_TO: {
             return { ...state, dateTo: action.data }
         }
 
         default: return initialState;
     }
 }
-
-// ...state, doorstaff: [...state.doorstaff.map(e => e.activityId === action.data.id ? { ...e, selected: action.data.selected } : e)]

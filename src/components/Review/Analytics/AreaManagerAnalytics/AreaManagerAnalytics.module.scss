@@ -2,46 +2,27 @@
 @import "src/scss/variables.scss";
 
 .container {
-  .grid_area {
-    display: grid;
+  margin-left: auto;
 
+  margin-right: auto;
+  max-width: 1500px;
 
+  .switch_type,
+  .form {
+    display: flex;
     justify-content: center;
+  }
 
+  .chart_area {
+    display: grid;
+    grid-template-columns: 6fr 6fr;
+    justify-content: center;
     gap: 10px;
 
-    .switch_type {
-      grid-column: 2;
-      grid-row: 1;
-    }
-
-    .form {
-      grid-column: 2;
-      grid-row: 2;
-    }
-
-    .chart {
-      grid-column: 1/4;
-      grid-row: 3;
-    }
 
     @media screen and (max-width: $screen-laptop) {
-      grid-template-columns: 4fr 4fr 4fr;
-      grid-template-rows: 1fr;
-
-      .switch_type {
-        grid-column: 2;
-      }
-
-      .form {
-        grid-column: 2;
-        grid-row: 2;
-      }
-
-      .chart {
-        grid-column: 1/4;
-        grid-row: 3;
-      }
+      grid-template-columns: 12fr;
+      justify-content: center;
     }
   }
 

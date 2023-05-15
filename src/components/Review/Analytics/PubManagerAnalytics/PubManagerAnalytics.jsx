@@ -1,7 +1,7 @@
 import s from "./PubManagerAnalytics.module.scss";
 import { SwitchType } from "./SwitchType/SwitchType";
 import { DatesForm } from "./DatesForm/DatesForm";
-import { Chart } from "../../../Shared/Chart/Chart";
+import { Chart } from "./Chart/Chart";
 import { useSelector } from "react-redux";
 import { Breakdown } from "./Breakdown/Breakdown";
 

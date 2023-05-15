@@ -27,6 +27,8 @@ export const SignIn = (props) => {
     "Content-Type": "application/x-www-form-urlencoded",
   };
 
+  console.log('supplier ID', sia)
+
   useEffect(() => {
     if (sia.doorstaff.staffId) dispatch(GetDoorstaffPositions(headers));
   }, [sia.doorstaff.staffId]);
@@ -41,8 +43,8 @@ export const SignIn = (props) => {
     if (sia.position !== null && sia.supplier !== null)
       dispatch(
         GetDoorstaffRates(
-          sia.position.positionId,
-          sia.supplier.supplierId,
+          sia.position ? sia.position.positionId : 0,
+          sia.supplier ? sia.supplier.supplierId : 0,
           sia.date,
           headers
         )
@@ -84,10 +86,10 @@ export const SignIn = (props) => {
           >
             {sia.options.positions.length > 0
               ? sia.options.positions.map((e) => (
-                  <option key={e.positionId} value={e.positionId}>
-                    {e.positionName}
-                  </option>
-                ))
+                <option key={e.positionId} value={e.positionId}>
+                  {e.positionName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -108,10 +110,10 @@ export const SignIn = (props) => {
           >
             {sia.options.suppliers.length > 0
               ? sia.options.suppliers.map((e) => (
-                  <option key={e.supplierId} value={e.supplierId}>
-                    {e.supplierName}
-                  </option>
-                ))
+                <option key={e.supplierId} value={e.supplierId}>
+                  {e.supplierName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -126,10 +128,10 @@ export const SignIn = (props) => {
           >
             {sia.options.rates.length > 0
               ? sia.options.rates.map((e) => (
-                  <option key={e.rateGroupId} value={e.rateGroupId}>
-                    {e.rateGroupName}
-                  </option>
-                ))
+                <option key={e.rateGroupId} value={e.rateGroupId}>
+                  {e.rateGroupName}
+                </option>
+              ))
               : null}
           </select>
         </div>

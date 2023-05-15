@@ -31,15 +31,18 @@
   border: 0;
   color: white;
   padding: 5px 10px;
-  font-weight: bold;
+  font-family: $central-header ;
+  font-weight: bolder;
   background-color: $bgColor;
 
   @media screen and (max-width: $screen-laptop) {
     font-size: 0.6rem;
   }
+
   @media screen and (max-width: $screen-tablet) {
     font-size: 0.5rem;
   }
+
   @media screen and (max-width: $screen-mobile) {
     font-size: 0.46rem;
   }
@@ -51,7 +54,8 @@
   }
 
   &:active {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add the echo effect */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    /* Add the echo effect */
     animation: echo 0.1s;
   }
 
@@ -61,6 +65,7 @@
     from {
       box-shadow: 0 0 0 rgba(255, 255, 255, 0);
     }
+
     to {
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
@@ -125,9 +130,10 @@
     background-color: $table-main-even;
   }
 
-  tbody > tr:last-child {
+  tbody>tr:last-child {
     border-radius: 10px;
   }
+
   thead {
     display: table-header-group;
   }
@@ -136,28 +142,31 @@
     display: table-row-group;
   }
 
-  tr{
-    &:hover{
+  tr {
+    &:hover {
       opacity: 0.87;
       transition: opacity 0.5s;
     }
-    
+
   }
- 
+
 
   button {
     @include btn($button-submit);
     margin-left: 0;
     box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
       rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+
     font-size: 0.7rem;
-    font-weight: lighter;
+
   }
 
   @media screen and (max-width: $screen-laptop) {
-    th,td {
+
+    th,
+    td {
       font-size: 0.6rem;
-      
+
     }
   }
 }
@@ -170,7 +179,7 @@
   color: $form-input;
   box-shadow: 5px;
   box-shadow: $soft-shadow;
-  
+
   input,
   label {
     display: block;
@@ -179,7 +188,9 @@
   label {
     font-family: $form-font;
   }
-  select, select:empty,
+
+  select,
+  select:empty,
   input[type="number"],
   input[type="date"],
   input[type="time"],
@@ -188,7 +199,7 @@
   }
 
   @media screen and (max-width: $screen-laptop) {
-    
+
     label {
       font-size: 0.7rem;
     }
@@ -196,7 +207,7 @@
   }
 
   @media screen and (max-width: $screen-mobile) {
-   
+
     label {
       font-size: 0.6rem;
     }
@@ -212,7 +223,7 @@
   margin-top: 5px;
   margin-left: 5px;
   background-color: rgb(252, 252, 252);
-  width: 150px ;
+  width: 150px;
   color: $form-input;
   font-family: $form-font;
 
@@ -223,7 +234,7 @@
 
   @media screen and (max-width: $screen-mobile) {
     width: 100px;
-  
+
   }
 
   @include smooth-input-outline;
@@ -259,6 +270,7 @@
 
 @mixin smooth-input-outline {
   outline: none;
+
   &:focus {
     transition: box-shadow 0.4s;
     box-shadow: rgba(71, 71, 71, 0.5) 0.3px 0.3px 1.5px 1px inset,
@@ -270,7 +282,7 @@
 }
 
 //Chart
-@mixin chart{
+@mixin chart {
 
 
   width: auto;
@@ -279,14 +291,14 @@
   margin-right: auto;
 
   @media screen and (max-width: $screen-laptop) {
-      width: 700px;
+    width: 700px;
   }
 
   @media screen and (max-width: $screen-tablet) {
-      width: 500px;
+    width: 500px;
   }
 
   @media screen and (max-width: $screen-mobile) {
-      width: 300px;
+    width: 300px;
   }
 }

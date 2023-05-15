@@ -2,6 +2,9 @@
 @import "src/scss/variables.scss";
 
 
+.container {
+  flex: 1;
+}
 
 .tail_spin {
   position: fixed;
@@ -11,15 +14,14 @@
 
 }
 
-.tail_spin_container{
+.tail_spin_container {
   background-color: rgba(0, 0, 0, 0.2);
   width: 200vw;
   height: 200vh;
   z-index: 0;
   top: 50%;
   left: 50%;
-  overflow-y:visible;
+  overflow-y: visible;
   transform: translate(-50%, -50%);
   position: fixed;
 }
-

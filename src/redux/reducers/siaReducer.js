@@ -48,7 +48,7 @@ export const siaReducer = (state = initialState, action) => {
     case GET_DOORSTAFF_POSITION_OPT:
       return {
         ...state,
-        options: { ...state.options, positions: action.data }
+        options: { ...state.options, positions: action.data.sort((a, b) => a.positionName.localeCompare(b.positionName)) }
       };
     case GET_DOORSTAFF_RATE_OPT:
       return {

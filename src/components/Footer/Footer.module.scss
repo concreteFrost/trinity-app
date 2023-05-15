@@ -1,0 +1,97 @@
+@import "../../scss/variables.scss";
+
+.container {
+    background-color: #fcfcfc;
+    position: fixed;
+    width: 100%;
+    height: 90px;
+    bottom: 0;
+}
+
+nav {
+    margin-top: 15px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: $central-header;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 6fr 6fr;
+
+    align-items: center;
+
+    .contact {
+        grid-column: 1/3;
+        text-align: center;
+        font-weight: bold;
+
+        @media screen and (max-width:$screen-tablet) {
+            text-align: left;
+        }
+    }
+
+    .phone {
+        grid-column: 1;
+        grid-row: 2;
+        text-align: center;
+
+        @media screen and (max-width:$screen-tablet) {
+            text-align: left;
+        }
+    }
+
+    .email {
+        grid-column: 2;
+        grid-row: 2;
+        text-align: center;
+
+        @media screen and (max-width:$screen-tablet) {
+            text-align: left;
+            grid-column: 1;
+            grid-row: 3;
+        }
+    }
+
+    .copyright {
+        grid-column: 1/3;
+        grid-row: 3;
+        text-align: center;
+        font-style: italic;
+        font-size: 0.9rem;
+
+        @media screen and (max-width:$screen-tablet) {
+            text-align: left;
+            grid-column: 1;
+            grid-row: 4;
+        }
+    }
+
+    @media screen and (max-width:$screen-tablet) {
+        grid-template-columns: 12fr;
+    }
+}
+
+.logo {
+    position: absolute;
+    left: 40px;
+    width: 180px;
+    margin-top: 20px;
+
+    @media screen and (max-width:$screen-tablet) {
+        display: none;
+    }
+}
+
+.help {
+    position: absolute;
+    right: 50px;
+    bottom: 35px;
+
+    a {
+        text-decoration: none;
+        color: $nav-highlight;
+        font-weight: bold;
+    }
+}
