@@ -6,14 +6,39 @@
     width: 100%;
     height: 90px;
     bottom: 0;
+    transition: height 0.3s ease;
+}
+
+.small_container {
+    background-color: #fcfcfc;
+    position: fixed;
+    width: 100%;
+    height: 40px;
+    bottom: 0;
+    transition: height 0.3s ease;
+
+    .small_icon {
+        font-size: 1.4rem;
+        top: 10px;
+        position: absolute;
+        right: 20px;
+        color: $nav-highlight;
+    }
+
 }
 
 nav {
     margin-top: 15px;
-    max-width: 400px;
+    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
     font-family: $central-header;
+
+
+    @media screen and (max-width:$screen-tablet) {
+        margin: auto 10px;
+
+    }
 }
 
 .grid {
@@ -29,6 +54,7 @@ nav {
 
         @media screen and (max-width:$screen-tablet) {
             text-align: left;
+
         }
     }
 

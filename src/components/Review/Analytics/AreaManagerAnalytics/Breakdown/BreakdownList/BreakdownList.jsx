@@ -24,7 +24,7 @@ export const BreakdownList = (props) => {
   };
 
   const calculateTotal = (obj) => {
-    return obj.map((e) => e.payments).reduce((a, b) => a + b).toFixed(2);
+    return parseFloat(obj.map((e) => e.payments).reduce((a, b) => a + b)).toFixed(2);
   };
 
   const calculateAverage = (obj) => {
@@ -35,11 +35,11 @@ export const BreakdownList = (props) => {
 
 
   const calculateMin = (obj) => {
-    return Math.min(...obj.map((e) => e.payments)).toFixed(2);
+    return parseFloat(...obj.map((e) => e.payments)).toFixed(2);
   };
 
   const calculteMax = (obj) => {
-    return Math.max(...obj.map((e) => e.payments)).toFixed(2);
+    return parseFloat(...obj.map((e) => e.payments)).toFixed(2);
   };
 
   let paymentsData;
@@ -80,7 +80,7 @@ export const BreakdownList = (props) => {
                       <span>Date:</span> {payment.date}
                     </p>{" "}
                     <p>
-                      <span>Cost:</span> {payment.payments}
+                      <span>Cost:</span> {payment.payments.toFixed(2)}
                     </p>
                   </li>
                 ))}

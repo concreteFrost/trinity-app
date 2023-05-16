@@ -78,7 +78,6 @@ export const Chart = (props) => {
     maintainAspectRatio: false,
   };
 
-  console.log(datasets.length > 0)
 
   return (
     <div>

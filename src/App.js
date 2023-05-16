@@ -1,4 +1,5 @@
 import s from "./App.module.scss";
+import "./scss/global.scss"
 import { Navbar } from "./components/Navbar/Navbar";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "./components/Home/Home";
@@ -13,12 +14,9 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import { useSelector } from "react-redux";
 import { ModalMessage } from "./components/Modal/ModalMessage/ModalMessage";
 import { ModalLogout } from "./components/Modal/ModalLogout/ModalLogout";
-import { TailSpin } from "react-loader-spinner";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
-  const isLoading = useSelector((state) => state.loaderReducer.isLoading);
-
   return (
     <div>
       <div className={s.container}>
@@ -78,13 +76,6 @@ function App() {
             }
           ></Route>
         </Routes>
-        {isLoading === true ? (
-          <div className={s.tail_spin_container}>
-            <div className={s.tail_spin}>
-              <TailSpin width={150} height={150} color={"#42aaf5"}></TailSpin>
-            </div>{" "}
-          </div>
-        ) : null}
       </div>
       <Footer></Footer>
     </div>

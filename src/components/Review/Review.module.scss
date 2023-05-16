@@ -2,26 +2,26 @@
 @import "src/scss/variables.scss";
 
 .container {
-  
+
     header {
         @include page-title;
     }
 
     .summary_container {
         display: grid;
-    
+
         height: $grid-height;
         grid-template-rows: 1fr 2fr 2fr;
-       
-       
+
+
     }
 
-    h3{
+    h3,
+    h2 {
         @include page-title;
 
-        @media screen and (max-width:$screen-laptop){
-            font-size: 1.5rem;
-            font-weight: bolder;
+        @media screen and (max-width:$screen-laptop) {
+
             margin-bottom: 10px;
         }
     }

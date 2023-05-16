@@ -20,7 +20,7 @@ export const areaManagerAnalyticsReducer = (state = initialState, action) => {
         case GET_AREA_MANAGER_ANALYTICS_LOCATIONS: {
             const updatedLocations = action.data.map((location) => ({
                 ...location,
-                isChecked: true
+                isChecked: false
             }));
             return { ...state, locations: updatedLocations };
         }

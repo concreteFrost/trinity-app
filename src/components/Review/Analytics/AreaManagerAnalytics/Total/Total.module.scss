@@ -1,0 +1,50 @@
+@import "src/scss/mixins.scss";
+@import "src/scss/variables.scss";
+
+.grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 4fr);
+    justify-content: center;
+    text-align: center;
+
+    .dates {
+        border-top: 1px solid rgb(221, 221, 221);
+        grid-column: 1/4;
+        grid-row: 2;
+
+        span {
+
+            font-weight: bold;
+            text-decoration: underline;
+
+        }
+
+    }
+
+    .doorstaff {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .cost {
+        grid-column: 3;
+        grid-row: 3;
+    }
+
+    .combined {
+        grid-column: 1/4;
+        grid-row: 4;
+        text-align: center;
+
+    }
+
+    .doorstaff,
+    .cost,
+    .combined {
+        p {
+            font-family: $form-font;
+            font-weight: bold;
+        }
+    }
+}

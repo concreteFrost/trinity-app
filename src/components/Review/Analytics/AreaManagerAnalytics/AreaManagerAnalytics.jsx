@@ -5,6 +5,7 @@ import { Chart } from "./Chart/Chart";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { Breakdown } from "./Breakdown/Breakdown";
+import { Total } from "./Total/Total";
 
 
 export const AreaManagerAnalytics = () => {
@@ -35,6 +36,7 @@ export const AreaManagerAnalytics = () => {
         <Chart data={costs} title={"costs"}></Chart>
       </div>
       <div className={s.breakdown}><Breakdown></Breakdown></div>
+      {costs.length > 0 || doorstaff.length > 0 ? <Total></Total> : null}
     </div>
   );
 };
