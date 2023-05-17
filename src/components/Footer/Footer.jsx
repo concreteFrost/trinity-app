@@ -36,7 +36,7 @@ export const Footer = () => {
                             <div className={s.contact}>contact</div>
                             <div className={s.phone}> phone : +44 (0) 330 043 1705</div>
                             <div className={s.email}> email : support@e-cocoon.com</div>
-                            <div className={s.copyright}>© Cocoon Technology</div>
+                            <div className={s.copyright}>©Cocoon Technology 2023</div>
                             <div className={s.logo}>
                                 <CocoonLogo></CocoonLogo>
                             </div>
