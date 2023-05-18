@@ -33,16 +33,14 @@ export const Footer = () => {
                 <footer className={s.container} onMouseLeave={() => { setIsHovered(false) }} >
                     <nav>
                         <div className={s.grid}>
-                            <div className={s.contact}>contact</div>
-                            <div className={s.phone}> phone : +44 (0) 330 043 1705</div>
-                            <div className={s.email}> email : support@e-cocoon.com</div>
-                            <div className={s.copyright}>©Cocoon Technology 2023</div>
                             <div className={s.logo}>
                                 <CocoonLogo></CocoonLogo>
                             </div>
-                        </div>
-                        <div className={s.help}>
-                            <a href="#">Help</a>
+                            <div className={s.copyright}><a href="https://cocoon.technology/"> ©Cocoon Technology 2023</a></div>
+
+                            <div className={s.help}>
+                                <a href="#">Help</a>
+                            </div>
                         </div>
                     </nav>
                 </footer>}
