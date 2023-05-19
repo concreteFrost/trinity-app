@@ -1,4 +1,5 @@
 @import "../../scss/variables.scss";
+@import "src/scss/mixins.scss";
 
 .container {
     background-color: #fcfcfc;
@@ -29,7 +30,6 @@
 
 nav {
     margin-top: 15px;
-
     font-family: $central-header;
 
     @media screen and (max-width:$screen-tablet) {
@@ -56,8 +56,6 @@ nav {
             font-size: 0.9rem;
         }
 
-
-
         @media screen and (max-width:$screen-tablet) {
             text-align: left;
         }
@@ -66,7 +64,6 @@ nav {
     .logo {
         display: flex;
         justify-content: start;
-
         position: relative;
 
         svg {
@@ -76,7 +73,6 @@ nav {
 
         }
 
-
         @media screen and (max-width:$screen-tablet) {
             display: none;
         }
@@ -85,13 +81,74 @@ nav {
     .help {
         display: flex;
         justify-content: end;
+        margin-right: 40px;
+        text-decoration: none;
+        color: $nav-highlight;
+        font-weight: bold;
+        cursor: pointer;
 
-        a {
-            margin-right: 40px;
-            text-decoration: none;
-            color: $nav-highlight;
-            font-weight: bold;
+
+        @media screen and (max-width:$screen-tablet) {
+            grid-column: 3;
         }
+    }
+
+}
+
+.help_container {
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 100vw;
+    height: 120vh;
+    overflow: hidden;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+}
+
+.help_close_btn {
+    float: right;
+
+    button {
+        @include btn($button-submit)
+    }
+}
+
+
+.help_modal_window {
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    color: rgb(0, 0, 0);
+    z-index: 10;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+    overflow: wrap;
+}
+
+.help_modal_message {
+    text-align: center;
+    font-family: $central-header;
+    line-height: 20px;
+
+    span {
+        font-weight: bold;
+    }
+
+    h4 {
+        text-align: center;
+    }
+
+    padding: 10px;
+    flex: 1;
+
+    a {
+        text-decoration: none;
+        color: black
     }
 
 }

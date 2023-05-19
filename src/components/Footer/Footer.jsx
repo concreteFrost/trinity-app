@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import s from './Footer.module.scss';
 import { ReactComponent as CocoonLogo } from '../../images/cocoonCompressed.svg';
-import { FaMagento, FaArrowAltCircleUp, FaInfo } from "react-icons/fa"
+import { FaInfo } from "react-icons/fa"
 
 export const Footer = () => {
     const [screenWidth, setScreenHeight] = useState(window.innerHeight);
-
+    const [isHelpVisible, setIsHelpVisible] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     useEffect(() => {
         const handleResize = () => {
@@ -37,14 +37,22 @@ export const Footer = () => {
                                 <CocoonLogo></CocoonLogo>
                             </div>
                             <div className={s.copyright}><a href="https://cocoon.technology/"> ©Cocoon Technology 2023</a></div>
-
                             <div className={s.help}>
-                                <a href="#">Help</a>
+                                <span onClick={() => { setIsHelpVisible(true) }}>Help</span>
                             </div>
                         </div>
                     </nav>
                 </footer>}
-
+            {isHelpVisible ? <div className={s.help_container}>
+                <div className={s.help_modal_window}>
+                    <div className={s.help_close_btn}><button onClick={() => { setIsHelpVisible(false) }}>X</button></div>
+                    <div className={s.help_modal_message}>
+                        <h3>CONTACT</h3>
+                        <div><span>Phone:</span>01923 477771</div>
+                        <div><span>Email:</span> <a href={`mailto:ithelpdeskrequests@jdwetherspoon.co.uk`}>ithelpdeskrequests@jdwetherspoon.co.uk</a></div>
+                    </div>
+                </div>
+            </div> : null}
         </div>
 
     );
