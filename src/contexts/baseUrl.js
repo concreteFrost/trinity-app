@@ -1,1 +1,1 @@
-export  const baseUrl = "https://testapi.etrinity.services/TrinityWebAPI/api"
+export  const baseUrl = "http://testtrinity01/TrinityWebAPI/api"
