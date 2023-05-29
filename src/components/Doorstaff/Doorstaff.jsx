@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Recent } from "./Recent/Recent";
 import { Disputed } from "../Shared/Disputed/Disputed";
 import { SwitchView } from "../Shared/SwitchView/SwitchView";
-import { Route,Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 export const Doorstaff = () => {
   const [view, setView] = useState("current");
@@ -44,12 +44,12 @@ export const Doorstaff = () => {
               </>
             }
           ></Route>
-          <Route path="recent" element={  <Recent isVisible={true}></Recent>}></Route>
-          <Route path="disputed" element={ <Disputed data={disputedctivity} system={"S"}></Disputed>}></Route>
+          <Route path="recent" element={<Recent isVisible={true}></Recent>}></Route>
+          <Route path="disputed" element={<Disputed data={disputedctivity} system={"S"}></Disputed>}></Route>
         </Routes>
 
-      
-       
+
+
       </main>
     </div>
   );

@@ -4,7 +4,7 @@ import { SwitchView } from "../Shared/SwitchView/SwitchView";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ViewAreaDisputedNote } from "../../redux/api/disputedApi";
-import { Route,Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 export const Authorise = () => {
   const [view, setView] = useState("doorstaff");
@@ -108,7 +108,7 @@ export const Authorise = () => {
       <header>
         <h1>AUTHORISE</h1>
         <SwitchView
-         
+
           inputs={["doorstaff", "costs"]}
           currentView={view}
         ></SwitchView>

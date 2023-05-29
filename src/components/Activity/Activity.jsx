@@ -17,7 +17,7 @@ export const Activity = () => {
   const disputedctivity = useSelector((s) => s.getActivityReducer.disputed);
   useEffect(() => {
     dispatch(GetDisputedActivity(token, "A"));
-  
+
   }, []);
 
   return (
@@ -30,10 +30,10 @@ export const Activity = () => {
           countedActivity={disputedctivity.length}
         ></SwitchView>
       </header>
-        <main>
+      <main>
         <Routes>
           <Route
-             path="current"
+            path="current"
             element={
               <>
                 <AddActivity />
@@ -47,7 +47,7 @@ export const Activity = () => {
             element={<Disputed data={disputedctivity} system={"A"} />}
           ></Route>
         </Routes>
-        </main>
+      </main>
     </div>
   );
 };
