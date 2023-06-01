@@ -4,38 +4,39 @@ import { useEffect, useState } from "react";
 import { GET_RECENT_DOORSTAFF } from "../../../redux/types";
 import axios from "axios";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
+import { baseUrl } from "../../../contexts/baseUrl";
 
 export const Recent = (props) => {
   const tableHeader = [
     {
       Header: "NAME",
-      accessor:"staffName",
+      accessor: "staffName",
     },
     {
       Header: "SUPPLIER",
-      accessor:'supplierName'
+      accessor: 'supplierName'
     },
     {
       Header: "JOB",
-      accessor:"rateGroupName"
+      accessor: "rateGroupName"
     },
     {
       Header: "START TIME",
-      accessor:"start",
+      accessor: "start",
       Cell: ({ value }) => {
         return value.split('T').join('/');
       }
     },
     {
       Header: "END TIME",
-      accessor:"finish",
+      accessor: "finish",
       Cell: ({ value }) => {
         return value.split('T').join('/');
       }
     },
     {
       Header: "APPROVAL LEVEL",
-      accessor:"status"
+      accessor: "status"
     },
     ,]
 
@@ -43,7 +44,7 @@ export const Recent = (props) => {
 
   const recent = useSelector((state) => state.doorstaffReducer.recent);
   const dispatch = useDispatch();
-  
+
   const today = new Date();
   const weekBefore = new Date(today);
   weekBefore.setDate(weekBefore.getDate() - 7);
@@ -58,7 +59,7 @@ export const Recent = (props) => {
     const toDate = new Date(e.target[1].value).toISOString();
 
     axios({
-      url: "https://testapi.etrinity.services/TrinityWebApi/api/Report/ActivityList?system=S",
+      url: baseUrl + "/Report/ActivityList?system=S",
       headers: {
         Authorization: "Bearer " + user.access_token,
         "Content-Type": "application/json",
@@ -71,18 +72,16 @@ export const Recent = (props) => {
         locationGroupId: 0,
         supplierId: 0,
         reference: 0,
-        paymentStatusId:0
+        paymentStatusId: 0
       },
     })
       .then((res) => {
-        dispatch({type: GET_RECENT_DOORSTAFF, data : res.data.reportRecord})
-        console.log(res.data)
-        console.log(fromDate)
-        console.log(toDate.split("T")[0] + "T23:59:99.000Z")
-      }).catch(e=>console.log(e))
+        dispatch({ type: GET_RECENT_DOORSTAFF, data: res.data.reportRecord })
+
+      }).catch(e => console.log(e))
   }
 
-  
+
 
   return (
     <div className={s.container}>

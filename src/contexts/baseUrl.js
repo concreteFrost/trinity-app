@@ -1,1 +1,1 @@
-export  const baseUrl = "http://testtrinity01/TrinityWebAPI/api"
+export const baseUrl = "https://jdwtrinity.jdwint.local/TrinityWebAPI/api"
