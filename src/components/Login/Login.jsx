@@ -9,13 +9,13 @@ import axios from "axios";
 import { baseUrl } from "../../contexts/baseUrl";
 
 export const Login = () => {
-  const [errorMessage, setErrorMessage] = useState(false);
+  const errorMessage = useSelector((state) => state.userReducer.errorOnLogin)
   const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let clientID = localStorage.getItem("clientID");
   let user = JSON.parse(localStorage.getItem('user'))
-
+  console.log(errorMessage)
   if (!clientID) {
     axios
       .get(
@@ -26,14 +26,6 @@ export const Login = () => {
         clientID = res.data.message;
       });
   }
-
-  useEffect(() => {
-    if (errorMessage) {
-      setTimeout(() => {
-        setErrorMessage(false);
-      }, 3000);
-    }
-  }, [errorMessage]);
 
   useEffect(() => {
     if (user) {
@@ -67,7 +59,7 @@ export const Login = () => {
         </div>
         {errorMessage ? (
           <div className={s.error}>
-            <p>*incorrect user name</p>
+            <p>{errorMessage}</p>
           </div>
         ) : null}
         <button>Login</button>

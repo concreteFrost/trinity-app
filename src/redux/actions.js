@@ -1,8 +1,8 @@
-import { GET_DOORSTAFF_LIST } from "./types";
 import {
-  GET_SIA_DATA,
-  CLEAR_SIA_DATA, LOGOFF,LOGIN
+  GET_DOORSTAFF_LIST, GET_SIA_DATA,
+  CLEAR_SIA_DATA, LOGOFF, LOGIN, SHOW_ERROR_ON_LOGIN, CLEAR_ERROR_ON_LOGIN
 } from "./types";
+
 
 
 //LOGIN ACTIONS
@@ -26,6 +26,14 @@ export function ClearSiaData() {
 //DOORSTAFF TABLE ACTIONS
 export function SetDoorStaffList(data) {
   return { type: GET_DOORSTAFF_LIST, data };
+}
+
+export function SetErrorOnLogin() {
+  return { type: SHOW_ERROR_ON_LOGIN }
+}
+
+export function ClearErrorOnLogin() {
+  return { type: CLEAR_ERROR_ON_LOGIN }
 }
 
 

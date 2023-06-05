@@ -1,5 +1,5 @@
 
-import { SetLoginDetails } from "../../redux/actions";
+import { ClearErrorOnLogin, SetErrorOnLogin, SetLoginDetails } from "../../redux/actions";
 import axios from "axios";
 import { baseUrl } from "../../contexts/baseUrl";
 
@@ -22,7 +22,9 @@ export function GetToken(username, clientID) {
                 dispatch(SetLoginDetails(res.data));
             })
             .catch((e) => {
-                console.log(e)
+                dispatch(SetErrorOnLogin())
+
+                setTimeout(() => dispatch(ClearErrorOnLogin()), 4000)
             });
     }
 }
