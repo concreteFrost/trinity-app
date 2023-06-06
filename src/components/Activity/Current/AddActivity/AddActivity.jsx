@@ -21,6 +21,7 @@ export const AddActivity = () => {
   const supplierOpt = useSelector(
     (state) => state.activityReducer.GetOpt.supplierOpt
   );
+  const supplierProvided = useSelector(state=>state.activityReducer.supplierProvided)
   const rate = useSelector((state) => state.activityReducer.getRate);
   const token = useSelector((state) => state.userReducer.user.access_token);
   const locationId = useSelector((state) => state.userReducer.user.locationId);
@@ -152,7 +153,7 @@ export const AddActivity = () => {
           <button>CHECK RATE</button>
         </div>
       </form>
-      <form onSubmit={SecondSubmit} className={s.rate_form}>
+     {supplierProvided === true ? <form onSubmit={SecondSubmit} className={s.rate_form}>
         <div className={s.rate}>
           <label>RATE</label>
           <div className={s.radio}>
@@ -229,7 +230,7 @@ export const AddActivity = () => {
           <button className={s.clear}>CLEAR</button>
           <button className={s.add}>ADD</button>
         </div>
-      </form>
+      </form> : null}  
     </div>
   );
 };
