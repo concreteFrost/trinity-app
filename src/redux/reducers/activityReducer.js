@@ -17,7 +17,7 @@ const initialState = {
   supplier: null,
   costValue: null,
   hoursWorked: null,
-  
+  supplierProvided : false
 };
 
 export const activityReducer = (state = initialState, action) => {
@@ -67,6 +67,11 @@ export const activityReducer = (state = initialState, action) => {
       return {
         ...initialState
       };
+    }
+    case "SUPPLIER_PROVIDED":{
+      return{
+        ...state, supplierProvided : action.data
+      }
     }
     default:
       return state;

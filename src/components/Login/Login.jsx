@@ -1,6 +1,5 @@
 import s from "./Login.module.scss";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GetToken } from "../../redux/api/loginApi";
@@ -9,45 +8,47 @@ import axios from "axios";
 import { baseUrl } from "../../contexts/baseUrl";
 
 export const Login = () => {
-  const errorMessage = useSelector((state) => state.userReducer.errorOnLogin)
-  const isLoggedIn = useSelector(state => state.userReducer.isLoggedIn);
+  const errorMessage = useSelector((state) => state.userReducer.errorOnLogin);
+  const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  let clientID = localStorage.getItem("clientID");
-  let user = JSON.parse(localStorage.getItem('user'))
-  console.log(errorMessage)
-  if (!clientID) {
-    axios
-      .get(
-        baseUrl + "/Auth/GenerateUniqueReference"
-      )
-      .then((res) => {
-        localStorage.setItem("clientID", res.data.message);
-        clientID = res.data.message;
-      });
-  }
+  const [clientID, setClientID] = useState(null); // Use state to store the clientID
 
   useEffect(() => {
-    if (user) {
-      if (new Date() < new Date(user['.expires']))
-        dispatch(SetLoginDetails(user))
+    let storedClientID = localStorage.getItem("clientID");
+    if (!storedClientID) {
+      axios.get(baseUrl + "/Auth/GenerateUniqueReference").then((res) => {
+        const generatedClientID = res.data.message;
+        localStorage.setItem("clientID", generatedClientID);
+        setClientID(generatedClientID);
+      });
+    } else {
+      setClientID(storedClientID);
+    }
+  }, []);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && new Date() < new Date(user[".expires"])) {
+      dispatch(SetLoginDetails(user));
     }
 
     if (isLoggedIn) {
-      if (localStorage.getItem("lastRoute")) {
-        navigate(localStorage.getItem("lastRoute"))
-      }
-      else {
-        navigate("/home")
-      }
+      const lastRoute = localStorage.getItem("lastRoute");
+      navigate(lastRoute || "/home");
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn, dispatch, navigate]);
 
   function submitLogin(e) {
     e.preventDefault();
-    dispatch(GetToken(e.target[0].value, clientID))
-
+    if (clientID) {
+      dispatch(GetToken(e.target[0].value, clientID));
+    } else {
+      
+      console.log("clientID not available");
+    }
   }
+
   return (
     <div className={s.container}>
       <form onSubmit={submitLogin}>

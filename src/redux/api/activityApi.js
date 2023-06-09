@@ -70,11 +70,13 @@ export function GetRate(token, data) {
         console.log('result of get rate', res)
         if (res.data.message) {
           dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.message })
+          dispatch({type: "SUPPLIER_PROVIDED", data : false})
         }
         else {
           dispatch({ type: GET_ACTIVITY_RATE, data: res.data })
           dispatch({ type: SET_ACTIVITY_SUPPLIER, data: data.supplierID })
           dispatch({ type: SET_ACTIVITY_COST_VALUE, data: res.data.costValue })
+          dispatch({type: "SUPPLIER_PROVIDED", data : true})
         }
 
       })
