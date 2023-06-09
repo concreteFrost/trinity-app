@@ -23,8 +23,7 @@ export function GetToken(username, clientID) {
             })
             .catch((e) => {
                 dispatch(SetErrorOnLogin())
-
-                setTimeout(() => dispatch(ClearErrorOnLogin()), 4000)
+                setTimeout(() => dispatch(ClearErrorOnLogin()), 7000)
             });
     }
 }

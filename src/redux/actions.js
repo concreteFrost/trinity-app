@@ -3,8 +3,6 @@ import {
   CLEAR_SIA_DATA, LOGOFF, LOGIN, SHOW_ERROR_ON_LOGIN, CLEAR_ERROR_ON_LOGIN
 } from "./types";
 
-
-
 //LOGIN ACTIONS
 export function SetLoginDetails(data) {
   return { type: LOGIN, data };

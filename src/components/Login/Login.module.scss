@@ -1,7 +1,7 @@
 @import "src/scss/mixins.scss";
 @import "src/scss/variables.scss";
 
-.container{
+.container {
 
     position: absolute;
 
@@ -10,21 +10,41 @@
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 
-    form{
+
+    form {
         @include form-template;
+        width: 200px;
+        margin-left: auto;
+        margin-right: auto;
         display: grid;
         justify-items: center;
         gap: 10px;
     }
 
-    button{
+    button {
         @include btn($button-submit);
-    
-        
-        
+
     }
 
-    .error{
+    .error_container {
+        width: 500px;
         color: red;
+    }
+
+    .error {
+        position: absolute;
+        text-align: center;
+
+        opacity: 1;
+        transition: opacity 0.5s ease;
+
+    }
+
+    .error_fade {
+        position: absolute;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+
     }
 }

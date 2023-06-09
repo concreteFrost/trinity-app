@@ -57,13 +57,16 @@ export const Login = () => {
           </label>
           <input type="text" name="userName" id="userName" />
         </div>
-        {errorMessage ? (
-          <div className={s.error}>
-            <p>{errorMessage}</p>
-          </div>
-        ) : null}
+
         <button>Login</button>
       </form>
+      <div className={s.error_container}>
+        <div className={errorMessage ? s.error : s.error_fade}>
+          <p>*The username or password is incorrect</p>
+          <p> <strong>–NOTE </strong> pub logins should be entered in the format of your network login without the ‘@jdwetherspoon.co.uk’</p>
+          <p><i> -e.g. ‘p95’ or ‘p177’ or ‘p4039’ without any leading zeroes </i></p>
+        </div>
+      </div>
     </div>
   );
 };

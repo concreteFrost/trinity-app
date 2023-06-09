@@ -3,7 +3,7 @@ import { CLEAR_ERROR_ON_LOGIN, LOGIN, SHOW_ERROR_ON_LOGIN } from "../types";
 const initialState = {
   user: {},
   isLoggedIn: false,
-  errorOnLogin: ""
+  errorOnLogin: false
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -18,14 +18,14 @@ export const userReducer = (state = initialState, action) => {
 
     case SHOW_ERROR_ON_LOGIN:
       return {
-        ...state, errorOnLogin: "*The user name or password is incorrect"
-      }
-    case CLEAR_ERROR_ON_LOGIN: {
-      return {
-        ...state, errorOnLogin: ""
-      }
-    }
+        ...state,
+        errorOnLogin: true
+      };
 
+    case CLEAR_ERROR_ON_LOGIN:
+      return {
+        ...state, errorOnLogin: false
+      }
     default:
       return state;
   }
