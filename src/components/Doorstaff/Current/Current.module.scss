@@ -4,115 +4,15 @@
 .container {
   @include home-page-container;
 
-  .wrapper {
-    @include table_wrapper
-  }
-
-  .doorstaff_table {
-    @include main-tables;
-
-    input {
-      min-width: 100px;
-      max-width: 100px;
-
-      @include form-input;
-    }
-
-    button {
-      margin-top: 10px;
-    }
-
-  }
-
-  .signoff {
-    display: flex;
-    align-items: center;
-
-  }
-
-  .time {
-    display: block;
-  }
-
 
   .error {
     margin-bottom: 10px;
     color: red;
   }
 
-  .button_footer {
-    float: right;
-    display: flex;
-    margin-top: 20px;
-
-    button {
-      margin: 0 2px;
-      @include btn($button-submit)
-    }
-  }
-
-  .sign_all_out {
-
-    background-color: rgba(0, 0, 0, 0.2);
-    width: 100vw;
-    height: 100vh;
-    z-index: 1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
 
 
-    form {
-      width: 300px;
-      padding: 10px;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 5px;
-      z-index: 9999;
 
-      @include form-template;
-
-      label {
-        font-family: $central-header;
-        font-weight: bold;
-      }
-
-      input {
-
-        width: 99% !important;
-        margin-left: 0 !important;
-        min-height: 30px;
-        margin-right: 0px;
-
-        font-size: 1rem;
-        font-family: $central-header !important;
-        font-weight: bold;
-      }
-
-      .sign_all_out_btn_container {
-
-        display: grid;
-        grid-template-columns: 12fr;
-        margin-top: 10px;
-
-        .btn_confirm {
-          margin-bottom: 2px;
-          @include btn($button-submit)
-        }
-
-        .btn_cancel {
-
-          @include btn($button-cancel)
-        }
-      }
-
-
-    }
-
-  }
 
 
 }

@@ -46,10 +46,11 @@ nav {
     position: relative;
 
     .copyright {
-        display: flex;
+        display:grid;
         justify-content: center;
 
         a {
+            text-align: center;
             text-decoration: none;
             color: black;
             font-style: italic;
@@ -61,16 +62,22 @@ nav {
         }
     }
 
-    .logo {
-        display: flex;
+    .cocoon {
+        display: grid;
         justify-content: start;
         position: relative;
-
         svg {
             position: absolute;
             top: -57px;
             width: 200px;
 
+        }
+        a{
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            text-decoration: none;
+            font-size: 0.7rem;
         }
 
         @media screen and (max-width:$screen-tablet) {

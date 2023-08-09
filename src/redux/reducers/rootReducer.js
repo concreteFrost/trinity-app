@@ -16,6 +16,7 @@ import { searchHistoryReducer } from "./searchHistoryReducer";
 import { LOGOFF } from "../types";
 import { pubManagerAnalyticsReducer } from "./pubManagerAnalyticsReducer";
 import { areaManagerAnalyticsReducer } from "./areaManagerAnalyticsReducer";
+import { receiptReducer } from "./receiptReducer";
 
 const appReducer = combineReducers({
   userReducer, siaReducer, doorstaffReducer,
@@ -23,7 +24,7 @@ const appReducer = combineReducers({
   authoriseReducer, summaryReducer, searchActivitiesReducer,
   searchHistoryReducer,
   modalMessageReducer, modalPromptReducer, modalLogoutReducer, loaderReducer, pubManagerAnalyticsReducer,
-  areaManagerAnalyticsReducer
+  areaManagerAnalyticsReducer, receiptReducer
 })
 
 export const rootReducer = (state, action) => {

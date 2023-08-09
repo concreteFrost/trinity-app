@@ -1,0 +1,35 @@
+@import "../../../../scss/mixins.scss";
+
+.wrapper {
+  @include table_wrapper
+}
+
+
+.doorstaff_table {
+    @include main-tables;
+  
+    input {
+      min-width: 100px;
+      max-width: 100px;
+
+      @include form-input;
+     
+    }
+
+    button {
+      margin-top: 10px;
+    }
+
+    
+  .signoff {
+    display: flex;
+    align-items: center;
+
+  }
+
+  .time {
+    display: block;
+  }
+
+
+  }

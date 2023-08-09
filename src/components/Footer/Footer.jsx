@@ -33,10 +33,12 @@ export const Footer = () => {
                 <footer className={s.container} onMouseLeave={() => { setIsHovered(false) }} >
                     <nav>
                         <div className={s.grid}>
-                            <div className={s.logo}>
-                                <CocoonLogo></CocoonLogo>
+                            <div className={s.cocoon}>
+                                <div> <CocoonLogo></CocoonLogo></div>
+                                <div><a href="https://cocoon.technology/"> ©Cocoon Technology 2023</a></div>
                             </div>
-                            <div className={s.copyright}><a href="https://cocoon.technology/"> ©Cocoon Technology 2023</a></div>
+                            <div className={s.copyright}>
+                                <div>  <a href="https://trinity.jdwint.local/sif/autobill.pdf">Supplier Setup Forms </a></div></div>
                             <div className={s.help}>
                                 <span onClick={() => { setIsHelpVisible(true) }}>Help</span>
                             </div>

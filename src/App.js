@@ -14,11 +14,14 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import { useSelector } from "react-redux";
 import { ModalMessage } from "./components/Modal/ModalMessage/ModalMessage";
 import { ModalLogout } from "./components/Modal/ModalLogout/ModalLogout";
+import { Receipt } from "./components/Receipt/Receipt";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
+
   return (
     <div>
+      
       <div className={s.container}>
         <ModalMessage></ModalMessage>
         <ModalLogout></ModalLogout>
@@ -78,6 +81,7 @@ function App() {
         </Routes>
       </div>
       <Footer></Footer>
+      <Receipt></Receipt>
     </div>
   );
 }
