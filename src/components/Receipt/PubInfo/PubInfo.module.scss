@@ -1,0 +1,28 @@
+.pub_info {
+    border: 1px solid black;
+    padding: 10px;
+
+    .pub_title {
+        span{
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        margin-bottom: 10px;
+    }
+
+    .pub_address {
+        p{
+            margin: 0;
+            padding: 0;
+        }
+        margin-bottom: 10px;
+       
+        
+    }
+
+    .pub_telephone {
+        span{
+            font-weight: bold;
+        }
+    }
+}

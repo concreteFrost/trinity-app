@@ -60,7 +60,6 @@ export const ActivityTable = (props) => {
   const currentActivity = useSelector(s => s.getActivityReducer.current);
   const activityReceiptData = useSelector((state)=> state.receiptReducer);
 
-  useEffect(()=> console.log('activity receipt',activityReceiptData),[]);
   const today = new Date()
   const yesterday = new Date(new Date().setDate(today.getDate() - 1));
   const dispatch = useDispatch();
@@ -72,6 +71,7 @@ export const ActivityTable = (props) => {
 
   function getTimesheetData(activityId){
     dispatch(GetTimesheetData(token,"A", activityId))
+    console.log('aaaaaaa',activityReceiptData)
   }
 
   return (

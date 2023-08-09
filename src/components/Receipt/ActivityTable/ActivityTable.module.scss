@@ -1,0 +1,32 @@
+.activity_info {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-bottom: 150px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    table {
+        margin-bottom: 40px;
+        table-layout: fixed;
+        width: 100%;
+
+        th {
+            text-align: left;
+        }
+
+
+    }
+
+    .to_fill_up_container {
+        display: grid;
+        grid-template-columns: 12fr;
+        gap: 7px;
+
+        .to_fill_up {
+            border-bottom: 1px dotted rgb(137, 137, 137);
+        }
+
+        margin-bottom: 20px;
+    }
+
+}

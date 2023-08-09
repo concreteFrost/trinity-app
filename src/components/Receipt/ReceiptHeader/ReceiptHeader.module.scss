@@ -1,0 +1,34 @@
+.header {
+    display: grid;
+    grid-template-columns: 6fr 6fr;
+
+    .title {
+        grid-row: 1/3;
+        font-size: 2rem;
+        color: rgb(255, 119, 0);
+    }
+
+    .main_address {
+        grid-column: 2;
+        grid-row: 1;
+        text-align: right;
+        padding-right: 20px;
+        font-size: 0.8rem;
+        p {
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+        }
+    }
+
+    .switchboard {
+        grid-row: 2;
+        margin-top: 20px;
+        padding-right: 20px;
+        text-align: right;
+        font-weight: bold;
+        font-size: 0.8rem;
+    }
+
+    margin-bottom: 10px;
+}
