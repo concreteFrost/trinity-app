@@ -44,7 +44,7 @@ export const CurrentTable = (props) => {
                         <th>DATE</th>
                         <th>EDIT</th>
                         <th>PRINT</th>
-                        {props.doorstaff.length > 0 ? <th>SIGN OUT</th> : null}
+                        {props.doorstaff.length > 0 ? <th className={s.signoff_header}>SIGN OUT</th> : null}
                         {props.doorstaff.length > 0 ? <th>CANCEL</th> : null}
                     </tr>
                 </thead>
