@@ -9,6 +9,7 @@ import { DeleteDoorStaff } from "../../../../redux/api/doorstaffAPI";
 import { GetTimesheetData } from "../../../../redux/api/receiptAPI";
 
 
+
 export const CurrentTable = (props) => {
     const dispatch = useDispatch();
     const token = useSelector((state)=>state.userReducer.user.access_token);
@@ -26,6 +27,12 @@ export const CurrentTable = (props) => {
     dispatch(GetTimesheetData(token,"S", activityId))
   }
 
+  function showCancelModal(activityIdToCancel){
+   
+
+    dispatch({type:"SHOW_CANCEL_MODAL", data: activityIdToCancel })
+  }
+
     return (
         <div className={s.wrapper}>
             <table className={s.doorstaff_table}>
@@ -36,8 +43,9 @@ export const CurrentTable = (props) => {
                         <th>START TIME</th>
                         <th>DATE</th>
                         <th>EDIT</th>
-                        <th>Print</th>
-                        {props.isVisible ? <th>SIGN OUT</th> : null}
+                        <th>PRINT</th>
+                        {props.doorstaff.length > 0 ? <th>SIGN OUT</th> : null}
+                        {props.doorstaff.length > 0 ? <th>CANCEL</th> : null}
                     </tr>
                 </thead>
                 <tbody>
@@ -84,7 +92,9 @@ export const CurrentTable = (props) => {
                                             </div>
                                         </form>
                                     </td>
+                                   
                                 ) : null}
+                                {props.isVisible ? <td><button onClick={()=>{showCancelModal(e.activityId)}} >CANCEL</button></td> : null}
                             </tr>
                         ))
                     ) : (

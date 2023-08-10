@@ -14,6 +14,7 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import { useSelector } from "react-redux";
 import { ModalMessage } from "./components/Modal/ModalMessage/ModalMessage";
 import { ModalLogout } from "./components/Modal/ModalLogout/ModalLogout";
+import { ModalCancel } from "./components/Modal/ModalCancel/ModalCancel";
 import { Receipt } from "./components/Receipt/Receipt";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       <div className={s.container}>
         <ModalMessage></ModalMessage>
         <ModalLogout></ModalLogout>
+        <ModalCancel></ModalCancel>
         {isLoggedIn === true ? <Navbar className={s.nav} /> : null}
         <Routes>
           <Route path="/" element={isLoggedIn ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />} />

@@ -13,6 +13,25 @@ import {
   GET_DOORSTAFF_RATE_OPT,
 } from "../types";
 
+
+export function CancelDoorStaff(data, token) {
+  return function (dispatch) {
+   return axios({
+      method: "POST",
+      url: `${baseUrl}/Activity/CancelActivity`,
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      data: data
+    }).then(() => {
+      dispatch({ type: "HIDE_CANCEL_MODAL" })
+      dispatch(GetDoorstaff(token))
+    })
+    .catch(e => console.log(e))
+  }
+}
+
 export function DeleteDoorStaff(data, token, signOutTIme) {
   return function (dispatch) {
     return axios({
