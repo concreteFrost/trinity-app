@@ -40,21 +40,7 @@ export const ActivityTable = (props) => {
       Header: "NOTE",
       accessor:"description"
     },
-    {
-      Header:"PRINT",
-      accessor:'centralCostId',
-      Cell: ({ row }) => (
-        <div>
-          <button
-            onClick={() => {getTimesheetData(row.original.centralCostId)}}
-          >
-            PRINT
-          </button>
-        </div>
-      ),
-    }
-
-    ,]
+    ]
 
   const token = useSelector((state) => state.userReducer.user.access_token);
   const currentActivity = useSelector(s => s.getActivityReducer.current);
@@ -71,7 +57,6 @@ export const ActivityTable = (props) => {
 
   function getTimesheetData(activityId){
     dispatch(GetTimesheetData(token,"A", activityId))
-    console.log('aaaaaaa',activityReceiptData)
   }
 
   return (

@@ -4,15 +4,13 @@ import {
     SET_DOORSTAFF_SIGNOUT_TIME,
     TOGGLE_DOORSTAFF_TO_SIGN_OUT,
 } from "../../../../redux/types";
-import { useDispatch, useSelector} from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux/es/exports";
 import { DeleteDoorStaff } from "../../../../redux/api/doorstaffAPI";
 import { GetTimesheetData } from "../../../../redux/api/receiptAPI";
 
-
-
 export const CurrentTable = (props) => {
     const dispatch = useDispatch();
-    const token = useSelector((state)=>state.userReducer.user.access_token);
+    const token = useSelector((state) => state.userReducer.user.access_token);
     function SingleSignOff(e) {
         e.preventDefault()
         if (e.target[0].value && e.target[1].value) {
@@ -22,16 +20,9 @@ export const CurrentTable = (props) => {
         }
     }
 
-    
-  function getTimesheetData(activityId){
-    dispatch(GetTimesheetData(token,"S", activityId))
-  }
-
-  function showCancelModal(activityIdToCancel){
-   
-
-    dispatch({type:"SHOW_CANCEL_MODAL", data: activityIdToCancel })
-  }
+    function showCancelModal(activityIdToCancel) {
+        dispatch({ type: "SHOW_CANCEL_MODAL", data: activityIdToCancel })
+    }
 
     return (
         <div className={s.wrapper}>
@@ -42,8 +33,8 @@ export const CurrentTable = (props) => {
                         <th>JOB ROLE</th>
                         <th>START TIME</th>
                         <th>DATE</th>
-                        <th>EDIT</th>
-                        <th>PRINT</th>
+                     
+
                         {props.doorstaff.length > 0 ? <th>SIGN OUT</th> : null}
                         {props.doorstaff.length > 0 ? <th>CANCEL</th> : null}
                     </tr>
@@ -56,8 +47,6 @@ export const CurrentTable = (props) => {
                                 <td>{e.position}</td>
                                 <td>{e.startTime.split('T')[1].substring(0, 5)}</td>
                                 <td>{e.startTime.split('T')[0]}</td>
-                                <td><button>EDIT</button></td>
-                                <td><button onClick={()=>{getTimesheetData(e.activityId)}}>PRINT</button></td>
                                 {props.isVisible ? (
                                     <td>
                                         <form onSubmit={SingleSignOff} data-staff={JSON.stringify(e)}>
@@ -92,9 +81,9 @@ export const CurrentTable = (props) => {
                                             </div>
                                         </form>
                                     </td>
-                                   
+
                                 ) : null}
-                                {props.isVisible ? <td><button onClick={()=>{showCancelModal(e.activityId)}} >CANCEL</button></td> : null}
+                                {props.isVisible ? <td><button onClick={() => { showCancelModal(e.activityId) }} >CANCEL</button></td> : null}
                             </tr>
                         ))
                     ) : (

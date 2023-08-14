@@ -5,6 +5,7 @@ import { GET_RECENT_DOORSTAFF } from "../../../redux/types";
 import axios from "axios";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
 import { baseUrl } from "../../../contexts/baseUrl";
+import { GetTimesheetData } from "../../../redux/api/receiptAPI";
 
 export const Recent = (props) => {
   const tableHeader = [
@@ -38,12 +39,30 @@ export const Recent = (props) => {
       Header: "APPROVAL LEVEL",
       accessor: "status"
     },
+    {
+      Header:"PRINT",
+      accessor:'centralCostId',
+      Cell: ({ row }) => (
+        <div>
+          <button
+            onClick={() => {getTimesheetData(row.original.activityId)}}
+          >
+            PRINT
+          </button>
+        </div>
+      ),
+    }
     ,]
 
   const user = useSelector((state) => state.userReducer.user);
+  const token = useSelector((state) => state.userReducer.user.access_token);
 
   const recent = useSelector((state) => state.doorstaffReducer.recent);
   const dispatch = useDispatch();
+
+  function getTimesheetData(activityId){
+    dispatch(GetTimesheetData(token,"S", activityId))
+  }
 
   const today = new Date();
   const weekBefore = new Date(today);
