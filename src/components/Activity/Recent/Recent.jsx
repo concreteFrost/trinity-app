@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { GetActivity } from "../../../redux/api/activityApi";
 import { useState } from "react";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
+import { GetTimesheetData } from "../../../redux/api/receiptAPI";
 
 export const Recent = (props) => {
 
@@ -38,6 +39,19 @@ export const Recent = (props) => {
       Header: "NOTE",
       accessor:"description"
     },
+    {
+      Header:"PRINT",
+      accessor:'centralCostId',
+      Cell: ({ row }) => (
+        <div>
+          <button
+            onClick={() => {getTimesheetData(row.original.centralCostId)}}
+          >
+            PRINT
+          </button>
+        </div>
+      ),
+    }
 
     ,]
 
@@ -57,6 +71,10 @@ export const Recent = (props) => {
 
     if (fromDate.length > 0 && toDate.length > 0)
       dispatch(GetActivity(token, fromDate, toDate, "R"));
+  }
+
+  function getTimesheetData(activityId){
+    dispatch(GetTimesheetData(token,"A", activityId))
   }
 
   return (
