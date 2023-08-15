@@ -6,11 +6,11 @@ import {
 } from "../../../../redux/types";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { DeleteDoorStaff } from "../../../../redux/api/doorstaffAPI";
-import { GetTimesheetData } from "../../../../redux/api/receiptAPI";
+
 
 export const CurrentTable = (props) => {
     const dispatch = useDispatch();
-    const token = useSelector((state) => state.userReducer.user.access_token);
+
     function SingleSignOff(e) {
         e.preventDefault()
         if (e.target[0].value && e.target[1].value) {
@@ -33,15 +33,9 @@ export const CurrentTable = (props) => {
                         <th>JOB ROLE</th>
                         <th>START TIME</th>
                         <th>DATE</th>
-<<<<<<< HEAD
-                        <th>EDIT</th>
-                        <th>PRINT</th>
-                        {props.doorstaff.length > 0 ? <th className={s.signoff_header}>SIGN OUT</th> : null}
-=======
                      
 
                         {props.doorstaff.length > 0 ? <th>SIGN OUT</th> : null}
->>>>>>> main
                         {props.doorstaff.length > 0 ? <th>CANCEL</th> : null}
                     </tr>
                 </thead>
