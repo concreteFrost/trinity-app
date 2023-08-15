@@ -27,8 +27,7 @@ export const SignIn = (props) => {
     "Content-Type": "application/x-www-form-urlencoded",
   };
 
-  console.log('supplier ID', sia)
-
+  
   useEffect(() => {
     if (sia.doorstaff.staffId) dispatch(GetDoorstaffPositions(headers));
   }, [sia.doorstaff.staffId]);
