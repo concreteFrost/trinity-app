@@ -33,8 +33,6 @@ export const CurrentTable = (props) => {
                         <th>JOB ROLE</th>
                         <th>START TIME</th>
                         <th>DATE</th>
-                     
-
                         {props.doorstaff.length > 0 ? <th>SIGN OUT</th> : null}
                         {props.doorstaff.length > 0 ? <th>CANCEL</th> : null}
                     </tr>

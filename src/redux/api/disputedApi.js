@@ -1,6 +1,6 @@
 import axios from "axios";
 import { baseUrl } from "../../contexts/baseUrl";
-import { GET_DISPUTED_ACTIVITY, GET_DISPUTED_DOORSTAFF, SHOW_MODAL_MESSAGE,RESET_MODAL_ACTIVITY, GET_DISPUTED_COUNT } from '../types'
+import { GET_DISPUTED_ACTIVITY, GET_DISPUTED_DOORSTAFF, SHOW_MODAL_MESSAGE, RESET_MODAL_ACTIVITY, GET_DISPUTED_COUNT } from '../types'
 import { GetAuthorise } from "./authoriseApi";
 
 //FOR PUB MANAGER
@@ -12,17 +12,17 @@ export function GetDisputedActivity(token, system) {
                 "Content-Type": "application/x-www-form-urlencoded",
             }
         }).then(res => {
-            switch(system){
+            switch (system) {
                 case "S":
                     dispatch({ type: GET_DISPUTED_DOORSTAFF, data: res.data.reportRecord })
-                    
+
                     break;
                 case "A":
                     dispatch({ type: GET_DISPUTED_ACTIVITY, data: res.data.reportRecord })
                     break;
             }
             dispatch({ type: GET_DISPUTED_COUNT, data: res.data.reportRecord.length })
-        
+
         }
         )
     }
@@ -32,7 +32,7 @@ export function GetDisputedActivity(token, system) {
 export function SendBackDisputed(token, returnDisputed, system) {
     return function (dispatch) {
         return axios({
-            url: baseUrl + "/Disputed/ReturnActivity?system="+ system,
+            url: baseUrl + "/Disputed/ReturnActivity?system=" + system,
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export function SendBackDisputed(token, returnDisputed, system) {
         })
             .then((res) => {
                 dispatch({ type: RESET_MODAL_ACTIVITY })
-                dispatch(GetDisputedActivity(token, system ))
+                dispatch(GetDisputedActivity(token, system))
                 console.log(res)
 
             }).catch(e => console.log(e))
@@ -71,40 +71,43 @@ export function SendDisputed(system, token, dispute) {
             .then(() => {
                 dispatch({ type: RESET_MODAL_ACTIVITY })
                 dispatch(GetAuthorise(system, token))
-            }).catch(e => console.log(system,token,dispute))
+            }).catch(e => {
+                console.log(dispute.paymentActivityID, "id");
+                console.log( dispute.disputedNote,"name")
+            })
     }
 }
 
 
 //FOR PUB MANAGER
-export function ViewDisputedNote(token,system,activityID) {
+export function ViewDisputedNote(token, system, activityID) {
     return function (dispatch) {
-      return axios.get(baseUrl + `/Disputed/GetNotes/${system}/${activityID}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/x-www-form-urlencoded",
-        }
-      }).then(res => {
-        if(res.data.record.length > 0)
-        dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.record[res.data.record.length-1].name })
-      })
+        return axios.get(baseUrl + `/Disputed/GetNotes/${system}/${activityID}`, {
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/x-www-form-urlencoded",
+            }
+        }).then(res => {
+            if (res.data.record.length > 0)
+                dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.record[res.data.record.length - 1].name })
+        })
     }
-  }
+}
 
 //FOR AREA MANAGER
-export function ViewAreaDisputedNote(token,system,activityID) {
+export function ViewAreaDisputedNote(token, system, activityID) {
     return function (dispatch) {
-      return axios.get(baseUrl + `/AreaManager/GetNotes/${system}/${parseInt(activityID)}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/x-www-form-urlencoded",
-        }
-      }).then(res => {
-        if(res.data.record.length > 0)
-        dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.record[res.data.record.length-1].name })
-        console.log(res.data)
-      })
+        return axios.get(baseUrl + `/AreaManager/GetNotes/${system}/${parseInt(activityID)}`, {
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/x-www-form-urlencoded",
+            }
+        }).then(res => {
+            if (res.data.record.length > 0)
+                dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.record[res.data.record.length - 1].name })
+            console.log(res.data)
+        })
     }
-  }
+}
 
 

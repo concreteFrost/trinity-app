@@ -65,7 +65,7 @@ export const Authorise = () => {
       Cell: ({ row }) => (
         <div>
           <button
-            onClick={() => viewNote(row.original.paymentAuthId, system, token)}
+            onClick={() => viewNote(row.original.activityId, system, token)}
           >
             NOTE
           </button>
@@ -74,7 +74,7 @@ export const Authorise = () => {
     },
     {
       Header: "ACTIONS",
-      accessor: "paymentAuthId",
+      accessor: "activityId",
       Cell: ({ row }) => (
         <div className={s.actions}>
           <input
@@ -92,7 +92,7 @@ export const Authorise = () => {
               dispatch({ type: "SHOW_MODAL_PROMPT" });
               dispatch({
                 type: "SET_DISPUTED_PAYMENT_ID",
-                data: row.original.paymentAuthId,
+                data: row.original.activityId,
               });
             }}
           >
