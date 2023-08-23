@@ -15,12 +15,14 @@ import {
   SET_DOORSTAFF_START_TIME,
 } from "../../../redux/types";
 import { ClearSiaData } from "../../../redux/actions";
+import { useState } from "react";
 
 export const SignIn = (props) => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.userReducer.user);
   const sia = useSelector((state) => state.siaReducer);
+  const [canSubmit,setCanSubmit] = useState(false)
 
   const headers = {
     Authorization: "Bearer " + token.access_token,
@@ -47,11 +49,13 @@ export const SignIn = (props) => {
           sia.date,
           headers
         )
-      );
+      )
+      setCanSubmit(true);
   }, [sia.position, sia.supplier]);
 
   function Submit() {
-    if (sia.rate.rateGroupId) {
+    if (sia.rate.rateGroupId && canSubmit) {
+      setCanSubmit(false)
       dispatch(SetDoorStaff(token.access_token, sia));
     }
   }
@@ -168,7 +172,7 @@ export const SignIn = (props) => {
           <button className={s.clear} onClick={() => dispatch(ClearSiaData())}>
             CLEAR
           </button>
-          <button className={s.submit} onClick={Submit}>
+          <button className={s.submit} onClick={Submit} >
             SUBMIT
           </button>
         </div>

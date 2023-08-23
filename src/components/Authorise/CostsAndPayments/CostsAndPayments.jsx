@@ -11,10 +11,11 @@ import {
 } from "../../../redux/types";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
 
+
 export const CostsAndPayments = (props) => {
   const toDispute = useSelector((state) => state.modalPromptReducer);
   const token = useSelector((state) => state.userReducer.user.access_token);
-
+  const userReducer = useSelector(state => state.userReducer.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,17 +56,19 @@ export const CostsAndPayments = (props) => {
       ></TableTemplate>
 
       <div>
-        <ul>
+        {userReducer.userRole === "2" ? <ul>
           <li>
             <button onClick={UnselectAll}>NONE</button>
           </li>
           <li>
             <button onClick={SelectAll}>SELECT ALL</button>
           </li>
+
           <li>
             <button onClick={Approve}>APPROVE</button>{" "}
           </li>
-        </ul>
+        </ul> : null}
+
       </div>
     </div>
   );

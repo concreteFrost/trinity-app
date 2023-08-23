@@ -43,7 +43,7 @@ export const NavbarList = (props) => {
       >
         SEARCH
       </NavLink>
-      {userReducer.userRole == 2 ? <NavLink
+      {userReducer.userRole == 2 || userReducer.userRole == 1 ? <NavLink
         className={() => (location.pathname.includes("authorise") ? s.active : s.default)}
         to="/authorise/doorstaff"
       >
