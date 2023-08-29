@@ -56,7 +56,7 @@ export const CostsAndPayments = (props) => {
       ></TableTemplate>
 
       <div>
-        {userReducer.userRole === "2" ? <ul>
+        {userReducer.userRole === "2" || userReducer.userRole === "1" ? <ul>
           <li>
             <button onClick={UnselectAll}>NONE</button>
           </li>
