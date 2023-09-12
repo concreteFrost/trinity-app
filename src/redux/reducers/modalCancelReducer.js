@@ -1,18 +1,20 @@
 
 const initialState = {
   isVisible: false,
-  activityToCancel: null
+  activityToModify: null,
+  activityType : null
 };
 
 export const modalCancelReducer = (state = initialState, action) => {
   switch (action.type) {
-    case  "SHOW_CANCEL_MODAL":
+    case  "SHOW_ACTION_MODAL":
       return {
         ...state,
         isVisible: true,
-        activityToCancel : action.data
+        activityToModify : action.activityToModify,
+        activityType : action.activityType
       };
-    case "HIDE_CANCEL_MODAL":
+    case "HIDE_ACTION_MODAL":
       return {
         ...state,
         isVisible: false,

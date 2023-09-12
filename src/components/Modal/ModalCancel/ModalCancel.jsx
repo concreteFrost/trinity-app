@@ -11,19 +11,19 @@ export const ModalCancel = (props) => {
 
     function Cancel(e) {
         e.preventDefault();
-        dispatch(CancelDoorStaff(modalCancelReducer.activityToCancel,token))
+        dispatch(CancelDoorStaff(modalCancelReducer.activityToModify,token))
       
     }
 
     function HideModal(e) {
         e.preventDefault()
-        dispatch({ type: "HIDE_CANCEL_MODAL" });
+        dispatch({ type: "HIDE_ACTION_MODAL" });
 
     }
 
     function Submit(e) {
-        e.preventDefault();
-       
+        e.preventDefault();    
+        dispatch({ type: "HIDE_ACTION_MODAL" });
     }
 
     return (
@@ -35,7 +35,7 @@ export const ModalCancel = (props) => {
                     <div className={s.input_body}>
                         <form onSubmit={Submit}>
                             <div className={s.modal_btn}>
-                                <button onClick={Cancel}>SUBMIT</button>
+                                <button onClick={modalCancelReducer.activityType === "CANCEL" ? Cancel : null}>SUBMIT</button>
                                 <button onClick={HideModal}>CLOSE</button>
                             </div>
 

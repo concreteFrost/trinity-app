@@ -25,7 +25,7 @@ export function CancelDoorStaff(data, token) {
       data: data,
     })
       .then(() => {
-        dispatch({ type: "HIDE_CANCEL_MODAL" });
+        dispatch({ type: "HIDE_ACTION_MODAL" });
         dispatch(GetDoorstaff(token));
       })
       .catch((e) => console.log(e));

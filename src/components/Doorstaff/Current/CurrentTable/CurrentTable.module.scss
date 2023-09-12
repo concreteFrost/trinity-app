@@ -1,4 +1,5 @@
 @import "../../../../scss/mixins.scss";
+@import "../../../../scss/variables.scss";
 
 .wrapper {
   @include table_wrapper
@@ -29,6 +30,24 @@
 
   .time {
     display: block;
+  }
+
+  .cancel_operations{
+    display: flex;
+    flex-direction: column;
+
+    button{
+      margin: 0;
+      margin-bottom: 2px;
+
+      &.yellow{
+        background-color: $nav-highlight;
+      }
+
+      &.red{
+        background-color: $button-cancel;
+      }
+    }
   }
 
 
