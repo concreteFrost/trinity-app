@@ -1,8 +1,6 @@
 import s from "./SignIn.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
 import {
-  GetDoorstaffPositions,
   GetDoorstaffRates,
   GetDoorstaffSuppliers,
   SetDoorStaff,
@@ -15,47 +13,50 @@ import {
   SET_DOORSTAFF_START_TIME,
 } from "../../../redux/types";
 import { ClearSiaData } from "../../../redux/actions";
-import { useState } from "react";
 
-export const SignIn = (props) => {
+export const SignIn = () => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.userReducer.user);
   const sia = useSelector((state) => state.siaReducer);
-  const [canSubmit,setCanSubmit] = useState(false)
 
   const headers = {
     Authorization: "Bearer " + token.access_token,
     "Content-Type": "application/x-www-form-urlencoded",
   };
 
-  
-  useEffect(() => {
-    if (sia.doorstaff.staffId) dispatch(GetDoorstaffPositions(headers));
-  }, [sia.doorstaff.staffId]);
+  async function GetPositionAndSupplier(e) {
+    await dispatch({
+      type: SET_DOORSTAFF_POSITION,
+      data: {
+        positionId: e.target.value,
+        positionName: e.target.options[e.target.selectedIndex].text,
+      },
+    });
+    await dispatch(GetDoorstaffSuppliers(headers, e.target.value));
+  }
 
-  useEffect(() => {
-    if (sia.position !== null)
-      dispatch(GetDoorstaffSuppliers(headers, sia.position.positionId));
-  }, [sia.position]);
+  async function GetSupplierAndRate(e) {
+    await dispatch({
+      type: SET_DOORSTAFF_SUPPLIER,
+      data: {
+        supplierId: e.target.value,
+        supplierName: e.target.options[e.target.selectedIndex].text,
+      },
+    });
 
-  //GET RATE
-  useEffect(() => {
-    if (sia.position !== null && sia.supplier !== null)
-      dispatch(
-        GetDoorstaffRates(
-          sia.position ? sia.position.positionId : 0,
-          sia.supplier ? sia.supplier.supplierId : 0,
-          sia.date,
-          headers
-        )
+    await dispatch(
+      GetDoorstaffRates(
+        sia.position ? sia.position.positionId : 0,
+        e.target.value,
+        sia.date,
+        headers
       )
-      setCanSubmit(true);
-  }, [sia.position, sia.supplier]);
+    );
+  }
 
   function Submit() {
-    if (sia.rate.rateGroupId && canSubmit) {
-      setCanSubmit(false)
+    if (sia.rate.rateGroupId) {
       dispatch(SetDoorStaff(token.access_token, sia));
     }
   }
@@ -77,22 +78,17 @@ export const SignIn = (props) => {
           <label>POSITION</label>
           <select
             onChange={(e) => {
-              dispatch({
-                type: SET_DOORSTAFF_POSITION,
-                data: {
-                  positionId: e.target.value,
-                  positionName: e.target.options[e.target.selectedIndex].text,
-                },
-              });
+              GetPositionAndSupplier(e);
             }}
-            disabled={sia.options.positions.length === 0}
+            disabled={sia.options.positions.length <= 1}
           >
+            <option value={null}>Select Position</option>
             {sia.options.positions.length > 0
               ? sia.options.positions.map((e) => (
-                <option key={e.positionId} value={e.positionId}>
-                  {e.positionName}
-                </option>
-              ))
+                  <option key={e.positionId} value={e.positionId}>
+                    {e.positionName}
+                  </option>
+                ))
               : null}
           </select>
         </div>
@@ -101,22 +97,17 @@ export const SignIn = (props) => {
           <label>SUPPLIER</label>
           <select
             onChange={(e) => {
-              dispatch({
-                type: SET_DOORSTAFF_SUPPLIER,
-                data: {
-                  supplierId: e.target.value,
-                  supplierName: e.target.options[e.target.selectedIndex].text,
-                },
-              });
+              GetSupplierAndRate(e);
             }}
-            disabled={sia.options.suppliers.length === 0}
+            disabled={sia.options.suppliers.length <= 1}
           >
+            <option value={null}>Select the Supplier</option>
             {sia.options.suppliers.length > 0
               ? sia.options.suppliers.map((e) => (
-                <option key={e.supplierId} value={e.supplierId}>
-                  {e.supplierName}
-                </option>
-              ))
+                  <option key={e.supplierId} value={e.supplierId}>
+                    {e.supplierName}
+                  </option>
+                ))
               : null}
           </select>
         </div>
@@ -131,10 +122,10 @@ export const SignIn = (props) => {
           >
             {sia.options.rates.length > 0
               ? sia.options.rates.map((e) => (
-                <option key={e.rateGroupId} value={e.rateGroupId}>
-                  {e.rateGroupName}
-                </option>
-              ))
+                  <option key={e.rateGroupId} value={e.rateGroupId}>
+                    {e.rateGroupName}
+                  </option>
+                ))
               : null}
           </select>
         </div>
@@ -172,9 +163,11 @@ export const SignIn = (props) => {
           <button className={s.clear} onClick={() => dispatch(ClearSiaData())}>
             CLEAR
           </button>
-          <button className={s.submit} onClick={Submit} >
-            SUBMIT
-          </button>
+          {sia.rate && sia.rate.rateGroupId !== null ? (
+            <button className={s.submit} onClick={Submit}>
+              SUBMIT
+            </button>
+          ) : null}
         </div>
       </form>
     </div>

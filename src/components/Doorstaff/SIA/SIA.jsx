@@ -4,6 +4,7 @@ import { FaSearch } from "react-icons/fa"
 import { GetSIAdataAPI } from "../../../redux/api/siaAPI"
 import { useState } from "react"
 import { TailSpin } from "react-loader-spinner";
+import { ClearSiaData } from "../../../redux/actions"
 
 
 export const SIA = () => {

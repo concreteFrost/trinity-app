@@ -37,9 +37,7 @@ export const siaReducer = (state = initialState, action) => {
         doorstaff: action.data,
       };
     case CLEAR_SIA_DATA:
-      return {
-        ...initialState
-      };
+      return initialState;
     case GET_DOORSTAFF_SUPPLIER_OPT:
       return {
         ...state,

@@ -100,9 +100,6 @@ export function GetDoorstaffPositions(headers) {
         headers: headers,
       })
       .then((res) => {
-        console.log(res.data.position[0]);
-        // const sortedRes = res.data.position.sort((a, b) => a.localeCompare(b));
-        // console.log('sorted', sortedRes)
         dispatch({ type: GET_DOORSTAFF_POSITION_OPT, data: res.data.position });
         dispatch({ type: SET_DOORSTAFF_POSITION, data: res.data.position[0] });
       })
@@ -117,13 +114,17 @@ export function GetDoorstaffSuppliers(headers, positionId) {
         headers: headers,
       })
       .then((res) => {
+   
         dispatch({
           type: GET_DOORSTAFF_SUPPLIER_OPT,
           data: res.data.suppliers,
         });
         dispatch({ type: SET_DOORSTAFF_SUPPLIER, data: res.data.suppliers[0] });
       })
-      .catch((e) => console.log("no supplier ID"));
+      .catch((e) =>  dispatch({
+        type: GET_DOORSTAFF_SUPPLIER_OPT,
+        data: [],
+      }));
   };
 }
 
@@ -142,14 +143,17 @@ export function GetDoorstaffRates(position, supplier, date, headers) {
         }
       )
       .then((res) => {
+      
         if (res.data.success === false) {
           dispatch({
             type: SHOW_MODAL_MESSAGE,
-            data: "There are no suppliers associated with this pub",
+            data: "Please select the correct supplier",
           });
         }
         dispatch({ type: GET_DOORSTAFF_RATE_OPT, data: res.data.rates });
         dispatch({ type: SET_DOORSTAFF_RATE, data: res.data.rates[0] });
+      }).catch(e=>{
+        dispatch({ type: GET_DOORSTAFF_RATE_OPT, data: [] });
       });
   };
 }
@@ -167,7 +171,7 @@ export function GetDoorstaff(token) {
         dispatch(SetDoorStaffList(res.data.staffLogin));
       })
       .catch((e) => {
-        console.log(e);
+
       });
   };
 }
