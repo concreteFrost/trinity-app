@@ -13,12 +13,10 @@ export const CurrentModal = (props) => {
     function SignoffSelected(e) {
         e.preventDefault();
         dispatch({ type: "SIGN_OFF_SELECTED_DOORSTAFF", data: { signOutTime: e.target[0].value, signOutDate: e.target[1].value } })
-        const signOutTIme = e.target[1].value + "T" + e.target[0].value
-        props.doorstaff.forEach((x) => {
-            if (x.isChecked) {
-                dispatch(DeleteDoorStaff(x, props.token.access_token, signOutTIme));
-            }
-        })
+        const signOutTIme = e.target[1].value + "T" + e.target[0].value;
+        const toSignOff = props.doorstaff.filter((staff)=> staff.isChecked)
+
+        dispatch(DeleteDoorStaff(toSignOff,props.token.access_token, signOutTIme));
         props.setIsSignOffModalVisible(false)
     }
 
