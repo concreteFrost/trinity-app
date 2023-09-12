@@ -13,46 +13,62 @@ import {
   GET_DOORSTAFF_RATE_OPT,
 } from "../types";
 
-
 export function CancelDoorStaff(data, token) {
   return function (dispatch) {
-   return axios({
+    return axios({
       method: "POST",
       url: `${baseUrl}/Activity/CancelActivity`,
       headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",
       },
-      data: data
-    }).then(() => {
-      dispatch({ type: "HIDE_CANCEL_MODAL" })
-      dispatch(GetDoorstaff(token))
+      data: data,
     })
-    .catch(e => console.log(e))
-  }
+      .then(() => {
+        dispatch({ type: "HIDE_CANCEL_MODAL" });
+        dispatch(GetDoorstaff(token));
+      })
+      .catch((e) => console.log(e));
+  };
 }
 
-export function DeleteDoorStaff(data, token, signOutTIme) {
-  return function (dispatch) {
-    return axios({
+export function DeleteDoorStaff(data, token, signOutTime) {
+  const toLogOut = Array.isArray(data)
+    ? data.map((staff) => ({
+        activityId: staff.activityId,
+        staffId: staff.staffId,
+        staffName: staff.staffName,
+        positionId: staff.positionId,
+        position: staff.position,
+        locationId: staff.locationId,
+        supplierId: staff.supplierId,
+        supplierName: staff.supplierName,
+        startTime: staff.startTime,
+        endTime: signOutTime,
+        rateGroupId: staff.rateGroupId,
+      }))
+    : [
+        {
+          activityId: data.activityId,
+          staffId: data.staffId,
+          staffName: data.staffName,
+          positionId: data.positionId,
+          position: data.position,
+          locationId: data.locationId,
+          supplierId: data.supplierId,
+          supplierName: data.supplierName,
+          startTime: data.startTime,
+          endTime: signOutTime,
+          rateGroupId: data.rateGroupId,
+        },
+      ];
+
+  return (dispatch) =>
+    axios({
       method: "POST",
       url: `${baseUrl}/Activity/SignOffMembers`,
       data: {
-        staffLogin: [
-          {
-            activityId: data.activityId,
-            staffId: data.staffId,
-            staffName: data.staffName,
-            positionId: data.positionId,
-            position: data.position,
-            locationId: data.locationId,
-            supplierId: data.supplierId,
-            supplierName: data.supplierName,
-            startTime: data.startTime,
-            endTime: signOutTIme,
-            rateGroupId: data.rateGroupId,
-          },
-        ],
+        staffLogin: toLogOut,
         success: true,
         message: "",
       },
@@ -70,14 +86,11 @@ export function DeleteDoorStaff(data, token, signOutTIme) {
           setTimeout(() => {
             dispatch({ type: CLEAR_DOORSTAFF_ERROR_MESSAGE });
           }, 3000);
-        }
-        else {
+        } else {
           dispatch(GetDoorstaff(token));
         }
-
       })
       .catch((e) => console.log(e));
-  };
 }
 
 export function GetDoorstaffPositions(headers) {
@@ -87,9 +100,6 @@ export function GetDoorstaffPositions(headers) {
         headers: headers,
       })
       .then((res) => {
-        console.log(res.data.position[0])
-        // const sortedRes = res.data.position.sort((a, b) => a.localeCompare(b));
-        // console.log('sorted', sortedRes)
         dispatch({ type: GET_DOORSTAFF_POSITION_OPT, data: res.data.position });
         dispatch({ type: SET_DOORSTAFF_POSITION, data: res.data.position[0] });
       })
@@ -104,13 +114,17 @@ export function GetDoorstaffSuppliers(headers, positionId) {
         headers: headers,
       })
       .then((res) => {
+   
         dispatch({
           type: GET_DOORSTAFF_SUPPLIER_OPT,
           data: res.data.suppliers,
         });
         dispatch({ type: SET_DOORSTAFF_SUPPLIER, data: res.data.suppliers[0] });
       })
-      .catch((e) => console.log("no supplier ID"));
+      .catch((e) =>  dispatch({
+        type: GET_DOORSTAFF_SUPPLIER_OPT,
+        data: [],
+      }));
   };
 }
 
@@ -119,21 +133,27 @@ export function GetDoorstaffRates(position, supplier, date, headers) {
     return axios
       .get(
         `${baseUrl}/Activity/LookupRates/` +
-        position +
-        "/" +
-        supplier +
-        "/" +
-        new Date(date).getTime(),
+          position +
+          "/" +
+          supplier +
+          "/" +
+          new Date(date).getTime(),
         {
           headers: headers,
         }
       )
       .then((res) => {
+      
         if (res.data.success === false) {
-          dispatch({ type: SHOW_MODAL_MESSAGE, data: "There are no suppliers associated with this pub" });
+          dispatch({
+            type: SHOW_MODAL_MESSAGE,
+            data: "Please select the correct supplier",
+          });
         }
         dispatch({ type: GET_DOORSTAFF_RATE_OPT, data: res.data.rates });
         dispatch({ type: SET_DOORSTAFF_RATE, data: res.data.rates[0] });
+      }).catch(e=>{
+        dispatch({ type: GET_DOORSTAFF_RATE_OPT, data: [] });
       });
   };
 }
@@ -145,13 +165,13 @@ export function GetDoorstaff(token) {
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/x-www-form-urlencoded",
-        }
+        },
       })
       .then((res) => {
         dispatch(SetDoorStaffList(res.data.staffLogin));
       })
       .catch((e) => {
-        console.log(e);
+
       });
   };
 }
