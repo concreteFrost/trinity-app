@@ -19,8 +19,7 @@ export const CurrentTable = (props) => {
   }
 
   function showCancelModal(activityIdToCancel) {
-    dispatch({ type: "SHOW_ACTION_MODAL", activityToModify: activityIdToCancel, activityType : "CANCEL" });
-    console.log(activityIdToCancel)
+    dispatch({ type: "SHOW_ACTION_MODAL", activityToModify: activityIdToCancel, activityType: "CANCEL" });
   }
 
   return (
@@ -106,7 +105,7 @@ export const CurrentTable = (props) => {
                 ) : null}
                 {props.isVisible ? (
                   <td className={s.cancel_operations}>
-                    
+
                     <button
                       onClick={() => {
                         showCancelModal(e.activityId);
@@ -114,21 +113,8 @@ export const CurrentTable = (props) => {
                     >
                       CANCEL
                     </button>
-                    <button className={s.yellow}
-                      onClick={() => {
-                        
-                      }}
-                    >
-                      RESET
-                    </button>
-                    <button className={s.red}
-                      onClick={() => {
-                        
-                      }}
-                    >
-                      DELETE
-                    </button>
-                    
+
+
                   </td>
                 ) : null}
               </tr>

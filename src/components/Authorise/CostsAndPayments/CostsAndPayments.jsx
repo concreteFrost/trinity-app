@@ -20,7 +20,7 @@ export const CostsAndPayments = (props) => {
 
   useEffect(() => {
     dispatch(GetAuthorise(props.system, token));
-  }, []);
+  }, [window.location.href]);
 
   function Approve() {
     props.data.forEach((element) => {

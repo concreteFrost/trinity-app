@@ -6,6 +6,44 @@ import {
   SHOW_MODAL_MESSAGE,
 } from "../types";
 
+export function RecallActivity(data, token) {
+  return function (dispatch) {
+    return axios({
+      method: "POST",
+      url: `${baseUrl}/Activity/RecallActivity`,
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    })
+      .then((res) => {
+        dispatch({ type: "HIDE_ACTION_MODAL" });
+        console.log("ACTIVITY RECALL SUCCESS", res.data)
+      })
+      .catch((e) => console.log("ACTIVITY RECALL FAIL", e));
+  };
+}
+
+export function DeleteActivity(data, token) {
+  return function (dispatch) {
+    return axios({
+      method: "POST",
+      url: `${baseUrl}/Activity/DeleteActivity`,
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    })
+      .then((res) => {
+        dispatch({ type: "HIDE_ACTION_MODAL" });
+        console.log("ACTIVITY DELETE SUCCESS", res.data)
+      })
+      .catch((e) => console.log("ACTIVITY DELETE FAIL", e));
+  };
+}
+
 export function GetAuthorise(system, token) {
   return function (dispatch) {
     return axios
@@ -30,7 +68,7 @@ export function GetAuthorise(system, token) {
             });
             break;
         }
-        console.log(res.data)
+
       });
   };
 }
@@ -62,8 +100,6 @@ export function ViewNote(token, activityId) {
       .then((res) => {
         if (res.data.message.length > 0)
           dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.message });
-
-        console.log(res.data);
       });
   };
 }

@@ -5,15 +5,18 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ViewAreaDisputedNote } from "../../redux/api/disputedApi";
 import { Route, Routes } from "react-router-dom";
+import { ArrowBarDown } from "react-bootstrap-icons";
 
 export const Authorise = () => {
-  const [view, setView] = useState("doorstaff");
+
   const [_type, setType] = useState("costs");
 
   const doorstaff = useSelector((state) => state.authoriseReducer.doorstaff);
-  const token = useSelector((state) => state.userReducer.user.access_token);
   const costs = useSelector((state) => state.authoriseReducer.costs);
+  const token = useSelector((state) => state.userReducer.user.access_token);
+  const userRole = useSelector((state) => state.userReducer.user.userRole);
   const [showAuthLevel, setShowAuthLevel] = useState("status");
+
   const dispatch = useDispatch();
 
   function handleCheck(e, actions, id) {
@@ -24,6 +27,24 @@ export const Authorise = () => {
   }
   function viewNote(paymentAuthId, system, token) {
     dispatch(ViewAreaDisputedNote(token, system, paymentAuthId));
+  }
+
+  function toggleMoreActions(e) {
+    let path = window.location.href;
+    path.endsWith('doorstaff') ? dispatch({ type: "TOGGLE_MORE_ACTIONS_FOR_DOORSTAFF", data: e })
+      : dispatch({ type: "TOGGLE_MORE_ACTIONS_FOR_COSTS", data: e })
+  }
+
+  function showRecallModal(activityId) {
+    dispatch({ type: "SHOW_ACTION_MODAL", activityToModify: activityId, activityType: "RECALL" })
+  }
+
+  function showDeleteModal(activityId) {
+    dispatch({ type: "SHOW_ACTION_MODAL", activityToModify: activityId, activityType: "DELETE" })
+  }
+
+  function showRecallIfno() {
+    dispatch({ type: "SHOW_MODAL_MESSAGE", data: 'helpfull message' })
   }
 
   const tableHeaders = (system, checkMethod) => [
@@ -76,28 +97,43 @@ export const Authorise = () => {
       Header: "ACTIONS",
       accessor: "activityId",
       Cell: ({ row }) => (
-        <div className={s.actions}>
-          <input
-            type="checkbox"
-            name={row.original.activityId}
-            id={row.original.activityId}
-            onChange={(e) => {
-              handleCheck(e, checkMethod, row.original.activityId);
-            }}
-            checked={row.original.selected}
-          />
+        <div className={s.actions_wrapper}>
+          <div className={s.actions}>
+            <input
+              type="checkbox"
+              name={row.original.activityId}
+              id={row.original.activityId}
+              onChange={(e) => {
+                handleCheck(e, checkMethod, row.original.activityId);
+              }}
+              checked={row.original.selected}
+            />
 
-          <button
-            onClick={() => {
-              dispatch({ type: "SHOW_MODAL_PROMPT" });
-              dispatch({
-                type: "SET_DISPUTED_PAYMENT_ID",
-                data: row.original.activityId,
-              });
-            }}
-          >
-            DISPUTE
-          </button>
+            <button
+              onClick={() => {
+                dispatch({ type: "SHOW_MODAL_PROMPT" });
+                dispatch({
+                  type: "SET_DISPUTED_PAYMENT_ID",
+                  data: row.original.activityId,
+                });
+              }}
+            >
+              DISPUTE
+            </button>
+            <button onClick={() => toggleMoreActions(row.original.activityId)}>MORE</button>
+          </div>
+          {row.original.moreActionsVisible ? <div className={s.additional_actions}>
+            <div className={s.icon}>  <ArrowBarDown></ArrowBarDown></div>
+            <div className={s.additional_action_item}>
+
+              <button className={s.recall} onClick={() => showRecallModal(row.original.activityId)}>RECALL</button>
+              <button className={s.question} onClick={showRecallIfno}>?</button>
+            </div>
+            {userRole === '1' ? <div className={s.additional_action_item}>
+              <button className={s.delete} onClick={() => showDeleteModal(row.original.activityId)}>DELETE</button>
+              <button className={s.question}>?</button>
+            </div> : null}
+          </div> : null}
         </div>
       ),
     },
@@ -108,9 +144,7 @@ export const Authorise = () => {
       <header>
         <h1>AUTHORISE</h1>
         <SwitchView
-
           inputs={["doorstaff", "costs"]}
-          currentView={view}
         ></SwitchView>
       </header>
 

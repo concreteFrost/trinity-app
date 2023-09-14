@@ -7,21 +7,21 @@
 
 
 .doorstaff_table {
-    @include main-tables;
-  
-    input {
-      min-width: 100px;
-      max-width: 100px;
+  @include main-tables;
 
-      @include form-input;
-     
-    }
+  input {
+    min-width: 100px;
+    max-width: 100px;
 
-    button {
-      margin-top: 10px;
-    }
+    @include form-input;
 
-    
+  }
+
+  button {
+    margin-top: 10px;
+  }
+
+
   .signoff {
     display: flex;
     align-items: center;
@@ -32,23 +32,6 @@
     display: block;
   }
 
-  .cancel_operations{
-    display: flex;
-    flex-direction: column;
-
-    button{
-      margin: 0;
-      margin-bottom: 2px;
-
-      &.yellow{
-        background-color: $nav-highlight;
-      }
-
-      &.red{
-        background-color: $button-cancel;
-      }
-    }
-  }
 
 
-  }
+}
