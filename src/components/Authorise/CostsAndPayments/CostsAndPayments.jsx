@@ -23,7 +23,9 @@ export const CostsAndPayments = (props) => {
   }, [window.location.href]);
 
   function Approve() {
+
     props.data.forEach((element) => {
+      console.log(element)
       if (element.selected)
         dispatch(ApproveActivity(props.system, token, element));
     });
@@ -42,6 +44,8 @@ export const CostsAndPayments = (props) => {
   function DisputeActivity() {
     dispatch(SendDisputed(props.system, token, toDispute));
   }
+
+
 
   return (
     <div className={props.container}>

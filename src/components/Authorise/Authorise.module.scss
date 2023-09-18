@@ -14,16 +14,7 @@
     margin-right: auto;
   }
 
-  .locations_select {
-    @include form-template;
-    width: 300px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+
 
   ul {
     display: flex;
@@ -42,61 +33,8 @@
   }
 
 
-  .actions_wrapper {
-    position: relative;
-
-    button {
-      margin-left: 5px;
-    }
-
-    .actions {
-      display: grid;
-
-      button {
-        margin-bottom: 5px;
-
-      }
 
 
-    }
-
-    .additional_actions {
-      display: grid;
-      justify-content: right;
-
-      .icon {
-        display: flex;
-        justify-content: center;
-        font-size: 1.2rem;
-        color: gray;
-        margin-bottom: 5px;
-      }
-
-      .additional_action_item {
-        display: grid;
-        grid-template-columns: 6fr 6fr;
-        margin-bottom: 5px;
-
-        .recall {
-          background-color: $nav-highlight;
-        }
-
-        .delete {
-          background-color: $button-cancel;
-        }
-
-        .question {
-          border-radius: 10px;
-          background-color: rgb(158, 158, 158);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          justify-self: right;
-
-        }
-      }
-    }
-  }
 
 
 

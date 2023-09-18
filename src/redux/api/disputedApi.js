@@ -73,7 +73,7 @@ export function SendDisputed(system, token, dispute) {
                 dispatch(GetAuthorise(system, token))
             }).catch(e => {
                 console.log(dispute.paymentActivityID, "id");
-                console.log( dispute.disputedNote,"name")
+                console.log(dispute.disputedNote, "name")
             })
     }
 }
@@ -94,20 +94,8 @@ export function ViewDisputedNote(token, system, activityID) {
     }
 }
 
-//FOR AREA MANAGER
-export function ViewAreaDisputedNote(token, system, activityID) {
-    return function (dispatch) {
-        return axios.get(baseUrl + `/AreaManager/GetNotes/${system}/${parseInt(activityID)}`, {
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/x-www-form-urlencoded",
-            }
-        }).then(res => {
-            if (res.data.record.length > 0)
-                dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.record[res.data.record.length - 1].name })
-            console.log(res.data)
-        })
-    }
-}
+
+
+
 
 

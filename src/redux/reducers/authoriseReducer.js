@@ -57,6 +57,15 @@ export const authoriseReducer = (state = initialState, action) => {
             return {
                 ...state, costs: [...state.costs.map(e => e.activityId === action.data ? { ...e, moreActionsVisible: !e.moreActionsVisible } : e)]
             }
+        case "GET_DOORSTAFF_DISPUTED_NOTE_LIST":
+            return {
+                ...state, doorstaff: [...state.doorstaff.map((e) => e.activityId === action.activityID ? { ...e, disputedNotes: action.data } : e)]
+            }
+        case "GET_COSTS_DISPUTED_NOTE_LIST":
+            return {
+                ...state, costs: [...state.costs.map((e) => e.activityId === action.activityID ? { ...e, disputedNotes: action.data } : e)]
+            }
+
         default: return state;
     }
 }

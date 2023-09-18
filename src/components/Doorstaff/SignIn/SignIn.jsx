@@ -84,7 +84,7 @@ export const SignIn = () => {
             onChange={(e) => {
               GetPositionAndSupplier(e);
             }}
-            disabled={sia.options.positions.length <= 1}
+            disabled={sia.options.positions.length === 0}
           >
             <option value={null}>Select Position</option>
             {sia.options.positions.length > 0
@@ -103,7 +103,7 @@ export const SignIn = () => {
             onChange={(e) => {
               GetSupplierAndRate(e);
             }}
-            disabled={sia.options.suppliers.length <= 1}
+            disabled={sia.options.suppliers.length === 0}
           >
             <option value={null}>Select the Supplier</option>
             {sia.options.suppliers.length > 0
