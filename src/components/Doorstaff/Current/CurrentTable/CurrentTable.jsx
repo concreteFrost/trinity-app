@@ -1,11 +1,18 @@
 import s from "./CurrentTable.module.scss";
 import {
   SET_DOORSTAFF_SIGNOUT_DATE,
-  SET_DOORSTAFF_SIGNOUT_TIME,
   TOGGLE_DOORSTAFF_TO_SIGN_OUT,
 } from "../../../../redux/types";
 import { useDispatch } from "react-redux/es/exports";
-import { DeleteDoorStaff } from "../../../../redux/api/doorstaffAPI";
+import { SignOffMember } from "../../../../services/activityApi";
+import {
+  ShowModalMessage,
+  ShowCancelModal,
+  SetDoorstaffSignOutTime,
+  SetDoorstaffSignOutDate,
+  ToggleDoorstaffToSignOut,
+} from "../../../../redux/actions";
+import { RefreshDoorstaffList } from "../../../../services/utils/activityUtils";
 
 export const CurrentTable = (props) => {
   const dispatch = useDispatch();
@@ -14,12 +21,24 @@ export const CurrentTable = (props) => {
     if (e.target[0].value && e.target[1].value) {
       const data = JSON.parse(e.target.dataset.staff);
       const signOutTIme = e.target[1].value + "T" + e.target[0].value;
-      dispatch(DeleteDoorStaff(data, props.token.access_token, signOutTIme));
+
+      SignOffMember(data, props.token.access_token, signOutTIme)
+        .then((res) => {
+          if (!res.data.success) {
+            dispatch(ShowModalMessage(res.data.message));
+          } else {
+            RefreshDoorstaffList(props.token.access_token, dispatch);
+          }
+          console.log("sign off member success", res);
+        })
+        .catch((e) => {
+          console.log("sign off member error", e);
+        });
     }
   }
 
   function showCancelModal(activityIdToCancel) {
-    dispatch({ type: "SHOW_ACTION_MODAL", activityToModify: activityIdToCancel, activityType: "CANCEL" });
+    dispatch(ShowCancelModal(activityIdToCancel));
   }
 
   return (
@@ -57,13 +76,12 @@ export const CurrentTable = (props) => {
                               type="time"
                               value={e.signOutTime}
                               onChange={(x) => {
-                                dispatch({
-                                  type: SET_DOORSTAFF_SIGNOUT_TIME,
-                                  data: {
-                                    id: e.staffId,
-                                    signOutTIme: x.target.value,
-                                  },
-                                });
+                                dispatch(
+                                  SetDoorstaffSignOutTime(
+                                    e.staffId,
+                                    x.target.value
+                                  )
+                                );
                               }}
                               required
                             />
@@ -74,13 +92,7 @@ export const CurrentTable = (props) => {
                               type="date"
                               value={e.signOutDate}
                               onChange={(x) => {
-                                dispatch({
-                                  type: SET_DOORSTAFF_SIGNOUT_DATE,
-                                  data: {
-                                    id: e.staffId,
-                                    signOutTIme: x.target.value,
-                                  },
-                                });
+                                dispatch(SetDoorstaffSignOutDate(e.staffId,x.target.value))
                               }}
                               required
                             />
@@ -91,10 +103,7 @@ export const CurrentTable = (props) => {
                             type="checkbox"
                             checked={e.isChecked}
                             onChange={() =>
-                              dispatch({
-                                type: TOGGLE_DOORSTAFF_TO_SIGN_OUT,
-                                data: e.staffId,
-                              })
+                            dispatch(ToggleDoorstaffToSignOut(e.staffId))
                             }
                           ></input>
                           <button>SIGN OUT</button>
@@ -105,7 +114,6 @@ export const CurrentTable = (props) => {
                 ) : null}
                 {props.isVisible ? (
                   <td className={s.cancel_operations}>
-
                     <button
                       onClick={() => {
                         showCancelModal(e.activityId);
@@ -113,8 +121,6 @@ export const CurrentTable = (props) => {
                     >
                       CANCEL
                     </button>
-
-
                   </td>
                 ) : null}
               </tr>

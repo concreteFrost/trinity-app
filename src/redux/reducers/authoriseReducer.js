@@ -53,7 +53,7 @@ export const authoriseReducer = (state = initialState, action) => {
                 ...state, doorstaff: [...state.doorstaff.map(e => e.activityId === action.data ? { ...e, moreActionsVisible: !e.moreActionsVisible } : e)]
             }
         case "TOGGLE_MORE_ACTIONS_FOR_COSTS":
-            console.log(...state.costs)
+           
             return {
                 ...state, costs: [...state.costs.map(e => e.activityId === action.data ? { ...e, moreActionsVisible: !e.moreActionsVisible } : e)]
             }

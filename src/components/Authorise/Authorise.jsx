@@ -54,7 +54,7 @@ export const Authorise = () => {
       Header: "NOTES",
       accessor: "disputedNotes",
       Cell: ({ row }) => (
-        row.original.disputedNotes ? <NoteElement row={row}></NoteElement> : null
+        row.original.disputedNotes && row.original.disputedNotes.length >0 ? <NoteElement row={row}></NoteElement> : null
       ),
     },
     {

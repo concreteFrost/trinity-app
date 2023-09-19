@@ -1,6 +1,6 @@
 import axios from "axios";
 import { baseUrl } from "../../contexts/baseUrl";
-import { ClearSiaData, GetSiaData } from "../actions";
+import { ClearSiaData, SetSiaData } from "../actions";
 import { SHOW_MODAL_MESSAGE } from "../types";
 import { GetDoorstaffPositions } from "./doorstaffAPI";
 
@@ -19,7 +19,7 @@ export function GetSIAdataAPI(token,sia){
                 dispatch(ClearSiaData())
              }
              else{     
-                await dispatch(GetSiaData(res.data))
+                await dispatch(SetSiaData(res.data))
                 await dispatch(GetDoorstaffPositions(headers))
              }
          

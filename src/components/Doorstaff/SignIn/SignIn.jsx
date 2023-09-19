@@ -1,18 +1,30 @@
 import s from "./SignIn.module.scss";
 import { useSelector, useDispatch } from "react-redux";
+import { GetDoorstaff } from "../../../redux/api/doorstaffAPI";
 import {
-  GetDoorstaffRates,
-  GetDoorstaffSuppliers,
-  SetDoorStaff,
-} from "../../../redux/api/doorstaffAPI";
-import {
-  SET_DOORSTAFF_POSITION,
-  SET_DOORSTAFF_SUPPLIER,
   SET_DOORSTAFF_RATE,
   SET_DOORSTAFF_START_DATE,
   SET_DOORSTAFF_START_TIME,
 } from "../../../redux/types";
-import { ClearSiaData } from "../../../redux/actions";
+import {
+  ClearSiaData,
+  SetDoorStaffList,
+  GetDoorstaffSupplierOptions,
+  SetDoorstaffCurrentSupplier,
+  ShowModalMessage,
+  SetDoorstaffCurrentPosition,
+  GetDooorstaffRateOptions,
+  SetDoorstaffCurrentRate,
+  SetDoorstaffStartTime,
+  SetDoorstaffStartDate,
+} from "../../../redux/actions";
+import {
+  GetDoorstaffList,
+  GetDoorstaffSupplier,
+  SignOnMember,
+  GetDoorstaffRates,
+} from "../../../services/activityApi";
+import { RefreshDoorstaffList } from "../../../services/utils/activityUtils";
 
 export const SignIn = () => {
   const dispatch = useDispatch();
@@ -20,49 +32,68 @@ export const SignIn = () => {
   const token = useSelector((state) => state.userReducer.user);
   const sia = useSelector((state) => state.siaReducer);
 
-  const headers = {
-    Authorization: "Bearer " + token.access_token,
-    "Content-Type": "application/x-www-form-urlencoded",
-  };
-
   async function GetPositionAndSupplier(e) {
-    await dispatch({
-      type: SET_DOORSTAFF_POSITION,
-      data: {
-        positionId: e.target.value,
-        positionName: e.target.options[e.target.selectedIndex].text,
-      },
-    });
-    await dispatch(GetDoorstaffSuppliers(headers, e.target.value));
+    const position = e.target.value;
+    await dispatch(SetDoorstaffCurrentPosition(position));
+    await GetDoorstaffSupplier(position, token.access_token)
+      .then((res) => {
+        console.log("get suppliers list success", res[0]);
+        dispatch(GetDoorstaffSupplierOptions(res));
+      })
+      .catch((e) => {
+        console.log("get suppliers list error", e);
+        dispatch(GetDoorstaffSupplierOptions([]));
+      });
+      console.log(position)
   }
 
-  async function GetSupplierAndRate(e) {
-    await dispatch({
-      type: SET_DOORSTAFF_SUPPLIER,
-      data: {
-        supplierId: e.target.value,
-        supplierName: e.target.options[e.target.selectedIndex].text,
-      },
-    });
+  async function SetCurrentSupplier(e) {
+    const supplierId = e.target.value;
+    const supplierName = e.target.options[e.target.selectedIndex].text;
 
     await dispatch(
-      GetDoorstaffRates(
-        sia.position ? sia.position.positionId : 0,
-        e.target.value,
-        sia.date,
-        headers
-      )
+      SetDoorstaffCurrentSupplier({
+        supplierId: supplierId,
+        supplierName: supplierName,
+      })
     );
+
+    await GetDoorstaffRates(
+      token.access_token,
+      sia.position ? sia.position : 0,
+      supplierId,
+      sia.date
+    )
+      .then((res) => {
+        console.log("get rates success", res);
+        if(!res.success){
+          dispatch(ShowModalMessage(res.message))
+        }
+        dispatch(GetDooorstaffRateOptions(res.rates))
+      })
+      .catch((e) => {
+        console.log("get rates error", e);
+      });
+
   }
 
   function SetRateGroupID(e) {
-    dispatch({ type: SET_DOORSTAFF_RATE, data: e.target.value })
-    console.log(e.target.value)
+    const rateId = e.target.value;
+    dispatch(SetDoorstaffCurrentRate(rateId))
   }
 
   function Submit() {
-    console.log(sia)
-    dispatch(SetDoorStaff(token.access_token, sia));
+
+    SignOnMember(token.access_token, sia)
+      .then((res) => {
+        if (!res.success) {
+          dispatch(ShowModalMessage(res.message));
+        } else {
+          RefreshDoorstaffList(token.access_token,dispatch)
+          dispatch(ClearSiaData());
+        }
+      })
+      .catch((e) => console.log("sign on member error", e));
   }
 
   return (
@@ -89,10 +120,10 @@ export const SignIn = () => {
             <option value={null}>Select Position</option>
             {sia.options.positions.length > 0
               ? sia.options.positions.map((e) => (
-                <option key={e.positionId} value={e.positionId}>
-                  {e.positionName}
-                </option>
-              ))
+                  <option key={e.positionId} value={e.positionId}>
+                    {e.positionName}
+                  </option>
+                ))
               : null}
           </select>
         </div>
@@ -101,17 +132,17 @@ export const SignIn = () => {
           <label>SUPPLIER</label>
           <select
             onChange={(e) => {
-              GetSupplierAndRate(e);
+              SetCurrentSupplier(e);
             }}
             disabled={sia.options.suppliers.length === 0}
           >
             <option value={null}>Select the Supplier</option>
             {sia.options.suppliers.length > 0
               ? sia.options.suppliers.map((e) => (
-                <option key={e.supplierId} value={e.supplierId}>
-                  {e.supplierName}
-                </option>
-              ))
+                  <option key={e.supplierId} value={e.supplierId}>
+                    {e.supplierName}
+                  </option>
+                ))
               : null}
           </select>
         </div>
@@ -119,18 +150,16 @@ export const SignIn = () => {
         <div className={s.rate}>
           <label>RATE</label>
           <select
-            onChange={(e) =>
-              SetRateGroupID(e)
-            }
+            onChange={(e) => SetRateGroupID(e)}
             disabled={sia.options.rates.length === 0}
           >
             <option value={null}>Select Rate</option>
             {sia.options.rates.length > 0
               ? sia.options.rates.map((e) => (
-                <option key={e.rateGroupId} value={e.rateGroupId}>
-                  {e.rateGroupName}
-                </option>
-              ))
+                  <option key={e.rateGroupId} value={e.rateGroupId}>
+                    {e.rateGroupName}
+                  </option>
+                ))
               : null}
           </select>
         </div>
@@ -141,10 +170,7 @@ export const SignIn = () => {
             type="date"
             value={sia.date}
             onChange={(e) => {
-              dispatch({
-                type: SET_DOORSTAFF_START_DATE,
-                data: e.target.value,
-              });
+              dispatch(SetDoorstaffStartDate(e.target.value));
             }}
           />
         </div>
@@ -154,12 +180,7 @@ export const SignIn = () => {
           <input
             type="time"
             value={sia.time}
-            onChange={(e) => {
-              dispatch({
-                type: SET_DOORSTAFF_START_TIME,
-                data: e.target.value,
-              });
-            }}
+            onChange={(e) => {dispatch(SetDoorstaffStartTime(e.target.value))}}
             required
           />
         </div>
@@ -172,7 +193,6 @@ export const SignIn = () => {
           <button className={s.submit} onClick={Submit}>
             SUBMIT
           </button>
-
         </div>
       </form>
     </div>
