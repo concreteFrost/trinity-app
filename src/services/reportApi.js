@@ -112,22 +112,54 @@ export function GetSearchPaymentStatusAPI(token) {
   })
 }
 
-// export function GetSearchPaymentStatus(token) {
+export function GetSearchPaymentStatusGroupAPI(token) {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${baseUrl}/Report/CriteriaPaymentReportStatusList`, {
+        headers: headers(token)
+      }).then(res => resolve(res)).catch(e => reject(e))
+  })
+}
+
+export function GetSearchedDataAPI(system, token, _data) {
+  return new Promise((resolve, reject) => {
+    axios(`${baseUrl}/Report/ActivityList?system=` + system, {
+      method: "POST",
+      headers: headers(token),
+      data: _data,
+
+    }).then(res => resolve(res)).catch(e => reject(e))
+  })
+}
+
+// export function GetSearchedData(system, token, _data) {
 //   return function (dispatch) {
-//     return axios
-//       .get(`${baseUrl}/Report/CriteriaPaymentStatusList`, {
-//         headers: {
-//           Authorization: "Bearer " + token,
-//           "Content-Type": "application/json",
-//         },
-//       })
-//       .then((res) =>
-//         dispatch({
-//           type: GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_OPT,
-//           data: res.data.record,
-//         })
-//       )
-//       .catch((e) => console.log(e));
+//     return axios(`${baseUrl}/Report/ActivityList?system=` + system, {
+//       method: "POST",
+//       headers: {
+//         Authorization: "Bearer " + token,
+//         "Content-Type": "application/json",
+//       },
+//       data: _data,
+//     }).then((res) => {
+//       switch (system) {
+//         case "S":
+//           dispatch({
+//             type: "GET_SEARCHED_ACTIVITES",
+//             data: res.data.reportRecord,
+//           });
+//           break;
+
+//         case "A":
+//           dispatch({
+//             type: "GET_SEARCHED_COSTS",
+//             data: res.data.reportRecord,
+//           });
+//           break;
+//       }
+//       if (res.data.success === false) {
+//         dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.message });
+//       }
+//     });
 //   };
 // }
-

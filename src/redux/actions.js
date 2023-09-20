@@ -30,7 +30,10 @@ import {
   GET_ACTIVITIES_SEARCH_SUPPLIERS_OPT,
   GET_ACTIVITIES_SEARCH_LOCATIONS_OPT,
   GET_ACTIVITIES_SEARCH_LOCATIONS_GROUP_OPT,
-  GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_OPT
+  GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_OPT,
+  GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_GROUP_OPT,
+  GET_SEARCHED_COSTS,
+  GET_SEARCHED_ACTIVITES
 } from "./types";
 
 //LOGIN ACTIONS
@@ -199,7 +202,30 @@ export function GetSearchPaymentStatus(record) {
     data: record,
   }
 }
-//MODAL ACTIONS
+
+export function GetSearchPaymentStatusGroup(record) {
+  return {
+    type: GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_GROUP_OPT,
+    data: record,
+  }
+}
+
+export function GetSearchedActivities(reportRecord) {
+  return {
+    type: GET_SEARCHED_ACTIVITES,
+    data: reportRecord,
+  }
+}
+
+export function GetSearchedCosts(reportRecord) {
+  return {
+    type: GET_SEARCHED_COSTS,
+    data: reportRecord,
+  }
+}
+
+
+//*MODAL ACTIONS
 export function ShowModalMessage(message) {
   return { type: SHOW_MODAL_MESSAGE, data: message };
 }

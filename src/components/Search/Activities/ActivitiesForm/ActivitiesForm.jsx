@@ -1,12 +1,8 @@
 import s from "./ActivitiesForm.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { GetSearchStaff, GetSearchSuppliers, GetSearchLocations, GetSearchLocationGroup, GetSearchPaymentStatus } from "../../../../redux/actions";
-import {
-  GetSearchPaymentStatusGroup,
-  GetSearchedData,
-} from "../../../../redux/api/searchActivitiesApi";
-import { GetSearchLocationsAPI, GetSearchLocationsGroupAPI, GetSearchPaymentStatusAPI, GetSearchStaffAPI, GetSearchSuppliersAPI } from "../../../../services/reportApi";
+import { GetSearchStaff, GetSearchSuppliers, GetSearchLocations, GetSearchLocationGroup, GetSearchPaymentStatus, GetSearchPaymentStatusGroup, GetSearchedActivities, GetSearchedCosts, ShowModalMessage } from "../../../../redux/actions";
+import { GetSearchLocationsAPI, GetSearchLocationsGroupAPI, GetSearchPaymentStatusAPI, GetSearchStaffAPI, GetSearchSuppliersAPI, GetSearchPaymentStatusGroupAPI, GetSearchedDataAPI } from "../../../../services/reportApi";
 export const ActivitiesForm = (props) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userReducer.user.access_token);
@@ -30,9 +26,9 @@ export const ActivitiesForm = (props) => {
 
     //LOCATION GROUPS dropdown
     GetSearchLocationsGroupAPI(token).then((res) => {
-      console.log('get search location groups success')
+      console.log('get search location groups success', res)
       dispatch(GetSearchLocationGroup(res.data.record))
-    }).catch((e) => console.log('get search location groups success'))
+    }).catch((e) => console.log('get search location groups error', e))
 
     //STAFF/GROUP dropdown
     GetSearchStaffAPI(token).then((res) => {
@@ -42,7 +38,7 @@ export const ActivitiesForm = (props) => {
       console.log('get search staff error', e)
     })
 
-
+    //PAYMENT STATUS dropdown
     GetSearchPaymentStatusAPI(token).then((res) => {
       console.log('get search payment status success', res)
       dispatch(GetSearchPaymentStatus(res.data.record))
@@ -50,7 +46,14 @@ export const ActivitiesForm = (props) => {
       console.log('get search payment status error', e)
     })
 
-    dispatch(GetSearchPaymentStatusGroup(token));
+    //Currently not in use
+    GetSearchPaymentStatusGroupAPI(token).then((res) => {
+      console.log('get search payment status group success', res)
+      dispatch(GetSearchPaymentStatusGroup(res.data.record))
+    }).catch((e) => {
+      console.log('get search payment status group error', e)
+    })
+
   }, []);
 
   function Submit(e) {
@@ -80,12 +83,24 @@ export const ActivitiesForm = (props) => {
         break;
     }
 
-    dispatch(GetSearchedData(props.system, token, _data));
+    GetSearchedDataAPI(props.system, token, _data).then((res) => {
+      console.log('get searched data success', res)
+      if (!res.data.success) {
+        dispatch(ShowModalMessage(res.data.message))
+      }
+      switch (props.system) {
+        case "S":
+          dispatch(GetSearchedActivities(res.data.reportRecord))
+          break;
+        case "A":
+          dispatch(GetSearchedCosts(res.data.reportRecord))
+          break;
+      }
+    }).catch((e) => console.log('get searched data error', e))
   }
 
   return (
     <div className={s.container}>
-      {/* <header><h2>{props.header}</h2></header> */}
       <form onSubmit={Submit}>
         {props.currentView === "activities" ? (
           <div className={s.staff}>
