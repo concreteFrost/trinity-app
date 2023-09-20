@@ -17,7 +17,7 @@ export const ModalAction = () => {
                 msg = "Are you sure you want to cancel this shift?"
                 break;
             case "RECALL":
-                msg = "Are you sure you want to recall this shift?"
+                msg = "Are you sure you want to reset this shift?"
                 break;
             case "DELETE":
                 msg = "Are you sure you want to delete this shift?"
