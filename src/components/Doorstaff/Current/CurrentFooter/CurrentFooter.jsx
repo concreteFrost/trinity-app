@@ -1,16 +1,16 @@
-import {  useDispatch } from "react-redux";
-import { SELECT_ALL_DOORSTAFF_TO_SIGN_OUT, DESELECT_ALL_DOORSTAFF_TO_SIGN_OUT } from "../../../../redux/types";
+import { useDispatch } from "react-redux";
 import s from "./CurrentFooter.module.scss"
+import { DeselectAllDoorstaffToSignOut, SelectAllDoorstaffToSingOut } from "../../../../redux/actions";
 
-export const CurrentFooter=(props)=>{
+export const CurrentFooter = (props) => {
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    return(
-        <div className={s.button_footer}>
-        <div><button onClick={() => dispatch({ type: SELECT_ALL_DOORSTAFF_TO_SIGN_OUT })}> SELECT ALL</button></div>
-        <div><button onClick={() => dispatch({ type: DESELECT_ALL_DOORSTAFF_TO_SIGN_OUT })}> DESELECT ALL</button></div>
-        <div><button onClick={props.ShowSignOffSelectedModal}>SIGN OUT</button> </div>
-      </div>
-    )
+  return (
+    <div className={s.button_footer}>
+      <div><button onClick={() => dispatch(SelectAllDoorstaffToSingOut())}> SELECT ALL</button></div>
+      <div><button onClick={() => dispatch(DeselectAllDoorstaffToSignOut())}> DESELECT ALL</button></div>
+      <div><button onClick={props.ShowSignOffSelectedModal}>SIGN OUT</button> </div>
+    </div>
+  )
 }

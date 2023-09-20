@@ -1,51 +1,52 @@
 import s from "./Recent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { GetActivity } from "../../../redux/api/activityApi";
 import { useState } from "react";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
-import { GetTimesheetData } from "../../../redux/api/receiptAPI";
+import { GetActivityAPI } from "../../../services/reportApi";
+import { GetActivityRecents } from "../../../redux/actions";
+import { GeneratePDF } from "../../../services/utils/reportUtils";
 
-export const Recent = (props) => {
+export const Recent = () => {
 
   const tableHeader = [
     {
       Header: "TIME",
-      accessor:"startTime",
+      accessor: "startTime",
       Cell: ({ value }) => {
         return value.split('T')[0];
       }
     },
     {
       Header: "HOURS WORKED",
-      accessor:'hoursWorked'
+      accessor: 'hoursWorked'
     },
     {
       Header: "COST",
-      accessor:"costValue"
+      accessor: "costValue"
     },
     {
       Header: "SUPPLIER",
-      accessor:"supplierName"
+      accessor: "supplierName"
     },
     {
       Header: "ANALYSIS",
-      accessor:"staffGroupName"
+      accessor: "staffGroupName"
     },
     {
       Header: "STATUS LEVEL",
-      accessor:"paymentStatusDesc"
+      accessor: "paymentStatusDesc"
     },
     {
       Header: "NOTE",
-      accessor:"description"
+      accessor: "description"
     },
     {
-      Header:"PRINT",
-      accessor:'centralCostId',
+      Header: "PRINT",
+      accessor: 'centralCostId',
       Cell: ({ row }) => (
         <div>
           <button
-            onClick={() => {getTimesheetData(row.original.centralCostId)}}
+            onClick={() => { getTimesheetData(row.original.centralCostId) }}
           >
             PRINT
           </button>
@@ -62,7 +63,7 @@ export const Recent = (props) => {
 
   const [fromDate, setFromDate] = useState(new Date().toISOString().split("T")[0]);
   const [toDate, setToDate] = useState(new Date().toISOString().split("T")[0]);
-    
+
   function Submit(e) {
     e.preventDefault()
 
@@ -70,11 +71,15 @@ export const Recent = (props) => {
     const toDate = new Date(e.target[1].value).toISOString();
 
     if (fromDate.length > 0 && toDate.length > 0)
-      dispatch(GetActivity(token, fromDate, toDate, "R"));
+
+      GetActivityAPI(token, fromDate, toDate).then((res) => {
+        console.log('get recent activity success', res)
+        dispatch(GetActivityRecents(res.data.records))
+      }).catch((e) => console.log('get recent activity error', e))
   }
 
-  function getTimesheetData(activityId){
-    dispatch(GetTimesheetData(token,"A", activityId))
+  function getTimesheetData(activityId) {
+    GeneratePDF(token, "A", activityId, dispatch);
   }
 
   return (
@@ -91,7 +96,7 @@ export const Recent = (props) => {
         <div className={s.view_btn}> <button>VIEW</button></div>
       </form>
       <TableTemplate columns={tableHeader} data={recentActivity}></TableTemplate>
-   
+
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import s from "./Recent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
-import { GET_RECENT_DOORSTAFF } from "../../../redux/types";
-import axios from "axios";
+import { useState } from "react";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
-import { baseUrl } from "../../../contexts/baseUrl";
-import { GetTimesheetData } from "../../../redux/api/receiptAPI";
+import { GeneratePDF } from "../../../services/utils/reportUtils";
+import { GetDoorstaffRecentAPI, GetTimesheetDataAPI } from "../../../services/reportApi";
+import { GetDoorstaffRecent } from "../../../redux/actions";
+
 
 export const Recent = (props) => {
   const tableHeader = [
@@ -40,12 +40,15 @@ export const Recent = (props) => {
       accessor: "status"
     },
     {
-      Header:"PRINT",
-      accessor:'centralCostId',
+      Header: "PRINT",
+      accessor: 'centralCostId',
       Cell: ({ row }) => (
         <div>
           <button
-            onClick={() => {getTimesheetData(row.original.activityId)}}
+
+            onClick={() => {
+              GeneratePDF(token, "S", row.original.activityId, dispatch);
+            }}
           >
             PRINT
           </button>
@@ -60,9 +63,6 @@ export const Recent = (props) => {
   const recent = useSelector((state) => state.doorstaffReducer.recent);
   const dispatch = useDispatch();
 
-  function getTimesheetData(activityId){
-    dispatch(GetTimesheetData(token,"S", activityId))
-  }
 
   const today = new Date();
   const weekBefore = new Date(today);
@@ -77,30 +77,14 @@ export const Recent = (props) => {
     const fromDate = new Date(e.target[0].value).toISOString();
     const toDate = new Date(e.target[1].value).toISOString();
 
-    axios({
-      url: baseUrl + "/Report/ActivityList?system=S",
-      headers: {
-        Authorization: "Bearer " + user.access_token,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      data: {
-        dateFrom: fromDate,
-        dateTo: toDate.split("T")[0] + "T23:59:999.000Z",
-        locationId: parseInt(user.locationId),
-        locationGroupId: 0,
-        supplierId: 0,
-        reference: 0,
-        paymentStatusId: 0
-      },
+    GetDoorstaffRecentAPI(user, fromDate, toDate).then((res) => {
+      console.log("get recent doorstaff success", res.data.reportRecord)
+      dispatch(GetDoorstaffRecent(res.data.reportRecord))
+    }).catch((e) => {
+      console.log("get recent doorstaff error", e)
     })
-      .then((res) => {
-        dispatch({ type: GET_RECENT_DOORSTAFF, data: res.data.reportRecord })
 
-      }).catch(e => console.log(e))
   }
-
-
 
   return (
     <div className={s.container}>

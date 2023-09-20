@@ -7,7 +7,7 @@ import { PubInfo } from "./PubInfo/PubInfo";
 import { ReceiptFooter } from "./ReceiptFooter/ReceiptFooter";
 import { ReceiptHeader } from "./ReceiptHeader/ReceiptHeader";
 
-export const Receipt = (props) => {
+export const Receipt = () => {
 
     const receiptData = useSelector((state) => state.receiptReducer.data)
     const receiptTittle = useSelector((state) => state.receiptReducer.title);
@@ -24,6 +24,11 @@ export const Receipt = (props) => {
         return `${day}/${month}/${year} ${hours}:${minutes}`;
     }
 
+    function roundWorkingHours(workingHours) {
+        const roundedHours = parseFloat(workingHours).toFixed(2);
+        return roundedHours;
+    }
+
     return (
         <div className={s.hidden_wrapper} >
             <div className={s.wrapper} id="receipt" >
@@ -32,8 +37,8 @@ export const Receipt = (props) => {
                     <SupplierInfo systemToCheck={systemToCheck} receiptData={receiptData}></SupplierInfo>
                     <PubInfo receiptData={receiptData}></PubInfo>
                 </div>
-                {systemToCheck === "A" ? <ActivityTable receiptData={receiptData} formatDate={formatDate}></ActivityTable> : 
-                <DoorstaffTable receiptData={receiptData} formatDate={formatDate}></DoorstaffTable>
+                {systemToCheck === "A" ? <ActivityTable receiptData={receiptData} formatDate={formatDate} ></ActivityTable> :
+                    <DoorstaffTable receiptData={receiptData} roundWorkingHours={roundWorkingHours} formatDate={formatDate}></DoorstaffTable>
                 }
                 <ReceiptFooter systemToCheck={systemToCheck} receiptData={receiptData} formatDate={formatDate}></ReceiptFooter>
             </div>

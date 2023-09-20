@@ -1,28 +1,55 @@
 import s from "./ActivitiesForm.module.scss";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-
+import { GetSearchStaff, GetSearchSuppliers, GetSearchLocations, GetSearchLocationGroup, GetSearchPaymentStatus } from "../../../../redux/actions";
 import {
-  GetSearchSuppliers,
-  GetSearchLocations,
-  GetSearchLocationsGroup,
-  GetSearchStaff,
-  GetSearchPaymentStatus,
   GetSearchPaymentStatusGroup,
   GetSearchedData,
 } from "../../../../redux/api/searchActivitiesApi";
+import { GetSearchLocationsAPI, GetSearchLocationsGroupAPI, GetSearchPaymentStatusAPI, GetSearchStaffAPI, GetSearchSuppliersAPI } from "../../../../services/reportApi";
 export const ActivitiesForm = (props) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userReducer.user.access_token);
   const data = useSelector((state) => state.searchActivitiesReducer);
 
   useEffect(() => {
-    dispatch(GetSearchSuppliers(token));
-    dispatch(GetSearchLocations(token));
-    dispatch(GetSearchLocationsGroup(token));
-    dispatch(GetSearchStaff(token));
-    dispatch(GetSearchPaymentStatus(token));
+    //SUPPLIER/GROUP dropdown
+    GetSearchSuppliersAPI(token).then((res) => {
+      console.log('get search suppliers success', res)
+      dispatch(GetSearchSuppliers(res.data.record))
+    }).catch((e) => {
+      console.log('get search suppliers error', e)
+    })
+
+    //LOCATION dropdown
+    GetSearchLocationsAPI(token).then((res) => {
+      console.log('get search locations success', res)
+      dispatch(GetSearchLocations(res.data.record))
+    }).catch((e) => { console.log('get search locations error', e) })
+
+
+    //LOCATION GROUPS dropdown
+    GetSearchLocationsGroupAPI(token).then((res) => {
+      console.log('get search location groups success')
+      dispatch(GetSearchLocationGroup(res.data.record))
+    }).catch((e) => console.log('get search location groups success'))
+
+    //STAFF/GROUP dropdown
+    GetSearchStaffAPI(token).then((res) => {
+      console.log('get search staff success', res)
+      dispatch(GetSearchStaff(res.data.record));
+    }).catch((e) => {
+      console.log('get search staff error', e)
+    })
+
+
+    GetSearchPaymentStatusAPI(token).then((res) => {
+      console.log('get search payment status success', res)
+      dispatch(GetSearchPaymentStatus(res.data.record))
+    }).catch((e) => {
+      console.log('get search payment status error', e)
+    })
+
     dispatch(GetSearchPaymentStatusGroup(token));
   }, []);
 
