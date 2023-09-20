@@ -28,7 +28,7 @@ export const ColumnActions = (props) => {
     }
 
     function showRecallIfno() {
-        dispatch({ type: "SHOW_MODAL_MESSAGE", data: 'This action will reset the shift' })
+        dispatch({ type: "SHOW_MODAL_MESSAGE", data: 'Resets the sign-off time and returns this activity back to the Pub Manager to enter a new sign off time' })
     }
 
     return (<div className={s.actions_wrapper}>
@@ -59,7 +59,7 @@ export const ColumnActions = (props) => {
         {props.row.original.moreActionsVisible ? <div className={s.additional_actions}>
             <div className={s.additional_action_item}>
 
-                <button className={s.recall} onClick={() => showRecallModal(props.row.original.activityId)}>RECALL</button>
+                <button className={s.recall} onClick={() => showRecallModal(props.row.original.activityId)}>REST</button>
                 <button className={s.question} onClick={showRecallIfno}>?</button>
             </div>
             {/* {userRole === '1' ? <div className={s.additional_action_item}>
