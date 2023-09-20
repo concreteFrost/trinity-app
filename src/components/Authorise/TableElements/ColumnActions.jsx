@@ -23,10 +23,6 @@ export const ColumnActions = (props) => {
         dispatch({ type: "SHOW_ACTION_MODAL", activityToModify: activityId, activityType: "RECALL" })
     }
 
-    function showDeleteModal(activityId) {
-        dispatch({ type: "SHOW_ACTION_MODAL", activityToModify: activityId, activityType: "DELETE" })
-    }
-
     function showRecallIfno() {
         dispatch({ type: "SHOW_MODAL_MESSAGE", data: 'Resets the sign-off time and returns this activity back to the Pub Manager to enter a new sign off time' })
     }
@@ -59,7 +55,7 @@ export const ColumnActions = (props) => {
         {props.row.original.moreActionsVisible ? <div className={s.additional_actions}>
             <div className={s.additional_action_item}>
 
-                <button className={s.recall} onClick={() => showRecallModal(props.row.original.activityId)}>REST</button>
+                <button className={s.recall} onClick={() => showRecallModal(props.row.original.activityId)}>RESET</button>
                 <button className={s.question} onClick={showRecallIfno}>?</button>
             </div>
             {/* {userRole === '1' ? <div className={s.additional_action_item}>
