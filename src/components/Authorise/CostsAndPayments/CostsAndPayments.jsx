@@ -20,10 +20,12 @@ export const CostsAndPayments = (props) => {
 
   useEffect(() => {
     dispatch(GetAuthorise(props.system, token));
-  }, []);
+  }, [window.location.href]);
 
   function Approve() {
+
     props.data.forEach((element) => {
+      console.log(element)
       if (element.selected)
         dispatch(ApproveActivity(props.system, token, element));
     });

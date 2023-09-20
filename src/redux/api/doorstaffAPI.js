@@ -25,7 +25,7 @@ export function CancelDoorStaff(data, token) {
       data: data,
     })
       .then(() => {
-        dispatch({ type: "HIDE_CANCEL_MODAL" });
+        dispatch({ type: "HIDE_ACTION_MODAL" });
         dispatch(GetDoorstaff(token));
       })
       .catch((e) => console.log(e));
@@ -35,33 +35,33 @@ export function CancelDoorStaff(data, token) {
 export function DeleteDoorStaff(data, token, signOutTime) {
   const toLogOut = Array.isArray(data)
     ? data.map((staff) => ({
-        activityId: staff.activityId,
-        staffId: staff.staffId,
-        staffName: staff.staffName,
-        positionId: staff.positionId,
-        position: staff.position,
-        locationId: staff.locationId,
-        supplierId: staff.supplierId,
-        supplierName: staff.supplierName,
-        startTime: staff.startTime,
-        endTime: signOutTime,
-        rateGroupId: staff.rateGroupId,
-      }))
+      activityId: staff.activityId,
+      staffId: staff.staffId,
+      staffName: staff.staffName,
+      positionId: staff.positionId,
+      position: staff.position,
+      locationId: staff.locationId,
+      supplierId: staff.supplierId,
+      supplierName: staff.supplierName,
+      startTime: staff.startTime,
+      endTime: signOutTime,
+      rateGroupId: staff.rateGroupId,
+    }))
     : [
-        {
-          activityId: data.activityId,
-          staffId: data.staffId,
-          staffName: data.staffName,
-          positionId: data.positionId,
-          position: data.position,
-          locationId: data.locationId,
-          supplierId: data.supplierId,
-          supplierName: data.supplierName,
-          startTime: data.startTime,
-          endTime: signOutTime,
-          rateGroupId: data.rateGroupId,
-        },
-      ];
+      {
+        activityId: data.activityId,
+        staffId: data.staffId,
+        staffName: data.staffName,
+        positionId: data.positionId,
+        position: data.position,
+        locationId: data.locationId,
+        supplierId: data.supplierId,
+        supplierName: data.supplierName,
+        startTime: data.startTime,
+        endTime: signOutTime,
+        rateGroupId: data.rateGroupId,
+      },
+    ];
 
   return (dispatch) =>
     axios({
@@ -102,8 +102,9 @@ export function GetDoorstaffPositions(headers) {
       .then((res) => {
         dispatch({ type: GET_DOORSTAFF_POSITION_OPT, data: res.data.position });
         dispatch({ type: SET_DOORSTAFF_POSITION, data: res.data.position[0] });
+        console.log("SUCCESS RESPONSE ON GET POSITIONS", res.data)
       })
-      .catch((e) => console.log("no positions available"));
+      .catch((e) => console.log("BAD RESPONSE ON GET POSITIONS", e));
   };
 }
 
@@ -114,17 +115,22 @@ export function GetDoorstaffSuppliers(headers, positionId) {
         headers: headers,
       })
       .then((res) => {
-   
+
         dispatch({
           type: GET_DOORSTAFF_SUPPLIER_OPT,
           data: res.data.suppliers,
         });
         dispatch({ type: SET_DOORSTAFF_SUPPLIER, data: res.data.suppliers[0] });
+
+        console.log("SUCCESS RESPONSE ON GET SUPPLIERS", res.data)
       })
-      .catch((e) =>  dispatch({
-        type: GET_DOORSTAFF_SUPPLIER_OPT,
-        data: [],
-      }));
+      .catch((e) => {
+        dispatch({
+          type: GET_DOORSTAFF_SUPPLIER_OPT,
+          data: [],
+        })
+        console.log("BAD RESPONSE ON GET SUPPLIERS", e);
+      });
   };
 }
 
@@ -133,17 +139,17 @@ export function GetDoorstaffRates(position, supplier, date, headers) {
     return axios
       .get(
         `${baseUrl}/Activity/LookupRates/` +
-          position +
-          "/" +
-          supplier +
-          "/" +
-          new Date(date).getTime(),
+        position +
+        "/" +
+        supplier +
+        "/" +
+        new Date(date).getTime(),
         {
           headers: headers,
         }
       )
       .then((res) => {
-      
+
         if (res.data.success === false) {
           dispatch({
             type: SHOW_MODAL_MESSAGE,
@@ -152,8 +158,10 @@ export function GetDoorstaffRates(position, supplier, date, headers) {
         }
         dispatch({ type: GET_DOORSTAFF_RATE_OPT, data: res.data.rates });
         dispatch({ type: SET_DOORSTAFF_RATE, data: res.data.rates[0] });
-      }).catch(e=>{
+        console.log("SUCCESS RESPONE ON GET RATES", res.data)
+      }).catch(e => {
         dispatch({ type: GET_DOORSTAFF_RATE_OPT, data: [] });
+        console.log("BAD RESPONE ON GET RATES", e)
       });
   };
 }
@@ -190,7 +198,7 @@ export function SetDoorStaff(token, sia) {
         supplierId: parseInt(sia.supplier.supplierId),
         supplierName: sia.supplier.supplierName,
         startTime: sia.date + "T" + sia.time,
-        rateGroupId: sia.rate.rateGroupId,
+        rateGroupId: sia.rate,
       },
       headers: {
         Authorization: "Bearer " + token,
@@ -204,9 +212,10 @@ export function SetDoorStaff(token, sia) {
           dispatch(GetDoorstaff(token));
           dispatch(ClearSiaData());
         }
+        console.log("SIGN ON SUCCESS", res.data)
       })
       .catch((e) => {
-        console.log(e.message);
+        console.log("SIGN ON ERROR", e.message);
       });
   };
 }

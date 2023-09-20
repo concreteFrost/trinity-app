@@ -55,10 +55,14 @@ export const SignIn = () => {
     );
   }
 
+  function SetRateGroupID(e) {
+    dispatch({ type: SET_DOORSTAFF_RATE, data: e.target.value })
+    console.log(e.target.value)
+  }
+
   function Submit() {
-    if (sia.rate.rateGroupId) {
-      dispatch(SetDoorStaff(token.access_token, sia));
-    }
+    console.log(sia)
+    dispatch(SetDoorStaff(token.access_token, sia));
   }
 
   return (
@@ -80,15 +84,15 @@ export const SignIn = () => {
             onChange={(e) => {
               GetPositionAndSupplier(e);
             }}
-            disabled={sia.options.positions.length <= 1}
+            disabled={sia.options.positions.length === 0}
           >
             <option value={null}>Select Position</option>
             {sia.options.positions.length > 0
               ? sia.options.positions.map((e) => (
-                  <option key={e.positionId} value={e.positionId}>
-                    {e.positionName}
-                  </option>
-                ))
+                <option key={e.positionId} value={e.positionId}>
+                  {e.positionName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -99,15 +103,15 @@ export const SignIn = () => {
             onChange={(e) => {
               GetSupplierAndRate(e);
             }}
-            disabled={sia.options.suppliers.length <= 1}
+            disabled={sia.options.suppliers.length === 0}
           >
             <option value={null}>Select the Supplier</option>
             {sia.options.suppliers.length > 0
               ? sia.options.suppliers.map((e) => (
-                  <option key={e.supplierId} value={e.supplierId}>
-                    {e.supplierName}
-                  </option>
-                ))
+                <option key={e.supplierId} value={e.supplierId}>
+                  {e.supplierName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -116,16 +120,17 @@ export const SignIn = () => {
           <label>RATE</label>
           <select
             onChange={(e) =>
-              dispatch({ type: SET_DOORSTAFF_RATE, data: e.target.value })
+              SetRateGroupID(e)
             }
             disabled={sia.options.rates.length === 0}
           >
+            <option value={null}>Select Rate</option>
             {sia.options.rates.length > 0
               ? sia.options.rates.map((e) => (
-                  <option key={e.rateGroupId} value={e.rateGroupId}>
-                    {e.rateGroupName}
-                  </option>
-                ))
+                <option key={e.rateGroupId} value={e.rateGroupId}>
+                  {e.rateGroupName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -163,11 +168,11 @@ export const SignIn = () => {
           <button className={s.clear} onClick={() => dispatch(ClearSiaData())}>
             CLEAR
           </button>
-          {sia.rate && sia.rate.rateGroupId !== null ? (
-            <button className={s.submit} onClick={Submit}>
-              SUBMIT
-            </button>
-          ) : null}
+
+          <button className={s.submit} onClick={Submit}>
+            SUBMIT
+          </button>
+
         </div>
       </form>
     </div>
