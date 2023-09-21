@@ -52,7 +52,8 @@ import {
   SET_ACTIVITY_SUPPLIER,
   SET_ACTIVITY_COST_VALUE,
   SUPPLIER_PROVIDED,
-  SET_ACTIVITY_HOURS_WORKED
+  SET_ACTIVITY_HOURS_WORKED,
+  CLEAR_ACTIVITY
 } from "./types";
 
 //LOGIN ACTIONS
@@ -217,6 +218,10 @@ export function GetActivityRecents(records) {
 
 export function SetActivityHoursWorked(hours) {
   return { type: SET_ACTIVITY_HOURS_WORKED, data: hours }
+}
+
+export function ClearActivity() {
+  return { type: CLEAR_ACTIVITY }
 }
 
 

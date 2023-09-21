@@ -249,40 +249,53 @@ export function GetRateAPI(token, data) {
   })
 }
 
+export function SubmitActivityAPI(token, _data) {
+  return new Promise((resolve, reject) => {
+    axios({
+      url: `${baseUrl}/CentralCosts/CostEntry`,
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      data: _data,
+    }).then((res) => {
+      console.log('submit activity success', res)
+      resolve(res)
+    }).catch((e) => {
+      console.log('sumbit activity error', e)
+      reject(e)
+    })
+  })
+}
 
 
-// export function GetRate(token, data) {
+
+// export function SubmitActivity(token, _data) {
 //   return function (dispatch) {
 //     return axios({
-//       url: `${baseUrl}/CentralCosts/LookupRate`,
+//       url: `${baseUrl}/CentralCosts/CostEntry`,
 //       headers: {
 //         Authorization: "Bearer " + token,
 //         "Content-Type": "application/json",
 //       },
 //       method: "POST",
-//       data: {
-//         costGroupId: data.activityID,
-//         supplierId: data.supplierID,
-//         costEntryTime: data.time,
-//       },
+//       data: _data,
 //     })
 //       .then((res) => {
-//         console.log('result of get rate', res)
-//         if (res.data.message) {
-//           dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.message })
-//           dispatch({ type: "SUPPLIER_PROVIDED", data: false })
-//         }
-//         else {
-//           dispatch({ type: GET_ACTIVITY_RATE, data: res.data })
-//           dispatch({ type: SET_ACTIVITY_SUPPLIER, data: data.supplierID })
-//           dispatch({ type: SET_ACTIVITY_COST_VALUE, data: res.data.costValue })
-//           dispatch({ type: "SUPPLIER_PROVIDED", data: true })
-//         }
+//         dispatch({ type: CLEAR_ACTIVITY });
+//         dispatch(GetActivityTypeOpt(token));
 
+
+
+//       }).then(() => {
+//         const today = new Date()
+//         const yesterday = new Date(new Date().setDate(today.getDate() - 1));
+//         dispatch(GetActivity(token, yesterday, today, "C"))
 //       })
 //       .catch((e) => {
-//         console.log(e);
+//         console.log(e)
+//         dispatch({ type: SHOW_MODAL_MESSAGE, data: e.message })
 //       });
-//   };
+//   }
 // }
-
