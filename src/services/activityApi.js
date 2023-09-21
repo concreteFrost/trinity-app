@@ -1,8 +1,7 @@
 import axios from "axios";
 import { baseUrl } from "../contexts/baseUrl";
-import { reject } from "q";
 
-export function GetSiaData(sia, token) {
+export function GetSiaDataAPI(sia, token) {
   return new Promise((resolve, reject) => {
     const headers = {
       Authorization: "Bearer " + token,
@@ -18,7 +17,7 @@ export function GetSiaData(sia, token) {
   });
 }
 
-export function GetDoorstaffPositions(token) {
+export function GetDoorstaffPositionsAPI(token) {
   return new Promise((resolve, reject) => {
     const headers = {
       Authorization: "Bearer " + token,
@@ -34,7 +33,7 @@ export function GetDoorstaffPositions(token) {
   });
 }
 
-export function GetDoorstaffSupplier(positionId, token) {
+export function GetDoorstaffSupplierAPI(positionId, token) {
   const headers = {
     Authorization: "Bearer " + token,
     "Content-Type": "application/x-www-form-urlencoded",
@@ -52,7 +51,7 @@ export function GetDoorstaffSupplier(positionId, token) {
   });
 }
 
-export function GetDoorstaffRates(token, position, supplier, date) {
+export function GetDoorstaffRatesAPI(token, position, supplier, date) {
   const headers = {
     Authorization: "Bearer " + token,
     "Content-Type": "application/x-www-form-urlencoded",
@@ -61,11 +60,11 @@ export function GetDoorstaffRates(token, position, supplier, date) {
     axios
       .get(
         `${baseUrl}/Activity/LookupRates/` +
-          position +
-          "/" +
-          supplier +
-          "/" +
-          new Date(date).getTime(),
+        position +
+        "/" +
+        supplier +
+        "/" +
+        new Date(date).getTime(),
         {
           headers: headers,
         }
@@ -75,7 +74,7 @@ export function GetDoorstaffRates(token, position, supplier, date) {
   });
 }
 
-export function SignOnMember(token, sia) {
+export function SignOnMemberAPI(token, sia) {
   return new Promise((resolve, reject) => {
     axios({
       method: "POST",
@@ -101,36 +100,36 @@ export function SignOnMember(token, sia) {
   });
 }
 
-export function SignOffMember(data, token, signOutTime) {
+export function SignOffMemberAPI(data, token, signOutTime) {
   const toLogOut = Array.isArray(data)
     ? data.map((staff) => ({
-        activityId: staff.activityId,
-        staffId: staff.staffId,
-        staffName: staff.staffName,
-        positionId: staff.positionId,
-        position: staff.position,
-        locationId: staff.locationId,
-        supplierId: staff.supplierId,
-        supplierName: staff.supplierName,
-        startTime: staff.startTime,
-        endTime: signOutTime,
-        rateGroupId: staff.rateGroupId,
-      }))
+      activityId: staff.activityId,
+      staffId: staff.staffId,
+      staffName: staff.staffName,
+      positionId: staff.positionId,
+      position: staff.position,
+      locationId: staff.locationId,
+      supplierId: staff.supplierId,
+      supplierName: staff.supplierName,
+      startTime: staff.startTime,
+      endTime: signOutTime,
+      rateGroupId: staff.rateGroupId,
+    }))
     : [
-        {
-          activityId: data.activityId,
-          staffId: data.staffId,
-          staffName: data.staffName,
-          positionId: data.positionId,
-          position: data.position,
-          locationId: data.locationId,
-          supplierId: data.supplierId,
-          supplierName: data.supplierName,
-          startTime: data.startTime,
-          endTime: signOutTime,
-          rateGroupId: data.rateGroupId,
-        },
-      ];
+      {
+        activityId: data.activityId,
+        staffId: data.staffId,
+        staffName: data.staffName,
+        positionId: data.positionId,
+        position: data.position,
+        locationId: data.locationId,
+        supplierId: data.supplierId,
+        supplierName: data.supplierName,
+        startTime: data.startTime,
+        endTime: signOutTime,
+        rateGroupId: data.rateGroupId,
+      },
+    ];
   return new Promise((resolve, reject) => {
     axios({
       method: "POST",
@@ -148,7 +147,7 @@ export function SignOffMember(data, token, signOutTime) {
   });
 }
 
-export function CancelDoorstaff(data, token) {
+export function CancelDoorstaffAPI(data, token) {
   return new Promise((resolve, reject) => {
     axios({
       method: "POST",
@@ -166,26 +165,8 @@ export function CancelDoorstaff(data, token) {
   });
 }
 
-// export function CancelDoorStaff(data, token) {
-//   return function (dispatch) {
-//     return axios({
-//       method: "POST",
-//       url: `${baseUrl}/Activity/CancelActivity`,
-//       headers: {
-//         Authorization: "Bearer " + token,
-//         "Content-Type": "application/json",
-//       },
-//       data: data,
-//     })
-//       .then(() => {
-//         dispatch({ type: "HIDE_ACTION_MODAL" });
-//         dispatch(GetDoorstaff(token));
-//       })
-//       .catch((e) => console.log(e));
-//   };
-// }
 
-export function GetDoorstaffList(token) {
+export function GetDoorstaffListAPI(token) {
   return new Promise((resolve, reject) => {
     axios
       .get(`${baseUrl}/Activity/LookupCurrentMembers`, {
@@ -200,3 +181,108 @@ export function GetDoorstaffList(token) {
       .catch((e) => reject(e));
   });
 }
+
+//ACTIVITY
+
+export function GetActivityTypeOptAPI(token) {
+  return new Promise((resolve, reject) => {
+    axios.get(`${baseUrl}/CentralCosts/LookupCostGroups`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    ).then(res => {
+      console.log('get activity type opt success', res)
+      resolve(res)
+    }).catch(e => {
+      console.log('get activity type opt error', e)
+      reject(e)
+    })
+  })
+}
+
+export function GetActivitySupplierOptAPI(token, activityId) {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(
+        `${baseUrl}/CentralCosts/LookupSuppliers/` +
+        activityId,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      ).then((res) => {
+        console.log('get activity supplier opt success', res)
+        resolve(res)
+      }).catch((e) => {
+        console.log('get activity supplier opt error', e)
+        reject(e)
+      })
+  })
+}
+
+export function GetRateAPI(token, data) {
+  return new Promise((resolve, reject) => {
+    axios({
+      url: `${baseUrl}/CentralCosts/LookupRate`,
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      data: {
+        costGroupId: data.activityID,
+        supplierId: data.supplierID,
+        costEntryTime: data.time,
+      },
+    }).then((res) => {
+      console.log("get activity rate success", res)
+      resolve(res)
+    }).catch((e) => {
+      console.log("get activity rate error", e)
+      reject(e)
+    })
+  })
+}
+
+
+
+// export function GetRate(token, data) {
+//   return function (dispatch) {
+//     return axios({
+//       url: `${baseUrl}/CentralCosts/LookupRate`,
+//       headers: {
+//         Authorization: "Bearer " + token,
+//         "Content-Type": "application/json",
+//       },
+//       method: "POST",
+//       data: {
+//         costGroupId: data.activityID,
+//         supplierId: data.supplierID,
+//         costEntryTime: data.time,
+//       },
+//     })
+//       .then((res) => {
+//         console.log('result of get rate', res)
+//         if (res.data.message) {
+//           dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.message })
+//           dispatch({ type: "SUPPLIER_PROVIDED", data: false })
+//         }
+//         else {
+//           dispatch({ type: GET_ACTIVITY_RATE, data: res.data })
+//           dispatch({ type: SET_ACTIVITY_SUPPLIER, data: data.supplierID })
+//           dispatch({ type: SET_ACTIVITY_COST_VALUE, data: res.data.costValue })
+//           dispatch({ type: "SUPPLIER_PROVIDED", data: true })
+//         }
+
+//       })
+//       .catch((e) => {
+//         console.log(e);
+//       });
+//   };
+// }
+

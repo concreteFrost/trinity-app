@@ -1,11 +1,11 @@
 import s from "./ModalAction.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { CancelDoorStaff } from "../../../redux/api/doorstaffAPI";
-import { useState } from "react";
-import { DeleteActivity } from "../../../redux/api/authoriseApi";
 import { RecallActivity } from "../../../services/areaManagerApi";
 import { SHOW_MODAL_MESSAGE } from "../../../redux/types";
 import { GetAuthoriseAndNotes } from "../../../services/utils/areaManagerUtils";
+import { CancelDoorstaffAPI } from "../../../services/activityApi";
+import { RefreshDoorstaffList } from "../../../services/utils/activityUtils";
+import { HideActionModal } from "../../../redux/actions";
 
 export const ModalAction = () => {
   const modalActionReducer = useSelector((state) => state.modalActionReducer);
@@ -34,7 +34,11 @@ export const ModalAction = () => {
   const dispatch = useDispatch();
 
   function Cancel() {
-    dispatch(CancelDoorStaff(modalActionReducer.activityToModify, token));
+    CancelDoorstaffAPI(modalActionReducer.activityToModify, token).then((res) => {
+      console.log('cancel activity success', res)
+      dispatch(HideActionModal());
+      RefreshDoorstaffList(token, dispatch);
+    })
   }
   function Recall() {
     RecallActivity(token, modalActionReducer.activityToModify)
@@ -50,18 +54,12 @@ export const ModalAction = () => {
       .catch((e) => console.log("recall activity error", e));
   }
 
-  function Delete() {
-    dispatch(DeleteActivity(modalActionReducer.activityToModify, token));
-  }
-
   function DefineActiveOperation() {
     switch (modalActionReducer.activityType) {
       case "CANCEL":
         return Cancel();
       case "RECALL":
         return Recall();
-      case "DELETE":
-        return Delete();
       default:
         return Cancel();
     }

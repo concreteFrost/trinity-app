@@ -1,7 +1,7 @@
 import axios from "axios";
 import { baseUrl } from "../../contexts/baseUrl";
 import { GET_DISPUTED_ACTIVITY, GET_DISPUTED_DOORSTAFF, SHOW_MODAL_MESSAGE, RESET_MODAL_ACTIVITY, GET_DISPUTED_COUNT } from '../types'
-import { GetAuthorise } from "./authoriseApi";
+
 
 //FOR PUB MANAGER
 export function GetDisputedActivity(token, system) {
@@ -54,29 +54,29 @@ export function SendBackDisputed(token, returnDisputed, system) {
 
 
 //FOR AREA MANAGER
-export function SendDisputed(system, token, dispute) {
-    return function (dispatch) {
-        return axios({
-            url: `${baseUrl}/AreaManager/DisputeActivity?system=` + system,
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
-            method: "POST",
-            data: {
-                id: dispute.paymentActivityID,
-                name: dispute.disputedNote
-            },
-        })
-            .then(() => {
-                dispatch({ type: RESET_MODAL_ACTIVITY })
-                dispatch(GetAuthorise(system, token))
-            }).catch(e => {
-                console.log(dispute.paymentActivityID, "id");
-                console.log(dispute.disputedNote, "name")
-            })
-    }
-}
+// export function SendDisputed(system, token, dispute) {
+//     return function (dispatch) {
+//         return axios({
+//             url: `${baseUrl}/AreaManager/DisputeActivity?system=` + system,
+//             headers: {
+//                 Authorization: "Bearer " + token,
+//                 "Content-Type": "application/json",
+//             },
+//             method: "POST",
+//             data: {
+//                 id: dispute.paymentActivityID,
+//                 name: dispute.disputedNote
+//             },
+//         })
+//             .then(() => {
+//                 dispatch({ type: RESET_MODAL_ACTIVITY })
+//                 dispatch(GetAuthorise(system, token))
+//             }).catch(e => {
+//                 console.log(dispute.paymentActivityID, "id");
+//                 console.log(dispute.disputedNote, "name")
+//             })
+//     }
+// }
 
 
 //FOR PUB MANAGER

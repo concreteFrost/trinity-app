@@ -1,10 +1,6 @@
 import s from "./CurrentTable.module.scss";
-import {
-  SET_DOORSTAFF_SIGNOUT_DATE,
-  TOGGLE_DOORSTAFF_TO_SIGN_OUT,
-} from "../../../../redux/types";
 import { useDispatch } from "react-redux/es/exports";
-import { SignOffMember } from "../../../../services/activityApi";
+import { SignOffMemberAPI } from "../../../../services/activityApi";
 import {
   ShowModalMessage,
   ShowCancelModal,
@@ -22,7 +18,7 @@ export const CurrentTable = (props) => {
       const data = JSON.parse(e.target.dataset.staff);
       const signOutTIme = e.target[1].value + "T" + e.target[0].value;
 
-      SignOffMember(data, props.token.access_token, signOutTIme)
+      SignOffMemberAPI(data, props.token.access_token, signOutTIme)
         .then((res) => {
           if (!res.data.success) {
             dispatch(ShowModalMessage(res.data.message));
@@ -92,7 +88,7 @@ export const CurrentTable = (props) => {
                               type="date"
                               value={e.signOutDate}
                               onChange={(x) => {
-                                dispatch(SetDoorstaffSignOutDate(e.staffId,x.target.value))
+                                dispatch(SetDoorstaffSignOutDate(e.staffId, x.target.value))
                               }}
                               required
                             />
@@ -103,7 +99,7 @@ export const CurrentTable = (props) => {
                             type="checkbox"
                             checked={e.isChecked}
                             onChange={() =>
-                            dispatch(ToggleDoorstaffToSignOut(e.staffId))
+                              dispatch(ToggleDoorstaffToSignOut(e.staffId))
                             }
                           ></input>
                           <button>SIGN OUT</button>

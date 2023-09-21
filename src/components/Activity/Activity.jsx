@@ -2,7 +2,6 @@ import s from "./Activity.module.scss";
 import { AddActivity } from "./Current/AddActivity/AddActivity";
 import { ActivityTable } from "./Current/ActivityTable/ActivityTable";
 import { SwitchView } from "../Shared/SwitchView/SwitchView";
-import { useState } from "react";
 import { Recent } from "./Recent/Recent";
 import { Disputed } from "../Shared/Disputed/Disputed";
 import { useSelector, useDispatch } from "react-redux";

@@ -1,14 +1,7 @@
 import s from "./SignIn.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { GetDoorstaff } from "../../../redux/api/doorstaffAPI";
-import {
-  SET_DOORSTAFF_RATE,
-  SET_DOORSTAFF_START_DATE,
-  SET_DOORSTAFF_START_TIME,
-} from "../../../redux/types";
 import {
   ClearSiaData,
-  SetDoorStaffList,
   GetDoorstaffSupplierOptions,
   SetDoorstaffCurrentSupplier,
   ShowModalMessage,
@@ -19,10 +12,9 @@ import {
   SetDoorstaffStartDate,
 } from "../../../redux/actions";
 import {
-  GetDoorstaffList,
-  GetDoorstaffSupplier,
-  SignOnMember,
-  GetDoorstaffRates,
+  GetDoorstaffSupplierAPI,
+  SignOnMemberAPI,
+  GetDoorstaffRatesAPI,
 } from "../../../services/activityApi";
 import { RefreshDoorstaffList } from "../../../services/utils/activityUtils";
 
@@ -35,7 +27,7 @@ export const SignIn = () => {
   async function GetPositionAndSupplier(e) {
     const position = e.target.value;
     await dispatch(SetDoorstaffCurrentPosition(position));
-    await GetDoorstaffSupplier(position, token.access_token)
+    await GetDoorstaffSupplierAPI(position, token.access_token)
       .then((res) => {
         console.log("get suppliers list success", res[0]);
         dispatch(GetDoorstaffSupplierOptions(res));
@@ -44,7 +36,7 @@ export const SignIn = () => {
         console.log("get suppliers list error", e);
         dispatch(GetDoorstaffSupplierOptions([]));
       });
-      console.log(position)
+    console.log(position)
   }
 
   async function SetCurrentSupplier(e) {
@@ -58,7 +50,7 @@ export const SignIn = () => {
       })
     );
 
-    await GetDoorstaffRates(
+    await GetDoorstaffRatesAPI(
       token.access_token,
       sia.position ? sia.position : 0,
       supplierId,
@@ -66,7 +58,7 @@ export const SignIn = () => {
     )
       .then((res) => {
         console.log("get rates success", res);
-        if(!res.success){
+        if (!res.success) {
           dispatch(ShowModalMessage(res.message))
         }
         dispatch(GetDooorstaffRateOptions(res.rates))
@@ -84,12 +76,12 @@ export const SignIn = () => {
 
   function Submit() {
 
-    SignOnMember(token.access_token, sia)
+    SignOnMemberAPI(token.access_token, sia)
       .then((res) => {
         if (!res.success) {
           dispatch(ShowModalMessage(res.message));
         } else {
-          RefreshDoorstaffList(token.access_token,dispatch)
+          RefreshDoorstaffList(token.access_token, dispatch)
           dispatch(ClearSiaData());
         }
       })
@@ -120,10 +112,10 @@ export const SignIn = () => {
             <option value={null}>Select Position</option>
             {sia.options.positions.length > 0
               ? sia.options.positions.map((e) => (
-                  <option key={e.positionId} value={e.positionId}>
-                    {e.positionName}
-                  </option>
-                ))
+                <option key={e.positionId} value={e.positionId}>
+                  {e.positionName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -139,10 +131,10 @@ export const SignIn = () => {
             <option value={null}>Select the Supplier</option>
             {sia.options.suppliers.length > 0
               ? sia.options.suppliers.map((e) => (
-                  <option key={e.supplierId} value={e.supplierId}>
-                    {e.supplierName}
-                  </option>
-                ))
+                <option key={e.supplierId} value={e.supplierId}>
+                  {e.supplierName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -156,10 +148,10 @@ export const SignIn = () => {
             <option value={null}>Select Rate</option>
             {sia.options.rates.length > 0
               ? sia.options.rates.map((e) => (
-                  <option key={e.rateGroupId} value={e.rateGroupId}>
-                    {e.rateGroupName}
-                  </option>
-                ))
+                <option key={e.rateGroupId} value={e.rateGroupId}>
+                  {e.rateGroupName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -180,7 +172,7 @@ export const SignIn = () => {
           <input
             type="time"
             value={sia.time}
-            onChange={(e) => {dispatch(SetDoorstaffStartTime(e.target.value))}}
+            onChange={(e) => { dispatch(SetDoorstaffStartTime(e.target.value)) }}
             required
           />
         </div>

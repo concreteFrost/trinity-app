@@ -1,30 +1,30 @@
 import s from "./SIA.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { FaSearch } from "react-icons/fa";
-import { useState } from "react";
-import { TailSpin } from "react-loader-spinner";
 import {
   ClearSiaData,
   GetDoorstaffPositionsOptions,
+  HideLoader,
   SetDoorstaffCurrentPosition,
   SetSiaData,
+  ShowLoader,
   ShowModalMessage,
 } from "../../../redux/actions";
 import {
-  GetDoorstaffPositions,
-  GetSiaData,
+  GetDoorstaffPositionsAPI,
+  GetSiaDataAPI,
 } from "../../../services/activityApi";
 
 export const SIA = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userReducer.user.access_token);
   const sia = useSelector((state) => state.siaReducer.siaNumber);
-  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setIsLoading(true);
-    GetSiaData(sia, token)
+
+    dispatch(ShowLoader());
+    GetSiaDataAPI(sia, token)
       .then((siaResult) => {
         console.log("get sia data success", siaResult);
         if (siaResult.message !== null) {
@@ -32,7 +32,7 @@ export const SIA = () => {
           dispatch(ClearSiaData());
         }
         dispatch(SetSiaData(siaResult));
-        GetDoorstaffPositions(token)
+        GetDoorstaffPositionsAPI(token)
           .then((res) => {
             console.log("get positions success", res[0]);
             dispatch(GetDoorstaffPositionsOptions(res));
@@ -44,7 +44,8 @@ export const SIA = () => {
       })
       .catch((e) => console.log("get sia data error", e))
       .finally(() => {
-        setIsLoading(false);
+
+        dispatch(HideLoader());
       });
   }
   return (
@@ -65,13 +66,6 @@ export const SIA = () => {
           <FaSearch></FaSearch>
         </button>
       </form>
-      {isLoading === true ? (
-        <div className="tail_spin_container">
-          <div className="tail_spin">
-            <TailSpin width={150} height={150} color={"#42aaf5"}></TailSpin>
-          </div>{" "}
-        </div>
-      ) : null}
     </div>
   );
 };

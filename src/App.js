@@ -16,6 +16,7 @@ import { ModalMessage } from "./components/Modal/ModalMessage/ModalMessage";
 import { ModalLogout } from "./components/Modal/ModalLogout/ModalLogout";
 import { ModalAction } from "./components/Modal/ModalAction/ModalAction";
 import { Receipt } from "./components/Receipt/Receipt";
+import Loader from "./components/Loader/Loader";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
@@ -27,6 +28,7 @@ function App() {
         <ModalMessage></ModalMessage>
         <ModalLogout></ModalLogout>
         <ModalAction></ModalAction>
+        <Loader></Loader>
         {isLoggedIn === true ? <Navbar className={s.nav} /> : null}
         <Routes>
           <Route path="/" element={isLoggedIn ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />} />

@@ -2,7 +2,6 @@ import s from "./AddActivity.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import {
-  GetActivityTypeOpt,
   GetRate,
   GetSupplierOpt,
   SubmitActivity,
@@ -13,6 +12,8 @@ import {
   SET_ACTIVITY_TYPE,
   SHOW_MODAL_MESSAGE
 } from "../../../../redux/types";
+import { GetActivitySupplierOptAPI, GetActivityTypeOptAPI, GetRateAPI } from "../../../../services/activityApi";
+import { GetActivityRate, GetActivitySupplierOpt, GetActivityTypeOpt, SetActivityCostValue, SetActivitySupplier, SetActivityType, ShowModalMessage, isActivitySupplierProvided } from "../../../../redux/actions";
 
 export const AddActivity = () => {
   const activityOpt = useSelector(
@@ -21,7 +22,7 @@ export const AddActivity = () => {
   const supplierOpt = useSelector(
     (state) => state.activityReducer.GetOpt.supplierOpt
   );
-  const supplierProvided = useSelector(state=>state.activityReducer.supplierProvided)
+  const supplierProvided = useSelector(state => state.activityReducer.supplierProvided)
   const rate = useSelector((state) => state.activityReducer.getRate);
   const token = useSelector((state) => state.userReducer.user.access_token);
   const locationId = useSelector((state) => state.userReducer.user.locationId);
@@ -46,20 +47,28 @@ export const AddActivity = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(GetActivityTypeOpt(token));
+    GetActivityTypeOptAPI(token).then((res) => {
+      dispatch(GetActivityTypeOpt(res.data.record))
+      dispatch(SetActivityType(res.data.record[0].id))
+      GetActivitySupplierOptAPI(token, res.data.record[0].id)
+    })
   }, []);
+
+  function GetSupplierOpt(e) {
+    GetActivitySupplierOptAPI(token, e.target.value).then((res) => {
+      dispatch(GetActivitySupplierOpt(res.data.suppliers))
+    })
+  }
+
 
   function CompareRates() {
     if (parseInt(costValue) !== rate.costValue) {
-      dispatch({
-        type: SHOW_MODAL_MESSAGE,
-        data: "NOTES input is now required",
-      });
+      dispatch(ShowModalMessage("NOTES input is now required"));
       setNoteIsRequired(true);
     } else {
       setNoteIsRequired(false);
     }
-    dispatch({ type: SET_ACTIVITY_COST_VALUE, data: costValue });
+    dispatch(SetActivityCostValue(costValue));
   }
 
   async function FirstSubmit(e) {
@@ -73,9 +82,18 @@ export const AddActivity = () => {
       time: _time,
     };
 
-    await dispatch({ type: "SHOW_LOADER" });
-    await dispatch(GetRate(token, data));
-    await dispatch({ type: "HIDE_LOADER" });
+    // await dispatch({ type: "SHOW_LOADER" });
+    GetRateAPI(token, data).then((res) => {
+      if (res.data.message) {
+        dispatch(ShowModalMessage(res.data.message))
+        dispatch(isActivitySupplierProvided(false))
+      }
+      else {
+        dispatch(GetActivityRate(res.data))
+        dispatch(isActivitySupplierProvided(true))
+      }
+    })
+    // await dispatch({ type: "HIDE_LOADER" });
   }
 
   function SecondSubmit(e) {
@@ -98,35 +116,36 @@ export const AddActivity = () => {
     <div className={s.container}>
       <form onSubmit={FirstSubmit} className={s.first_form}>
         <div className={s.general}>
-          <label htmlFor="type" disabled={activityOpt.length ===0}>TYPE</label>
+          <label htmlFor="type" disabled={activityOpt.length === 0}>TYPE</label>
           <select
             name="type"
-            onChange={(e) => {
-              dispatch(GetSupplierOpt(token, e.target.value));
-              dispatch({ type: SET_ACTIVITY_TYPE, data: e.target.value });
-            }}
+            onChange={(e) => { GetSupplierOpt(e) }}
+            disabled={activityOpt.length === 0}
           >
+            <option value={null}>Select Type</option>
             {activityOpt.length > 0
               ? activityOpt.map((e) => {
-                  return (
-                    <option key={e.id} value={e.id}>
-                      {e.name}
-                    </option>
-                  );
-                })
+                return (
+                  <option key={e.id} value={e.id}>
+                    {e.name}
+                  </option>
+                );
+              })
               : null}
           </select>
 
           <label htmlFor="supplier">SUPPLIER</label>
-          <select name="supplier" disabled={supplierOpt.length < 1}>
+          <select name="supplier" disabled={supplierOpt.length === 0}>
+            <option value={null}>Select Supplier</option>
+
             {supplierOpt.length > 0
               ? supplierOpt.map((e) => {
-                  return (
-                    <option key={e.supplierId} value={e.supplierId}>
-                      {e.supplierName}
-                    </option>
-                  );
-                })
+                return (
+                  <option key={e.supplierId} value={e.supplierId}>
+                    {e.supplierName}
+                  </option>
+                );
+              })
               : null}
           </select>
         </div>
@@ -153,7 +172,7 @@ export const AddActivity = () => {
           <button>CHECK RATE</button>
         </div>
       </form>
-     {supplierProvided === true ? <form onSubmit={SecondSubmit} className={s.rate_form}>
+      {supplierProvided === true ? <form onSubmit={SecondSubmit} className={s.rate_form}>
         <div className={s.rate}>
           <label>RATE</label>
           <div className={s.radio}>
@@ -230,7 +249,7 @@ export const AddActivity = () => {
           <button className={s.clear}>CLEAR</button>
           <button className={s.add}>ADD</button>
         </div>
-      </form> : null}  
+      </form> : null}
     </div>
   );
 };

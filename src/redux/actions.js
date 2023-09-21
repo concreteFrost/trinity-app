@@ -33,7 +33,25 @@ import {
   GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_OPT,
   GET_ACTIVITIES_SEARCH_PAYMENT_STATUS_GROUP_OPT,
   GET_SEARCHED_COSTS,
-  GET_SEARCHED_ACTIVITES
+  GET_SEARCHED_ACTIVITES,
+  HIDE_ACTION_MODAL,
+  GET_COSTS_DOORSTAFF_WEEKLY,
+  GET_COSTS_DOORSTAFF_MONTHLY,
+  GET_COSTS_ACTIVITY_WEEKLY,
+  GET_COSTS_ACTIVITY_MONTHLY,
+  GET_COSTS_ACTIVITY_DAILY,
+  GET_COSTS_DOORSTAFF_DAILY,
+  SHOW_LOADER,
+  HIDE_LOADER,
+  GET_DOORSTAFF_SUMMARY_DAILY,
+  GET_DOORSTAFF_SUMMARY_WEEKLY,
+  GET_ACTIVITY_TYPE_OPT,
+  SET_ACTIVITY_TYPE,
+  GET_ACTIVITY_SUPPLIER_OPT,
+  GET_ACTIVITY_RATE,
+  SET_ACTIVITY_SUPPLIER,
+  SET_ACTIVITY_COST_VALUE,
+  SUPPLIER_PROVIDED
 } from "./types";
 
 //LOGIN ACTIONS
@@ -102,6 +120,9 @@ export function SetDoorstaffStartTime(time) {
   };
 }
 
+
+
+
 export function ToggleDoorstaffToSignOut(staffId) {
   return {
     type: TOGGLE_DOORSTAFF_TO_SIGN_OUT,
@@ -155,7 +176,38 @@ export function SignOffSelectedDoorstaff(time, date) {
 
 //*ACTIVITY ACTIONS
 
-//GET
+
+export function GetActivityTypeOpt(record) {
+  return { type: GET_ACTIVITY_TYPE_OPT, data: record }
+}
+
+export function SetActivityType(recordId) {
+  return { type: SET_ACTIVITY_TYPE, data: recordId }
+}
+
+export function GetActivitySupplierOpt(suppliers) {
+  return { type: GET_ACTIVITY_SUPPLIER_OPT, data: suppliers }
+}
+
+export function SetActivitySupplier(supplierID) {
+  return { type: SET_ACTIVITY_SUPPLIER, data: supplierID }
+}
+
+export function SetActivityCostValue(costValue) {
+  return { type: SET_ACTIVITY_COST_VALUE, data: costValue }
+}
+
+export function isActivitySupplierProvided(isProvided) {
+  return { type: SUPPLIER_PROVIDED, data: isProvided }
+}
+
+export function GetActivityRate(rate) {
+  return { type: GET_ACTIVITY_RATE, data: rate }
+}
+
+
+
+
 export function GetActivityCurrent(records) {
   return { type: GET_CURRENT_ACTIVITY, data: records }
 }
@@ -238,8 +290,74 @@ export function ShowCancelModal(activityIdToCancel) {
   };
 }
 
-//REPORT ACTIONS
+export function HideActionModal() {
+  return { type: HIDE_ACTION_MODAL }
+}
+
+//*REPORT ACTIONS
 
 export function SetReceiptData(receiptTitle, system, res) {
   return { type: SET_RECEIPT_DATA, title: receiptTitle, systemToCheck: system, data: res }
+}
+
+export function GetDoorstaffSummaryDaily(summaryRecords) {
+  return {
+    type: GET_COSTS_DOORSTAFF_DAILY,
+    data: summaryRecords.slice(0, 3),
+  }
+}
+
+export function GetDoorstaffSummaryWeekly(summaryRecords) {
+  return {
+    type: GET_COSTS_DOORSTAFF_WEEKLY,
+    data: summaryRecords.slice(0, 3),
+  }
+}
+
+export function GetDoorstaffSummaryMonthly(summaryRecords) {
+  return {
+    type: GET_COSTS_DOORSTAFF_MONTHLY,
+    data: summaryRecords.slice(0, 3),
+  }
+}
+
+export function GetCostsSummaryDaily(summaryRecords) {
+  return {
+    type: GET_COSTS_ACTIVITY_DAILY,
+    data: summaryRecords.slice(3, summaryRecords.length),
+  }
+}
+
+export function GetCostsSummaryWeekly(summaryRecords) {
+  return {
+    type: GET_COSTS_ACTIVITY_WEEKLY,
+    data: summaryRecords.slice(3, summaryRecords.length),
+  }
+}
+
+export function GetCostsSummaryMonthly(summaryRecords) {
+  return {
+    type: GET_COSTS_ACTIVITY_MONTHLY,
+    data: summaryRecords.slice(3, summaryRecords.length),
+  }
+}
+
+//SUMMARY ON HOME PAGE
+export function GetDoorstaffDaily(summaryRecords) {
+  return { type: GET_DOORSTAFF_SUMMARY_DAILY, data: summaryRecords }
+}
+
+export function GetDoorstaffWeekly(summaryRecords) {
+  return { type: GET_DOORSTAFF_SUMMARY_WEEKLY, data: summaryRecords }
+}
+
+//*LOADER
+
+export function ShowLoader() {
+  console.log('show')
+  return { type: SHOW_LOADER }
+}
+
+export function HideLoader() {
+  return { type: HIDE_LOADER }
 }

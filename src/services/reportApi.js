@@ -132,34 +132,18 @@ export function GetSearchedDataAPI(system, token, _data) {
   })
 }
 
-// export function GetSearchedData(system, token, _data) {
-//   return function (dispatch) {
-//     return axios(`${baseUrl}/Report/ActivityList?system=` + system, {
-//       method: "POST",
-//       headers: {
-//         Authorization: "Bearer " + token,
-//         "Content-Type": "application/json",
-//       },
-//       data: _data,
-//     }).then((res) => {
-//       switch (system) {
-//         case "S":
-//           dispatch({
-//             type: "GET_SEARCHED_ACTIVITES",
-//             data: res.data.reportRecord,
-//           });
-//           break;
-
-//         case "A":
-//           dispatch({
-//             type: "GET_SEARCHED_COSTS",
-//             data: res.data.reportRecord,
-//           });
-//           break;
-//       }
-//       if (res.data.success === false) {
-//         dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.message });
-//       }
-//     });
-//   };
-// }
+export function GetSummaryReviewAPI(token, date, summaryCode) {
+  return new Promise((resolve, reject) => {
+    axios.get(
+      `${baseUrl}/Report/SummaryReview?system=C&workingDate=${date}&summaryCode=${summaryCode}`,
+      {
+        headers: headers(token)
+      }).then((res) => {
+        console.log('get summary review success', res)
+        resolve(res)
+      }).catch((e) => {
+        console.log('get summary review error', e)
+        reject(e)
+      })
+  })
+}

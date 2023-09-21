@@ -5,7 +5,7 @@ import {
   ShowModalMessage,
   SignOffSelectedDoorstaff,
 } from "../../../../redux/actions";
-import { SignOffMember } from "../../../../services/activityApi";
+import { SignOffMemberAPI } from "../../../../services/activityApi";
 import { RefreshDoorstaffList } from "../../../../services/utils/activityUtils";
 
 export const CurrentModal = (props) => {
@@ -25,7 +25,7 @@ export const CurrentModal = (props) => {
 
     dispatch(SignOffSelectedDoorstaff(e.target[0].value, e.target[1].value));
 
-    SignOffMember(toSignOff, props.token.access_token, signOutTIme)
+    SignOffMemberAPI(toSignOff, props.token.access_token, signOutTIme)
       .then((res) => {
         !res.data.success
           ? dispatch(ShowModalMessage(res.data.message))
