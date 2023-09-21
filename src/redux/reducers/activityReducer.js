@@ -2,7 +2,7 @@ import {
   GET_ACTIVITY_TYPE_OPT, GET_ACTIVITY_SUPPLIER_OPT,
   GET_ACTIVITY_RATE, SET_ACTIVITY_TYPE,
   SET_ACTIVITY_SUPPLIER, SET_ACTIVITY_HOURS_WORKED,
-  SET_ACTIVITY_COST_VALUE,CLEAR_ACTIVITY
+  SET_ACTIVITY_COST_VALUE, CLEAR_ACTIVITY
 } from "../types";
 
 const initialState = {
@@ -14,10 +14,10 @@ const initialState = {
   getRate: {},
 
   activityType: null,
-  supplier: null,
+  supplierId: null,
   costValue: null,
   hoursWorked: null,
-  supplierProvided : false
+  supplierProvided: false
 };
 
 export const activityReducer = (state = initialState, action) => {
@@ -48,7 +48,7 @@ export const activityReducer = (state = initialState, action) => {
     case SET_ACTIVITY_SUPPLIER:
       return {
         ...state,
-        supplier: action.data,
+        supplierId: action.data,
       };
 
     case SET_ACTIVITY_HOURS_WORKED: {
@@ -68,9 +68,9 @@ export const activityReducer = (state = initialState, action) => {
         ...initialState
       };
     }
-    case "SUPPLIER_PROVIDED":{
-      return{
-        ...state, supplierProvided : action.data
+    case "SUPPLIER_PROVIDED": {
+      return {
+        ...state, supplierProvided: action.data
       }
     }
     default:

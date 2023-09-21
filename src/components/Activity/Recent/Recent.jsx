@@ -5,6 +5,7 @@ import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
 import { GetActivityAPI } from "../../../services/reportApi";
 import { GetActivityRecents } from "../../../redux/actions";
 import { GeneratePDF } from "../../../services/utils/reportUtils";
+import { RefreshActivityList } from "../../../services/utils/activityUtils";
 
 export const Recent = () => {
 
@@ -71,11 +72,7 @@ export const Recent = () => {
     const toDate = new Date(e.target[1].value).toISOString();
 
     if (fromDate.length > 0 && toDate.length > 0)
-
-      GetActivityAPI(token, fromDate, toDate).then((res) => {
-        console.log('get recent activity success', res)
-        dispatch(GetActivityRecents(res.data.records))
-      }).catch((e) => console.log('get recent activity error', e))
+      RefreshActivityList(token, fromDate, toDate, dispatch, "R")
   }
 
   function getTimesheetData(activityId) {

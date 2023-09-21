@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { GetActivitySupplierOptAPI, GetActivityTypeOptAPI, GetRateAPI, SubmitActivityAPI } from "../../../../services/activityApi";
 import { ClearActivity, GetActivityRate, GetActivitySupplierOpt, GetActivityTypeOpt, HideLoader, SetActivityCostValue, SetActivityHoursWorked, SetActivitySupplier, SetActivityType, ShowLoader, ShowModalMessage, isActivitySupplierProvided } from "../../../../redux/actions";
+import { RefreshActivityList } from "../../../../services/utils/activityUtils";
 
 export const AddActivity = () => {
   const activityOpt = useSelector(
@@ -11,11 +12,12 @@ export const AddActivity = () => {
   const supplierOpt = useSelector(
     (state) => state.activityReducer.GetOpt.supplierOpt
   );
-  const supplierProvided = useSelector(state => state.activityReducer.supplierProvided)
-  const rate = useSelector((state) => state.activityReducer.getRate);
   const token = useSelector((state) => state.userReducer.user.access_token);
   const locationId = useSelector((state) => state.userReducer.user.locationId);
-  const supplierId = useSelector((state) => state.activityReducer.supplier);
+  const supplierProvided = useSelector(state => state.activityReducer.supplierProvided)
+  const rate = useSelector((state) => state.activityReducer.getRate);
+
+  const supplierId = useSelector((state) => state.activityReducer.supplierId);
   const costGroupId = useSelector(
     (state) => state.activityReducer.activityType
   );
@@ -73,14 +75,12 @@ export const AddActivity = () => {
 
     dispatch(ShowLoader());
     GetRateAPI(token, data).then((res) => {
-      console.log('sdsdssds', res.data)
       if (res.data.message) {
         dispatch(ShowModalMessage(res.data.message))
         dispatch(isActivitySupplierProvided(false))
       }
       else {
         dispatch(GetActivityRate(res.data))
-        dispatch(SetActivitySupplier(res.data.rateGroupId))
         dispatch(isActivitySupplierProvided(true))
         dispatch(SetActivityCostValue(res.data.costValue))
       }
@@ -92,9 +92,10 @@ export const AddActivity = () => {
 
   function SecondSubmit(e) {
     e.preventDefault();
+    console.log(supplierId)
     const _data = {
       locationId: parseInt(locationId),
-      supplierId: supplierId,
+      supplierId: parseInt(supplierId),
       costGroupId: parseInt(costGroupId),
       rateGroupId: rate.rateGroupId,
       rateTypeId: rate.rateTypeId,
@@ -103,11 +104,10 @@ export const AddActivity = () => {
       description: notes,
       hoursWorked: parseFloat(hoursWorked),
     };
-
-    // dispatch(SubmitActivity(token, _data));
     SubmitActivityAPI(token, _data).then((res) => {
 
       dispatch(ClearActivity())
+
     })
 
     console.log(_data)
@@ -137,7 +137,7 @@ export const AddActivity = () => {
 
           <label htmlFor="supplier">SUPPLIER</label>
           <select name="supplier" disabled={supplierOpt.length === 0} onChange={(e) => {
-            SetActivitySupplier(e.target.value)
+            dispatch(SetActivitySupplier(e.target.value))
           }}>
             <option value={null}>Select Supplier</option>
 

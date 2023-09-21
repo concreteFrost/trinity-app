@@ -2,9 +2,7 @@ import s from "./ActivityTable.module.scss"
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { TableTemplate } from "../../../Shared/TableTemplate/TableTemplate";
-import { GetActivityAPI } from "../../../../services/reportApi";
-import { GET_CURRENT_ACTIVITY } from "../../../../redux/types";
-import { GetActivityCurrent } from "../../../../redux/actions";
+import { RefreshActivityList } from "../../../../services/utils/activityUtils";
 
 
 export const ActivityTable = (props) => {
@@ -51,11 +49,7 @@ export const ActivityTable = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    GetActivityAPI(token, new Date(yesterday).toISOString(), new Date(today).toISOString()).then((res) => {
-      console.log('get activity report success', res)
-      dispatch(GetActivityCurrent(res.data.records))
-    }).catch((e) => console.log('get activity error', e))
-
+    RefreshActivityList(token, new Date(yesterday).toISOString(), new Date(today).toISOString(), dispatch, "C")
   }, [])
 
 
