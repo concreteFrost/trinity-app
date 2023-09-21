@@ -59,7 +59,7 @@ export const ColumnActions = (props) => {
         {props.row.original.moreActionsVisible ? <div className={s.additional_actions}>
             <div className={s.additional_action_item}>
 
-                <button className={s.recall} onClick={() => showRecallModal(props.row.original.activityId)}>REST</button>
+                <button className={s.recall} onClick={() => showRecallModal(props.row.original.activityId)}>RESET</button>
                 <button className={s.question} onClick={showRecallIfno}>?</button>
             </div>
             {/* {userRole === '1' ? <div className={s.additional_action_item}>
