@@ -51,7 +51,8 @@ import {
   GET_ACTIVITY_RATE,
   SET_ACTIVITY_SUPPLIER,
   SET_ACTIVITY_COST_VALUE,
-  SUPPLIER_PROVIDED
+  SUPPLIER_PROVIDED,
+  SET_ACTIVITY_HOURS_WORKED
 } from "./types";
 
 //LOGIN ACTIONS
@@ -206,8 +207,6 @@ export function GetActivityRate(rate) {
 }
 
 
-
-
 export function GetActivityCurrent(records) {
   return { type: GET_CURRENT_ACTIVITY, data: records }
 }
@@ -215,6 +214,11 @@ export function GetActivityCurrent(records) {
 export function GetActivityRecents(records) {
   return { type: GET_RECENT_ACTIVITY, data: records }
 }
+
+export function SetActivityHoursWorked(hours) {
+  return { type: SET_ACTIVITY_HOURS_WORKED, data: hours }
+}
+
 
 
 //*SEARCH ACTIONS

@@ -2,18 +2,15 @@ import s from "./AddActivity.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import {
-  GetRate,
-  GetSupplierOpt,
+
   SubmitActivity,
 } from "../../../../redux/api/activityApi";
 import {
   SET_ACTIVITY_COST_VALUE,
   SET_ACTIVITY_HOURS_WORKED,
-  SET_ACTIVITY_TYPE,
-  SHOW_MODAL_MESSAGE
 } from "../../../../redux/types";
 import { GetActivitySupplierOptAPI, GetActivityTypeOptAPI, GetRateAPI } from "../../../../services/activityApi";
-import { GetActivityRate, GetActivitySupplierOpt, GetActivityTypeOpt, SetActivityCostValue, SetActivitySupplier, SetActivityType, ShowModalMessage, isActivitySupplierProvided } from "../../../../redux/actions";
+import { GetActivityRate, GetActivitySupplierOpt, GetActivityTypeOpt, SetActivityCostValue, SetActivityHoursWorked, SetActivitySupplier, SetActivityType, ShowModalMessage, isActivitySupplierProvided } from "../../../../redux/actions";
 
 export const AddActivity = () => {
   const activityOpt = useSelector(
@@ -206,12 +203,7 @@ export const AddActivity = () => {
             name="hours-worked"
             step={0.01}
             value={hoursWorked ? hoursWorked : ""}
-            onChange={(e) => {
-              dispatch({
-                type: SET_ACTIVITY_HOURS_WORKED,
-                data: e.target.value,
-              });
-            }}
+            onChange={(e) => { dispatch(SetActivityHoursWorked(e.target.value)) }}
             required
           />
 
@@ -221,12 +213,7 @@ export const AddActivity = () => {
             name="value"
             readOnly={rate.rateTypeId === 4 ? true : false}
             value={costValue ? costValue : 0}
-            onChange={(e) => {
-              dispatch({
-                type: SET_ACTIVITY_COST_VALUE,
-                data: e.target.value,
-              });
-            }}
+            onChange={(e) => { dispatch(SetActivityCostValue(e.target.value)) }}
             onBlur={CompareRates}
           />
         </div>
