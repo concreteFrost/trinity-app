@@ -18,9 +18,10 @@ export const AddActivity = () => {
   const rate = useSelector((state) => state.activityReducer.getRate);
 
   const supplierId = useSelector((state) => state.activityReducer.supplierId);
-  const costGroupId = useSelector(
+  const activityType = useSelector(
     (state) => state.activityReducer.activityType
   );
+
 
   const costValue = useSelector((state) => state.activityReducer.costValue);
   const hoursWorked = useSelector((state) => state.activityReducer.hoursWorked);
@@ -38,6 +39,7 @@ export const AddActivity = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+
     GetActivityTypeOptAPI(token).then((res) => {
       dispatch(GetActivityTypeOpt(res.data.record))
       dispatch(SetActivityType(res.data.record[0].id))
@@ -46,13 +48,16 @@ export const AddActivity = () => {
   }, []);
 
   function GetSupplierOpt(e) {
+    dispatch(SetActivityType(e.target.value))
     GetActivitySupplierOptAPI(token, e.target.value).then((res) => {
       dispatch(GetActivitySupplierOpt(res.data.suppliers))
+
     })
   }
 
 
   function CompareRates() {
+
     if (parseInt(costValue) !== rate.costValue) {
       dispatch(ShowModalMessage("NOTES input is now required"));
       setNoteIsRequired(true);
@@ -92,11 +97,11 @@ export const AddActivity = () => {
 
   function SecondSubmit(e) {
     e.preventDefault();
-    console.log(supplierId)
+
     const _data = {
       locationId: parseInt(locationId),
       supplierId: parseInt(supplierId),
-      costGroupId: parseInt(costGroupId),
+      costGroupId: parseInt(activityType),
       rateGroupId: rate.rateGroupId,
       rateTypeId: rate.rateTypeId,
       startTime: date + "T" + time + ":00Z",
@@ -105,12 +110,12 @@ export const AddActivity = () => {
       hoursWorked: parseFloat(hoursWorked),
     };
     SubmitActivityAPI(token, _data).then((res) => {
-
       dispatch(ClearActivity())
-
+    }).finally(() => {
+      const today = new Date()
+      const yesterday = new Date(new Date().setDate(today.getDate() - 1));
+      RefreshActivityList(token, new Date(yesterday).toISOString(), new Date(today).toISOString(), dispatch, "C")
     })
-
-    console.log(_data)
 
   }
   return (

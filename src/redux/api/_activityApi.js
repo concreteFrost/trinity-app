@@ -86,31 +86,31 @@ import {
 //   };
 // }
 
-export function SubmitActivity(token, _data) {
-  return function (dispatch) {
-    return axios({
-      url: `${baseUrl}/CentralCosts/CostEntry`,
-      headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      data: _data,
-    })
-      .then((res) => {
-        dispatch({ type: CLEAR_ACTIVITY });
-        dispatch(GetActivityTypeOpt(token));
-      }).then(() => {
-        const today = new Date()
-        const yesterday = new Date(new Date().setDate(today.getDate() - 1));
-        dispatch(GetActivity(token, yesterday, today, "C"))
-      })
-      .catch((e) => {
-        console.log(e)
-        dispatch({ type: SHOW_MODAL_MESSAGE, data: e.message })
-      });
-  }
-}
+// export function SubmitActivity(token, _data) {
+//   return function (dispatch) {
+//     return axios({
+//       url: `${baseUrl}/CentralCosts/CostEntry`,
+//       headers: {
+//         Authorization: "Bearer " + token,
+//         "Content-Type": "application/json",
+//       },
+//       method: "POST",
+//       data: _data,
+//     })
+//       .then((res) => {
+//         dispatch({ type: CLEAR_ACTIVITY });
+//         dispatch(GetActivityTypeOpt(token));
+//       }).then(() => {
+//         const today = new Date()
+//         const yesterday = new Date(new Date().setDate(today.getDate() - 1));
+//         dispatch(GetActivity(token, yesterday, today, "C"))
+//       })
+//       .catch((e) => {
+//         console.log(e)
+//         dispatch({ type: SHOW_MODAL_MESSAGE, data: e.message })
+//       });
+//   }
+// }
 
 // export function GetActivity(token, dateFrom, dateTo, activityType) {
 //   return function (dispatch) {

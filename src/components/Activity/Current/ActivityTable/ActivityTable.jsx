@@ -5,7 +5,7 @@ import { TableTemplate } from "../../../Shared/TableTemplate/TableTemplate";
 import { RefreshActivityList } from "../../../../services/utils/activityUtils";
 
 
-export const ActivityTable = (props) => {
+export const ActivityTable = () => {
 
   const tableHeader = [
     {
