@@ -6,8 +6,9 @@ import { Recent } from "./Recent/Recent";
 import { Disputed } from "../Shared/Disputed/Disputed";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { GetDisputedActivity } from "../../redux/api/disputedApi";
+import { GetDisputedActivity } from "../../redux/actions";
 import { Route, Routes } from "react-router-dom";
+import { GetDisputedActivityAPI } from "../../services/disputedApi";
 
 export const Activity = () => {
   const token = useSelector((state) => state.userReducer.user.access_token);
@@ -15,7 +16,10 @@ export const Activity = () => {
 
   const disputedctivity = useSelector((s) => s.getActivityReducer.disputed);
   useEffect(() => {
-    dispatch(GetDisputedActivity(token, "A"));
+    GetDisputedActivityAPI(token, "A").then((res) => {
+
+      dispatch(GetDisputedActivity(res.data.reportRecord))
+    })
 
   }, []);
 

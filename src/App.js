@@ -28,7 +28,7 @@ function App() {
         <ModalMessage></ModalMessage>
         <ModalLogout></ModalLogout>
         <ModalAction></ModalAction>
-        <Loader></Loader>
+
         {isLoggedIn === true ? <Navbar className={s.nav} /> : null}
         <Routes>
           <Route path="/" element={isLoggedIn ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />} />
@@ -86,6 +86,7 @@ function App() {
       </div>
       <Footer></Footer>
       <Receipt></Receipt>
+      <Loader></Loader>
     </div>
   );
 }

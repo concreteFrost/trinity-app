@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 function Loader() {
     const loaderReducer = useSelector((state) => state.loaderReducer);
-    console.log(loaderReducer)
     return (<>
         {loaderReducer.isLoading ? <div className="tail_spin_container">
             <div className="tail_spin">

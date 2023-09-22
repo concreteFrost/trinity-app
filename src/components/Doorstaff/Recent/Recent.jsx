@@ -77,7 +77,7 @@ export const Recent = (props) => {
     const fromDate = new Date(e.target[0].value).toISOString();
     const toDate = new Date(e.target[1].value).toISOString();
 
-    GetDoorstaffRecentAPI(user, fromDate, toDate).then((res) => {
+    GetDoorstaffRecentAPI(user, fromDate, toDate, "S").then((res) => {
       console.log("get recent doorstaff success", res.data.reportRecord)
       dispatch(GetDoorstaffRecent(res.data.reportRecord))
     }).catch((e) => {

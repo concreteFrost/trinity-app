@@ -3,12 +3,13 @@ import { SignIn } from "./SignIn/SignIn";
 import { Current } from "./Current/Current";
 import { SIA } from "./SIA/SIA";
 import { useState, useEffect } from "react";
-import { GetDisputedActivity } from "../../redux/api/disputedApi";
 import { useSelector, useDispatch } from "react-redux";
 import { Recent } from "./Recent/Recent";
 import { Disputed } from "../Shared/Disputed/Disputed";
 import { SwitchView } from "../Shared/SwitchView/SwitchView";
 import { Route, Routes } from "react-router-dom";
+import { GetDisputedActivityAPI } from "../../services/disputedApi";
+import { GetDisputedDoorstaff } from "../../redux/actions";
 
 export const Doorstaff = () => {
   const [view, setView] = useState("current");
@@ -18,7 +19,9 @@ export const Doorstaff = () => {
 
   const disputedctivity = useSelector((s) => s.doorstaffReducer.disputed);
   useEffect(() => {
-    dispatch(GetDisputedActivity(token, "S"));
+    GetDisputedActivityAPI(token, 'S').then((res) => {
+      dispatch(GetDisputedDoorstaff(res.data.reportRecord))
+    })
   }, []);
 
   return (
@@ -47,9 +50,6 @@ export const Doorstaff = () => {
           <Route path="recent" element={<Recent isVisible={true}></Recent>}></Route>
           <Route path="disputed" element={<Disputed data={disputedctivity} system={"S"}></Disputed>}></Route>
         </Routes>
-
-
-
       </main>
     </div>
   );

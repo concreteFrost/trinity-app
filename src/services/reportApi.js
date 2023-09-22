@@ -27,10 +27,10 @@ export function GetTimesheetDataAPI(token, system, activityId) {
 }
 
 //returns recent doorstaff
-export function GetDoorstaffRecentAPI(user, fromDate, toDate) {
+export function GetDoorstaffRecentAPI(user, fromDate, toDate, system) {
   return new Promise((resolve, reject) => {
     axios({
-      url: baseUrl + "/Report/ActivityList?system=S",
+      url: baseUrl + "/Report/ActivityList?system=" + system,
       headers: headers(user.access_token),
       method: "POST",
       data: {
@@ -47,6 +47,41 @@ export function GetDoorstaffRecentAPI(user, fromDate, toDate) {
       .catch(e => reject(e))
   })
 }
+
+// export function GetAnalytics(token, fromDate, toDate, user,system) {
+//   return function (dispatch) {
+//       const _data ={
+//           dateFrom: fromDate,
+//           dateTo: toDate.split("T")[0] + "T23:59:999.000Z",
+//           locationId: parseInt(user.locationId),
+//           locationGroupId: 0,
+//           supplierId: 0,
+//           reference: 0,
+//           paymentStatusId: 0
+//       }
+//       return axios({
+//           url: baseUrl+ "/Report/ActivityList?system=" + system,
+//           headers: {
+//               Authorization: "Bearer " + token,
+//               "Content-Type": "application/json",
+//           },
+//           method: "POST",
+//           data: _data
+//       })
+//           .then((res) => {
+
+//               switch(system){
+//                   case "S":
+//                       dispatch({ type: "GET_DOORSTAFF_ANALYTICS", data: res.data.reportRecord })
+//                       break;
+//                   case "A":
+//                       dispatch({ type: "GET_COSTS_ANALYTICS", data: res.data.reportRecord })
+//                       break;                
+//               }
+
+//           })
+//   }
+// }
 
 //returns current or recent activities
 export function GetActivityAPI(token, dateFrom, dateTo) {
@@ -121,12 +156,20 @@ export function GetSearchPaymentStatusGroupAPI(token) {
   })
 }
 
-export function GetSearchedDataAPI(system, token, _data) {
+export function GetSearchedDataAPI(system, token, locationId, _data) {
   return new Promise((resolve, reject) => {
     axios(`${baseUrl}/Report/ActivityList?system=` + system, {
       method: "POST",
       headers: headers(token),
-      data: _data,
+      data: {
+        dateFrom: _data.dateFrom,
+        dateTo: _data.dateTo,
+        locationId: locationId,
+        locationGroupId: 0,
+        supplierId: 0,
+        reference: 0,
+        paymentStatusId: -1,
+      },
 
     }).then(res => resolve(res)).catch(e => reject(e))
   })
@@ -147,3 +190,7 @@ export function GetSummaryReviewAPI(token, date, summaryCode) {
       })
   })
 }
+
+// export function 
+
+

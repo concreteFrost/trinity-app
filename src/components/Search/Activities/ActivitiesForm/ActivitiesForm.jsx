@@ -7,6 +7,8 @@ export const ActivitiesForm = (props) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userReducer.user.access_token);
   const data = useSelector((state) => state.searchActivitiesReducer);
+  const user = useSelector((state) => state.userReducer.user);
+
 
   useEffect(() => {
     //SUPPLIER/GROUP dropdown
@@ -83,7 +85,7 @@ export const ActivitiesForm = (props) => {
         break;
     }
 
-    GetSearchedDataAPI(props.system, token, _data).then((res) => {
+    GetSearchedDataAPI(props.system, token, user.locationId, _data).then((res) => {
       console.log('get searched data success', res)
       if (!res.data.success) {
         dispatch(ShowModalMessage(res.data.message))

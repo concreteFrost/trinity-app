@@ -1,9 +1,7 @@
 import s from "./DatesForm.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
-import { SET_AREA_MANAGER_ANALYTICS_DATE_TO, SET_AREA_MANAGER_ANALYTICS_DATE_FROM } from "../../../../../redux/types";
-import { GetAreaManagerAnalytics } from "../../../../../redux/api/areaManagerAnalyticsAPI";
-import { HideLoader, ShowLoader } from "../../../../../redux/actions";
+import { GetAreaManagerAnalytics } from "../../../../../services/utils/reportUtils";
+import { HideLoader, SetAreaManagerAnalyticsDateFrom, SetAreaManagerAnalyticsDateTo, ShowLoader } from "../../../../../redux/actions";
 
 
 export const DatesForm = () => {
@@ -15,24 +13,21 @@ export const DatesForm = () => {
     e.preventDefault();
 
     dispatch(ShowLoader());
-    await dispatch(GetAreaManagerAnalytics("S", user, analytics))
-    await dispatch(GetAreaManagerAnalytics("A", user, analytics))
-    dispatch(HideLoader());
+    await GetAreaManagerAnalytics("S", user.access_token, analytics, dispatch)
+    await GetAreaManagerAnalytics("A", user.access_token, analytics, dispatch)
+    await dispatch(HideLoader());
+
+
   }
   return (
     <div className={s.container}>
-      <form onSubmit={Submit}>
+      <form onSubmit={(e) => Submit(e)}>
         <div>
           <label>FROM</label>
           <input
             type="date"
             value={analytics.dateFrom}
-            onChange={(e) => {
-              dispatch({
-                type: SET_AREA_MANAGER_ANALYTICS_DATE_FROM,
-                data: e.target.value,
-              });
-            }}
+            onChange={(e) => { dispatch(SetAreaManagerAnalyticsDateFrom(e.target.value)) }}
           ></input>
         </div>
         <div>
@@ -40,12 +35,7 @@ export const DatesForm = () => {
           <input
             type="date"
             value={analytics.dateTo}
-            onChange={(e) => {
-              dispatch({
-                type: SET_AREA_MANAGER_ANALYTICS_DATE_TO,
-                data: e.target.value,
-              });
-            }}
+            onChange={(e) => { dispatch(SetAreaManagerAnalyticsDateTo(e.target.value)) }}
           />
         </div>
         <div className={s.view_btn}>

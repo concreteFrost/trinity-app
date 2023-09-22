@@ -1,9 +1,8 @@
 import s from "./LocationList.module.scss"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react";
-import { GetAreaManagerLocations } from "../../../../../redux/api/areaManagerAnalyticsAPI";
-
-
+import { GetSearchLocationsAPI } from "../../../../../services/reportApi";
+import { GetAreaManagerAnalyticsLocations, ToggleAreaManagerAnalyticsLocations } from "../../../../../redux/actions";
 
 export const LocationList = (props) => {
 
@@ -12,7 +11,9 @@ export const LocationList = (props) => {
     const user = useSelector(state => state.userReducer.user);
 
     useEffect(() => {
-        dispatch(GetAreaManagerLocations(user.access_token))
+        GetSearchLocationsAPI(user.access_token).then((res) => {
+            dispatch(GetAreaManagerAnalyticsLocations(res.data.record))
+        });
     }, [])
 
     return (
@@ -21,7 +22,10 @@ export const LocationList = (props) => {
             <div className={s.dropdown}>
                 <button onClick={props.toggleShowLocations} className={s.dropdown_button}>{props.showDropdown ? "Close" : "Show"}</button>
                 {props.showDropdown ? <div className={s.dropdown_content}>
-                    {locationsList.length > 0 ? locationsList.map((e) => { return <label key={e.id} ><input type="checkbox" name={e.name} value={e.id} checked={e.isChecked} onChange={() => dispatch({ type: "TOGGLE_ARREA_MANAGER_ANALYTICS_LOCATIONS", data: e.id })} />{e.name} </label> }) : null}
+                    {locationsList.length > 0 ? locationsList.map((e) => {
+                        return <label key={e.id} ><input type="checkbox" name={e.name} value={e.id} checked={e.isChecked} onChange={() => { dispatch(ToggleAreaManagerAnalyticsLocations(e.id)) }}
+                        />{e.name} </label>
+                    }) : null}
                 </div> : null}
             </div>
         </div>

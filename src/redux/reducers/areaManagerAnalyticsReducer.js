@@ -40,6 +40,6 @@ export const areaManagerAnalyticsReducer = (state = initialState, action) => {
             return { ...state, dateTo: action.data }
         }
 
-        default: return initialState;
+        default: return state;
     }
 }

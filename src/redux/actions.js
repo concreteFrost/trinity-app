@@ -53,7 +53,20 @@ import {
   SET_ACTIVITY_COST_VALUE,
   SUPPLIER_PROVIDED,
   SET_ACTIVITY_HOURS_WORKED,
-  CLEAR_ACTIVITY
+  CLEAR_ACTIVITY,
+  GET_AREA_MANAGER_ANALYTICS_DOORSTAFF,
+  GET_AREA_MANAGER_ANALYTICS_COSTS,
+  SET_AREA_MANAGER_ANALYTICS_DATE_TO,
+  SET_AREA_MANAGER_ANALYTICS_DATE_FROM,
+  GET_AREA_MANAGER_ANALYTICS_LOCATIONS,
+  TOGGLE_ARREA_MANAGER_ANALYTICS_LOCATIONS,
+  GET_DISPUTED_DOORSTAFF,
+  GET_DISPUTED_ACTIVITY,
+  RESET_MODAL_ACTIVITY,
+  SHOW_MODAL_PROMPT,
+  SET_DISPUTED_PAYMENT_ID,
+  GET_DOORSTAFF_ANALYTICS,
+  GET_COSTS_ANALYTICS
 } from "./types";
 
 //LOGIN ACTIONS
@@ -286,22 +299,7 @@ export function GetSearchedCosts(reportRecord) {
 }
 
 
-//*MODAL ACTIONS
-export function ShowModalMessage(message) {
-  return { type: SHOW_MODAL_MESSAGE, data: message };
-}
 
-export function ShowCancelModal(activityIdToCancel) {
-  return {
-    type: SHOW_ACTION_MODAL,
-    activityToModify: activityIdToCancel,
-    activityType: "CANCEL",
-  };
-}
-
-export function HideActionModal() {
-  return { type: HIDE_ACTION_MODAL }
-}
 
 //*REPORT ACTIONS
 
@@ -351,6 +349,44 @@ export function GetCostsSummaryMonthly(summaryRecords) {
   }
 }
 
+//ANALYTICS
+
+export function GetAreaManagerAnalyticsLocations(locations) {
+  return ({
+    type: GET_AREA_MANAGER_ANALYTICS_LOCATIONS,
+    data: locations
+  })
+}
+export function SetAreaManagerAnalyticsDateFrom(dateFrom) {
+  return { type: SET_AREA_MANAGER_ANALYTICS_DATE_FROM, data: dateFrom }
+}
+
+export function SetAreaManagerAnalyticsDateTo(dateTo) {
+  return { type: SET_AREA_MANAGER_ANALYTICS_DATE_TO, data: dateTo }
+}
+
+export function GetAreaManagerAnalyticsCosts(concatenatedResults) {
+  return { type: GET_AREA_MANAGER_ANALYTICS_COSTS, data: concatenatedResults }
+}
+
+export function GetAreaManagerAnalyticsDoorstaff(concatenatedResults) {
+  return { type: GET_AREA_MANAGER_ANALYTICS_DOORSTAFF, data: concatenatedResults }
+}
+
+export function ToggleAreaManagerAnalyticsLocations(id) {
+  return { type: TOGGLE_ARREA_MANAGER_ANALYTICS_LOCATIONS, data: id }
+}
+
+export function GetDoorstaffAnalytics(reportRecord) {
+  return { type: GET_DOORSTAFF_ANALYTICS, data: reportRecord }
+}
+
+export function GetCostsAnalytics(reportRecord) {
+  return { type: GET_COSTS_ANALYTICS, data: reportRecord }
+}
+
+
+
 //SUMMARY ON HOME PAGE
 export function GetDoorstaffDaily(summaryRecords) {
   return { type: GET_DOORSTAFF_SUMMARY_DAILY, data: summaryRecords }
@@ -360,13 +396,57 @@ export function GetDoorstaffWeekly(summaryRecords) {
   return { type: GET_DOORSTAFF_SUMMARY_WEEKLY, data: summaryRecords }
 }
 
+//*DISPUTED
+
+export function GetDisputedDoorstaff(reportRecord) {
+  return { type: GET_DISPUTED_DOORSTAFF, data: reportRecord }
+
+}
+
+export function GetDisputedActivity(reportRecord) {
+  return { type: GET_DISPUTED_ACTIVITY, data: reportRecord }
+
+}
+
+export function SetDisputedPaymentID(id) {
+  return { type: SET_DISPUTED_PAYMENT_ID, data: id }
+}
+
+
+
 //*LOADER
 
 export function ShowLoader() {
-  console.log('show')
+
   return { type: SHOW_LOADER }
 }
 
 export function HideLoader() {
   return { type: HIDE_LOADER }
+}
+
+
+//*MODAL ACTIONS
+export function ShowModalMessage(message) {
+  return { type: SHOW_MODAL_MESSAGE, data: message };
+}
+
+export function ShowCancelModal(activityIdToCancel) {
+  return {
+    type: SHOW_ACTION_MODAL,
+    activityToModify: activityIdToCancel,
+    activityType: "CANCEL",
+  };
+}
+
+export function ShowModalPrompt() {
+  return { type: SHOW_MODAL_PROMPT }
+}
+
+export function HideActionModal() {
+  return { type: HIDE_ACTION_MODAL }
+}
+
+export function ResetModalActivity() {
+  return { type: RESET_MODAL_ACTIVITY }
 }

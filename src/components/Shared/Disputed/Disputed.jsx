@@ -2,7 +2,8 @@ import s from "./Disputed.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { TableTemplate } from "../TableTemplate/TableTemplate";
 import { ModalPrompt } from "../../Modal/ModalPrompt/ModalPrompt";
-import { SendBackDisputed, ViewDisputedNote } from "../../../redux/api/disputedApi";
+import { GetDisputedActivityAPI, SendBackDisputedAPI, ViewDisputedNoteAPI } from "../../../services/disputedApi";
+import { ResetModalActivity, GetDisputedActivity, GetDisputedDoorstaff, ShowModalMessage, ShowModalPrompt, SetDisputedPaymentID } from "../../../redux/actions.js"
 
 export const Disputed = (props) => {
 
@@ -46,20 +47,35 @@ export const Disputed = (props) => {
   const dispatch = useDispatch();
 
   function showDisputeModal(id) {
-    dispatch({ type: "SHOW_MODAL_PROMPT" })
-    dispatch({ type: "SET_DISPUTED_PAYMENT_ID", data: id })
+    dispatch(ShowModalPrompt());
+    dispatch(SetDisputedPaymentID(id));
 
   }
 
   function viewNote(e) {
-    dispatch(ViewDisputedNote(token, props.system, e))
+    ViewDisputedNoteAPI(token, props.system, e).then((res) => {
+      dispatch(ShowModalMessage(res.data.record[res.data.record.length - 1].name))
+    })
   }
 
-  function DisputeBack() {
-    dispatch(SendBackDisputed(token, currentDisputed, props.system))
+  async function DisputeBack() {
+
+    await SendBackDisputedAPI(token, currentDisputed, props.system).then(() => {
+      dispatch(ResetModalActivity())
+    })
+
+    await GetDisputedActivityAPI(token, props.system).then((res) => {
+      switch (props.system) {
+        case "A":
+          dispatch(GetDisputedActivity(res.data.reportRecord))
+          break;
+        case "S":
+          dispatch(GetDisputedDoorstaff(res.data.reportRecord))
+          break;
+      }
+
+    })
   }
-
-
   return (
     <>
       <ModalPrompt submitForm={DisputeBack}></ModalPrompt>

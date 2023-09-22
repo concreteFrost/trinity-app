@@ -1,6 +1,7 @@
 import s from "./DatesForm.module.scss"
 import { useSelector, useDispatch } from "react-redux"
-import { GetAnalytics} from "../../../../../redux/api/pubManagerAnalyticsAPI"
+import { GetDoorstaffRecentAPI } from "../../../../../services/reportApi";
+import { GetDoorstaffAnalytics, GetCostsAnalytics } from "../../../../../redux/actions";
 
 export const DatesForm = () => {
 
@@ -9,18 +10,30 @@ export const DatesForm = () => {
 
     const dispatch = useDispatch();
 
+    function _GetDoorstaffAnalytics() {
+        GetDoorstaffRecentAPI(user, analytics.dateFrom, analytics.dateTo, "S").then((res) => {
+            dispatch(GetDoorstaffAnalytics(res.data.reportRecord))
+        })
+    }
+
+    function _GetCostsAnalytics() {
+        GetDoorstaffRecentAPI(user, analytics.dateFrom, analytics.dateTo, "A").then((res) => {
+            dispatch(GetCostsAnalytics(res.data.reportRecord))
+        })
+    }
+
     function Submit(e) {
         e.preventDefault();
         switch (analytics.currentType) {
             case "S":
-                dispatch(GetAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo, user,"S"))
+                _GetDoorstaffAnalytics()
                 break;
             case "A":
-                dispatch(GetAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo, user,"A"))
+                _GetCostsAnalytics()
                 break;
             case "C":
-                dispatch(GetAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo, user,"S"))
-                dispatch(GetAnalytics(user.access_token, analytics.dateFrom, analytics.dateTo, user,"A"))
+                _GetDoorstaffAnalytics()
+                _GetCostsAnalytics()
                 break;
         }
     }
