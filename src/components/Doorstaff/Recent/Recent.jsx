@@ -3,9 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
 import { GeneratePDF } from "../../../services/utils/reportUtils";
-import { GetDoorstaffRecentAPI, GetTimesheetDataAPI } from "../../../services/reportApi";
+import { GetDoorstaffRecentAPI } from "../../../services/reportApi";
 import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
-
 
 export const Recent = (props) => {
   const tableHeader = [
@@ -15,37 +14,36 @@ export const Recent = (props) => {
     },
     {
       Header: "SUPPLIER",
-      accessor: 'supplierName'
+      accessor: "supplierName",
     },
     {
       Header: "JOB",
-      accessor: "rateGroupName"
+      accessor: "rateGroupName",
     },
     {
       Header: "START TIME",
       accessor: "start",
       Cell: ({ value }) => {
-        return value.split('T').join('/');
-      }
+        return value.split("T").join("/");
+      },
     },
     {
       Header: "END TIME",
       accessor: "finish",
       Cell: ({ value }) => {
-        return value.split('T').join('/');
-      }
+        return value.split("T").join("/");
+      },
     },
     {
       Header: "APPROVAL LEVEL",
-      accessor: "status"
+      accessor: "status",
     },
     {
       Header: "PRINT",
-      accessor: 'centralCostId',
+      accessor: "centralCostId",
       Cell: ({ row }) => (
         <div>
           <button
-
             onClick={() => {
               GeneratePDF(token, "S", row.original.activityId, dispatch);
             }}
@@ -54,15 +52,14 @@ export const Recent = (props) => {
           </button>
         </div>
       ),
-    }
-    ,]
+    },
+  ];
 
   const user = useSelector((state) => state.userReducer.user);
   const token = useSelector((state) => state.userReducer.user.access_token);
 
   const recent = useSelector((state) => state.doorstaffReducer.recent);
   const dispatch = useDispatch();
-
 
   const today = new Date();
   const weekBefore = new Date(today);
@@ -72,18 +69,14 @@ export const Recent = (props) => {
   const [tDate, setToDate] = useState(new Date().toISOString().split("T")[0]);
 
   function Submit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     const fromDate = new Date(e.target[0].value).toISOString();
     const toDate = new Date(e.target[1].value).toISOString();
 
     GetDoorstaffRecentAPI(user, fromDate, toDate, "S").then((res) => {
-      console.log("get recent doorstaff success", res.data.reportRecord)
-      dispatch(DoorstaffActions.GetDoorstaffRecent(res.data.reportRecord))
-    }).catch((e) => {
-      console.log("get recent doorstaff error", e)
-    })
-
+      dispatch(DoorstaffActions.GetDoorstaffRecent(res.data.reportRecord));
+    });
   }
 
   return (
@@ -91,16 +84,30 @@ export const Recent = (props) => {
       <form onSubmit={Submit}>
         <div>
           <label htmlFor="">FROM</label>
-          <input type="date" name="from-date" id="from-date" value={fDate} onChange={(e) => setFromDate(e.target.value)} />
+          <input
+            type="date"
+            name="from-date"
+            id="from-date"
+            value={fDate}
+            onChange={(e) => setFromDate(e.target.value)}
+          />
         </div>
         <div>
           <label htmlFor="">TO</label>
-          <input type="date" name="to-date" id="to-date" value={tDate} onChange={(e) => setToDate(e.target.value)} />
+          <input
+            type="date"
+            name="to-date"
+            id="to-date"
+            value={tDate}
+            onChange={(e) => setToDate(e.target.value)}
+          />
         </div>
-        <div className={s.view_btn}> <button>VIEW</button></div>
+        <div className={s.view_btn}>
+          {" "}
+          <button>VIEW</button>
+        </div>
       </form>
       <TableTemplate columns={tableHeader} data={recent}></TableTemplate>
-
     </div>
   );
 };

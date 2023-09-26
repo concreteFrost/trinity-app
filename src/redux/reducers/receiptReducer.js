@@ -1,4 +1,4 @@
-import { SET_RECEIPT_DATA } from "../types";
+import { SET_RECEIPT_DATA } from "../types/reportTypes";
 
 
 const initialState = {

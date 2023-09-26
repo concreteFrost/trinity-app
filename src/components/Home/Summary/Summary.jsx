@@ -3,7 +3,7 @@ import s from "./Summary.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { GetSummaryReviewAPI } from "../../../services/reportApi";
-import { GetDoorstaffDaily, GetDoorstaffWeekly, HideLoader, ShowLoader } from "../../../redux/actions";
+import {HideLoader, ShowLoader } from "../../../redux/actions/loaderActions";
 import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
 
 

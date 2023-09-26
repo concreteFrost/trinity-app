@@ -1,12 +1,10 @@
 import s from "./CurrentModal.module.scss";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import {
-  ShowModalMessage,
-} from "../../../../redux/actions";
 import { SignOffMemberAPI } from "../../../../services/activityApi";
 import { RefreshDoorstaffList } from "../../../../services/utils/activityUtils";
-import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions"
+import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions";
+import * as ModalActions from "../../../../redux/actions/modalActions";
 
 export const CurrentModal = (props) => {
   const [signOffSelectedDate, setSignOffSelectedDate] = useState(
@@ -23,15 +21,21 @@ export const CurrentModal = (props) => {
     const signOutTIme = e.target[1].value + "T" + e.target[0].value;
     const toSignOff = props.doorstaff.filter((staff) => staff.isChecked);
 
-    dispatch(DoorstaffActions.SignOffSelectedDoorstaff(e.target[0].value, e.target[1].value));
+    dispatch(
+      DoorstaffActions.SignOffSelectedDoorstaff(
+        e.target[0].value,
+        e.target[1].value
+      )
+    );
 
-    SignOffMemberAPI(toSignOff, props.token.access_token, signOutTIme)
-      .then((res) => {
+    SignOffMemberAPI(toSignOff, props.token.access_token, signOutTIme).then(
+      (res) => {
         !res.data.success
-          ? dispatch(ShowModalMessage(res.data.message))
+          ? dispatch(ModalActions.ShowModalMessage(res.data.message))
           : RefreshDoorstaffList(props.token.access_token, dispatch);
-      })
-      .catch((e) => console.log(e));
+      }
+    );
+
     props.setIsSignOffModalVisible(false);
   }
 

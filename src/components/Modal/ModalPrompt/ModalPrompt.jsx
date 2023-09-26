@@ -1,6 +1,7 @@
 import s from "./ModalPrompt.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_DISPUTED_NOTE, RESET_MODAL_ACTIVITY } from "../../../redux/types";
+import { SET_DISPUTED_NOTE } from "../../../redux/types/authoriseTypes";
+import { ResetModalActivity } from "../../../redux/actions/modalActions";
 
 export const ModalPrompt = (props) => {
   const show = useSelector((state) => state.modalPromptReducer);
@@ -11,7 +12,7 @@ export const ModalPrompt = (props) => {
 
   function HideModal(e) {
     e.preventDefault();
-    dispatch({ type: RESET_MODAL_ACTIVITY });
+    dispatch(ResetModalActivity());
   }
 
   function Submit(e) {

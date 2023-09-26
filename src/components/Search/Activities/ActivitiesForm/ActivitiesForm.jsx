@@ -1,61 +1,62 @@
 import s from "./ActivitiesForm.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { GetSearchStaff, GetSearchSuppliers, GetSearchLocations, GetSearchLocationGroup, GetSearchPaymentStatus, GetSearchPaymentStatusGroup, GetSearchedActivities, GetSearchedCosts, ShowModalMessage } from "../../../../redux/actions";
-import { GetSearchLocationsAPI, GetSearchLocationsGroupAPI, GetSearchPaymentStatusAPI, GetSearchStaffAPI, GetSearchSuppliersAPI, GetSearchPaymentStatusGroupAPI, GetSearchedDataAPI } from "../../../../services/reportApi";
+import {
+  GetSearchLocationsAPI,
+  GetSearchLocationsGroupAPI,
+  GetSearchPaymentStatusAPI,
+  GetSearchStaffAPI,
+  GetSearchSuppliersAPI,
+  GetSearchPaymentStatusGroupAPI,
+  GetSearchedDataAPI,
+} from "../../../../services/reportApi";
+import { ShowModalMessage } from "../../../../redux/actions/modalActions";
+import * as SearchActions from "../../../../redux/actions/searchActions";
+
 export const ActivitiesForm = (props) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userReducer.user.access_token);
   const data = useSelector((state) => state.searchActivitiesReducer);
   const user = useSelector((state) => state.userReducer.user);
 
-
   useEffect(() => {
     //SUPPLIER/GROUP dropdown
-    GetSearchSuppliersAPI(token).then((res) => {
-      console.log('get search suppliers success', res)
-      dispatch(GetSearchSuppliers(res.data.record))
-    }).catch((e) => {
-      console.log('get search suppliers error', e)
-    })
+    GetSearchSuppliersAPI(token)
+      .then((res) => {
+        dispatch(SearchActions.GetSearchSuppliers(res.data.record));
+      })
+      .catch((e) => {});
 
     //LOCATION dropdown
     GetSearchLocationsAPI(token).then((res) => {
-      console.log('get search locations success', res)
-      dispatch(GetSearchLocations(res.data.record))
-    }).catch((e) => { console.log('get search locations error', e) })
-
+      dispatch(SearchActions.GetSearchLocations(res.data.record));
+    });
 
     //LOCATION GROUPS dropdown
     GetSearchLocationsGroupAPI(token).then((res) => {
-      console.log('get search location groups success', res)
-      dispatch(GetSearchLocationGroup(res.data.record))
-    }).catch((e) => console.log('get search location groups error', e))
+      dispatch(SearchActions.GetSearchLocationGroup(res.data.record));
+    });
 
     //STAFF/GROUP dropdown
-    GetSearchStaffAPI(token).then((res) => {
-      console.log('get search staff success', res)
-      dispatch(GetSearchStaff(res.data.record));
-    }).catch((e) => {
-      console.log('get search staff error', e)
-    })
+    GetSearchStaffAPI(token)
+      .then((res) => {
+        dispatch(SearchActions.GetSearchStaff(res.data.record));
+      })
+      .catch((e) => {});
 
     //PAYMENT STATUS dropdown
-    GetSearchPaymentStatusAPI(token).then((res) => {
-      console.log('get search payment status success', res)
-      dispatch(GetSearchPaymentStatus(res.data.record))
-    }).catch((e) => {
-      console.log('get search payment status error', e)
-    })
+    GetSearchPaymentStatusAPI(token)
+      .then((res) => {
+        dispatch(SearchActions.GetSearchPaymentStatus(res.data.record));
+      })
+      .catch((e) => {});
 
     //Currently not in use
-    GetSearchPaymentStatusGroupAPI(token).then((res) => {
-      console.log('get search payment status group success', res)
-      dispatch(GetSearchPaymentStatusGroup(res.data.record))
-    }).catch((e) => {
-      console.log('get search payment status group error', e)
-    })
-
+    GetSearchPaymentStatusGroupAPI(token)
+      .then((res) => {
+        dispatch(SearchActions.GetSearchPaymentStatusGroup(res.data.record));
+      })
+      .catch((e) => {});
   }, []);
 
   function Submit(e) {
@@ -84,21 +85,23 @@ export const ActivitiesForm = (props) => {
         };
         break;
     }
-
-    GetSearchedDataAPI(props.system, token, user.locationId, _data).then((res) => {
-      console.log('get searched data success', res)
-      if (!res.data.success) {
-        dispatch(ShowModalMessage(res.data.message))
+    GetSearchedDataAPI(props.system, token, user.locationId, _data).then(
+      (res) => {
+        if (!res.data.success) {
+          dispatch(ShowModalMessage(res.data.message));
+        }
+        switch (props.system) {
+          case "S":
+            dispatch(
+              SearchActions.GetSearchedActivities(res.data.reportRecord)
+            );
+            break;
+          case "A":
+            dispatch(SearchActions.GetSearchedCosts(res.data.reportRecord));
+            break;
+        }
       }
-      switch (props.system) {
-        case "S":
-          dispatch(GetSearchedActivities(res.data.reportRecord))
-          break;
-        case "A":
-          dispatch(GetSearchedCosts(res.data.reportRecord))
-          break;
-      }
-    }).catch((e) => console.log('get searched data error', e))
+    );
   }
 
   return (
@@ -115,10 +118,10 @@ export const ActivitiesForm = (props) => {
               <option value={0}>All</option>
               {data.options.staff.length > 0
                 ? data.options.staff.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))
+                    <option key={e.id} value={e.id}>
+                      {e.name}
+                    </option>
+                  ))
                 : null}
             </select>
           </div>
@@ -134,10 +137,10 @@ export const ActivitiesForm = (props) => {
             <option value={0}>All</option>
             {data.options.locations.length > 0
               ? data.options.locations.map((e) => (
-                <option key={e.id} value={e.id}>
-                  {e.name}
-                </option>
-              ))
+                  <option key={e.id} value={e.id}>
+                    {e.name}
+                  </option>
+                ))
               : null}
           </select>
 
@@ -149,10 +152,10 @@ export const ActivitiesForm = (props) => {
             <option value={0}>All</option>
             {data.options.locationsGroup.length > 0
               ? data.options.locationsGroup.map((e) => (
-                <option key={e.id} value={e.id}>
-                  {e.name}
-                </option>
-              ))
+                  <option key={e.id} value={e.id}>
+                    {e.name}
+                  </option>
+                ))
               : null}
           </select>
         </div>
@@ -168,10 +171,10 @@ export const ActivitiesForm = (props) => {
               <option value={0}>All</option>
               {data.options.suppliers.length > 0
                 ? data.options.suppliers.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))
+                    <option key={e.id} value={e.id}>
+                      {e.name}
+                    </option>
+                  ))
                 : null}
             </select>
           </div>
@@ -185,10 +188,10 @@ export const ActivitiesForm = (props) => {
           >
             {data.options.paymentStatus.length > 0
               ? data.options.paymentStatus.map((e) => (
-                <option key={e.id} value={e.id}>
-                  {e.name}
-                </option>
-              ))
+                  <option key={e.id} value={e.id}>
+                    {e.name}
+                  </option>
+                ))
               : null}
           </select>
         </div>

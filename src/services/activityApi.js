@@ -12,8 +12,14 @@ export function GetSiaDataAPI(sia, token) {
       .get(`${baseUrl}/Activity/CheckMember/` + sia, {
         headers: headers,
       })
-      .then((res) => resolve(res.data))
-      .catch((e) => reject(e));
+      .then((res) => {
+        console.log("get sia data success", res);
+        resolve(res.data);
+      })
+      .catch((e) => {
+        console.log("get sia data error", e);
+        reject(e);
+      });
   });
 }
 
@@ -28,8 +34,14 @@ export function GetDoorstaffPositionsAPI(token) {
       .get(`${baseUrl}/Activity/LookupPositions`, {
         headers: headers,
       })
-      .then((res) => resolve(res.data.position))
-      .catch((e) => reject(e));
+      .then((res) => {
+        console.log('get doorstaff positions success',res)
+        resolve(res.data.position);
+      })
+      .catch((e) => {
+        console.log('get doorstaff positions error',e)
+        reject(e);
+      });
   });
 }
 
@@ -45,9 +57,12 @@ export function GetDoorstaffSupplierAPI(positionId, token) {
         headers: headers,
       })
       .then((res) => {
+        console.log("get doorstaff suppliers success", res)
         resolve(res.data.suppliers);
       })
-      .catch((e) => reject(e));
+      .catch((e) => {
+        console.log("get doorstaff suppliers error", e)
+        reject(e)});
   });
 }
 
@@ -60,17 +75,21 @@ export function GetDoorstaffRatesAPI(token, position, supplier, date) {
     axios
       .get(
         `${baseUrl}/Activity/LookupRates/` +
-        position +
-        "/" +
-        supplier +
-        "/" +
-        new Date(date).getTime(),
+          position +
+          "/" +
+          supplier +
+          "/" +
+          new Date(date).getTime(),
         {
           headers: headers,
         }
       )
-      .then((res) => resolve(res.data))
-      .catch((e) => reject(e));
+      .then((res) =>{
+        console.log("get doorstaff rates success", res)
+        resolve(res.data)})
+      .catch((e) => {
+        console.log("get doorstaff rates error", e)
+        reject(e)});
   });
 }
 
@@ -95,41 +114,45 @@ export function SignOnMemberAPI(token, sia) {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => resolve(res.data))
-      .catch((e) => reject(e));
+      .then((res) => {
+        console.log("sign on member success success", res)
+        resolve(res.data)})
+      .catch((e) => {
+        console.log("get doorstaff rates error", e)
+        reject(e)});
   });
 }
 
 export function SignOffMemberAPI(data, token, signOutTime) {
   const toLogOut = Array.isArray(data)
     ? data.map((staff) => ({
-      activityId: staff.activityId,
-      staffId: staff.staffId,
-      staffName: staff.staffName,
-      positionId: staff.positionId,
-      position: staff.position,
-      locationId: staff.locationId,
-      supplierId: staff.supplierId,
-      supplierName: staff.supplierName,
-      startTime: staff.startTime,
-      endTime: signOutTime,
-      rateGroupId: staff.rateGroupId,
-    }))
-    : [
-      {
-        activityId: data.activityId,
-        staffId: data.staffId,
-        staffName: data.staffName,
-        positionId: data.positionId,
-        position: data.position,
-        locationId: data.locationId,
-        supplierId: data.supplierId,
-        supplierName: data.supplierName,
-        startTime: data.startTime,
+        activityId: staff.activityId,
+        staffId: staff.staffId,
+        staffName: staff.staffName,
+        positionId: staff.positionId,
+        position: staff.position,
+        locationId: staff.locationId,
+        supplierId: staff.supplierId,
+        supplierName: staff.supplierName,
+        startTime: staff.startTime,
         endTime: signOutTime,
-        rateGroupId: data.rateGroupId,
-      },
-    ];
+        rateGroupId: staff.rateGroupId,
+      }))
+    : [
+        {
+          activityId: data.activityId,
+          staffId: data.staffId,
+          staffName: data.staffName,
+          positionId: data.positionId,
+          position: data.position,
+          locationId: data.locationId,
+          supplierId: data.supplierId,
+          supplierName: data.supplierName,
+          startTime: data.startTime,
+          endTime: signOutTime,
+          rateGroupId: data.rateGroupId,
+        },
+      ];
   return new Promise((resolve, reject) => {
     axios({
       method: "POST",
@@ -142,8 +165,12 @@ export function SignOffMemberAPI(data, token, signOutTime) {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => resolve(res))
-      .catch((e) => reject(e));
+      .then((res) => {
+        console.log("sign off doorstaff success", res)
+        resolve(res)})
+      .catch((e) => {
+        console.log("sign off doorstaff error", e)
+        reject(e)});
   });
 }
 
@@ -159,12 +186,14 @@ export function CancelDoorstaffAPI(data, token) {
       data: data,
     })
       .then((res) => {
+        console.log("cancel doorstaff success", res)
         resolve(res);
       })
-      .catch((e) => reject(e));
+      .catch((e) => {
+        console.log("cancel doorstaff error", e)
+        reject(e)});
   });
 }
-
 
 export function GetDoorstaffListAPI(token) {
   return new Promise((resolve, reject) => {
@@ -176,9 +205,12 @@ export function GetDoorstaffListAPI(token) {
         },
       })
       .then((res) => {
+        console.log("get doorstaff list success", res)
         resolve(res.data.staffLogin);
       })
-      .catch((e) => reject(e));
+      .catch((e) => {
+        console.log("get doorstaff list error", e)
+        reject(e)});
   });
 }
 
@@ -186,43 +218,42 @@ export function GetDoorstaffListAPI(token) {
 
 export function GetActivityTypeOptAPI(token) {
   return new Promise((resolve, reject) => {
-    axios.get(`${baseUrl}/CentralCosts/LookupCostGroups`,
-      {
+    axios
+      .get(`${baseUrl}/CentralCosts/LookupCostGroups`, {
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      }
-    ).then(res => {
-      console.log('get activity type opt success', res)
-      resolve(res)
-    }).catch(e => {
-      console.log('get activity type opt error', e)
-      reject(e)
-    })
-  })
+      })
+      .then((res) => {
+        console.log("get activity type opt success", res);
+        resolve(res);
+      })
+      .catch((e) => {
+        console.log("get activity type opt error", e);
+        reject(e);
+      });
+  });
 }
 
 export function GetActivitySupplierOptAPI(token, activityId) {
   return new Promise((resolve, reject) => {
     axios
-      .get(
-        `${baseUrl}/CentralCosts/LookupSuppliers/` +
-        activityId,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      ).then((res) => {
-        console.log('get activity supplier opt success', res)
-        resolve(res)
-      }).catch((e) => {
-        console.log('get activity supplier opt error', e)
-        reject(e)
+      .get(`${baseUrl}/CentralCosts/LookupSuppliers/` + activityId, {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       })
-  })
+      .then((res) => {
+        console.log("get activity supplier opt success", res);
+        resolve(res);
+      })
+      .catch((e) => {
+        console.log("get activity supplier opt error", e);
+        reject(e);
+      });
+  });
 }
 
 export function GetRateAPI(token, data) {
@@ -239,14 +270,16 @@ export function GetRateAPI(token, data) {
         supplierId: data.supplierID,
         costEntryTime: data.time,
       },
-    }).then((res) => {
-      console.log("get activity rate success", res)
-      resolve(res)
-    }).catch((e) => {
-      console.log("get activity rate error", e)
-      reject(e)
     })
-  })
+      .then((res) => {
+        console.log("get activity rate success", res);
+        resolve(res);
+      })
+      .catch((e) => {
+        console.log("get activity rate error", e);
+        reject(e);
+      });
+  });
 }
 
 export function SubmitActivityAPI(token, _data) {
@@ -259,43 +292,15 @@ export function SubmitActivityAPI(token, _data) {
       },
       method: "POST",
       data: _data,
-    }).then((res) => {
-      console.log('submit activity success', res)
-      resolve(res)
-    }).catch((e) => {
-      console.log('sumbit activity error', e)
-      reject(e)
     })
-  })
+      .then((res) => {
+        console.log("submit activity success", res);
+        resolve(res);
+      })
+      .catch((e) => {
+        console.log("sumbit activity error", e);
+        reject(e);
+      });
+  });
 }
 
-
-
-// export function SubmitActivity(token, _data) {
-//   return function (dispatch) {
-//     return axios({
-//       url: `${baseUrl}/CentralCosts/CostEntry`,
-//       headers: {
-//         Authorization: "Bearer " + token,
-//         "Content-Type": "application/json",
-//       },
-//       method: "POST",
-//       data: _data,
-//     })
-//       .then((res) => {
-//         dispatch({ type: CLEAR_ACTIVITY });
-//         dispatch(GetActivityTypeOpt(token));
-
-
-
-//       }).then(() => {
-//         const today = new Date()
-//         const yesterday = new Date(new Date().setDate(today.getDate() - 1));
-//         dispatch(GetActivity(token, yesterday, today, "C"))
-//       })
-//       .catch((e) => {
-//         console.log(e)
-//         dispatch({ type: SHOW_MODAL_MESSAGE, data: e.message })
-//       });
-//   }
-// }

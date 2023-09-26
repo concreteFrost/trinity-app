@@ -1,16 +1,14 @@
 import { ModalPrompt } from "../../Modal/ModalPrompt/ModalPrompt";
 import { useDispatch, useSelector } from "react-redux";
-import { SendDisputed, ApproveActivity } from "../../../services/areaManagerApi";
-import { useEffect } from "react";
 import {
-  CHECK_ALL_AUTHORISE_DOORSTAFF,
-  CHECK_ALL_AUTHORISE_COSTS,
-  UNCHECK_ALL_AUTHORISE_DOORSTAFF,
-  UNCHECK_ALL_AUTHORISE_COSTS,
-  RESET_MODAL_ACTIVITY,
-} from "../../../redux/types";
+  SendDisputed,
+  ApproveActivity,
+} from "../../../services/areaManagerApi";
+import { useEffect } from "react";
+import * as AuthoriseActions from "../../../redux/actions/authoriseActions";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
 import { GetAuthoriseAndNotes } from "../../../services/utils/areaManagerUtils";
+import * as ModalActions from "../../../redux/actions/modalActions";
 
 export const CostsAndPayments = (props) => {
   const toDispute = useSelector((state) => state.modalPromptReducer);
@@ -27,33 +25,28 @@ export const CostsAndPayments = (props) => {
       if (element.selected)
         ApproveActivity(token, props.system, element)
           .then((res) => {
-            console.log("activity approve success", res);
-            GetAuthoriseAndNotes(token, props.system, dispatch)
+            GetAuthoriseAndNotes(token, props.system, dispatch);
           })
-          .catch((e) => {
-            console.log("activity approve error", e);
-          });
+          .catch((e) => {});
     });
   }
   function SelectAll() {
-    if (props.system === "S") dispatch({ type: CHECK_ALL_AUTHORISE_DOORSTAFF });
-    else dispatch({ type: CHECK_ALL_AUTHORISE_COSTS });
+    if (props.system === "S")
+      dispatch(AuthoriseActions.CheckAllAuthoriseDoorstass());
+    else dispatch(AuthoriseActions.CheckAllAuthoriseCosts());
   }
 
   function UnselectAll() {
     if (props.system === "S")
-      dispatch({ type: UNCHECK_ALL_AUTHORISE_DOORSTAFF });
-    else dispatch({ type: UNCHECK_ALL_AUTHORISE_COSTS });
+      dispatch(AuthoriseActions.UncheckAllAuthoriseDoorstaff());
+    else dispatch(AuthoriseActions.UncheckAllAuthoriseCosts());
   }
 
   function DisputeActivity() {
-    SendDisputed(props.system, token, toDispute)
-      .then((res) => {
-        console.log("dispute activity success", res);
-        dispatch({ type: RESET_MODAL_ACTIVITY });
-        GetAuthoriseAndNotes(token, props.system, dispatch)
-      })
-      .catch((e) => console.log("dispute activity error", e));
+    SendDisputed(props.system, token, toDispute).then((res) => {
+      ModalActions.ResetModalActivity();
+      GetAuthoriseAndNotes(token, props.system, dispatch);
+    });
   }
 
   return (

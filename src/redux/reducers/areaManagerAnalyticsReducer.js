@@ -5,7 +5,7 @@ import {
     TOGGLE_ARREA_MANAGER_ANALYTICS_LOCATIONS,
     SET_AREA_MANAGER_ANALYTICS_DATE_FROM,
     SET_AREA_MANAGER_ANALYTICS_DATE_TO
-} from "../types";
+} from "../types/analyticsTypes";
 
 const initialState = {
     locations: [],

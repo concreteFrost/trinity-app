@@ -1,0 +1,1 @@
+export const SET_RECEIPT_DATA = "SET_RECEIPT_DATA";

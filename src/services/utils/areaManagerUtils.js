@@ -1,5 +1,6 @@
 import { GetAuthorise,GetAreaDisputedNotes } from "../areaManagerApi";
-import { GET_AUTHORISE_DOORSTAFF,GET_AUTHORISE_COSTS } from "../../redux/types";
+import { GET_AUTHORISE_DOORSTAFF,GET_AUTHORISE_COSTS } from "../../redux/types/authoriseTypes";
+
 
 export function GetAuthoriseAndNotes(token,system,dispatch) {
     GetAuthorise(token, system)

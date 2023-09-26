@@ -5,8 +5,8 @@ const headers = (token) => {
   return {
     Authorization: "Bearer " + token,
     "Content-Type": "application/json",
-  }
-}
+  };
+};
 //returns pdf results
 export function GetTimesheetDataAPI(token, system, activityId) {
   return new Promise((resolve, reject) => {
@@ -14,13 +14,15 @@ export function GetTimesheetDataAPI(token, system, activityId) {
       .get(
         `${baseUrl}/Report/Timesheet?system=${system}&activityId=${activityId}`,
         {
-          headers: headers(token)
+          headers: headers(token),
         }
       )
       .then((res) => {
+        console.log("get timesheet data success", res);
         resolve(res.data);
       })
       .catch((e) => {
+        console.log("get timesheet data error", e);
         reject(e);
       });
   });
@@ -40,14 +42,19 @@ export function GetDoorstaffRecentAPI(user, fromDate, toDate, system) {
         locationGroupId: 0,
         supplierId: 0,
         reference: 0,
-        paymentStatusId: 0
+        paymentStatusId: 0,
       },
     })
-      .then((res) => { resolve(res) })
-      .catch(e => reject(e))
-  })
+      .then((res) => {
+        console.log("get activity recent success", res);
+        resolve(res);
+      })
+      .catch((e) => {
+        console.log("get activity recent error", e);
+        reject(e);
+      });
+  });
 }
-
 
 //returns current or recent activities
 export function GetActivityAPI(token, dateFrom, dateTo) {
@@ -58,10 +65,16 @@ export function GetActivityAPI(token, dateFrom, dateTo) {
       method: "POST",
       data: {
         dateFrom: dateFrom,
-        dateTo: dateTo
-      }
-    }).then(res => resolve(res)).catch(e => reject(e));
-  })
+        dateTo: dateTo,
+      },
+    })
+      .then((res) =>{ 
+        console.log("get cost review success",res)
+        resolve(res)})
+      .catch((e) => {
+        console.log("get cost review error",e)
+        reject(e)});
+  });
 }
 
 //return searched staff in search component
@@ -70,8 +83,16 @@ export function GetSearchStaffAPI(token) {
     axios
       .get(`${baseUrl}/Report/CriteriaStaffList`, {
         headers: headers(token),
-      }).then((res) => resolve(res)).catch((e) => reject(e))
-  })
+      })
+      .then((res) => {
+        console.log("get search staff success", res);
+        resolve(res);
+      })
+      .catch((e) => {
+        console.log("get search staff error", e);
+        reject(e);
+      });
+  });
 }
 
 //return searched supplier and group in search component
@@ -80,10 +101,16 @@ export function GetSearchSuppliersAPI(token) {
     axios
       .get(`${baseUrl}/Report/CriteriaSupplierList`, {
         headers: headers(token),
-      }).then((res) => { resolve(res) }).catch((e) => {
-        reject(e);
       })
-  })
+      .then((res) => {
+        console.log("get search suppliers success",res)
+        resolve(res);
+      })
+      .catch((e) => {
+        console.log("get search suppliers error",e)
+        reject(e);
+      });
+  });
 }
 
 export function GetSearchLocationsAPI(token) {
@@ -91,17 +118,29 @@ export function GetSearchLocationsAPI(token) {
     axios
       .get(`${baseUrl}/Report/CriteriaLocationList`, {
         headers: headers(token),
-      }).then(res => resolve(res)).catch(e => reject(e))
-  })
+      })
+      .then((res) => {
+        console.log("get search locations success",res)
+        resolve(res)})
+      .catch((e) => {
+        console.log("get search locations error",e)
+        reject(e)});
+  });
 }
 
 export function GetSearchLocationsGroupAPI(token) {
   return new Promise((resolve, reject) => {
     axios
       .get(`${baseUrl}/Report/CriteriaLocationGroupList`, {
-        headers: headers(token)
-      }).then(res => resolve(res)).catch(e => reject(e))
-  })
+        headers: headers(token),
+      })
+      .then((res) => {
+        console.log("get search locations group success",res)
+        resolve(res)})
+      .catch((e) => {
+        console.log("get search locations group error",e)
+        reject(e)});
+  });
 }
 
 export function GetSearchPaymentStatusAPI(token) {
@@ -109,17 +148,29 @@ export function GetSearchPaymentStatusAPI(token) {
     axios
       .get(`${baseUrl}/Report/CriteriaPaymentStatusList`, {
         headers: headers(token),
-      }).then(res => resolve(res)).catch(e => reject(e))
-  })
+      })
+      .then((res) => {
+        console.log("get search payment status success",res)
+        resolve(res)})
+      .catch((e) => {
+        console.log("get search payment status error",e)
+        reject(e)});
+  });
 }
 
 export function GetSearchPaymentStatusGroupAPI(token) {
   return new Promise((resolve, reject) => {
     axios
       .get(`${baseUrl}/Report/CriteriaPaymentReportStatusList`, {
-        headers: headers(token)
-      }).then(res => resolve(res)).catch(e => reject(e))
-  })
+        headers: headers(token),
+      })
+      .then((res) => {
+        console.log("get search payment status group success",res)
+        resolve(res)})
+      .catch((e) => {
+        console.log("get search payment status group error",e)
+        reject(e)});
+  });
 }
 
 export function GetSearchedDataAPI(system, token, locationId, _data) {
@@ -136,27 +187,32 @@ export function GetSearchedDataAPI(system, token, locationId, _data) {
         reference: 0,
         paymentStatusId: -1,
       },
-
-    }).then(res => resolve(res)).catch(e => reject(e))
-  })
+    })
+      .then((res) =>{ 
+        console.log("get activity list success",res)
+        resolve(res)})
+      .catch((e) => {
+        console.log("get activity list error",e)
+        reject(e)});
+  });
 }
 
 export function GetSummaryReviewAPI(token, date, summaryCode) {
   return new Promise((resolve, reject) => {
-    axios.get(
-      `${baseUrl}/Report/SummaryReview?system=C&workingDate=${date}&summaryCode=${summaryCode}`,
-      {
-        headers: headers(token)
-      }).then((res) => {
-        console.log('get summary review success', res)
-        resolve(res)
-      }).catch((e) => {
-        console.log('get summary review error', e)
-        reject(e)
+    axios
+      .get(
+        `${baseUrl}/Report/SummaryReview?system=C&workingDate=${date}&summaryCode=${summaryCode}`,
+        {
+          headers: headers(token),
+        }
+      )
+      .then((res) => {
+        console.log("get summary review success", res);
+        resolve(res);
       })
-  })
+      .catch((e) => {
+        console.log("get summary review error", e);
+        reject(e);
+      });
+  });
 }
-
-// export function 
-
-

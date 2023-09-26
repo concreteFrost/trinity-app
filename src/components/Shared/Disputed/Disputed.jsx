@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { TableTemplate } from "../TableTemplate/TableTemplate";
 import { ModalPrompt } from "../../Modal/ModalPrompt/ModalPrompt";
 import { GetDisputedActivityAPI, SendBackDisputedAPI, ViewDisputedNoteAPI } from "../../../services/disputedApi";
-import { ResetModalActivity,GetDisputedDoorstaff, ShowModalMessage, ShowModalPrompt, SetDisputedPaymentID } from "../../../redux/actions.js"
+import {  SetDisputedPaymentID } from "../../../redux/actions/authoriseActions"
+import {ShowModalMessage, ShowModalPrompt, ResetModalActivity} from "../../../redux/actions/modalActions";
 import * as ActivityActions from "../../../redux/actions/activityActions"
 import * as DoorstaffActions from "../../../redux/actions/doorstaffActions"
 

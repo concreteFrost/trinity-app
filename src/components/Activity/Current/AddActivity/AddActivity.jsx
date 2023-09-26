@@ -2,8 +2,9 @@ import s from "./AddActivity.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { GetActivitySupplierOptAPI, GetActivityTypeOptAPI, GetRateAPI, SubmitActivityAPI } from "../../../../services/activityApi";
-import { ShowModalMessage,ShowLoader,HideLoader } from "../../../../redux/actions";
+import { ShowLoader,HideLoader } from "../../../../redux/actions/loaderActions";
 import * as ActivityActions from "../../../../redux/actions/activityActions";
+import * as ModalActions from "../../../../redux/actions/modalActions";
 import { RefreshActivityList } from "../../../../services/utils/activityUtils";
 
 export const AddActivity = () => {
@@ -64,7 +65,7 @@ export const AddActivity = () => {
   function CompareRates() {
 
     if (parseInt(costValue) !== rate.costValue) {
-      dispatch(ShowModalMessage("NOTES input is now required"));
+      dispatch(ModalActions.ShowModalMessage("NOTES input is now required"));
       setNoteIsRequired(true);
     } else {
       setNoteIsRequired(false);
@@ -86,7 +87,7 @@ export const AddActivity = () => {
     dispatch(ShowLoader());
     GetRateAPI(token, data).then((res) => {
       if (res.data.message) {
-        dispatch(ShowModalMessage(res.data.message))
+        dispatch(ModalActions.ShowModalMessage(res.data.message))
         dispatch(ActivityActions.isActivitySupplierProvided(false))
       }
       else {

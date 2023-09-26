@@ -2,8 +2,6 @@ import s from "./Recent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
-import { GetActivityAPI } from "../../../services/reportApi";
-import { GetActivityRecents } from "../../../redux/actions";
 import { GeneratePDF } from "../../../services/utils/reportUtils";
 import { RefreshActivityList } from "../../../services/utils/activityUtils";
 

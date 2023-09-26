@@ -14,7 +14,7 @@ import { modalPromptReducer } from "./modalPromptReducer";
 import { modalActionReducer } from "./modalActionReducer";
 import { searchActivitiesReducer } from "./searchActivitesReducer";
 import { searchHistoryReducer } from "./searchHistoryReducer";
-import { LOGOFF } from "../types";
+import { LOGOFF } from "../types/loginTypes";
 import { pubManagerAnalyticsReducer } from "./pubManagerAnalyticsReducer";
 import { areaManagerAnalyticsReducer } from "./areaManagerAnalyticsReducer";
 import { receiptReducer } from "./receiptReducer";

@@ -2,7 +2,7 @@ import s from "./Login.module.scss";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { SetErrorOnLogin, SetLoginDetails } from "../../redux/actions";
+import { SetErrorOnLogin, SetLoginDetails } from "../../redux/actions/loginActions";
 import { GenerateUniqueReference, GetToken } from "../../services/authApi";
 
 export const Login = () => {
@@ -19,7 +19,6 @@ export const Login = () => {
         .then((generatedIdReferene) => {
           setClientID(generatedIdReferene);
         })
-        .catch((error) => console.log(error));
     } else {
       setClientID(storedClientID);
     }

@@ -1,12 +1,9 @@
 import s from "./CurrentTable.module.scss";
 import { useDispatch } from "react-redux/es/exports";
 import { SignOffMemberAPI } from "../../../../services/activityApi";
-import {
-  ShowModalMessage,
-  ShowCancelModal,
-} from "../../../../redux/actions";
 import { RefreshDoorstaffList } from "../../../../services/utils/activityUtils";
-import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions"
+import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions";
+import * as ModalActions from "../../../../redux/actions/modalActions";
 
 export const CurrentTable = (props) => {
   const dispatch = useDispatch();
@@ -19,20 +16,17 @@ export const CurrentTable = (props) => {
       SignOffMemberAPI(data, props.token.access_token, signOutTIme)
         .then((res) => {
           if (!res.data.success) {
-            dispatch(ShowModalMessage(res.data.message));
+            dispatch(ModalActions.ShowModalMessage(res.data.message));
           } else {
             RefreshDoorstaffList(props.token.access_token, dispatch);
           }
-          console.log("sign off member success", res);
         })
-        .catch((e) => {
-          console.log("sign off member error", e);
-        });
+      
     }
   }
 
   function showCancelModal(activityIdToCancel) {
-    dispatch(ShowCancelModal(activityIdToCancel));
+    dispatch(ModalActions.ShowCancelModal(activityIdToCancel));
   }
 
   return (

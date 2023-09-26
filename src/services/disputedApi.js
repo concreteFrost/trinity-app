@@ -57,18 +57,3 @@ export function ViewDisputedNoteAPI(token, system, activityID) {
         })
     })
 }
-
-
-// export function ViewDisputedNote(token, system, activityID) {
-//     return function (dispatch) {
-//         return axios.get(baseUrl + `/Disputed/GetNotes/${system}/${activityID}`, {
-//             headers: {
-//                 Authorization: "Bearer " + token,
-//                 "Content-Type": "application/x-www-form-urlencoded",
-//             }
-//         }).then(res => {
-//             if (res.data.record.length > 0)
-//                 dispatch({ type: SHOW_MODAL_MESSAGE, data: res.data.record[res.data.record.length - 1].name })
-//         })
-//     }
-// }

@@ -1,4 +1,4 @@
-import { CLEAR_ERROR_ON_LOGIN, LOGIN, SHOW_ERROR_ON_LOGIN } from "../types";
+import { CLEAR_ERROR_ON_LOGIN, LOGIN, SHOW_ERROR_ON_LOGIN } from "../types/loginTypes";
 
 const initialState = {
   user: {},

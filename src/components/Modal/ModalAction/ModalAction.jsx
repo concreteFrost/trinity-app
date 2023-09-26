@@ -1,11 +1,13 @@
 import s from "./ModalAction.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { RecallActivity } from "../../../services/areaManagerApi";
-import { SHOW_MODAL_MESSAGE } from "../../../redux/types";
 import { GetAuthoriseAndNotes } from "../../../services/utils/areaManagerUtils";
 import { CancelDoorstaffAPI } from "../../../services/activityApi";
 import { RefreshDoorstaffList } from "../../../services/utils/activityUtils";
-import { HideActionModal } from "../../../redux/actions";
+import {
+  HideActionModal,
+  ShowModalMessage,
+} from "../../../redux/actions/modalActions";
 
 export const ModalAction = () => {
   const modalActionReducer = useSelector((state) => state.modalActionReducer);
@@ -34,24 +36,22 @@ export const ModalAction = () => {
   const dispatch = useDispatch();
 
   function Cancel() {
-    CancelDoorstaffAPI(modalActionReducer.activityToModify, token).then((res) => {
-      console.log('cancel activity success', res)
-      dispatch(HideActionModal());
-      RefreshDoorstaffList(token, dispatch);
-    })
+    CancelDoorstaffAPI(modalActionReducer.activityToModify, token).then(
+      (res) => {
+        dispatch(HideActionModal());
+        RefreshDoorstaffList(token, dispatch);
+      }
+    );
   }
   function Recall() {
-    RecallActivity(token, modalActionReducer.activityToModify)
-      .then((res) => {
-        if (!res.success) {
-          dispatch({ type: SHOW_MODAL_MESSAGE, data: res.message });
-        } else {
-          console.log("recall activity success", res);
-          GetAuthoriseAndNotes(token, "S", dispatch);
-          GetAuthoriseAndNotes(token, "A", dispatch);
-        }
-      })
-      .catch((e) => console.log("recall activity error", e));
+    RecallActivity(token, modalActionReducer.activityToModify).then((res) => {
+      if (!res.success) {
+        dispatch(ShowModalMessage(res.message));
+      } else {
+        GetAuthoriseAndNotes(token, "S", dispatch);
+        GetAuthoriseAndNotes(token, "A", dispatch);
+      }
+    });
   }
 
   function DefineActiveOperation() {
@@ -67,12 +67,12 @@ export const ModalAction = () => {
 
   function HideModal(e) {
     e.preventDefault();
-    dispatch({ type: "HIDE_ACTION_MODAL" });
+    dispatch(HideActionModal());
   }
 
   function Submit(e) {
     e.preventDefault();
-    dispatch({ type: "HIDE_ACTION_MODAL" });
+    dispatch(HideActionModal());
   }
 
   return (

@@ -1,7 +1,7 @@
 import s from "./DatesForm.module.scss"
 import { useSelector, useDispatch } from "react-redux"
 import { GetDoorstaffRecentAPI } from "../../../../../services/reportApi";
-import { GetDoorstaffAnalytics, GetCostsAnalytics } from "../../../../../redux/actions";
+import { GetDoorstaffAnalytics, GetCostsAnalytics } from "../../../../../redux/actions/analyticsActions";
 
 export const DatesForm = () => {
 

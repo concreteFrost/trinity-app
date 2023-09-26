@@ -1,12 +1,9 @@
 import s from "./SummaryForm.module.scss"
 import { useDispatch, useSelector } from "react-redux";
-import { SET_COSTS_DATE } from "../../../../redux/types";
-import { GetCostsSummaryDaily, GetCostsSummaryWeekly, GetCostsSummaryMonthly, GetDoorstaffSummaryDaily, GetDoorstaffSummaryMonthly, GetDoorstaffSummaryWeekly, HideLoader, ShowLoader } from "../../../../redux/actions";
+import { HideLoader, ShowLoader } from "../../../../redux/actions/loaderActions";
 import { GetSummaryReviewAPI } from "../../../../services/reportApi";
 import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions";
-
-
-
+import * as ActivityActions from "../../../../redux/actions/activityActions";
 
 export const SummaryForm = () => {
   const dispatch = useDispatch();
@@ -15,24 +12,22 @@ export const SummaryForm = () => {
   const date = useSelector(state => state.costsReducer.date);
 
   function ChangeDate(e) {
-    dispatch({ type: SET_COSTS_DATE, data: e.target.value })
-
+    dispatch(ActivityActions.SetCostsDate(e.target.value))
   }
-
   async function SubmitForm(e) {
     e.preventDefault();
     dispatch(ShowLoader());
     await GetSummaryReviewAPI(token, date, "D").then((res) => {
       dispatch(DoorstaffActions.GetDoorstaffSummaryDaily(res.data.summaryRecords))
-      dispatch(GetCostsSummaryDaily(res.data.summaryRecords))
+      dispatch(ActivityActions.GetCostsSummaryDaily(res.data.summaryRecords))
     })
     await GetSummaryReviewAPI(token, date, "W").then((res) => {
       dispatch(DoorstaffActions.GetDoorstaffSummaryWeekly(res.data.summaryRecords))
-      dispatch(GetCostsSummaryWeekly(res.data.summaryRecords))
+      dispatch(ActivityActions.GetCostsSummaryWeekly(res.data.summaryRecords))
     })
     await GetSummaryReviewAPI(token, date, "M").then((res) => {
       dispatch(DoorstaffActions.GetDoorstaffSummaryMonthly(res.data.summaryRecords))
-      dispatch(GetCostsSummaryMonthly(res.data.summaryRecords))
+      dispatch(ActivityActions.GetCostsSummaryMonthly(res.data.summaryRecords))
     })
     await dispatch(HideLoader());
   }

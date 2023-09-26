@@ -2,7 +2,7 @@ import s from "./LocationList.module.scss"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react";
 import { GetSearchLocationsAPI } from "../../../../../services/reportApi";
-import { GetAreaManagerAnalyticsLocations, ToggleAreaManagerAnalyticsLocations } from "../../../../../redux/actions";
+import { GetAreaManagerAnalyticsLocations, ToggleAreaManagerAnalyticsLocations } from "../../../../../redux/actions/analyticsActions";
 
 export const LocationList = (props) => {
 

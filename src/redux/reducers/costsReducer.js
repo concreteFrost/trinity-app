@@ -1,10 +1,5 @@
-import {
-   
-    GET_COSTS_ACTIVITY_DAILY,
-    GET_COSTS_ACTIVITY_WEEKLY, GET_COSTS_ACTIVITY_MONTHLY,
-    SET_COSTS_DATE
-} from "../types";
 
+import * as ActiviyTypes from "../types/activityTypes";
 import * as DoorstaffTypes from "../types/doorstaffTypes";
 
 const initialState = {
@@ -28,7 +23,7 @@ export const costsReducer = (state = initialState, action) => {
    
     switch (action.type) {
 
-        case  SET_COSTS_DATE:
+        case  ActiviyTypes.SET_COSTS_DATE:
             return {
                 ...state, date: action.data
             }
@@ -47,17 +42,17 @@ export const costsReducer = (state = initialState, action) => {
                 ...state,
                 doorstaff: { ...state.doorstaff, monthly: action.data }
             };
-        case GET_COSTS_ACTIVITY_DAILY:
+        case ActiviyTypes.GET_COSTS_ACTIVITY_DAILY:
             return {
                 ...state,
                 costs: { ...state.costs, daily: action.data }
             };
-        case GET_COSTS_ACTIVITY_WEEKLY:
+        case ActiviyTypes.GET_COSTS_ACTIVITY_WEEKLY:
             return {
                 ...state,
                 costs: { ...state.costs, weekly: action.data }
             };
-        case GET_COSTS_ACTIVITY_MONTHLY:
+        case ActiviyTypes.GET_COSTS_ACTIVITY_MONTHLY:
             return {
                 ...state,
                 costs: { ...state.costs, monthly: action.data }

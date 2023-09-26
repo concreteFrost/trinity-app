@@ -1,4 +1,4 @@
-
+import * as ModalTypes from "../types/modalTypes";
 const initialState = {
   isVisible: false,
   activityToModify: null,
@@ -8,7 +8,7 @@ const initialState = {
 
 export const modalActionReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SHOW_ACTION_MODAL":
+    case ModalTypes.SHOW_ACTION_MODAL:
       return {
         ...state,
         isVisible: true,
@@ -16,7 +16,7 @@ export const modalActionReducer = (state = initialState, action) => {
         activityType: action.activityType,
         system: action.system
       };
-    case "HIDE_ACTION_MODAL":
+    case ModalTypes.HIDE_ACTION_MODAL:
       return {
         ...state,
         isVisible: false,

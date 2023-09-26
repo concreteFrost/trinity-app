@@ -1,7 +1,7 @@
 import s from "./ModalLogout.module.scss"
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { UserLogOff } from "../../../redux/actions";
+import { UserLogOff } from "../../../redux/actions/loginActions";
 
 export const ModalLogout = (props) => {
     const navigate = useNavigate();

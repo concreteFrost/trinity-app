@@ -49,4 +49,30 @@ export function GetActivityTypeOpt(record) {
     return { type: ActivityTypes.GET_DISPUTED_ACTIVITY, data: reportRecord }
   
   }
+
+  export function SetCostsDate(date){
+    return {type: ActivityTypes.SET_COSTS_DATE, data: date}
+  }
+
+  
+export function GetCostsSummaryDaily(summaryRecords) {
+  return {
+    type: ActivityTypes.GET_COSTS_ACTIVITY_DAILY,
+    data: summaryRecords.slice(3, summaryRecords.length),
+  }
+}
+
+export function GetCostsSummaryWeekly(summaryRecords) {
+  return {
+    type: ActivityTypes.GET_COSTS_ACTIVITY_WEEKLY,
+    data: summaryRecords.slice(3, summaryRecords.length),
+  }
+}
+
+export function GetCostsSummaryMonthly(summaryRecords) {
+  return {
+    type: ActivityTypes.GET_COSTS_ACTIVITY_MONTHLY,
+    data: summaryRecords.slice(3, summaryRecords.length),
+  }
+}
   

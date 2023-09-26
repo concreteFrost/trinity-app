@@ -1,7 +1,8 @@
 import s from "./DatesForm.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { GetAreaManagerAnalytics } from "../../../../../services/utils/reportUtils";
-import { HideLoader, SetAreaManagerAnalyticsDateFrom, SetAreaManagerAnalyticsDateTo, ShowLoader } from "../../../../../redux/actions";
+import {  SetAreaManagerAnalyticsDateFrom, SetAreaManagerAnalyticsDateTo} from "../../../../../redux/actions/analyticsActions";
+import { ShowLoader,HideLoader } from "../../../../../redux/actions/loaderActions";
 
 
 export const DatesForm = () => {

@@ -11,9 +11,12 @@ export function GetAuthorise(token, system) {
         },
       })
       .then((res) => {
+        console.log("get authorise payment list success", res)
         resolve(res.data.reportRecord);
       })
-      .catch((e) => reject(e));
+      .catch((e) => {
+        console.log("get authorise payment list error", e)
+        reject(e)});
   });
 }
 
@@ -29,8 +32,12 @@ export function GetAreaDisputedNotes(token, system, activityID) {
           },
         }
       )
-      .then((res) => resolve(res.data.record))
-      .catch((e) => reject(e));
+      .then((res) => {
+        console.log("get disputed note success", res)
+        resolve(res.data.record)})
+      .catch((e) => {
+        console.log("get disputed note error", e)
+        reject(e)});
   });
 }
 
@@ -48,8 +55,12 @@ export function SendDisputed(system, token, toDispute) {
         name: toDispute.disputedNote,
       },
     })
-      .then((res) => resolve(res))
-      .catch((e) => reject(e));
+      .then((res) => {
+        console.log("send disputed note success", res)
+        resolve(res)})
+      .catch((e) => {
+        console.log("send disputed note error", e)
+        reject(e)});
   });
 }
 
@@ -65,8 +76,12 @@ export function ApproveActivity(token, system, element) {
         method: "POST",
       }
     )
-      .then((res) => resolve(res))
-      .catch((e) => reject(e));
+      .then((res) =>{ 
+        console.log("approve activity success", res)
+        resolve(res)})
+      .catch((e) =>{ 
+        console.log("approve activity error",e)
+        reject(e)});
   });
 }
 
@@ -82,9 +97,11 @@ export function RecallActivity(token, data) {
       data: data,
     })
       .then((res) => {
+        console.log("recall activity success", res)
         resolve(res.data);
       })
       .catch((e) => {
+        console.log("recall activity error", e)
         reject(e);
       });
   });
