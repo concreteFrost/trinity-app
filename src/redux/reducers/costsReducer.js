@@ -1,9 +1,11 @@
 import {
-    GET_COSTS_DOORSTAFF_DAILY, GET_COSTS_DOORSTAFF_WEEKLY,
-    GET_COSTS_DOORSTAFF_MONTHLY, GET_COSTS_ACTIVITY_DAILY,
+   
+    GET_COSTS_ACTIVITY_DAILY,
     GET_COSTS_ACTIVITY_WEEKLY, GET_COSTS_ACTIVITY_MONTHLY,
     SET_COSTS_DATE
 } from "../types";
+
+import * as DoorstaffTypes from "../types/doorstaffTypes";
 
 const initialState = {
     doorstaff: {
@@ -30,17 +32,17 @@ export const costsReducer = (state = initialState, action) => {
             return {
                 ...state, date: action.data
             }
-        case GET_COSTS_DOORSTAFF_DAILY:
+        case DoorstaffTypes.GET_COSTS_DOORSTAFF_DAILY:
             return {
                 ...state,
                 doorstaff: { ...state.doorstaff, daily: action.data }
             };
-        case GET_COSTS_DOORSTAFF_WEEKLY:
+        case DoorstaffTypes.GET_COSTS_DOORSTAFF_WEEKLY:
             return {
                 ...state,
                 doorstaff: { ...state.doorstaff, weekly: action.data }
             };
-        case GET_COSTS_DOORSTAFF_MONTHLY:
+        case DoorstaffTypes.GET_COSTS_DOORSTAFF_MONTHLY:
             return {
                 ...state,
                 doorstaff: { ...state.doorstaff, monthly: action.data }

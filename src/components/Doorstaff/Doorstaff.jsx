@@ -9,7 +9,7 @@ import { Disputed } from "../Shared/Disputed/Disputed";
 import { SwitchView } from "../Shared/SwitchView/SwitchView";
 import { Route, Routes } from "react-router-dom";
 import { GetDisputedActivityAPI } from "../../services/disputedApi";
-import { GetDisputedDoorstaff } from "../../redux/actions";
+import * as DoorstaffActions from "../../redux/actions/doorstaffActions";
 
 export const Doorstaff = () => {
   const [view, setView] = useState("current");
@@ -20,7 +20,7 @@ export const Doorstaff = () => {
   const disputedctivity = useSelector((s) => s.doorstaffReducer.disputed);
   useEffect(() => {
     GetDisputedActivityAPI(token, 'S').then((res) => {
-      dispatch(GetDisputedDoorstaff(res.data.reportRecord))
+      dispatch(DoorstaffActions.GetDisputedDoorstaff(res.data.reportRecord))
     })
   }, []);
 

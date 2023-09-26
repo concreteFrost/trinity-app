@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { GetSummaryReviewAPI } from "../../../services/reportApi";
 import { GetDoorstaffDaily, GetDoorstaffWeekly, HideLoader, ShowLoader } from "../../../redux/actions";
+import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
 
 
 export const Summary = () => {
@@ -16,10 +17,10 @@ export const Summary = () => {
   useEffect(() => {
     dispatch(ShowLoader())
     GetSummaryReviewAPI(token, date, "D").then((res) => {
-      dispatch(GetDoorstaffDaily(res.data.summaryRecords))
+      dispatch(DoorstaffActions.GetDoorstaffDaily(res.data.summaryRecords))
     })
     GetSummaryReviewAPI(token, date, "W").then((res) => {
-      dispatch(GetDoorstaffWeekly(res.data.summaryRecords))
+      dispatch(DoorstaffActions.GetDoorstaffWeekly(res.data.summaryRecords))
     }).finally(() => {
       dispatch(HideLoader())
     })

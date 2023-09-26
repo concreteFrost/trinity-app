@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import {
   ShowModalMessage,
-  SignOffSelectedDoorstaff,
 } from "../../../../redux/actions";
 import { SignOffMemberAPI } from "../../../../services/activityApi";
 import { RefreshDoorstaffList } from "../../../../services/utils/activityUtils";
+import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions"
 
 export const CurrentModal = (props) => {
   const [signOffSelectedDate, setSignOffSelectedDate] = useState(
@@ -23,7 +23,7 @@ export const CurrentModal = (props) => {
     const signOutTIme = e.target[1].value + "T" + e.target[0].value;
     const toSignOff = props.doorstaff.filter((staff) => staff.isChecked);
 
-    dispatch(SignOffSelectedDoorstaff(e.target[0].value, e.target[1].value));
+    dispatch(DoorstaffActions.SignOffSelectedDoorstaff(e.target[0].value, e.target[1].value));
 
     SignOffMemberAPI(toSignOff, props.token.access_token, signOutTIme)
       .then((res) => {

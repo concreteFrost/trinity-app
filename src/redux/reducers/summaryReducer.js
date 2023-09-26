@@ -1,6 +1,4 @@
-import moment from 'moment';
-import { GET_DOORSTAFF_SUMMARY_DAILY, 
-    GET_DOORSTAFF_SUMMARY_WEEKLY } from "../types";
+import * as DoorstaffTypes from "../types/doorstaffTypes"
 
 const initialState = {
     doorstaff: {
@@ -15,12 +13,12 @@ const initialState = {
 export const summaryReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case GET_DOORSTAFF_SUMMARY_DAILY:
+        case DoorstaffTypes.GET_DOORSTAFF_SUMMARY_DAILY:
             return {
                 ...state,
                 doorstaff: {...state.doorstaff,daily: action.data}
             };
-        case GET_DOORSTAFF_SUMMARY_WEEKLY:
+        case DoorstaffTypes.GET_DOORSTAFF_SUMMARY_WEEKLY:
             return {
                 ...state,
                 doorstaff: {...state.doorstaff, weekly: action.data}

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SET_COSTS_DATE } from "../../../../redux/types";
 import { GetCostsSummaryDaily, GetCostsSummaryWeekly, GetCostsSummaryMonthly, GetDoorstaffSummaryDaily, GetDoorstaffSummaryMonthly, GetDoorstaffSummaryWeekly, HideLoader, ShowLoader } from "../../../../redux/actions";
 import { GetSummaryReviewAPI } from "../../../../services/reportApi";
+import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions";
 
 
 
@@ -22,15 +23,15 @@ export const SummaryForm = () => {
     e.preventDefault();
     dispatch(ShowLoader());
     await GetSummaryReviewAPI(token, date, "D").then((res) => {
-      dispatch(GetDoorstaffSummaryDaily(res.data.summaryRecords))
+      dispatch(DoorstaffActions.GetDoorstaffSummaryDaily(res.data.summaryRecords))
       dispatch(GetCostsSummaryDaily(res.data.summaryRecords))
     })
     await GetSummaryReviewAPI(token, date, "W").then((res) => {
-      dispatch(GetDoorstaffSummaryWeekly(res.data.summaryRecords))
+      dispatch(DoorstaffActions.GetDoorstaffSummaryWeekly(res.data.summaryRecords))
       dispatch(GetCostsSummaryWeekly(res.data.summaryRecords))
     })
     await GetSummaryReviewAPI(token, date, "M").then((res) => {
-      dispatch(GetDoorstaffSummaryMonthly(res.data.summaryRecords))
+      dispatch(DoorstaffActions.GetDoorstaffSummaryMonthly(res.data.summaryRecords))
       dispatch(GetCostsSummaryMonthly(res.data.summaryRecords))
     })
     await dispatch(HideLoader());

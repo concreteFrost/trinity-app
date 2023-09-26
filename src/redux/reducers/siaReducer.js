@@ -1,9 +1,4 @@
-import {
-  GET_SIA_DATA, SET_SIA_NUMBER,
-  CLEAR_SIA_DATA, GET_DOORSTAFF_SUPPLIER_OPT, GET_DOORSTAFF_POSITION_OPT,
-  GET_DOORSTAFF_RATE_OPT, SET_DOORSTAFF_SUPPLIER, SET_DOORSTAFF_POSITION,
-  SET_DOORSTAFF_RATE, SET_DOORSTAFF_START_DATE, SET_DOORSTAFF_START_TIME
-} from "../types";
+import * as DoorstaffTypes from "../types/doorstaffTypes"
 
 const initialState = {
   siaNumber: null,
@@ -27,49 +22,49 @@ const initialState = {
 
 export const siaReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_SIA_NUMBER:
+    case DoorstaffTypes.SET_SIA_NUMBER:
       return {
         ...state, siaNumber: action.data
       }
-    case GET_SIA_DATA:
+    case DoorstaffTypes.GET_SIA_DATA:
       return {
         ...state,
         doorstaff: action.data,
       };
-    case CLEAR_SIA_DATA:
+    case DoorstaffTypes.CLEAR_SIA_DATA:
       return initialState;
-    case GET_DOORSTAFF_SUPPLIER_OPT:
+    case DoorstaffTypes.GET_DOORSTAFF_SUPPLIER_OPT:
       return {
         ...state,
         options: { ...state.options, suppliers: action.data }
       };
-    case GET_DOORSTAFF_POSITION_OPT:
+    case DoorstaffTypes.GET_DOORSTAFF_POSITION_OPT:
       return {
         ...state,
         options: { ...state.options, positions: action.data.sort((a, b) => a.positionName.localeCompare(b.positionName)) }
       };
-    case GET_DOORSTAFF_RATE_OPT:
+    case DoorstaffTypes.GET_DOORSTAFF_RATE_OPT:
       return {
         ...state,
         options: { ...state.options, rates: action.data }
       };
-    case SET_DOORSTAFF_SUPPLIER:
+    case DoorstaffTypes.SET_DOORSTAFF_SUPPLIER:
       return {
         ...state, supplier: action.data
       }
-    case SET_DOORSTAFF_POSITION:
+    case DoorstaffTypes.SET_DOORSTAFF_POSITION:
       return {
         ...state, position: action.data
       }
-    case SET_DOORSTAFF_RATE:
+    case DoorstaffTypes.SET_DOORSTAFF_RATE:
       return {
         ...state, rate: action.data
       }
-    case SET_DOORSTAFF_START_TIME:
+    case DoorstaffTypes.SET_DOORSTAFF_START_TIME:
       return {
         ...state, time: action.data
       }
-    case SET_DOORSTAFF_START_DATE:
+    case DoorstaffTypes.SET_DOORSTAFF_START_DATE:
       return {
         ...state, date: action.data
       }

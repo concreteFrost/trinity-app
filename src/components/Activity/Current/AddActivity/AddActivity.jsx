@@ -2,7 +2,8 @@ import s from "./AddActivity.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { GetActivitySupplierOptAPI, GetActivityTypeOptAPI, GetRateAPI, SubmitActivityAPI } from "../../../../services/activityApi";
-import { ClearActivity, GetActivityRate, GetActivitySupplierOpt, GetActivityTypeOpt, HideLoader, SetActivityCostValue, SetActivityHoursWorked, SetActivitySupplier, SetActivityType, ShowLoader, ShowModalMessage, isActivitySupplierProvided } from "../../../../redux/actions";
+import { ShowModalMessage,ShowLoader,HideLoader } from "../../../../redux/actions";
+import * as ActivityActions from "../../../../redux/actions/activityActions";
 import { RefreshActivityList } from "../../../../services/utils/activityUtils";
 
 export const AddActivity = () => {
@@ -38,19 +39,23 @@ export const AddActivity = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-
+  function _GetActivityAPI(){
     GetActivityTypeOptAPI(token).then((res) => {
-      dispatch(GetActivityTypeOpt(res.data.record))
-      dispatch(SetActivityType(res.data.record[0].id))
+      dispatch(ActivityActions.GetActivityTypeOpt(res.data.record))
+      dispatch(ActivityActions.SetActivityType(res.data.record[0].id))
       GetActivitySupplierOptAPI(token, res.data.record[0].id)
     })
+  }
+
+  useEffect(() => {
+    _GetActivityAPI();
+    
   }, []);
 
   function GetSupplierOpt(e) {
-    dispatch(SetActivityType(e.target.value))
+    dispatch(ActivityActions.SetActivityType(e.target.value))
     GetActivitySupplierOptAPI(token, e.target.value).then((res) => {
-      dispatch(GetActivitySupplierOpt(res.data.suppliers))
+      dispatch(ActivityActions.GetActivitySupplierOpt(res.data.suppliers))
 
     })
   }
@@ -64,7 +69,7 @@ export const AddActivity = () => {
     } else {
       setNoteIsRequired(false);
     }
-    dispatch(SetActivityCostValue(costValue));
+    dispatch(ActivityActions.SetActivityCostValue(costValue));
   }
 
   function FirstSubmit(e) {
@@ -82,12 +87,12 @@ export const AddActivity = () => {
     GetRateAPI(token, data).then((res) => {
       if (res.data.message) {
         dispatch(ShowModalMessage(res.data.message))
-        dispatch(isActivitySupplierProvided(false))
+        dispatch(ActivityActions.isActivitySupplierProvided(false))
       }
       else {
-        dispatch(GetActivityRate(res.data))
-        dispatch(isActivitySupplierProvided(true))
-        dispatch(SetActivityCostValue(res.data.costValue))
+        dispatch(ActivityActions.GetActivityRate(res.data))
+        dispatch(ActivityActions.isActivitySupplierProvided(true))
+        dispatch(ActivityActions.SetActivityCostValue(res.data.costValue))
       }
     }).finally(() => {
       dispatch(HideLoader());
@@ -110,12 +115,16 @@ export const AddActivity = () => {
       hoursWorked: parseFloat(hoursWorked),
     };
     SubmitActivityAPI(token, _data).then((res) => {
-      dispatch(ClearActivity())
+      dispatch(ActivityActions.ClearActivity())
     }).finally(() => {
       const today = new Date()
       const yesterday = new Date(new Date().setDate(today.getDate() - 1));
       RefreshActivityList(token, new Date(yesterday).toISOString(), new Date(today).toISOString(), dispatch, "C")
+      _GetActivityAPI()
+    
     })
+
+   
 
   }
   return (
@@ -142,7 +151,7 @@ export const AddActivity = () => {
 
           <label htmlFor="supplier">SUPPLIER</label>
           <select name="supplier" disabled={supplierOpt.length === 0} onChange={(e) => {
-            dispatch(SetActivitySupplier(e.target.value))
+            dispatch(ActivityActions.SetActivitySupplier(e.target.value))
           }}>
             <option value={null}>Select Supplier</option>
 
@@ -214,7 +223,7 @@ export const AddActivity = () => {
             name="hours-worked"
             step={0.01}
             value={hoursWorked ? hoursWorked : ""}
-            onChange={(e) => { dispatch(SetActivityHoursWorked(e.target.value)) }}
+            onChange={(e) => { dispatch(ActivityActions.SetActivityHoursWorked(e.target.value)) }}
             required
           />
 
@@ -224,7 +233,7 @@ export const AddActivity = () => {
             name="value"
             readOnly={rate.rateTypeId === 4 ? true : false}
             value={costValue ? costValue : 0}
-            onChange={(e) => { dispatch(SetActivityCostValue(e.target.value)) }}
+            onChange={(e) => { dispatch(ActivityActions.SetActivityCostValue(e.target.value)) }}
             onBlur={CompareRates}
           />
         </div>

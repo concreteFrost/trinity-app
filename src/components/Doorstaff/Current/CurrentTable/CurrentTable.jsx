@@ -4,11 +4,9 @@ import { SignOffMemberAPI } from "../../../../services/activityApi";
 import {
   ShowModalMessage,
   ShowCancelModal,
-  SetDoorstaffSignOutTime,
-  SetDoorstaffSignOutDate,
-  ToggleDoorstaffToSignOut,
 } from "../../../../redux/actions";
 import { RefreshDoorstaffList } from "../../../../services/utils/activityUtils";
+import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions"
 
 export const CurrentTable = (props) => {
   const dispatch = useDispatch();
@@ -73,7 +71,7 @@ export const CurrentTable = (props) => {
                               value={e.signOutTime}
                               onChange={(x) => {
                                 dispatch(
-                                  SetDoorstaffSignOutTime(
+                                  DoorstaffActions.SetDoorstaffSignOutTime(
                                     e.staffId,
                                     x.target.value
                                   )
@@ -88,7 +86,7 @@ export const CurrentTable = (props) => {
                               type="date"
                               value={e.signOutDate}
                               onChange={(x) => {
-                                dispatch(SetDoorstaffSignOutDate(e.staffId, x.target.value))
+                                dispatch(DoorstaffActions.SetDoorstaffSignOutDate(e.staffId, x.target.value))
                               }}
                               required
                             />
@@ -99,7 +97,7 @@ export const CurrentTable = (props) => {
                             type="checkbox"
                             checked={e.isChecked}
                             onChange={() =>
-                              dispatch(ToggleDoorstaffToSignOut(e.staffId))
+                              dispatch(DoorstaffActions.ToggleDoorstaffToSignOut(e.staffId))
                             }
                           ></input>
                           <button>SIGN OUT</button>

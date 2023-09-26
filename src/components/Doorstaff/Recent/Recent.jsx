@@ -4,7 +4,7 @@ import { useState } from "react";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
 import { GeneratePDF } from "../../../services/utils/reportUtils";
 import { GetDoorstaffRecentAPI, GetTimesheetDataAPI } from "../../../services/reportApi";
-import { GetDoorstaffRecent } from "../../../redux/actions";
+import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
 
 
 export const Recent = (props) => {
@@ -79,7 +79,7 @@ export const Recent = (props) => {
 
     GetDoorstaffRecentAPI(user, fromDate, toDate, "S").then((res) => {
       console.log("get recent doorstaff success", res.data.reportRecord)
-      dispatch(GetDoorstaffRecent(res.data.reportRecord))
+      dispatch(DoorstaffActions.GetDoorstaffRecent(res.data.reportRecord))
     }).catch((e) => {
       console.log("get recent doorstaff error", e)
     })

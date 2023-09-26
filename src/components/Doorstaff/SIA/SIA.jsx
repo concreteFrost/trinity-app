@@ -2,14 +2,12 @@ import s from "./SIA.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { FaSearch } from "react-icons/fa";
 import {
-  ClearSiaData,
-  GetDoorstaffPositionsOptions,
   HideLoader,
-  SetDoorstaffCurrentPosition,
   SetSiaData,
   ShowLoader,
   ShowModalMessage,
 } from "../../../redux/actions";
+import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
 import {
   GetDoorstaffPositionsAPI,
   GetSiaDataAPI,
@@ -29,14 +27,14 @@ export const SIA = () => {
         console.log("get sia data success", siaResult);
         if (siaResult.message !== null) {
           dispatch(ShowModalMessage(siaResult.message));
-          dispatch(ClearSiaData());
+          dispatch(DoorstaffActions.ClearSiaData());
         }
-        dispatch(SetSiaData(siaResult));
+        dispatch(DoorstaffActions.SetSiaData(siaResult));
         GetDoorstaffPositionsAPI(token)
           .then((res) => {
             console.log("get positions success", res[0]);
-            dispatch(GetDoorstaffPositionsOptions(res));
-            dispatch(SetDoorstaffCurrentPosition(res[0]));
+            dispatch(DoorstaffActions.GetDoorstaffPositionsOptions(res));
+            dispatch(DoorstaffActions.SetDoorstaffCurrentPosition(res[0]));
           })
           .catch((e) => {
             console.log("get positions error", e);

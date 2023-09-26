@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import s from "./CurrentFooter.module.scss"
-import { DeselectAllDoorstaffToSignOut, SelectAllDoorstaffToSingOut } from "../../../../redux/actions";
+import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions"
 
 export const CurrentFooter = (props) => {
 
@@ -8,8 +8,8 @@ export const CurrentFooter = (props) => {
 
   return (
     <div className={s.button_footer}>
-      <div><button onClick={() => dispatch(SelectAllDoorstaffToSingOut())}> SELECT ALL</button></div>
-      <div><button onClick={() => dispatch(DeselectAllDoorstaffToSignOut())}> DESELECT ALL</button></div>
+      <div><button onClick={() => dispatch(DoorstaffActions.SelectAllDoorstaffToSingOut())}> SELECT ALL</button></div>
+      <div><button onClick={() => dispatch(DoorstaffActions.DeselectAllDoorstaffToSignOut())}> DESELECT ALL</button></div>
       <div><button onClick={props.ShowSignOffSelectedModal}>SIGN OUT</button> </div>
     </div>
   )

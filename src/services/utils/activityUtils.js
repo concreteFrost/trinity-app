@@ -1,13 +1,13 @@
 import { GetDoorstaffListAPI } from "../activityApi";
-import { GetActivityCurrent, SetDoorStaffList } from "../../redux/actions";
+import * as ActivityActions from "../../redux/actions/activityActions"
+import * as DoorstaffAction from "../../redux/actions/doorstaffActions"
 import { GetActivityAPI } from "../reportApi";
-import { GetActivityRecents } from "../../redux/actions";
 
 export function RefreshDoorstaffList(token, dispatch) {
   GetDoorstaffListAPI(token)
     .then((res) => {
       console.log("get doorstaff list success", res);
-      dispatch(SetDoorStaffList(res));
+      dispatch(DoorstaffAction.SetDoorStaffList(res));
     })
     .catch((e) => console.log("get doorstaff error", e));
 }
@@ -17,10 +17,10 @@ export function RefreshActivityList(token, fromDate, toDate, dispatch, activityP
     console.log('get recent activity success', res)
     switch (activityPeriod) {
       case "C":
-        dispatch(GetActivityCurrent(res.data.records))
+        dispatch(ActivityActions.GetActivityCurrent(res.data.records))
         break;
       case "R":
-        dispatch(GetActivityRecents(res.data.records))
+        dispatch(ActivityActions.GetActivityRecents(res.data.records))
         break
     }
 

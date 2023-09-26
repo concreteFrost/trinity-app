@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { TableTemplate } from "../TableTemplate/TableTemplate";
 import { ModalPrompt } from "../../Modal/ModalPrompt/ModalPrompt";
 import { GetDisputedActivityAPI, SendBackDisputedAPI, ViewDisputedNoteAPI } from "../../../services/disputedApi";
-import { ResetModalActivity, GetDisputedActivity, GetDisputedDoorstaff, ShowModalMessage, ShowModalPrompt, SetDisputedPaymentID } from "../../../redux/actions.js"
+import { ResetModalActivity,GetDisputedDoorstaff, ShowModalMessage, ShowModalPrompt, SetDisputedPaymentID } from "../../../redux/actions.js"
+import * as ActivityActions from "../../../redux/actions/activityActions"
+import * as DoorstaffActions from "../../../redux/actions/doorstaffActions"
 
 export const Disputed = (props) => {
 
@@ -67,10 +69,10 @@ export const Disputed = (props) => {
     await GetDisputedActivityAPI(token, props.system).then((res) => {
       switch (props.system) {
         case "A":
-          dispatch(GetDisputedActivity(res.data.reportRecord))
+          dispatch(ActivityActions.GetDisputedActivity(res.data.reportRecord))
           break;
         case "S":
-          dispatch(GetDisputedDoorstaff(res.data.reportRecord))
+          dispatch(DoorstaffActions.GetDisputedDoorstaff(res.data.reportRecord))
           break;
       }
 

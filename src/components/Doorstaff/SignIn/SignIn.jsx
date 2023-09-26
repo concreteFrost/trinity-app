@@ -17,6 +17,7 @@ import {
   GetDoorstaffRatesAPI,
 } from "../../../services/activityApi";
 import { RefreshDoorstaffList } from "../../../services/utils/activityUtils";
+import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
 
 export const SignIn = () => {
   const dispatch = useDispatch();
@@ -26,15 +27,15 @@ export const SignIn = () => {
 
   async function GetPositionAndSupplier(e) {
     const position = e.target.value;
-    await dispatch(SetDoorstaffCurrentPosition(position));
+    await dispatch(DoorstaffActions.SetDoorstaffCurrentPosition(position));
     await GetDoorstaffSupplierAPI(position, token.access_token)
       .then((res) => {
         console.log("get suppliers list success", res[0]);
-        dispatch(GetDoorstaffSupplierOptions(res));
+        dispatch(DoorstaffActions.GetDoorstaffSupplierOptions(res));
       })
       .catch((e) => {
         console.log("get suppliers list error", e);
-        dispatch(GetDoorstaffSupplierOptions([]));
+        dispatch(DoorstaffActions.GetDoorstaffSupplierOptions([]));
       });
     console.log(position)
   }
@@ -44,7 +45,7 @@ export const SignIn = () => {
     const supplierName = e.target.options[e.target.selectedIndex].text;
 
     await dispatch(
-      SetDoorstaffCurrentSupplier({
+      DoorstaffActions.SetDoorstaffCurrentSupplier({
         supplierId: supplierId,
         supplierName: supplierName,
       })
@@ -61,7 +62,7 @@ export const SignIn = () => {
         if (!res.success) {
           dispatch(ShowModalMessage(res.message))
         }
-        dispatch(GetDooorstaffRateOptions(res.rates))
+        dispatch(DoorstaffActions.GetDooorstaffRateOptions(res.rates))
       })
       .catch((e) => {
         console.log("get rates error", e);
@@ -71,7 +72,7 @@ export const SignIn = () => {
 
   function SetRateGroupID(e) {
     const rateId = e.target.value;
-    dispatch(SetDoorstaffCurrentRate(rateId))
+    dispatch(DoorstaffActions.SetDoorstaffCurrentRate(rateId))
   }
 
   function Submit() {
@@ -82,7 +83,7 @@ export const SignIn = () => {
           dispatch(ShowModalMessage(res.message));
         } else {
           RefreshDoorstaffList(token.access_token, dispatch)
-          dispatch(ClearSiaData());
+          dispatch(DoorstaffActions.ClearSiaData());
         }
       })
       .catch((e) => console.log("sign on member error", e));
@@ -162,7 +163,7 @@ export const SignIn = () => {
             type="date"
             value={sia.date}
             onChange={(e) => {
-              dispatch(SetDoorstaffStartDate(e.target.value));
+              dispatch(DoorstaffActions.SetDoorstaffStartDate(e.target.value));
             }}
           />
         </div>
@@ -172,13 +173,13 @@ export const SignIn = () => {
           <input
             type="time"
             value={sia.time}
-            onChange={(e) => { dispatch(SetDoorstaffStartTime(e.target.value)) }}
+            onChange={(e) => { dispatch(DoorstaffActions.SetDoorstaffStartTime(e.target.value)) }}
             required
           />
         </div>
 
         <div className={s.buttons}>
-          <button className={s.clear} onClick={() => dispatch(ClearSiaData())}>
+          <button className={s.clear} onClick={() => dispatch(DoorstaffActions.ClearSiaData())}>
             CLEAR
           </button>
 

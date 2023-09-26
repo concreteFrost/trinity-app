@@ -1,18 +1,4 @@
-import {
-  GET_DOORSTAFF_LIST,
-  GET_RECENT_DOORSTAFF,
-  GET_DISPUTED_DOORSTAFF,
-  SET_DOORSTAFF_ERROR_MESSAGE,
-  CLEAR_DOORSTAFF_ERROR_MESSAGE,
-  TOGGLE_DOORSTAFF_TO_SIGN_OUT,
-  SELECT_ALL_DOORSTAFF_TO_SIGN_OUT,
-  DESELECT_ALL_DOORSTAFF_TO_SIGN_OUT,
-  SET_DOORSTAFF_SIGNOUT_DATE,
-  SET_DOORSTAFF_SIGNOUT_TIME,
-  SIGN_OFF_SELECTED_DOORSTAFF,
-  SHOW_SIGN_OFF_MODAL,
-  HIDE_SIGN_OFF_MODAL,
-} from "../types";
+import * as DoorstaffTypes from "../types/doorstaffTypes"
 
 const initialState = {
   current: [],
@@ -24,7 +10,7 @@ const initialState = {
 
 export const doorstaffReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_DOORSTAFF_LIST:
+    case DoorstaffTypes.GET_DOORSTAFF_LIST:
       const fetchedDoorstaff = action.data.map((dstaff) => ({
         ...dstaff,
         isChecked: false,
@@ -39,7 +25,7 @@ export const doorstaffReducer = (state = initialState, action) => {
         current: fetchedDoorstaff,
       };
 
-    case TOGGLE_DOORSTAFF_TO_SIGN_OUT: {
+    case DoorstaffTypes.TOGGLE_DOORSTAFF_TO_SIGN_OUT: {
       return {
         ...state,
         current: [
@@ -49,19 +35,19 @@ export const doorstaffReducer = (state = initialState, action) => {
         ],
       };
     }
-    case SELECT_ALL_DOORSTAFF_TO_SIGN_OUT: {
+    case DoorstaffTypes.SELECT_ALL_DOORSTAFF_TO_SIGN_OUT: {
       return {
         ...state,
         current: state.current.map((e) => ({ ...e, isChecked: true })),
       };
     }
-    case DESELECT_ALL_DOORSTAFF_TO_SIGN_OUT: {
+    case DoorstaffTypes.DESELECT_ALL_DOORSTAFF_TO_SIGN_OUT: {
       return {
         ...state,
         current: state.current.map((e) => ({ ...e, isChecked: false })),
       };
     }
-    case SET_DOORSTAFF_SIGNOUT_TIME: {
+    case DoorstaffTypes.SET_DOORSTAFF_SIGNOUT_TIME: {
       return {
         ...state,
         current: [
@@ -74,7 +60,7 @@ export const doorstaffReducer = (state = initialState, action) => {
       };
     }
 
-    case SET_DOORSTAFF_SIGNOUT_DATE: {
+    case DoorstaffTypes.SET_DOORSTAFF_SIGNOUT_DATE: {
       return {
         ...state,
         current: [
@@ -86,7 +72,7 @@ export const doorstaffReducer = (state = initialState, action) => {
         ],
       };
     }
-    case SIGN_OFF_SELECTED_DOORSTAFF: {
+    case DoorstaffTypes.SIGN_OFF_SELECTED_DOORSTAFF: {
       return {
         ...state,
         current: [
@@ -103,37 +89,37 @@ export const doorstaffReducer = (state = initialState, action) => {
       };
     }
 
-    case SHOW_SIGN_OFF_MODAL: {
+    case DoorstaffTypes.SHOW_SIGN_OFF_MODAL: {
       return {
         ...state,
         showSignOffModal: true,
       };
     }
 
-    case HIDE_SIGN_OFF_MODAL: {
+    case DoorstaffTypes.HIDE_SIGN_OFF_MODAL: {
       return {
         ...state,
         showSignOffModal: false,
       };
     }
 
-    case GET_RECENT_DOORSTAFF:
+    case DoorstaffTypes.GET_RECENT_DOORSTAFF:
       return {
         ...state,
         recent: action.data,
       };
-    case GET_DISPUTED_DOORSTAFF:
+    case DoorstaffTypes.GET_DISPUTED_DOORSTAFF:
       return {
         ...state,
         disputed: action.data,
       };
 
-    case SET_DOORSTAFF_ERROR_MESSAGE:
+    case DoorstaffTypes.SET_DOORSTAFF_ERROR_MESSAGE:
       return {
         ...state,
         errorMessage: action.data,
       };
-    case CLEAR_DOORSTAFF_ERROR_MESSAGE:
+    case DoorstaffTypes.CLEAR_DOORSTAFF_ERROR_MESSAGE:
       return {
         ...state,
         errorMessage: "",
