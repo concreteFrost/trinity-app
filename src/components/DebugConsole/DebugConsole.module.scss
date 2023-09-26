@@ -1,0 +1,90 @@
+@import "src/scss/variables.scss";
+
+.wrapper {
+  position: absolute;
+  top: 70px;
+
+  .container {
+    position: relative;
+    height: 100%;
+    width: 200px;
+    padding: 10px;
+    height: 775px;
+    background-color: rgb(240, 241, 241);
+    box-shadow: $soft-shadow;
+
+    &.expanded {
+      transform: translate(0px);
+    }
+
+    &.closed {
+      transform: translate(-220px);
+    }
+
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .console_btn {
+    display: block; /* Make it a block-level element */
+    width: 100px; /* Set the width as needed */
+    height: 50px; /* Set the height as needed */
+    text-align: center; /* Center the text horizontally */
+    line-height: 50px; /* Center the text vertically */
+    color: #fff; /* Button text color */
+    border: none; /* Remove button border */
+    margin: 5px; /* Add some spacing */
+    font-size: 16px; /* Adjust font size as needed */
+    font-weight: bold; /* Optionally make text bold */
+    transform: rotate(
+      90deg
+    ); /* Rotate the button 90 degrees counterclockwise */
+    position: absolute;
+    right: -67px;
+    top: 10px;
+  }
+
+  .header_btns_container {
+    display: flex;
+    justify-content: center;
+  }
+  .footer_btns_container {
+    display: flex;
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .footer_btns_container,
+  .header_btns_container {
+    button {
+      width: 100%;
+      font-size: 0.7rem;
+    }
+  }
+
+  ul {
+    padding: 0;
+  }
+  li {
+    list-style: none;
+    background-color: rgb(211, 211, 211);
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid rgb(218, 218, 218);
+
+    i {
+      display: flex;
+      justify-content: right;
+      font-size: 0.7rem;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.8rem;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import s from "./App.module.scss";
-import "./scss/global.scss"
+import "./scss/global.scss";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "./components/Home/Home";
@@ -17,21 +17,30 @@ import { ModalLogout } from "./components/Modal/ModalLogout/ModalLogout";
 import { ModalAction } from "./components/Modal/ModalAction/ModalAction";
 import { Receipt } from "./components/Receipt/Receipt";
 import Loader from "./components/Loader/Loader";
+import DebugConsole from "./components/DebugConsole/DebugConsole";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
 
   return (
     <div>
-
       <div className={s.container}>
         <ModalMessage></ModalMessage>
         <ModalLogout></ModalLogout>
         <ModalAction></ModalAction>
-
+        <DebugConsole></DebugConsole>
         {isLoggedIn === true ? <Navbar className={s.nav} /> : null}
         <Routes>
-          <Route path="/" element={isLoggedIn ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />} />
+          <Route
+            path="/"
+            element={
+              isLoggedIn ? (
+                <Navigate to="/home" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route
             path="/home"
