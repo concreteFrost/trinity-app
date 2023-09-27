@@ -1,13 +1,14 @@
 import s from "./Recent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import moment from "moment/moment";
 import { GET_RECENT_DOORSTAFF } from "../../../redux/types";
 import axios from "axios";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
 import { baseUrl } from "../../../contexts/baseUrl";
 import { GetTimesheetData } from "../../../redux/api/receiptAPI";
 
-export const Recent = (props) => {
+export const Recent = () => {
   const tableHeader = [
     {
       Header: "NAME",
@@ -40,12 +41,12 @@ export const Recent = (props) => {
       accessor: "status"
     },
     {
-      Header:"PRINT",
-      accessor:'centralCostId',
+      Header: "PRINT",
+      accessor: 'centralCostId',
       Cell: ({ row }) => (
         <div>
           <button
-            onClick={() => {getTimesheetData(row.original.activityId)}}
+            onClick={() => { getTimesheetData(row.original.activityId) }}
           >
             PRINT
           </button>
@@ -60,8 +61,8 @@ export const Recent = (props) => {
   const recent = useSelector((state) => state.doorstaffReducer.recent);
   const dispatch = useDispatch();
 
-  function getTimesheetData(activityId){
-    dispatch(GetTimesheetData(token,"S", activityId))
+  function getTimesheetData(activityId) {
+    dispatch(GetTimesheetData(token, "S", activityId))
   }
 
   const today = new Date();
@@ -74,8 +75,13 @@ export const Recent = (props) => {
   function Submit(e) {
     e.preventDefault()
 
-    const fromDate = new Date(e.target[0].value).toISOString();
-    const toDate = new Date(e.target[1].value).toISOString();
+    const fromDate = moment(e.target[0].value).startOf('day'); // Set the time to 00:00:00.000
+    const formattedfromDate = fromDate.format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+    const toDate = moment(e.target[1].value).endOf('day'); // Set the time to 23:59:59.999
+    const formattedtoDate = toDate.format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+
+    console.log(formattedfromDate);
+    console.log(formattedtoDate);
 
     axios({
       url: baseUrl + "/Report/ActivityList?system=S",
@@ -85,13 +91,13 @@ export const Recent = (props) => {
       },
       method: "POST",
       data: {
-        dateFrom: fromDate,
-        dateTo: toDate.split("T")[0] + "T23:59:999.000Z",
+        dateFrom: formattedfromDate,
+        dateTo: formattedtoDate,
         locationId: parseInt(user.locationId),
         locationGroupId: 0,
         supplierId: 0,
         reference: 0,
-        paymentStatusId: 0
+        paymentStatusId: -1
       },
     })
       .then((res) => {
