@@ -1,13 +1,13 @@
 import html2pdf from "html2pdf.js";
 import { GetTimesheetDataAPI, GetSearchedDataAPI } from "../reportApi";
-import {  GetAreaManagerAnalyticsCosts, GetAreaManagerAnalyticsDoorstaff } from "../../redux/actions/analyticsActions";
+import { GetAreaManagerAnalyticsCosts, GetAreaManagerAnalyticsDoorstaff } from "../../redux/actions/analyticsActions";
 import { SetReceiptData } from "../../redux/actions/reportActions";
 
 
 export function GeneratePDF(token, system, activityId, dispatch) {
     GetTimesheetDataAPI(token, system, activityId).then((res) => {
         const receiptTitle = system === "A" ? 'Pub Activity Receipt' : 'Door Staff Timesheet'
-        dispatch(SetReceiptData(receiptTitle, system, res))
+        dispatch(SetReceiptData(receiptTitle, system, res.data))
     }).then(() => {
         const el = document.getElementById('receipt');
         const pdfOptions = {

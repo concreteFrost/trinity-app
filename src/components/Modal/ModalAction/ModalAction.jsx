@@ -45,8 +45,8 @@ export const ModalAction = () => {
   }
   function Recall() {
     RecallActivity(token, modalActionReducer.activityToModify).then((res) => {
-      if (!res.success) {
-        dispatch(ShowModalMessage(res.message));
+      if (!res.data.success) {
+        dispatch(ShowModalMessage(res.data.message));
       } else {
         GetAuthoriseAndNotes(token, "S", dispatch);
         GetAuthoriseAndNotes(token, "A", dispatch);

@@ -7,53 +7,63 @@
   .container {
     position: relative;
     height: 100%;
-    width: 200px;
+    width: 250px;
     padding: 10px;
     height: 775px;
     background-color: rgb(240, 241, 241);
     box-shadow: $soft-shadow;
+
+
 
     &.expanded {
       transform: translate(0px);
     }
 
     &.closed {
-      transform: translate(-220px);
+      transform: translate(-270px);
     }
 
     transition: transform 0.3s ease-in-out;
   }
 
+  .messages_list {
+    overflow-y: auto;
+    height: 700px;
+
+    span {
+      font-weight: bold;
+    }
+  }
+
   .console_btn {
-    display: block; /* Make it a block-level element */
-    width: 100px; /* Set the width as needed */
-    height: 50px; /* Set the height as needed */
-    text-align: center; /* Center the text horizontally */
-    line-height: 50px; /* Center the text vertically */
-    color: #fff; /* Button text color */
-    border: none; /* Remove button border */
-    margin: 5px; /* Add some spacing */
-    font-size: 16px; /* Adjust font size as needed */
-    font-weight: bold; /* Optionally make text bold */
-    transform: rotate(
-      90deg
-    ); /* Rotate the button 90 degrees counterclockwise */
+    display: block;
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    transform: rotate(90deg);
     position: absolute;
-    right: -67px;
-    top: 10px;
+    right: -62px;
+    top: 13px;
   }
 
   .header_btns_container {
     display: flex;
     justify-content: center;
   }
-  .footer_btns_container {
-    display: flex;
-    position: absolute;
 
+  .footer_btns_container {
+    background-color: rgb(240, 241, 241);
+    height: 30px;
+    position: absolute;
     bottom: 20px;
     left: 0;
     right: 0;
+
   }
 
   .footer_btns_container,
@@ -64,27 +74,5 @@
     }
   }
 
-  ul {
-    padding: 0;
-  }
-  li {
-    list-style: none;
-    background-color: rgb(211, 211, 211);
-    margin-bottom: 5px;
-    padding: 5px;
-    border-radius: 5px;
-    background-color: white;
-    border: 1px solid rgb(218, 218, 218);
 
-    i {
-      display: flex;
-      justify-content: right;
-      font-size: 0.7rem;
-    }
-
-    p {
-      margin: 0;
-      font-size: 0.8rem;
-    }
-  }
 }

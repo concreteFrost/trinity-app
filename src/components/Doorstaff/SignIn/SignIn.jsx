@@ -8,6 +8,7 @@ import {
 } from "../../../services/activityApi";
 import { RefreshDoorstaffList } from "../../../services/utils/activityUtils";
 import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
+import { GetResponse } from "../../../redux/actions/debugConsoleActions";
 
 export const SignIn = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export const SignIn = () => {
     const position = e.target.value;
     await dispatch(DoorstaffActions.SetDoorstaffCurrentPosition(position));
     await GetDoorstaffSupplierAPI(position, token.access_token).then((res) => {
-      dispatch(DoorstaffActions.GetDoorstaffSupplierOptions(res));
+      dispatch(DoorstaffActions.GetDoorstaffSupplierOptions(res.data.suppliers));
     });
   }
 
@@ -40,10 +41,11 @@ export const SignIn = () => {
       supplierId,
       sia.date
     ).then((res) => {
-      if (!res.success) {
-        dispatch(ShowModalMessage(res.message));
+      if (!res.data.success) {
+        console.log('sadasdsad', res)
+        dispatch(ShowModalMessage(res.data.message));
       }
-      dispatch(DoorstaffActions.GetDooorstaffRateOptions(res.rates));
+      dispatch(DoorstaffActions.GetDooorstaffRateOptions(res.data.rates));
     });
   }
 
@@ -55,12 +57,14 @@ export const SignIn = () => {
   function Submit() {
     SignOnMemberAPI(token.access_token, sia)
       .then((res) => {
-        if (!res.success) {
-          dispatch(ShowModalMessage(res.message));
+        if (!res.data.success) {
+          dispatch(ShowModalMessage(res.data.message));
         } else {
           RefreshDoorstaffList(token.access_token, dispatch);
           dispatch(DoorstaffActions.ClearSiaData());
+
         }
+        dispatch(GetResponse('doorstaff sign in success', res))
       })
   }
 
@@ -88,10 +92,10 @@ export const SignIn = () => {
             <option value={null}>Select Position</option>
             {sia.options.positions.length > 0
               ? sia.options.positions.map((e) => (
-                  <option key={e.positionId} value={e.positionId}>
-                    {e.positionName}
-                  </option>
-                ))
+                <option key={e.positionId} value={e.positionId}>
+                  {e.positionName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -107,10 +111,10 @@ export const SignIn = () => {
             <option value={null}>Select the Supplier</option>
             {sia.options.suppliers.length > 0
               ? sia.options.suppliers.map((e) => (
-                  <option key={e.supplierId} value={e.supplierId}>
-                    {e.supplierName}
-                  </option>
-                ))
+                <option key={e.supplierId} value={e.supplierId}>
+                  {e.supplierName}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -124,10 +128,10 @@ export const SignIn = () => {
             <option value={null}>Select Rate</option>
             {sia.options.rates.length > 0
               ? sia.options.rates.map((e) => (
-                  <option key={e.rateGroupId} value={e.rateGroupId}>
-                    {e.rateGroupName}
-                  </option>
-                ))
+                <option key={e.rateGroupId} value={e.rateGroupId}>
+                  {e.rateGroupName}
+                </option>
+              ))
               : null}
           </select>
         </div>

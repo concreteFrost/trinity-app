@@ -7,8 +7,8 @@ import {
   GetDoorstaffPositionsAPI,
   GetSiaDataAPI,
 } from "../../../services/activityApi";
-import {ShowModalMessage} from "../../../redux/actions/modalActions";
-import {AddSuccessMessage} from "../../../redux/actions/debugConsoleActions"
+import { ShowModalMessage } from "../../../redux/actions/modalActions";
+import { GetResponse } from "../../../redux/actions/debugConsoleActions"
 
 export const SIA = () => {
   const dispatch = useDispatch();
@@ -21,16 +21,16 @@ export const SIA = () => {
     dispatch(ShowLoader());
     GetSiaDataAPI(sia, token)
       .then((siaResult) => {
-        if (siaResult.message !== null) {
-          dispatch(ShowModalMessage(siaResult.message));
+        if (siaResult.data.message !== null) {
+          dispatch(ShowModalMessage(siaResult.data.message));
           dispatch(DoorstaffActions.ClearSiaData());
-         
+
         }
-        dispatch(DoorstaffActions.SetSiaData(siaResult));
-        dispatch(AddSuccessMessage('get sia data success'));
+        dispatch(DoorstaffActions.SetSiaData(siaResult.data));
+        dispatch(GetResponse('get sia data success', siaResult));
         GetDoorstaffPositionsAPI(token).then((res) => {
-          dispatch(DoorstaffActions.GetDoorstaffPositionsOptions(res));
-          dispatch(DoorstaffActions.SetDoorstaffCurrentPosition(res[0]));
+          dispatch(DoorstaffActions.GetDoorstaffPositionsOptions(res.data.position));
+          dispatch(DoorstaffActions.SetDoorstaffCurrentPosition(res.data.position[0]));
         });
       })
       .finally(() => {

@@ -7,7 +7,7 @@ export function RefreshDoorstaffList(token, dispatch) {
   GetDoorstaffListAPI(token)
     .then((res) => {
       console.log("get doorstaff list success", res);
-      dispatch(DoorstaffAction.SetDoorStaffList(res));
+      dispatch(DoorstaffAction.SetDoorStaffList(res.data.staffLogin));
     })
     .catch((e) => console.log("get doorstaff error", e));
 }
