@@ -12,6 +12,7 @@ import {
 } from "../../../../services/reportApi";
 import { ShowModalMessage } from "../../../../redux/actions/modalActions";
 import * as SearchActions from "../../../../redux/actions/searchActions";
+import { GetResponse, GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
 
 export const ActivitiesForm = (props) => {
   const dispatch = useDispatch();
@@ -23,40 +24,46 @@ export const ActivitiesForm = (props) => {
     //SUPPLIER/GROUP dropdown
     GetSearchSuppliersAPI(token)
       .then((res) => {
+        dispatch(GetResponse('get search suppliers success', res))
         dispatch(SearchActions.GetSearchSuppliers(res.data.record));
       })
-      .catch((e) => {});
+      .catch((e) => { dispatch(GetBadResponse('get search suppliers error', e)) });
 
     //LOCATION dropdown
     GetSearchLocationsAPI(token).then((res) => {
+      dispatch(GetResponse('get search locattions success', res))
       dispatch(SearchActions.GetSearchLocations(res.data.record));
-    });
+    }).catch((e) => { dispatch(GetBadResponse('get search locations error', e)) });;
 
     //LOCATION GROUPS dropdown
     GetSearchLocationsGroupAPI(token).then((res) => {
+      dispatch(GetResponse('get search locations group success', res))
       dispatch(SearchActions.GetSearchLocationGroup(res.data.record));
-    });
+    }).catch((e) => { dispatch(GetBadResponse('get search locations group error', e)) });;
 
     //STAFF/GROUP dropdown
     GetSearchStaffAPI(token)
       .then((res) => {
+        dispatch(GetResponse('get search staff success', res))
         dispatch(SearchActions.GetSearchStaff(res.data.record));
       })
-      .catch((e) => {});
+      .catch((e) => { dispatch(GetBadResponse('get search staff error', e)) });
 
     //PAYMENT STATUS dropdown
     GetSearchPaymentStatusAPI(token)
       .then((res) => {
+        dispatch(GetResponse('get search payment status success', res))
         dispatch(SearchActions.GetSearchPaymentStatus(res.data.record));
       })
-      .catch((e) => {});
+      .catch((e) => { dispatch(GetBadResponse('get search payment status error', e)) });
 
     //Currently not in use
     GetSearchPaymentStatusGroupAPI(token)
       .then((res) => {
+        dispatch(GetResponse('get search payment status group success', res))
         dispatch(SearchActions.GetSearchPaymentStatusGroup(res.data.record));
       })
-      .catch((e) => {});
+      .catch((e) => { dispatch(GetBadResponse('get search payment status group error', e)) });
   }, []);
 
   function Submit(e) {
@@ -118,10 +125,10 @@ export const ActivitiesForm = (props) => {
               <option value={0}>All</option>
               {data.options.staff.length > 0
                 ? data.options.staff.map((e) => (
-                    <option key={e.id} value={e.id}>
-                      {e.name}
-                    </option>
-                  ))
+                  <option key={e.id} value={e.id}>
+                    {e.name}
+                  </option>
+                ))
                 : null}
             </select>
           </div>
@@ -137,10 +144,10 @@ export const ActivitiesForm = (props) => {
             <option value={0}>All</option>
             {data.options.locations.length > 0
               ? data.options.locations.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))
+                <option key={e.id} value={e.id}>
+                  {e.name}
+                </option>
+              ))
               : null}
           </select>
 
@@ -152,10 +159,10 @@ export const ActivitiesForm = (props) => {
             <option value={0}>All</option>
             {data.options.locationsGroup.length > 0
               ? data.options.locationsGroup.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))
+                <option key={e.id} value={e.id}>
+                  {e.name}
+                </option>
+              ))
               : null}
           </select>
         </div>
@@ -171,10 +178,10 @@ export const ActivitiesForm = (props) => {
               <option value={0}>All</option>
               {data.options.suppliers.length > 0
                 ? data.options.suppliers.map((e) => (
-                    <option key={e.id} value={e.id}>
-                      {e.name}
-                    </option>
-                  ))
+                  <option key={e.id} value={e.id}>
+                    {e.name}
+                  </option>
+                ))
                 : null}
             </select>
           </div>
@@ -188,10 +195,10 @@ export const ActivitiesForm = (props) => {
           >
             {data.options.paymentStatus.length > 0
               ? data.options.paymentStatus.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))
+                <option key={e.id} value={e.id}>
+                  {e.name}
+                </option>
+              ))
               : null}
           </select>
         </div>

@@ -12,7 +12,7 @@
     height: 775px;
     background-color: rgb(240, 241, 241);
     box-shadow: $soft-shadow;
-
+    z-index: 1000;
 
 
     &.expanded {

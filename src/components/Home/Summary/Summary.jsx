@@ -3,8 +3,9 @@ import s from "./Summary.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { GetSummaryReviewAPI } from "../../../services/reportApi";
-import {HideLoader, ShowLoader } from "../../../redux/actions/loaderActions";
+import { HideLoader, ShowLoader } from "../../../redux/actions/loaderActions";
 import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
+import { GetBadResponse, GetResponse } from "../../../redux/actions/debugConsoleActions";
 
 
 export const Summary = () => {
@@ -17,10 +18,16 @@ export const Summary = () => {
   useEffect(() => {
     dispatch(ShowLoader())
     GetSummaryReviewAPI(token, date, "D").then((res) => {
+      dispatch(GetResponse('get daily summary success', res))
       dispatch(DoorstaffActions.GetDoorstaffDaily(res.data.summaryRecords))
+    }).catch((e) => {
+      dispatch(GetBadResponse('get daily summary error', e))
     })
     GetSummaryReviewAPI(token, date, "W").then((res) => {
+      dispatch(GetResponse('get weekly summary success', res))
       dispatch(DoorstaffActions.GetDoorstaffWeekly(res.data.summaryRecords))
+    }).catch((e) => {
+      dispatch(GetBadResponse('get weekly summary error', e))
     }).finally(() => {
       dispatch(HideLoader())
     })

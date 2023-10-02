@@ -1,7 +1,7 @@
 import s from "./Navbar.module.scss";
 import { NavbarList } from "./NavbarList/NavbarList";
 import { NavbarHeader } from "./NavbarHeader/NavbarHeader";
-import { HeaderImage } from '../HeaderImage/HeaderImage'
+import { HeaderImage } from '../HeaderImage/HeaderImage';
 
 export const Navbar = (props) => {
   return (

@@ -6,11 +6,14 @@ import {
   ClearSuccessMessages,
   ClearErrorMessages,
 } from "../../redux/actions/debugConsoleActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import ErrorMessages from "./ErrorMessages/ErrorMessages";
 
 function DebugConsole() {
   const [currentView, setCurrentView] = useState("success");
-  const [isExpanded, setIsExpanded] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(true);
+  const isConsoleVisible = useSelector((state) => state.debugConsoleReducer.isConsoleVisible);
+
   const dispatch = useDispatch();
 
   const containerClasses = `${s.container} ${isExpanded ? [s.expanded] : [s.closed]}`
@@ -18,7 +21,7 @@ function DebugConsole() {
 
   return (
     <div className={s.wrapper}>
-      <div className={containerClasses}>
+      {isConsoleVisible ? <div className={containerClasses}>
         <div className={s.console_btn}>
           <button onClick={() => { setIsExpanded(!isExpanded) }}>CONSOLE</button>
         </div>
@@ -30,7 +33,7 @@ function DebugConsole() {
           <div className={s.messages_list}>
             {currentView === "success" ? (
               <SuccessMessages></SuccessMessages>
-            ) : null}
+            ) : <ErrorMessages></ErrorMessages>}
           </div>
           <div className={s.footer_btns_container}>
             {currentView === "success" ? (
@@ -47,7 +50,8 @@ function DebugConsole() {
             </button>
           </div>
         </div>
-      </div>
+      </div> : null}
+
     </div>
   );
 }

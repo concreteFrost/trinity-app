@@ -1,10 +1,12 @@
 import { GetAuthorise, GetAreaDisputedNotes } from "../areaManagerApi";
 import { GET_AUTHORISE_DOORSTAFF, GET_AUTHORISE_COSTS } from "../../redux/types/authoriseTypes";
+import { GetBadResponse, GetResponse } from "../../redux/actions/debugConsoleActions";
 
 
 export function GetAuthoriseAndNotes(token, system, dispatch) {
   GetAuthorise(token, system)
     .then((res) => {
+      dispatch(GetResponse("get authorise success", res))
       switch (system) {
         case "S":
           dispatch({
@@ -25,7 +27,7 @@ export function GetAuthoriseAndNotes(token, system, dispatch) {
 
         GetAreaDisputedNotes(token, system, r.activityId)
           .then((notesData) => {
-            console.log('sadasddas', notesData.data.record)
+
             switch (system) {
               case "S":
                 dispatch({
@@ -43,11 +45,11 @@ export function GetAuthoriseAndNotes(token, system, dispatch) {
                 break;
             }
           })
-          .catch((e) => console.log(e))
+          .catch((e) => dispatch(GetBadResponse('get notes error', e)))
       });
 
     })
     .catch((e) => {
-      console.log(e);
+      dispatch(GetBadResponse('get authorise error', e))
     });
 }

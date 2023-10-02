@@ -9,6 +9,7 @@ import * as AuthoriseActions from "../../../redux/actions/authoriseActions";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
 import { GetAuthoriseAndNotes } from "../../../services/utils/areaManagerUtils";
 import * as ModalActions from "../../../redux/actions/modalActions";
+import { GetBadResponse, GetResponse } from "../../../redux/actions/debugConsoleActions";
 
 export const CostsAndPayments = (props) => {
   const toDispute = useSelector((state) => state.modalPromptReducer);
@@ -25,9 +26,10 @@ export const CostsAndPayments = (props) => {
       if (element.selected)
         ApproveActivity(token, props.system, element)
           .then((res) => {
+            dispatch(GetResponse('approve activity success', res))
             GetAuthoriseAndNotes(token, props.system, dispatch);
           })
-          .catch((e) => {});
+          .catch((e) => { dispatch(GetBadResponse('approve activity error', e)) });
     });
   }
   function SelectAll() {
@@ -44,8 +46,11 @@ export const CostsAndPayments = (props) => {
 
   function DisputeActivity() {
     SendDisputed(props.system, token, toDispute).then((res) => {
+      dispatch(GetResponse('send disputed activity success', res))
       ModalActions.ResetModalActivity();
       GetAuthoriseAndNotes(token, props.system, dispatch);
+    }).catch((e) => {
+      dispatch(GetBadResponse('send disputed activity error', e))
     });
   }
 

@@ -8,6 +8,7 @@ import {
   HideActionModal,
   ShowModalMessage,
 } from "../../../redux/actions/modalActions";
+import { GetBadResponse, GetResponse } from "../../../redux/actions/debugConsoleActions";
 
 export const ModalAction = () => {
   const modalActionReducer = useSelector((state) => state.modalActionReducer);
@@ -38,10 +39,13 @@ export const ModalAction = () => {
   function Cancel() {
     CancelDoorstaffAPI(modalActionReducer.activityToModify, token).then(
       (res) => {
+        dispatch(GetResponse('cancel activity success', res))
         dispatch(HideActionModal());
         RefreshDoorstaffList(token, dispatch);
       }
-    );
+    ).catch((e) => {
+      dispatch(GetBadResponse('cancel activity error', e))
+    });
   }
   function Recall() {
     RecallActivity(token, modalActionReducer.activityToModify).then((res) => {
@@ -51,6 +55,9 @@ export const ModalAction = () => {
         GetAuthoriseAndNotes(token, "S", dispatch);
         GetAuthoriseAndNotes(token, "A", dispatch);
       }
+      dispatch(GetResponse('recall activity succes', res))
+    }).catch((e) => {
+      dispatch(GetBadResponse('recall activity error', e))
     });
   }
 

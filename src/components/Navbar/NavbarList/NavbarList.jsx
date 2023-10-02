@@ -1,13 +1,14 @@
 import s from "./NavbarList.module.scss";
 import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { GearFill } from "react-bootstrap-icons";
+import { ToggleDebugConsole } from "../../../redux/actions/debugConsoleActions"
 
 export const NavbarList = (props) => {
 
   const dispatch = useDispatch();
   const userReducer = useSelector(state => state.userReducer.user);
   const location = useLocation();
-
 
   return (
     <div className={s.navbar_list}>
@@ -49,7 +50,11 @@ export const NavbarList = (props) => {
       >
         AUTHORISE
       </NavLink> : null}
-      <button onClick={() => dispatch({ type: "SHOW_LOGOUT_MODAL" })}>LOGOUT</button>
+      <div>
+        <GearFill className={s.settings_btn} onClick={() => dispatch(ToggleDebugConsole())}></GearFill>
+      </div>
+
+      <button className={s.logout_btn} onClick={() => dispatch({ type: "SHOW_LOGOUT_MODAL" })}>LOGOUT</button>
     </div>
   );
 };

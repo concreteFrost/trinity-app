@@ -2,10 +2,11 @@ import s from "./AddActivity.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { GetActivitySupplierOptAPI, GetActivityTypeOptAPI, GetRateAPI, SubmitActivityAPI } from "../../../../services/activityApi";
-import { ShowLoader,HideLoader } from "../../../../redux/actions/loaderActions";
+import { ShowLoader, HideLoader } from "../../../../redux/actions/loaderActions";
 import * as ActivityActions from "../../../../redux/actions/activityActions";
 import * as ModalActions from "../../../../redux/actions/modalActions";
 import { RefreshActivityList } from "../../../../services/utils/activityUtils";
+import { GetBadResponse, GetResponse } from "../../../../redux/actions/debugConsoleActions"
 
 export const AddActivity = () => {
   const activityOpt = useSelector(
@@ -40,24 +41,29 @@ export const AddActivity = () => {
 
   const dispatch = useDispatch();
 
-  function _GetActivityAPI(){
+  function _GetActivityAPI() {
     GetActivityTypeOptAPI(token).then((res) => {
       dispatch(ActivityActions.GetActivityTypeOpt(res.data.record))
       dispatch(ActivityActions.SetActivityType(res.data.record[0].id))
-      GetActivitySupplierOptAPI(token, res.data.record[0].id)
+      GetActivitySupplierOptAPI(token, res.data.record[0].id);
+      dispatch(GetResponse('get activity cost group success', res))
+    }).catch((e) => {
+      dispatch(GetBadResponse('get activity cost group success', e))
     })
   }
 
   useEffect(() => {
     _GetActivityAPI();
-    
+
   }, []);
 
   function GetSupplierOpt(e) {
     dispatch(ActivityActions.SetActivityType(e.target.value))
     GetActivitySupplierOptAPI(token, e.target.value).then((res) => {
       dispatch(ActivityActions.GetActivitySupplierOpt(res.data.suppliers))
-
+      dispatch(GetResponse('get activity supplier group success', res))
+    }).catch((e) => {
+      dispatch(GetBadResponse('get activity supplier group success', e))
     })
   }
 
@@ -95,6 +101,9 @@ export const AddActivity = () => {
         dispatch(ActivityActions.isActivitySupplierProvided(true))
         dispatch(ActivityActions.SetActivityCostValue(res.data.costValue))
       }
+      dispatch(GetResponse("get rate success", res))
+    }).catch((e) => {
+      dispatch(GetBadResponse("get rate error", e))
     }).finally(() => {
       dispatch(HideLoader());
     })
@@ -116,16 +125,19 @@ export const AddActivity = () => {
       hoursWorked: parseFloat(hoursWorked),
     };
     SubmitActivityAPI(token, _data).then((res) => {
+      dispatch(GetResponse("submit activity success", res))
       dispatch(ActivityActions.ClearActivity())
+    }).catch((e) => {
+      dispatch(GetBadResponse('submit activity error', e))
     }).finally(() => {
       const today = new Date()
       const yesterday = new Date(new Date().setDate(today.getDate() - 1));
       RefreshActivityList(token, new Date(yesterday).toISOString(), new Date(today).toISOString(), dispatch, "C")
       _GetActivityAPI()
-    
+
     })
 
-   
+
 
   }
   return (

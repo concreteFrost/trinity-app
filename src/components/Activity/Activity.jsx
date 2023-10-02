@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { GetDisputedActivityAPI } from "../../services/disputedApi";
 import * as ActivityActions from "../../redux/actions/activityActions";
+import { GetBadResponse, GetResponse } from "../../redux/actions/debugConsoleActions";
 
 export const Activity = () => {
   const token = useSelector((state) => state.userReducer.user.access_token);
@@ -17,9 +18,9 @@ export const Activity = () => {
   const disputedctivity = useSelector((s) => s.getActivityReducer.disputed);
   useEffect(() => {
     GetDisputedActivityAPI(token, "A").then((res) => {
-
+      dispatch(GetResponse("get disputed activity success", res))
       dispatch(ActivityActions.GetDisputedActivity(res.data.reportRecord))
-    })
+    }).catch((e) => { dispatch(GetBadResponse('get disputed activity error', e)) })
 
   }, []);
 

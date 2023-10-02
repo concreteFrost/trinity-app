@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SetErrorOnLogin, SetLoginDetails } from "../../redux/actions/loginActions";
 import { GenerateUniqueReference, GetToken } from "../../services/authApi";
+import { GetBadResponse } from "../../redux/actions/debugConsoleActions";
 
 export const Login = () => {
   const errorMessage = useSelector((state) => state.userReducer.errorOnLogin);
@@ -39,9 +40,16 @@ export const Login = () => {
     e.preventDefault();
     if (clientID) {
       GetToken(e.target[0].value, clientID)
-        .then((res) => dispatch(SetLoginDetails(res)))
-        .catch((e) => dispatch(SetErrorOnLogin()));
+        .then((res) => {
+          dispatch(SetLoginDetails(res));
+
+        })
+        .catch((e) => {
+          dispatch(GetBadResponse('get token error', e))
+          dispatch(SetErrorOnLogin())
+        });
     } else {
+
       console.log("clientID not available");
     }
   }

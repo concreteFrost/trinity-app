@@ -8,7 +8,7 @@ import {
 } from "../../../services/activityApi";
 import { RefreshDoorstaffList } from "../../../services/utils/activityUtils";
 import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
-import { GetResponse } from "../../../redux/actions/debugConsoleActions";
+import { GetBadResponse, GetResponse } from "../../../redux/actions/debugConsoleActions";
 
 export const SignIn = () => {
   const dispatch = useDispatch();
@@ -20,8 +20,9 @@ export const SignIn = () => {
     const position = e.target.value;
     await dispatch(DoorstaffActions.SetDoorstaffCurrentPosition(position));
     await GetDoorstaffSupplierAPI(position, token.access_token).then((res) => {
+      dispatch(GetResponse('get doorstaff positions success', res))
       dispatch(DoorstaffActions.GetDoorstaffSupplierOptions(res.data.suppliers));
-    });
+    }).catch((e) => { dispatch(GetBadResponse('get doorstaff positions error', e)) });
   }
 
   async function SetCurrentSupplier(e) {
@@ -42,10 +43,12 @@ export const SignIn = () => {
       sia.date
     ).then((res) => {
       if (!res.data.success) {
-        console.log('sadasdsad', res)
         dispatch(ShowModalMessage(res.data.message));
       }
+      dispatch(GetResponse('get doorstaff rates success', res))
       dispatch(DoorstaffActions.GetDooorstaffRateOptions(res.data.rates));
+    }).catch((e) => {
+      dispatch(GetBadResponse('get doorstaff rates error', e))
     });
   }
 
@@ -64,8 +67,8 @@ export const SignIn = () => {
           dispatch(DoorstaffActions.ClearSiaData());
 
         }
-        dispatch(GetResponse('doorstaff sign in success', res))
-      })
+        dispatch(GetResponse('sign in doorstaff success', res))
+      }).catch((e) => { GetBadResponse('sign in doorstaff error', e) })
   }
 
   return (

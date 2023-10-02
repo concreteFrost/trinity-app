@@ -12,12 +12,19 @@ export function GetResponse(message, response) {
     }
 }
 
+export function GetBadResponse(message, response) {
 
-
-export function AddErrorMessage(message) {
-    return { type: DebugConsoleTypes.ADD_ERROR_MESSAGE, data: message }
-
+    return {
+        type: DebugConsoleTypes.GET_BAD_RESPONSE,
+        message: message,
+        responseMessage: response.response.data.error ? response.response.data.error : response.message,
+        status: response.response.status,
+        method: response.config.method,
+        requestData: response.config.data,
+        requestUrl: response.config.url.split("/api")[1],
+    }
 }
+
 
 export function ClearSuccessMessages() {
     return { type: DebugConsoleTypes.CLEAR_SUCCESS_MESSAGES }
@@ -29,4 +36,8 @@ export function ClearErrorMessages() {
 
 export function ClearAllMessages() {
     return { type: DebugConsoleTypes.CLEAR_ALL_MESSAGES }
+}
+
+export function ToggleDebugConsole() {
+    return { type: DebugConsoleTypes.TOGGLE_DEBUG_CONSOLE }
 }

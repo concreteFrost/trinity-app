@@ -5,6 +5,7 @@ import {
   GetDoorstaffList,
 } from "../../../services/activityApi";
 import { HideActionModal } from "../../../redux/actions/modalActions";
+import { GetResponse } from "../../../redux/actions/debugConsoleActions";
 
 export const ModalCancel = (props) => {
   const modalCancelReducer = useSelector((state) => state.modalCancelReducer);
@@ -15,7 +16,8 @@ export const ModalCancel = (props) => {
   function Cancel(e) {
     e.preventDefault();
     CancelDoorstaff(modalCancelReducer.activityToModify, token).then((res) => {
-      GetDoorstaffList(token).then((res) => {});
+      dispatch(GetResponse('cancel activity success', res))
+      GetDoorstaffList(token).then((res) => { });
     });
   }
 
