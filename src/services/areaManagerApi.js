@@ -11,12 +11,10 @@ export function GetAuthorise(token, system) {
         },
       })
       .then((res) => {
-        console.log("get authorise payment list success", res)
         resolve(res);
       })
       .catch((e) => {
-        console.log("get authorise payment list error", e)
-        reject(e)
+        reject(e);
       });
   });
 }
@@ -34,12 +32,10 @@ export function GetAreaDisputedNotes(token, system, activityID) {
         }
       )
       .then((res) => {
-        console.log("get disputed note success", res)
-        resolve(res)
+        resolve(res);
       })
       .catch((e) => {
-        console.log("get disputed note error", e)
-        reject(e)
+        reject(e);
       });
   });
 }
@@ -59,12 +55,10 @@ export function SendDisputed(system, token, toDispute) {
       },
     })
       .then((res) => {
-        console.log("send disputed note success", res)
-        resolve(res)
+        resolve(res);
       })
       .catch((e) => {
-        console.log("send disputed note error", e)
-        reject(e)
+        reject(e);
       });
   });
 }
@@ -82,12 +76,10 @@ export function ApproveActivity(token, system, element) {
       }
     )
       .then((res) => {
-        console.log("approve activity success", res)
-        resolve(res)
+        resolve(res);
       })
       .catch((e) => {
-        console.log("approve activity error", e)
-        reject(e)
+        reject(e);
       });
   });
 }
@@ -104,11 +96,9 @@ export function RecallActivity(token, data) {
       data: data,
     })
       .then((res) => {
-        console.log("recall activity success", res)
         resolve(res);
       })
       .catch((e) => {
-        console.log("recall activity error", e)
         reject(e);
       });
   });

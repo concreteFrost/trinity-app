@@ -2,16 +2,15 @@
 @import "src/scss/mixins";
 
 .container {
+  display: flex;
+  justify-content: center;
 
-    display: flex;
-    justify-content: center;
-
-    
   form {
     @include form-template;
+    width: 100%;
     display: grid;
-
-    padding: 15px;
+    gap: 10px;
+    
   }
 
   .buttons {
@@ -20,7 +19,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    
+
     button {
       margin-left: 5px;
       margin-bottom: 0;
@@ -69,8 +68,4 @@
   .submit {
     @include btn($button-submit);
   }
-
-
-
-  
 }

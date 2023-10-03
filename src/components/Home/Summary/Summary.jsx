@@ -18,16 +18,16 @@ export const Summary = () => {
   useEffect(() => {
     dispatch(ShowLoader())
     GetSummaryReviewAPI(token, date, "D").then((res) => {
-      dispatch(GetResponse('get daily summary success', res))
+      dispatch(GetResponse('get daily summary success', res,'home'))
       dispatch(DoorstaffActions.GetDoorstaffDaily(res.data.summaryRecords))
     }).catch((e) => {
-      dispatch(GetBadResponse('get daily summary error', e))
+      dispatch(GetBadResponse('get daily summary error', e,'home'))
     })
     GetSummaryReviewAPI(token, date, "W").then((res) => {
-      dispatch(GetResponse('get weekly summary success', res))
+      dispatch(GetResponse('get weekly summary success', res,'home'))
       dispatch(DoorstaffActions.GetDoorstaffWeekly(res.data.summaryRecords))
     }).catch((e) => {
-      dispatch(GetBadResponse('get weekly summary error', e))
+      dispatch(GetBadResponse('get weekly summary error', e,'home'))
     }).finally(() => {
       dispatch(HideLoader())
     })

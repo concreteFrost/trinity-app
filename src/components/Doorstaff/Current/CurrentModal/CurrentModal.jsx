@@ -31,13 +31,13 @@ export const CurrentModal = (props) => {
 
     SignOffMemberAPI(toSignOff, props.token.access_token, signOutTIme).then(
       (res) => {
-        dispatch(GetResponse('sign off doorstaff success', res))
+        dispatch(GetResponse('sign off doorstaff success', res, 'doorstaff'))
         !res.data.success
           ? dispatch(ModalActions.ShowModalMessage(res.data.message))
           : RefreshDoorstaffList(props.token.access_token, dispatch);
       }
     ).catch((e) => {
-      dispatch(GetBadResponse('sign off doorstaff error', e))
+      dispatch(GetBadResponse('sign off doorstaff error', e, 'doorstaff'))
     });
 
     props.setIsSignOffModalVisible(false);

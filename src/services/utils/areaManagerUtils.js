@@ -6,7 +6,7 @@ import { GetBadResponse, GetResponse } from "../../redux/actions/debugConsoleAct
 export function GetAuthoriseAndNotes(token, system, dispatch) {
   GetAuthorise(token, system)
     .then((res) => {
-      dispatch(GetResponse("get authorise success", res))
+      dispatch(GetResponse("get authorise success", res,'authorise'))
       switch (system) {
         case "S":
           dispatch({
@@ -45,11 +45,11 @@ export function GetAuthoriseAndNotes(token, system, dispatch) {
                 break;
             }
           })
-          .catch((e) => dispatch(GetBadResponse('get notes error', e)))
+          .catch((e) => dispatch(GetBadResponse('get notes error', e,'authorise')))
       });
 
     })
     .catch((e) => {
-      dispatch(GetBadResponse('get authorise error', e))
+      dispatch(GetBadResponse('get authorise error', e,'authorise'))
     });
 }

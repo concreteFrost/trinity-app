@@ -18,11 +18,9 @@ export function GetTimesheetDataAPI(token, system, activityId) {
         }
       )
       .then((res) => {
-        console.log("get timesheet data success", res);
         resolve(res);
       })
       .catch((e) => {
-        console.log("get timesheet data error", e);
         reject(e);
       });
   });
@@ -46,11 +44,9 @@ export function GetDoorstaffRecentAPI(user, fromDate, toDate, system) {
       },
     })
       .then((res) => {
-        console.log("get activity recent success", res);
         resolve(res);
       })
       .catch((e) => {
-        console.log("get activity recent error", e);
         reject(e);
       });
   });
@@ -69,12 +65,10 @@ export function GetActivityAPI(token, dateFrom, dateTo) {
       },
     })
       .then((res) => {
-        console.log("get cost review success", res)
-        resolve(res)
+        resolve(res);
       })
       .catch((e) => {
-        console.log("get cost review error", e)
-        reject(e)
+        reject(e);
       });
   });
 }
@@ -87,11 +81,9 @@ export function GetSearchStaffAPI(token) {
         headers: headers(token),
       })
       .then((res) => {
-        console.log("get search staff success", res);
         resolve(res);
       })
       .catch((e) => {
-        console.log("get search staff error", e);
         reject(e);
       });
   });
@@ -105,11 +97,9 @@ export function GetSearchSuppliersAPI(token) {
         headers: headers(token),
       })
       .then((res) => {
-        console.log("get search suppliers success", res)
         resolve(res);
       })
       .catch((e) => {
-        console.log("get search suppliers error", e)
         reject(e);
       });
   });
@@ -122,12 +112,10 @@ export function GetSearchLocationsAPI(token) {
         headers: headers(token),
       })
       .then((res) => {
-        console.log("get search locations success", res)
-        resolve(res)
+        resolve(res);
       })
       .catch((e) => {
-        console.log("get search locations error", e)
-        reject(e)
+        reject(e);
       });
   });
 }
@@ -139,12 +127,10 @@ export function GetSearchLocationsGroupAPI(token) {
         headers: headers(token),
       })
       .then((res) => {
-        console.log("get search locations group success", res)
-        resolve(res)
+        resolve(res);
       })
       .catch((e) => {
-        console.log("get search locations group error", e)
-        reject(e)
+        reject(e);
       });
   });
 }
@@ -156,12 +142,10 @@ export function GetSearchPaymentStatusAPI(token) {
         headers: headers(token),
       })
       .then((res) => {
-        console.log("get search payment status success", res)
-        resolve(res)
+        resolve(res);
       })
       .catch((e) => {
-        console.log("get search payment status error", e)
-        reject(e)
+        reject(e);
       });
   });
 }
@@ -173,12 +157,10 @@ export function GetSearchPaymentStatusGroupAPI(token) {
         headers: headers(token),
       })
       .then((res) => {
-        console.log("get search payment status group success", res)
-        resolve(res)
+        resolve(res);
       })
       .catch((e) => {
-        console.log("get search payment status group error", e)
-        reject(e)
+        reject(e);
       });
   });
 }
@@ -199,12 +181,10 @@ export function GetSearchedDataAPI(system, token, locationId, _data) {
       },
     })
       .then((res) => {
-        console.log("get activity list success", res)
-        resolve(res)
+        resolve(res);
       })
       .catch((e) => {
-        console.log("get activity list error", e)
-        reject(e)
+        reject(e);
       });
   });
 }
@@ -219,11 +199,9 @@ export function GetSummaryReviewAPI(token, date, summaryCode) {
         }
       )
       .then((res) => {
-        console.log("get summary review success", res);
         resolve(res);
       })
       .catch((e) => {
-        console.log("get summary review error", e);
         reject(e);
       });
   });

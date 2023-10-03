@@ -184,6 +184,7 @@
     @include form-input;
   }
 
+
   @media screen and (max-width: $screen-laptop) {
 
     label {
@@ -209,19 +210,17 @@
   margin-top: 5px;
   margin-left: 5px;
   background-color: rgb(252, 252, 252);
-  width: 150px;
+  width: 100%;
+  height: 20px;
   color: $form-input;
   font-family: $form-font;
+  box-sizing: border-box;
 
   @media screen and (max-width: $screen-laptop) {
-    width: 110px;
+
     font-size: $font-laptop;
   }
 
-  @media screen and (max-width: $screen-mobile) {
-    width: 100px;
-
-  }
 
   @include smooth-input-outline;
 }

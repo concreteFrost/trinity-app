@@ -5,15 +5,11 @@ import { Current } from "../Doorstaff/Current/Current";
 import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../contexts/baseUrl";
 import axios from "axios";
-import { useState } from "react";
 
 export const Home = () => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.userReducer.user.access_token);
-  const disputedCount = useSelector(
-    (state) => state.modalMessageReducer.disputedCount
-  );
 
   const shown = JSON.parse(localStorage.getItem("activityShown"));
 

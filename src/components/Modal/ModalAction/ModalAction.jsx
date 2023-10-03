@@ -39,12 +39,12 @@ export const ModalAction = () => {
   function Cancel() {
     CancelDoorstaffAPI(modalActionReducer.activityToModify, token).then(
       (res) => {
-        dispatch(GetResponse('cancel activity success', res))
+        dispatch(GetResponse('cancel activity success', res,'activity'))
         dispatch(HideActionModal());
         RefreshDoorstaffList(token, dispatch);
       }
     ).catch((e) => {
-      dispatch(GetBadResponse('cancel activity error', e))
+      dispatch(GetBadResponse('cancel activity error', e,'activity'))
     });
   }
   function Recall() {
@@ -55,9 +55,9 @@ export const ModalAction = () => {
         GetAuthoriseAndNotes(token, "S", dispatch);
         GetAuthoriseAndNotes(token, "A", dispatch);
       }
-      dispatch(GetResponse('recall activity succes', res))
+      dispatch(GetResponse('recall activity succes', res,'activity'))
     }).catch((e) => {
-      dispatch(GetBadResponse('recall activity error', e))
+      dispatch(GetBadResponse('recall activity error', e,'activity'))
     });
   }
 

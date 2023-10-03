@@ -16,7 +16,7 @@ export const ModalCancel = (props) => {
   function Cancel(e) {
     e.preventDefault();
     CancelDoorstaff(modalCancelReducer.activityToModify, token).then((res) => {
-      dispatch(GetResponse('cancel activity success', res))
+      dispatch(GetResponse('cancel activity success', res,'activity'))
       GetDoorstaffList(token).then((res) => { });
     });
   }
