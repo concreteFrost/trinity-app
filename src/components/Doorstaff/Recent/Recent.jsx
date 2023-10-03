@@ -5,6 +5,8 @@ import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
 import { GeneratePDF } from "../../../services/utils/reportUtils";
 import { GetDoorstaffRecentAPI } from "../../../services/reportApi";
 import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
+import {GetResponse,GetBadResponse} from "../../../redux/actions/debugConsoleActions"
+import moment from "moment/moment";
 
 export const Recent = (props) => {
   const tableHeader = [
@@ -71,11 +73,16 @@ export const Recent = (props) => {
   function Submit(e) {
     e.preventDefault();
 
-    const fromDate = new Date(e.target[0].value).toISOString();
-    const toDate = new Date(e.target[1].value).toISOString();
+    const fromDate = moment(e.target[0].value).startOf('day');
+    const formattedfromDate = fromDate.format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+    const toDate = moment(e.target[1].value).endOf('day');
+    const formattedtoDate = toDate.format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
-    GetDoorstaffRecentAPI(user, fromDate, toDate, "S").then((res) => {
+    GetDoorstaffRecentAPI(user, formattedfromDate, formattedtoDate, "S").then((res) => {
+      dispatch(GetResponse('get doorstaff recent success',res,'doorstaff'))
       dispatch(DoorstaffActions.GetDoorstaffRecent(res.data.reportRecord));
+    }).catch((e)=>{
+      dispatch(GetBadResponse('get doorstaff recent error',e,'doorstaff'))
     });
   }
 

@@ -35,12 +35,12 @@ export function GetDoorstaffRecentAPI(user, fromDate, toDate, system) {
       method: "POST",
       data: {
         dateFrom: fromDate,
-        dateTo: toDate.split("T")[0] + "T23:59:999.000Z",
+        dateTo: toDate,
         locationId: parseInt(user.locationId),
         locationGroupId: 0,
         supplierId: 0,
         reference: 0,
-        paymentStatusId: 0,
+        paymentStatusId: -1,
       },
     })
       .then((res) => {
