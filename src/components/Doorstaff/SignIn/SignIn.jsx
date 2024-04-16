@@ -20,9 +20,9 @@ export const SignIn = () => {
     const position = e.target.value;
     await dispatch(DoorstaffActions.SetDoorstaffCurrentPosition(position));
     await GetDoorstaffSupplierAPI(position, token.access_token).then((res) => {
-      dispatch(GetResponse('get doorstaff positions success', res))
+      dispatch(GetResponse('get doorstaff positions success', res,'doorstaff'))
       dispatch(DoorstaffActions.GetDoorstaffSupplierOptions(res.data.suppliers));
-    }).catch((e) => { dispatch(GetBadResponse('get doorstaff positions error', e)) });
+    }).catch((e) => { dispatch(GetBadResponse('get doorstaff positions error', e,'doorstaff')) });
   }
 
   async function SetCurrentSupplier(e) {
@@ -45,10 +45,10 @@ export const SignIn = () => {
       if (!res.data.success) {
         dispatch(ShowModalMessage(res.data.message));
       }
-      dispatch(GetResponse('get doorstaff rates success', res))
+      dispatch(GetResponse('get doorstaff rates success', res, 'doorstaff'))
       dispatch(DoorstaffActions.GetDooorstaffRateOptions(res.data.rates));
     }).catch((e) => {
-      dispatch(GetBadResponse('get doorstaff rates error', e))
+      dispatch(GetBadResponse('get doorstaff rates error', e, 'doorstaff'))
     });
   }
 
@@ -67,8 +67,8 @@ export const SignIn = () => {
           dispatch(DoorstaffActions.ClearSiaData());
 
         }
-        dispatch(GetResponse('sign in doorstaff success', res))
-      }).catch((e) => { GetBadResponse('sign in doorstaff error', e) })
+        dispatch(GetResponse('sign in doorstaff success', res, 'doorstaff'))
+      }).catch((e) => { GetBadResponse('sign in doorstaff error', e, 'doorstaff') })
   }
 
   return (

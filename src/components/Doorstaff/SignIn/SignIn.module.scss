@@ -2,16 +2,26 @@
 @import "src/scss/mixins";
 
 .container {
+  display: flex;
+  justify-content: center;
 
-    display: flex;
-    justify-content: center;
-
-    
   form {
     @include form-template;
+    width: 100%;
     display: grid;
+    gap: 10px;
 
-    padding: 15px;
+    input,select{
+      min-width: 180px;
+
+   
+      @media screen and (max-width:$screen-tablet) {
+        min-width: 140px;
+      }
+      @media screen and (max-width:$screen-mobile) {
+        min-width: 100px;
+      }
+    }
   }
 
   .buttons {
@@ -20,7 +30,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    
+
     button {
       margin-left: 5px;
       margin-bottom: 0;
@@ -30,6 +40,7 @@
   .f_name {
     grid-column: 1;
     grid-row: 1;
+    
   }
 
   .l_name {
@@ -69,8 +80,4 @@
   .submit {
     @include btn($button-submit);
   }
-
-
-
-  
 }

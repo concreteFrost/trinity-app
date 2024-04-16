@@ -19,25 +19,25 @@ export const SummaryForm = () => {
     e.preventDefault();
     dispatch(ShowLoader());
     await GetSummaryReviewAPI(token, date, "D").then((res) => {
-      dispatch(GetResponse('get summary review success', res))
+      dispatch(GetResponse('get summary review success', res,'review'))
       dispatch(DoorstaffActions.GetDoorstaffSummaryDaily(res.data.summaryRecords))
       dispatch(ActivityActions.GetCostsSummaryDaily(res.data.summaryRecords))
     }).catch((e) => {
-      dispatch(GetBadResponse('get summary review error', e))
+      dispatch(GetBadResponse('get summary review error', e,'review'))
     })
     await GetSummaryReviewAPI(token, date, "W").then((res) => {
       dispatch(GetResponse('get summary review success', res))
       dispatch(DoorstaffActions.GetDoorstaffSummaryWeekly(res.data.summaryRecords))
       dispatch(ActivityActions.GetCostsSummaryWeekly(res.data.summaryRecords))
     }).catch((e) => {
-      dispatch(GetBadResponse('get summary review error', e))
+      dispatch(GetBadResponse('get summary review error', e,'review'))
     })
     await GetSummaryReviewAPI(token, date, "M").then((res) => {
-      dispatch(GetResponse('get summary review success', res))
+      dispatch(GetResponse('get summary review success', res,'review'))
       dispatch(DoorstaffActions.GetDoorstaffSummaryMonthly(res.data.summaryRecords))
       dispatch(ActivityActions.GetCostsSummaryMonthly(res.data.summaryRecords))
     }).catch((e) => {
-      dispatch(GetBadResponse('get summary review error', e))
+      dispatch(GetBadResponse('get summary review error', e,'review'))
     })
     await dispatch(HideLoader());
   }

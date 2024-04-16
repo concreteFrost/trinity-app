@@ -5,12 +5,13 @@ function SuccessMessages() {
   const successMessages = useSelector(
     (state) => state.debugConsoleReducer.successMessages
   );
-  console.log(successMessages)
+  const currentComponent = useSelector( (state) => state.debugConsoleReducer.currentComponent)
+ 
   return (
     <div>
       <ul>
         {successMessages.length > 0
-          ? successMessages.map((obj) => {
+          ? successMessages.filter((x)=>{return x.component === currentComponent || currentComponent === 'all'}).map((obj) => {
             return (
               <li key={obj.id}>
                 <div className={s.response_time}>{obj.response.responseTime}</div>

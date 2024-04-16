@@ -18,9 +18,9 @@ export const Activity = () => {
   const disputedctivity = useSelector((s) => s.getActivityReducer.disputed);
   useEffect(() => {
     GetDisputedActivityAPI(token, "A").then((res) => {
-      dispatch(GetResponse("get disputed activity success", res))
+      dispatch(GetResponse("get disputed activity success", res,'activity'))
       dispatch(ActivityActions.GetDisputedActivity(res.data.reportRecord))
-    }).catch((e) => { dispatch(GetBadResponse('get disputed activity error', e)) })
+    }).catch((e) => { dispatch(GetBadResponse('get disputed activity error', e,'activity')) })
 
   }, []);
 

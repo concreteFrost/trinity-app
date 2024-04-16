@@ -24,46 +24,46 @@ export const ActivitiesForm = (props) => {
     //SUPPLIER/GROUP dropdown
     GetSearchSuppliersAPI(token)
       .then((res) => {
-        dispatch(GetResponse('get search suppliers success', res))
+        dispatch(GetResponse('get search suppliers success', res,'search'))
         dispatch(SearchActions.GetSearchSuppliers(res.data.record));
       })
-      .catch((e) => { dispatch(GetBadResponse('get search suppliers error', e)) });
+      .catch((e) => { dispatch(GetBadResponse('get search suppliers error', e,'search')) });
 
     //LOCATION dropdown
     GetSearchLocationsAPI(token).then((res) => {
       dispatch(GetResponse('get search locattions success', res))
       dispatch(SearchActions.GetSearchLocations(res.data.record));
-    }).catch((e) => { dispatch(GetBadResponse('get search locations error', e)) });;
+    }).catch((e) => { dispatch(GetBadResponse('get search locations error', e,'search')) });;
 
     //LOCATION GROUPS dropdown
     GetSearchLocationsGroupAPI(token).then((res) => {
-      dispatch(GetResponse('get search locations group success', res))
+      dispatch(GetResponse('get search locations group success', res,'search'))
       dispatch(SearchActions.GetSearchLocationGroup(res.data.record));
-    }).catch((e) => { dispatch(GetBadResponse('get search locations group error', e)) });;
+    }).catch((e) => { dispatch(GetBadResponse('get search locations group error', e,'search')) });;
 
     //STAFF/GROUP dropdown
     GetSearchStaffAPI(token)
       .then((res) => {
-        dispatch(GetResponse('get search staff success', res))
+        dispatch(GetResponse('get search staff success', res,'search'))
         dispatch(SearchActions.GetSearchStaff(res.data.record));
       })
-      .catch((e) => { dispatch(GetBadResponse('get search staff error', e)) });
+      .catch((e) => { dispatch(GetBadResponse('get search staff error', e,'search')) });
 
     //PAYMENT STATUS dropdown
     GetSearchPaymentStatusAPI(token)
       .then((res) => {
-        dispatch(GetResponse('get search payment status success', res))
+        dispatch(GetResponse('get search payment status success', res,'search'))
         dispatch(SearchActions.GetSearchPaymentStatus(res.data.record));
       })
-      .catch((e) => { dispatch(GetBadResponse('get search payment status error', e)) });
+      .catch((e) => { dispatch(GetBadResponse('get search payment status error', e,'search')) });
 
     //Currently not in use
     GetSearchPaymentStatusGroupAPI(token)
       .then((res) => {
-        dispatch(GetResponse('get search payment status group success', res))
+        dispatch(GetResponse('get search payment status group success', res,'search'))
         dispatch(SearchActions.GetSearchPaymentStatusGroup(res.data.record));
       })
-      .catch((e) => { dispatch(GetBadResponse('get search payment status group error', e)) });
+      .catch((e) => { dispatch(GetBadResponse('get search payment status group error', e,'search')) });
   }, []);
 
   function Submit(e) {

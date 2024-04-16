@@ -5,12 +5,12 @@ function ErrorMessages() {
   const errorMessages = useSelector(
     (state) => state.debugConsoleReducer.errorMessages
   );
-  console.log(errorMessages)
+  const currentComponent = useSelector((state) => state.debugConsoleReducer.currentComponent)
   return (
     <div>
       <ul>
         {errorMessages.length > 0
-          ? errorMessages.map((obj) => {
+          ? errorMessages.filter((x)=>{return x.component === currentComponent || currentComponent === 'all'}).map((obj) => {
             return (
               <li key={obj.id}>
                 <div className={s.response_time}>{obj.response.responseTime}</div>

@@ -8,7 +8,7 @@ import {
   GetSiaDataAPI,
 } from "../../../services/activityApi";
 import { ShowModalMessage } from "../../../redux/actions/modalActions";
-import { GetResponse } from "../../../redux/actions/debugConsoleActions"
+import { GetBadResponse, GetResponse } from "../../../redux/actions/debugConsoleActions"
 
 export const SIA = () => {
   const dispatch = useDispatch();
@@ -27,12 +27,12 @@ export const SIA = () => {
 
         }
         dispatch(DoorstaffActions.SetSiaData(siaResult.data));
-        dispatch(GetResponse('get sia data success', siaResult));
+        dispatch(GetResponse('get sia data success', siaResult,'doorstaff'));
         GetDoorstaffPositionsAPI(token).then((res) => {
           dispatch(DoorstaffActions.GetDoorstaffPositionsOptions(res.data.position));
           dispatch(DoorstaffActions.SetDoorstaffCurrentPosition(res.data.position[0]));
         });
-      })
+      }).catch((e)=>{dispatch(GetBadResponse('get sia data error',e,))})
       .finally(() => {
         dispatch(HideLoader());
       });

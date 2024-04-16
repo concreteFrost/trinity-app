@@ -26,10 +26,10 @@ export const CostsAndPayments = (props) => {
       if (element.selected)
         ApproveActivity(token, props.system, element)
           .then((res) => {
-            dispatch(GetResponse('approve activity success', res))
+            dispatch(GetResponse('approve activity success', res,'authorise'))
             GetAuthoriseAndNotes(token, props.system, dispatch);
           })
-          .catch((e) => { dispatch(GetBadResponse('approve activity error', e)) });
+          .catch((e) => { dispatch(GetBadResponse('approve activity error', e,'authorise')) });
     });
   }
   function SelectAll() {
@@ -46,11 +46,11 @@ export const CostsAndPayments = (props) => {
 
   function DisputeActivity() {
     SendDisputed(props.system, token, toDispute).then((res) => {
-      dispatch(GetResponse('send disputed activity success', res))
+      dispatch(GetResponse('send disputed activity success', res,'authorise'))
       ModalActions.ResetModalActivity();
       GetAuthoriseAndNotes(token, props.system, dispatch);
     }).catch((e) => {
-      dispatch(GetBadResponse('send disputed activity error', e))
+      dispatch(GetBadResponse('send disputed activity error', e,'authorise'))
     });
   }
 

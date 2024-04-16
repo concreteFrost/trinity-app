@@ -48,12 +48,22 @@
     transform: rotate(90deg);
     position: absolute;
     right: -62px;
-    top: 13px;
+    top: 15px;
   }
 
   .header_btns_container {
     display: flex;
     justify-content: center;
+  }
+
+  .current_component{
+    label{
+      margin-right: 5px;
+    }
+
+    select{
+      width: 140px;
+    }
   }
 
   .footer_btns_container {
