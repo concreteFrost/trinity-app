@@ -50,10 +50,12 @@ export const NavbarList = (props) => {
       >
         AUTHORISE
       </NavLink> : null}
-      <div>
-        <GearFill className={s.settings_btn} onClick={() => dispatch(ToggleDebugConsole())}></GearFill>
-      </div>
 
+      <GearFill className={s.settings_btn} onClick={() => dispatch(ToggleDebugConsole())}></GearFill>
+
+      <div>
+
+      </div>
       <button className={s.logout_btn} onClick={() => dispatch({ type: "SHOW_LOGOUT_MODAL" })}>LOGOUT</button>
     </div>
   );
