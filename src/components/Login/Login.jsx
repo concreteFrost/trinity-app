@@ -19,7 +19,7 @@ export const Login = () => {
       GenerateUniqueReference()
         .then((generatedIdReferene) => {
           setClientID(generatedIdReferene);
-        })
+        }).catch((e)=> console.log('error generating client id', e))
     } else {
       setClientID(storedClientID);
     }
@@ -45,6 +45,7 @@ export const Login = () => {
 
         })
         .catch((e) => {
+          console.log('unable to login', e);
           dispatch(GetBadResponse('get token error', e))
           dispatch(SetErrorOnLogin())
         });
