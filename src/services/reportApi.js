@@ -7,6 +7,12 @@ const headers = (token) => {
     "Content-Type": "application/json",
   };
 };
+
+const multipartHeaders = (token) => {
+  return {
+    Authorization: "Bearer " + token,
+  };
+};
 //returns pdf results
 export function GetTimesheetDataAPI(token, system, activityId) {
   return new Promise((resolve, reject) => {
@@ -198,6 +204,21 @@ export function GetSummaryReviewAPI(token, date, summaryCode) {
           headers: headers(token),
         }
       )
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+}
+
+export function SendIssueLog(token, issue) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${baseUrl}/Report/IssueLog`, issue, {
+        headers: multipartHeaders(token),
+      })
       .then((res) => {
         resolve(res);
       })

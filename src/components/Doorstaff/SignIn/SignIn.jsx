@@ -18,6 +18,11 @@ export const SignIn = () => {
 
   async function GetPositionAndSupplier(e) {
     const position = e.target.value;
+    if (!position || position === '0') {
+      dispatch(ShowModalMessage("Selected position is "));
+      return;
+    }
+
     await dispatch(DoorstaffActions.SetDoorstaffCurrentPosition(position));
     await GetDoorstaffSupplierAPI(position, token.access_token).then((res) => {
       dispatch(GetResponse('get doorstaff positions success', res,'doorstaff'))
@@ -115,7 +120,7 @@ export const SignIn = () => {
             {sia.options.suppliers.length > 0
               ? sia.options.suppliers.map((e) => (
                 <option key={e.supplierId} value={e.supplierId}>
-                  {e.supplierName}
+                  {e.supplierName} : id {e.supplierId}
                 </option>
               ))
               : null}
@@ -132,7 +137,7 @@ export const SignIn = () => {
             {sia.options.rates.length > 0
               ? sia.options.rates.map((e) => (
                 <option key={e.rateGroupId} value={e.rateGroupId}>
-                  {e.rateGroupName}
+                  {e.rateGroupName} : id {e.rateGroupId}
                 </option>
               ))
               : null}

@@ -26,6 +26,7 @@ h5 {
 
 li {
   list-style: none;
+  position: relative;
   background-color: rgb(211, 211, 211);
   margin-bottom: 5px;
   padding: 5px;
@@ -37,5 +38,18 @@ li {
   p {
     margin: 0;
     font-size: 0.8rem;
+  }
+
+  .report_container {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    .report_btn {
+      cursor: pointer;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px;
+    }
   }
 }

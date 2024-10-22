@@ -14,7 +14,6 @@
     box-shadow: $soft-shadow;
     z-index: 1000;
 
-
     &.expanded {
       transform: translate(0px);
     }
@@ -56,12 +55,12 @@
     justify-content: center;
   }
 
-  .current_component{
-    label{
+  .current_component {
+    label {
       margin-right: 5px;
     }
 
-    select{
+    select {
       width: 140px;
     }
   }
@@ -73,7 +72,6 @@
     bottom: 20px;
     left: 0;
     right: 0;
-
   }
 
   .footer_btns_container,
@@ -83,6 +81,4 @@
       font-size: 0.7rem;
     }
   }
-
-
 }

@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import s from "./ErrorMessages.module.scss"
 
+
 function ErrorMessages() {
   const errorMessages = useSelector(
     (state) => state.debugConsoleReducer.errorMessages
