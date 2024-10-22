@@ -15,6 +15,7 @@ export const Doorstaff = () => {
   const [view, setView] = useState("current");
 
   const token = useSelector((state) => state.userReducer.user.access_token);
+  
   const dispatch = useDispatch();
 
   const disputedctivity = useSelector((s) => s.doorstaffReducer.disputed);
