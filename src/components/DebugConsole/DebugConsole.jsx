@@ -69,7 +69,7 @@ function DebugConsole() {
               )}
             </div>
             <div className={s.footer_btns_container}>
-              {currentView === "success" ? (
+              {/* {currentView === "success" ? (
                 <button onClick={() => dispatch(ClearSuccessMessages())}>
                   CLEAR
                 </button>
@@ -77,7 +77,7 @@ function DebugConsole() {
                 <button onClick={() => dispatch(ClearErrorMessages())}>
                   CLEAR
                 </button>
-              )}
+              )} */}
               <button onClick={() => dispatch(ClearAllMessages())}>
                 CLEAR ALL
               </button>

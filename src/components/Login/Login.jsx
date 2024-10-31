@@ -30,7 +30,6 @@ export const Login = () => {
     const lastRoute = localStorage.getItem("lastRoute");
     if (user && new Date() < new Date(user[".expires"]))
       dispatch(SetLoginDetails(user));
-
     if (isLoggedIn) {
       navigate(lastRoute || "/home");
     }

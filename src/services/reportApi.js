@@ -213,11 +213,14 @@ export function GetSummaryReviewAPI(token, date, summaryCode) {
   });
 }
 
-export function SendIssueLog(token, issue) {
+export function SendIssueLog(token, issueFile) {
   return new Promise((resolve, reject) => {
     axios
-      .post(`${baseUrl}/Report/IssueLog`, issue, {
-        headers: multipartHeaders(token),
+      .post(`${baseUrl}/Report/IssueLog`, issueFile, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Не указывайте Content-Type, axios сам его установит
+        },
       })
       .then((res) => {
         resolve(res);
