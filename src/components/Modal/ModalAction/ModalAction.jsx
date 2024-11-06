@@ -8,7 +8,8 @@ import {
   HideActionModal,
   ShowModalMessage,
 } from "../../../redux/actions/modalActions";
-import { GetBadResponse, GetResponse } from "../../../redux/actions/debugConsoleActions";
+import { GetBadResponse } from "../../../redux/actions/debugConsoleActions";
+import isErrorStatus from "../../../utils/checkStatusCode";
 
 export const ModalAction = () => {
   const modalActionReducer = useSelector((state) => state.modalActionReducer);
@@ -37,30 +38,37 @@ export const ModalAction = () => {
   const dispatch = useDispatch();
 
   function Cancel() {
-    CancelDoorstaffAPI(modalActionReducer.activityToModify, token).then(
-      (res) => {
-        dispatch(GetResponse('cancel activity success', res,'activity'))
+    CancelDoorstaffAPI(modalActionReducer.activityToModify, token)
+      .then((res) => {
+        if (isErrorStatus(res)) {
+          dispatch(GetBadResponse("cancel activity error", res, "activity"));
+        }
         dispatch(HideActionModal());
         RefreshDoorstaffList(token, dispatch);
-      }
-    ).catch((e) => {
-      dispatch(GetBadResponse('cancel activity error', e,'activity'))
-    });
+      })
+      .catch((e) => {
+        dispatch(GetBadResponse("cancel activity error", e, "activity"));
+      });
   }
   function Recall() {
     const system = modalActionReducer.system;
     const activityId = modalActionReducer.activityToModify;
-    RecallActivity(token, system,activityId).then((res) => {
-      if (!res.data.success) {
-        dispatch(ShowModalMessage(res.data.message));
-      } else {
-        GetAuthoriseAndNotes(token, "S", dispatch);
-        GetAuthoriseAndNotes(token, "A", dispatch);
-      }
-      dispatch(GetResponse('recall activity success', res,'activity'))
-    }).catch((e) => {
-      dispatch(GetBadResponse('recall activity error', e,'activity'))
-    });
+    RecallActivity(token, system, activityId)
+      .then((res) => {
+        if (!res.data.success) {
+          dispatch(ShowModalMessage(res.data.message));
+        } else {
+          GetAuthoriseAndNotes(token, "S", dispatch);
+          GetAuthoriseAndNotes(token, "A", dispatch);
+        }
+
+        if (isErrorStatus(res)) {
+          dispatch(GetBadResponse("recall activity error", res, "activity"));
+        }
+      })
+      .catch((e) => {
+        dispatch(GetBadResponse("recall activity error", e, "activity"));
+      });
   }
 
   function DefineActiveOperation() {

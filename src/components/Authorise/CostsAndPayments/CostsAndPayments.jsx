@@ -9,7 +9,8 @@ import * as AuthoriseActions from "../../../redux/actions/authoriseActions";
 import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
 import { GetAuthoriseAndNotes } from "../../../services/utils/areaManagerUtils";
 import * as ModalActions from "../../../redux/actions/modalActions";
-import { GetBadResponse, GetResponse } from "../../../redux/actions/debugConsoleActions";
+import { GetBadResponse } from "../../../redux/actions/debugConsoleActions";
+import isErrorStatus from "../../../utils/checkStatusCode";
 
 export const CostsAndPayments = (props) => {
   const toDispute = useSelector((state) => state.modalPromptReducer);
@@ -26,10 +27,16 @@ export const CostsAndPayments = (props) => {
       if (element.selected)
         ApproveActivity(token, props.system, element)
           .then((res) => {
-            dispatch(GetResponse('approve activity success', res,'authorise'))
+            if (isErrorStatus(res)) {
+              dispatch(
+                GetBadResponse("approve activity error", res, "authorise")
+              );
+            }
             GetAuthoriseAndNotes(token, props.system, dispatch);
           })
-          .catch((e) => { dispatch(GetBadResponse('approve activity error', e,'authorise')) });
+          .catch((e) => {
+            dispatch(GetBadResponse("approve activity error", e, "authorise"));
+          });
     });
   }
   function SelectAll() {
@@ -45,13 +52,22 @@ export const CostsAndPayments = (props) => {
   }
 
   function DisputeActivity() {
-    SendDisputed(props.system, token, toDispute).then((res) => {
-      dispatch(GetResponse('send disputed activity success', res,'authorise'))
-      ModalActions.ResetModalActivity();
-      GetAuthoriseAndNotes(token, props.system, dispatch);
-    }).catch((e) => {
-      dispatch(GetBadResponse('send disputed activity error', e,'authorise'))
-    });
+    SendDisputed(props.system, token, toDispute)
+      .then((res) => {
+        ModalActions.ResetModalActivity();
+        GetAuthoriseAndNotes(token, props.system, dispatch);
+
+        if (isErrorStatus(res)) {
+          dispatch(
+            GetBadResponse("send disputed activity error", res, "authorise")
+          );
+        }
+      })
+      .catch((e) => {
+        dispatch(
+          GetBadResponse("send disputed activity error", e, "authorise")
+        );
+      });
   }
 
   return (

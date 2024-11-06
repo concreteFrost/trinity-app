@@ -14,10 +14,8 @@ import {
 import * as ActivityActions from "../../../../redux/actions/activityActions";
 import * as ModalActions from "../../../../redux/actions/modalActions";
 import { RefreshActivityList } from "../../../../services/utils/activityUtils";
-import {
-  GetBadResponse,
-  GetResponse,
-} from "../../../../redux/actions/debugConsoleActions";
+import { GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
+import isErrorStatus from "../../../../utils/checkStatusCode";
 
 export const AddActivity = () => {
   const activityOpt = useSelector(
@@ -59,9 +57,10 @@ export const AddActivity = () => {
         dispatch(ActivityActions.GetActivityTypeOpt(res.data.record));
         dispatch(ActivityActions.SetActivityType(res.data.record[0].id));
         GetActivitySupplierOptAPI(token, res.data.record[0].id);
-        dispatch(
-          GetResponse("get activity cost group success", res, "activity")
-        );
+
+        if (isErrorStatus(res)) {
+          GetBadResponse("get activity cost group success", res, "activity");
+        }
       })
       .catch((e) => {
         dispatch(
@@ -79,9 +78,16 @@ export const AddActivity = () => {
     GetActivitySupplierOptAPI(token, e.target.value)
       .then((res) => {
         dispatch(ActivityActions.GetActivitySupplierOpt(res.data.suppliers));
-        dispatch(
-          GetResponse("get activity supplier group success", res, "activity")
-        );
+
+        if (isErrorStatus(res)) {
+          dispatch(
+            GetBadResponse(
+              "get activity supplier group success",
+              res,
+              "activity"
+            )
+          );
+        }
       })
       .catch((e) => {
         dispatch(
@@ -102,8 +108,20 @@ export const AddActivity = () => {
 
   function FirstSubmit(e) {
     e.preventDefault();
+
     const activityID = e.target[0].value;
     const supplierID = e.target[1].value;
+
+    if (activityID === "Select Type") {
+      dispatch(ModalActions.ShowModalMessage("Activity is not selected"));
+      return;
+    }
+
+    if (supplierID === "Select Supplier") {
+      dispatch(ModalActions.ShowModalMessage("Supplier is not selected"));
+      return;
+    }
+
     const _time = e.target[2].value;
     const data = {
       activityID: activityID,
@@ -113,22 +131,23 @@ export const AddActivity = () => {
 
     dispatch(ShowLoader());
 
-  
     GetRateAPI(token, data)
       .then((res) => {
         if (res.data.message) {
           dispatch(ModalActions.ShowModalMessage(res.data.message));
           dispatch(ActivityActions.isActivitySupplierProvided(false));
-          console.log(res)
-          dispatch(GetBadResponse("get rate error", res, "activity"));
         } else {
           dispatch(ActivityActions.GetActivityRate(res.data));
           dispatch(ActivityActions.isActivitySupplierProvided(true));
           dispatch(ActivityActions.SetActivityCostValue(res.data.costValue));
         }
-        dispatch(GetResponse("get rate success", res, "activity"));
+
+        if (isErrorStatus(res)) {
+          dispatch(GetBadResponse("get rate error", res, "activity"));
+        }
       })
       .catch((e) => {
+        dispatch(ModalActions.ShowModalMessage(e.response.data));
         dispatch(GetBadResponse("get rate error", e, "activity"));
       })
       .finally(() => {
@@ -152,11 +171,13 @@ export const AddActivity = () => {
     };
     SubmitActivityAPI(token, _data)
       .then((res) => {
-        dispatch(GetResponse("submit activity success", res,'activity'));
+        if (isErrorStatus(res)) {
+          dispatch(GetBadResponse("submit activity error", res, "activity"));
+        }
         dispatch(ActivityActions.ClearActivity());
       })
       .catch((e) => {
-        dispatch(GetBadResponse("submit activity error", e,'activity'));
+        dispatch(GetBadResponse("submit activity error", e, "activity"));
       })
       .finally(() => {
         const today = new Date();
@@ -183,6 +204,7 @@ export const AddActivity = () => {
             onChange={(e) => {
               GetSupplierOpt(e);
             }}
+            defaultValue={null}
             disabled={activityOpt.length === 0}
           >
             <option value={null}>Select Type</option>

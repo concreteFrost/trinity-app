@@ -1,42 +1,17 @@
 import * as DebugConsoleTypes from "../types/debugConsoleTypes";
 import moment from "moment/moment";
+import { v4 as uuidv4 } from "uuid";
 
 const initialState = {
-  successMessages: [],
   errorMessages: [],
   isConsoleVisible: false,
   currentComponent: "all",
 };
 
-const MAX_MESSAGES = 10; // Максимальное количество сообщений
-const MAX_BADMESSAGES = 20;
+const MAX_BADMESSAGES = 30;
 
 export const debugConsoleReducer = (state = initialState, action) => {
   switch (action.type) {
-    case DebugConsoleTypes.GET_RESPONSE: {
-      const response = {
-        method: action.method,
-        status: action.status,
-        responseTime: moment().format("HH:mm:ss"),
-        message: action.responseMessage,
-      };
-      const request = {
-        url: action.requestUrl,
-        data: action.requestData,
-      };
-      const newSuccessMessages = [
-        ...state.successMessages,
-        {
-          id: state.successMessages.length,
-          message: action.message,
-          response: response,
-          request: request,
-          component: action.component,
-        },
-      ].slice(-MAX_MESSAGES); // Ограничиваем до последних 50 сообщений
-      return { ...state, successMessages: newSuccessMessages };
-    }
-
     case DebugConsoleTypes.GET_BAD_RESPONSE: {
       const response = {
         method: action.method,
@@ -51,34 +26,24 @@ export const debugConsoleReducer = (state = initialState, action) => {
       const newErrorMessages = [
         ...state.errorMessages,
         {
-          id: state.errorMessages.length,
+          id: uuidv4(),
           message: action.message,
           response: response,
           request: request,
           component: action.component,
         },
       ].slice(-MAX_BADMESSAGES); // Ограничиваем до последних 50 сообщений
+      console.log(state.errorMessages);
       return { ...state, errorMessages: newErrorMessages };
     }
 
-    case DebugConsoleTypes.CLEAR_SUCCESS_MESSAGES:
-      return {
-        ...state,
-        successMessages: state.successMessages.filter(
-          (message) => message.component !== state.currentComponent
-        ),
-      };
-
-    case DebugConsoleTypes.CLEAR_ERROR_MESSAGES:
-      return {
-        ...state,
-        errorMessages: state.errorMessages.filter(
-          (message) => message.component !== state.currentComponent
-        ),
-      };
+    case DebugConsoleTypes.DELETE_ERROR_MESSAGE: {
+      const filtered = state.errorMessages.filter((x) => x.id !== action.data);
+      return { ...state, errorMessages: filtered };
+    }
 
     case DebugConsoleTypes.CLEAR_ALL_MESSAGES:
-      return { ...state, successMessages: [], errorMessages: [] };
+      return { ...state, errorMessages: [] };
 
     case DebugConsoleTypes.TOGGLE_DEBUG_CONSOLE:
       return { ...state, isConsoleVisible: !state.isConsoleVisible };

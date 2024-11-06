@@ -18,17 +18,22 @@ export function GetResponse(message, response, component) {
 
 export function GetBadResponse(message, res, component) {
   const config = res.config;
+  console.log("result", res);
 
   return {
     type: DebugConsoleTypes.GET_BAD_RESPONSE,
     message: message,
-    responseMessage: res.data ? res.data.message : "-",
-    status: res.status,
+    responseMessage: res.response.data ? res.response.data : "-",
+    status: res.response.status,
     method: config.method,
     requestData: config.data ? config.data : "null",
     requestUrl: config.url.split("/api")[1],
     component: component,
   };
+}
+
+export function DeleteErrorMessage(id) {
+  return { type: DebugConsoleTypes.DELETE_ERROR_MESSAGE, data: id };
 }
 
 export function SetCurrentComponent(component) {

@@ -8,7 +8,8 @@ import {
 } from "../../../services/activityApi";
 import { RefreshDoorstaffList } from "../../../services/utils/activityUtils";
 import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
-import { GetBadResponse, GetResponse } from "../../../redux/actions/debugConsoleActions";
+import { GetBadResponse } from "../../../redux/actions/debugConsoleActions";
+import isErrorStatus from "../../../utils/checkStatusCode";
 
 export const SignIn = () => {
   const dispatch = useDispatch();
@@ -18,16 +19,28 @@ export const SignIn = () => {
 
   async function GetPositionAndSupplier(e) {
     const position = e.target.value;
-    if (!position || position === '0') {
+    if (!position || position === "0") {
       dispatch(ShowModalMessage("Selected position is "));
       return;
     }
 
     await dispatch(DoorstaffActions.SetDoorstaffCurrentPosition(position));
-    await GetDoorstaffSupplierAPI(position, token.access_token).then((res) => {
-      dispatch(GetResponse('get doorstaff positions success', res,'doorstaff'))
-      dispatch(DoorstaffActions.GetDoorstaffSupplierOptions(res.data.suppliers));
-    }).catch((e) => { dispatch(GetBadResponse('get doorstaff positions error', e,'doorstaff')) });
+    await GetDoorstaffSupplierAPI(position, token.access_token)
+      .then((res) => {
+        if (isErrorStatus(res)) {
+          dispatch(
+            GetBadResponse("get doorstaff positions error", res, "doorstaff")
+          );
+        }
+        dispatch(
+          DoorstaffActions.GetDoorstaffSupplierOptions(res.data.suppliers)
+        );
+      })
+      .catch((e) => {
+        dispatch(
+          GetBadResponse("get doorstaff positions error", e, "doorstaff")
+        );
+      });
   }
 
   async function SetCurrentSupplier(e) {
@@ -46,15 +59,22 @@ export const SignIn = () => {
       sia.position ? sia.position : 0,
       supplierId,
       sia.date
-    ).then((res) => {
-      if (!res.data.success) {
-        dispatch(ShowModalMessage(res.data.message));
-      }
-      dispatch(GetResponse('get doorstaff rates success', res, 'doorstaff'))
-      dispatch(DoorstaffActions.GetDooorstaffRateOptions(res.data.rates));
-    }).catch((e) => {
-      dispatch(GetBadResponse('get doorstaff rates error', e, 'doorstaff'))
-    });
+    )
+      .then((res) => {
+        if (!res.data.success) {
+          dispatch(ShowModalMessage(res.data.message));
+        }
+
+        if (isErrorStatus(res)) {
+          dispatch(
+            GetBadResponse("get doorstaff rates error", res, "doorstaff")
+          );
+        }
+        dispatch(DoorstaffActions.GetDooorstaffRateOptions(res.data.rates));
+      })
+      .catch((e) => {
+        dispatch(GetBadResponse("get doorstaff rates error", e, "doorstaff"));
+      });
   }
 
   function SetRateGroupID(e) {
@@ -70,10 +90,15 @@ export const SignIn = () => {
         } else {
           RefreshDoorstaffList(token.access_token, dispatch);
           dispatch(DoorstaffActions.ClearSiaData());
-
         }
-        dispatch(GetResponse('sign in doorstaff success', res, 'doorstaff'))
-      }).catch((e) => { GetBadResponse('sign in doorstaff error', e, 'doorstaff') })
+
+        if (isErrorStatus(res)) {
+          dispatch(GetBadResponse("sign in doorstaff error", res, "doorstaff"));
+        }
+      })
+      .catch((e) => {
+        dispatch(GetBadResponse("sign in doorstaff error", e, "doorstaff"));
+      });
   }
 
   return (
@@ -100,10 +125,10 @@ export const SignIn = () => {
             <option value={null}>Select Position</option>
             {sia.options.positions.length > 0
               ? sia.options.positions.map((e) => (
-                <option key={e.positionId} value={e.positionId}>
-                  {e.positionName}
-                </option>
-              ))
+                  <option key={e.positionId} value={e.positionId}>
+                    {e.positionName}
+                  </option>
+                ))
               : null}
           </select>
         </div>
@@ -119,10 +144,10 @@ export const SignIn = () => {
             <option value={null}>Select the Supplier</option>
             {sia.options.suppliers.length > 0
               ? sia.options.suppliers.map((e) => (
-                <option key={e.supplierId} value={e.supplierId}>
-                  {e.supplierName} : id {e.supplierId}
-                </option>
-              ))
+                  <option key={e.supplierId} value={e.supplierId}>
+                    {e.supplierName} : id {e.supplierId}
+                  </option>
+                ))
               : null}
           </select>
         </div>
@@ -136,10 +161,10 @@ export const SignIn = () => {
             <option value={null}>Select Rate</option>
             {sia.options.rates.length > 0
               ? sia.options.rates.map((e) => (
-                <option key={e.rateGroupId} value={e.rateGroupId}>
-                  {e.rateGroupName} : id {e.rateGroupId}
-                </option>
-              ))
+                  <option key={e.rateGroupId} value={e.rateGroupId}>
+                    {e.rateGroupName} : id {e.rateGroupId}
+                  </option>
+                ))
               : null}
           </select>
         </div>

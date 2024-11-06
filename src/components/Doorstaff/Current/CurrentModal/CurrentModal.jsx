@@ -5,7 +5,8 @@ import { SignOffMemberAPI } from "../../../../services/activityApi";
 import { RefreshDoorstaffList } from "../../../../services/utils/activityUtils";
 import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions";
 import * as ModalActions from "../../../../redux/actions/modalActions";
-import { GetBadResponse, GetResponse } from "../../../../redux/actions/debugConsoleActions";
+import { GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
+import isErrorStatus from "../../../../utils/checkStatusCode";
 
 export const CurrentModal = (props) => {
   const [signOffSelectedDate, setSignOffSelectedDate] = useState(
@@ -29,16 +30,21 @@ export const CurrentModal = (props) => {
       )
     );
 
-    SignOffMemberAPI(toSignOff, props.token.access_token, signOutTIme).then(
-      (res) => {
-        dispatch(GetResponse('sign off doorstaff success', res, 'doorstaff'))
+    SignOffMemberAPI(toSignOff, props.token.access_token, signOutTIme)
+      .then((res) => {
         !res.data.success
           ? dispatch(ModalActions.ShowModalMessage(res.data.message))
           : RefreshDoorstaffList(props.token.access_token, dispatch);
-      }
-    ).catch((e) => {
-      dispatch(GetBadResponse('sign off doorstaff error', e, 'doorstaff'))
-    });
+
+        if (isErrorStatus(res)) {
+          dispatch(
+            GetBadResponse("sign off doorstaff error", res, "doorstaff")
+          );
+        }
+      })
+      .catch((e) => {
+        dispatch(GetBadResponse("sign off doorstaff error", e, "doorstaff"));
+      });
 
     props.setIsSignOffModalVisible(false);
   }

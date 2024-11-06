@@ -5,8 +5,8 @@ import { useEffect } from "react";
 import { GetSummaryReviewAPI } from "../../../services/reportApi";
 import { HideLoader, ShowLoader } from "../../../redux/actions/loaderActions";
 import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
-import { GetBadResponse, GetResponse } from "../../../redux/actions/debugConsoleActions";
-
+import { GetBadResponse } from "../../../redux/actions/debugConsoleActions";
+import isErrorStatus from "../../../utils/checkStatusCode";
 
 export const Summary = () => {
   const token = useSelector((state) => state.userReducer.user.access_token);
@@ -16,21 +16,30 @@ export const Summary = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(ShowLoader())
-    GetSummaryReviewAPI(token, date, "D").then((res) => {
-      dispatch(GetResponse('get daily summary success', res,'home'))
-      dispatch(DoorstaffActions.GetDoorstaffDaily(res.data.summaryRecords))
-    }).catch((e) => {
-      dispatch(GetBadResponse('get daily summary error', e,'home'))
-    })
-    GetSummaryReviewAPI(token, date, "W").then((res) => {
-      dispatch(GetResponse('get weekly summary success', res,'home'))
-      dispatch(DoorstaffActions.GetDoorstaffWeekly(res.data.summaryRecords))
-    }).catch((e) => {
-      dispatch(GetBadResponse('get weekly summary error', e,'home'))
-    }).finally(() => {
-      dispatch(HideLoader())
-    })
+    dispatch(ShowLoader());
+    GetSummaryReviewAPI(token, date, "D")
+      .then((res) => {
+        if (isErrorStatus(res)) {
+          dispatch(GetBadResponse("get daily summary error", res, "home"));
+        }
+        dispatch(DoorstaffActions.GetDoorstaffDaily(res.data.summaryRecords));
+      })
+      .catch((e) => {
+        dispatch(GetBadResponse("get daily summary error", e, "home"));
+      });
+    GetSummaryReviewAPI(token, date, "W")
+      .then((res) => {
+        if (isErrorStatus(res)) {
+          dispatch(GetBadResponse("get weekly summary error", res, "home"));
+        }
+        dispatch(DoorstaffActions.GetDoorstaffWeekly(res.data.summaryRecords));
+      })
+      .catch((e) => {
+        dispatch(GetBadResponse("get weekly summary error", e, "home"));
+      })
+      .finally(() => {
+        dispatch(HideLoader());
+      });
   }, []);
 
   return (
@@ -53,16 +62,16 @@ export const Summary = () => {
               <td>
                 {doorstaff.daily.length > 0
                   ? doorstaff.daily
-                    .map((i) => i.actualCount)
-                    .reduce((a, b) => a + b)
+                      .map((i) => i.actualCount)
+                      .reduce((a, b) => a + b)
                   : null}
               </td>
               <td>TOTAL ONSITE</td>
               <td>
                 {doorstaff.weekly.length > 0
                   ? doorstaff.weekly
-                    .map((i) => i.actualCount)
-                    .reduce((a, b) => a + b)
+                      .map((i) => i.actualCount)
+                      .reduce((a, b) => a + b)
                   : null}
               </td>
             </tr>
@@ -71,16 +80,16 @@ export const Summary = () => {
               <td>
                 {doorstaff.daily.length > 0
                   ? doorstaff.daily
-                    .map((i) => i.actualValue)
-                    .reduce((a, b) => a + b)
+                      .map((i) => i.actualValue)
+                      .reduce((a, b) => a + b)
                   : null}
               </td>
               <td>CURRENT SPENT</td>
               <td>
                 {doorstaff.weekly.length > 0
                   ? doorstaff.weekly
-                    .map((i) => i.actualValue)
-                    .reduce((a, b) => a + b)
+                      .map((i) => i.actualValue)
+                      .reduce((a, b) => a + b)
                   : null}
               </td>
             </tr>

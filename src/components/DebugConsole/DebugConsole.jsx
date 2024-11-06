@@ -11,12 +11,14 @@ import { useDispatch, useSelector } from "react-redux";
 import ErrorMessages from "./ErrorMessages/ErrorMessages";
 
 function DebugConsole() {
-  const [currentView, setCurrentView] = useState("success");
+  const [currentView, setCurrentView] = useState("errors");
   const [isExpanded, setIsExpanded] = useState(true);
   const isConsoleVisible = useSelector(
     (state) => state.debugConsoleReducer.isConsoleVisible
   );
-  const currentComponent = useSelector((state)=>state.debugConsoleReducer.currentComponent);
+  const currentComponent = useSelector(
+    (state) => state.debugConsoleReducer.currentComponent
+  );
 
   const dispatch = useDispatch();
 
@@ -27,8 +29,8 @@ function DebugConsole() {
     isExpanded ? [s.expanded] : [s.closed]
   }`;
 
-  function setCurrentComponent(e){
-    dispatch(SetCurrentComponent(e.target.value))
+  function setCurrentComponent(e) {
+    dispatch(SetCurrentComponent(e.target.value));
   }
 
   return (
@@ -46,12 +48,16 @@ function DebugConsole() {
           </div>
           <div className={subContainerClasses}>
             <div className={s.header_btns_container}>
-              <button onClick={() => setCurrentView("success")}>LOGS</button>
-              <button onClick={() => setCurrentView("errors")}>ERRORS</button>
+              {/* <button onClick={() => setCurrentView("success")}>LOGS</button> */}
+              {/* <button onClick={() => setCurrentView("errors")}>ERRORS</button> */}
+              <span>ERRORS LOG</span>
             </div>
             <div className={s.current_component}>
               <label>Component</label>
-              <select value={currentComponent} onChange={(e)=>setCurrentComponent(e)}>
+              <select
+                value={currentComponent}
+                onChange={(e) => setCurrentComponent(e)}
+              >
                 <option value="all">ALL</option>
                 <option value="home">HOME</option>
                 <option value="activity">ACTIVITY</option>
@@ -62,11 +68,7 @@ function DebugConsole() {
               </select>
             </div>
             <div className={s.messages_list}>
-              {currentView === "success" ? (
-                <SuccessMessages></SuccessMessages>
-              ) : (
-                <ErrorMessages></ErrorMessages>
-              )}
+              <ErrorMessages></ErrorMessages>
             </div>
             <div className={s.footer_btns_container}>
               {/* {currentView === "success" ? (

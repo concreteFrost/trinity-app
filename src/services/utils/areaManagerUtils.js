@@ -1,12 +1,20 @@
 import { GetAuthorise, GetAreaDisputedNotes } from "../areaManagerApi";
-import { GET_AUTHORISE_DOORSTAFF, GET_AUTHORISE_COSTS } from "../../redux/types/authoriseTypes";
-import { GetBadResponse, GetResponse } from "../../redux/actions/debugConsoleActions";
-
+import {
+  GET_AUTHORISE_DOORSTAFF,
+  GET_AUTHORISE_COSTS,
+} from "../../redux/types/authoriseTypes";
+import {
+  GetBadResponse,
+  GetResponse,
+} from "../../redux/actions/debugConsoleActions";
+import isErrorStatus from "../../utils/checkStatusCode";
 
 export function GetAuthoriseAndNotes(token, system, dispatch) {
   GetAuthorise(token, system)
     .then((res) => {
-      dispatch(GetResponse("get authorise success", res,'authorise'))
+      if (isErrorStatus(res)) {
+        dispatch(GetBadResponse("get notes error", res, "authorise"));
+      }
       switch (system) {
         case "S":
           dispatch({
@@ -24,10 +32,8 @@ export function GetAuthoriseAndNotes(token, system, dispatch) {
       }
 
       res.data.reportRecord.forEach((r) => {
-
         GetAreaDisputedNotes(token, system, r.activityId)
           .then((notesData) => {
-
             switch (system) {
               case "S":
                 dispatch({
@@ -45,11 +51,12 @@ export function GetAuthoriseAndNotes(token, system, dispatch) {
                 break;
             }
           })
-          .catch((e) => dispatch(GetBadResponse('get notes error', e,'authorise')))
+          .catch((e) =>
+            dispatch(GetBadResponse("get notes error", e, "authorise"))
+          );
       });
-
     })
     .catch((e) => {
-      dispatch(GetBadResponse('get authorise error', e,'authorise'))
+      dispatch(GetBadResponse("get authorise error", e, "authorise"));
     });
 }
