@@ -4,6 +4,8 @@ import { SignOffMemberAPI } from "../../../../services/activityApi";
 import { RefreshDoorstaffList } from "../../../../services/utils/activityUtils";
 import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions";
 import * as ModalActions from "../../../../redux/actions/modalActions";
+import isErrorStatus from "../../../../utils/checkStatusCode";
+import { GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
 
 export const CurrentTable = (props) => {
   const dispatch = useDispatch();
@@ -17,11 +19,17 @@ export const CurrentTable = (props) => {
         .then((res) => {
           if (!res.data.success) {
             dispatch(ModalActions.ShowModalMessage(res.data.message));
+            if (isErrorStatus(res)) {
+              dispatch(GetBadResponse("sign off member", res, "doorstaff"));
+            }
           } else {
             RefreshDoorstaffList(props.token.access_token, dispatch);
           }
         })
-      
+        .catch((e) => {
+          dispatch(ModalActions.ShowModalMessage(e.response.data));
+          dispatch(GetBadResponse("sign off member", e, "doorstaff"));
+        });
     }
   }
 
@@ -80,7 +88,12 @@ export const CurrentTable = (props) => {
                               type="date"
                               value={e.signOutDate}
                               onChange={(x) => {
-                                dispatch(DoorstaffActions.SetDoorstaffSignOutDate(e.staffId, x.target.value))
+                                dispatch(
+                                  DoorstaffActions.SetDoorstaffSignOutDate(
+                                    e.staffId,
+                                    x.target.value
+                                  )
+                                );
                               }}
                               required
                             />
@@ -91,7 +104,11 @@ export const CurrentTable = (props) => {
                             type="checkbox"
                             checked={e.isChecked}
                             onChange={() =>
-                              dispatch(DoorstaffActions.ToggleDoorstaffToSignOut(e.staffId))
+                              dispatch(
+                                DoorstaffActions.ToggleDoorstaffToSignOut(
+                                  e.staffId
+                                )
+                              )
                             }
                           ></input>
                           <button>SIGN OUT</button>

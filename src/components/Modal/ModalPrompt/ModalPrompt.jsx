@@ -43,7 +43,17 @@ export const ModalPrompt = (props) => {
                   rows="10"
                 ></textarea>
                 <div className={s.modal_btn}>
-                  <button onClick={props.submitForm}>SUBMIT</button>
+                  <button
+                    disabled={disputedNote.length <= 0}
+                    style={
+                      disputedNote.length <= 0
+                        ? { opacity: 0.3 }
+                        : { opacity: 1 }
+                    }
+                    onClick={props.submitForm}
+                  >
+                    SUBMIT
+                  </button>
                   <button onClick={HideModal}>CLOSE</button>
                 </div>
               </form>

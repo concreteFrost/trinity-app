@@ -33,7 +33,6 @@ export const debugConsoleReducer = (state = initialState, action) => {
           component: action.component,
         },
       ].slice(-MAX_BADMESSAGES); // Ограничиваем до последних 50 сообщений
-      console.log(state.errorMessages);
       return { ...state, errorMessages: newErrorMessages };
     }
 

@@ -22,7 +22,11 @@ export const ModalAction = () => {
         msg = "Are you sure you want to cancel this shift?";
         break;
       case "RECALL":
-        msg = "Warning! This action will permanently remove this transaction?";
+        if (modalActionReducer.system === "A") {
+          msg = "Warning! This action will permanently remove this transaction";
+        } else {
+          msg = "This action will reset the shift";
+        }
         break;
       case "DELETE":
         msg = "Are you sure you want to delete this shift?";

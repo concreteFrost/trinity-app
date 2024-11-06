@@ -18,7 +18,6 @@ export function GetResponse(message, response, component) {
 
 export function GetBadResponse(message, res, component) {
   const config = res.config;
-  console.log("res is ", res);
 
   let responseMessage = res.response.data;
 
