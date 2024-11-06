@@ -97,6 +97,7 @@ export const SignIn = () => {
         }
       })
       .catch((e) => {
+        console.log("bad response");
         dispatch(GetBadResponse("sign in doorstaff error", e, "doorstaff"));
       });
   }

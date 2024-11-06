@@ -2,7 +2,10 @@ import s from "./Login.module.scss";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { SetErrorOnLogin, SetLoginDetails } from "../../redux/actions/loginActions";
+import {
+  SetErrorOnLogin,
+  SetLoginDetails,
+} from "../../redux/actions/loginActions";
 import { GenerateUniqueReference, GetToken } from "../../services/authApi";
 import { GetBadResponse } from "../../redux/actions/debugConsoleActions";
 
@@ -19,7 +22,8 @@ export const Login = () => {
       GenerateUniqueReference()
         .then((generatedIdReferene) => {
           setClientID(generatedIdReferene);
-        }).catch((e)=> console.log('error generating client id', e))
+        })
+        .catch((e) => console.log("error generating client id", e));
     } else {
       setClientID(storedClientID);
     }
@@ -41,15 +45,12 @@ export const Login = () => {
       GetToken(e.target[0].value, clientID)
         .then((res) => {
           dispatch(SetLoginDetails(res));
-
         })
         .catch((e) => {
-          console.log('unable to login', e);
-          dispatch(GetBadResponse('get token error', e))
-          dispatch(SetErrorOnLogin())
+          dispatch(SetErrorOnLogin());
+          dispatch(GetBadResponse("get token error", e, "login"));
         });
     } else {
-
       console.log("clientID not available");
     }
   }

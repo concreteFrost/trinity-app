@@ -18,12 +18,18 @@ export function GetResponse(message, response, component) {
 
 export function GetBadResponse(message, res, component) {
   const config = res.config;
-  console.log("result", res);
+  console.log(res);
+
+  const responseMessage = res.response.data;
+
+  if (typeof responseMessage === "object") {
+    responseMessage = res.response.data.error;
+  }
 
   return {
     type: DebugConsoleTypes.GET_BAD_RESPONSE,
     message: message,
-    responseMessage: res.response.data ? res.response.data : "-",
+    responseMessage: responseMessage,
     status: res.response.status,
     method: config.method,
     requestData: config.data ? config.data : "null",
