@@ -18,9 +18,9 @@ export function GetResponse(message, response, component) {
 
 export function GetBadResponse(message, res, component) {
   const config = res.config;
-  console.log(res);
+  console.log("res is ", res);
 
-  const responseMessage = res.response.data;
+  let responseMessage = res.response.data;
 
   if (typeof responseMessage === "object") {
     responseMessage = res.response.data.error;
