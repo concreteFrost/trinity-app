@@ -84,16 +84,15 @@ export function ApproveActivity(token, system, element) {
   });
 }
 
-export function RecallActivity(token, data) {
+export function RecallActivity(token, system, activityID) {
   return new Promise((resolve, reject) => {
     axios({
       method: "POST",
-      url: `${baseUrl}/AreaManager/RecallActivity`,
+      url: `${baseUrl}/AreaManager/RecallActivity?system=${system}&activityId=${activityID}`,
       headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",
       },
-      data: data,
     })
       .then((res) => {
         resolve(res);

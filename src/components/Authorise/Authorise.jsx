@@ -61,7 +61,7 @@ export const Authorise = () => {
       Header: "ACTIONS",
       accessor: "activityId",
       Cell: ({ row }) => (
-        <ColumnActions row={row} checkMethod={checkMethod}></ColumnActions>
+        <ColumnActions row={row} checkMethod={checkMethod} system={system}></ColumnActions>
       ),
     },
   ];

@@ -20,11 +20,11 @@ export const ColumnActions = (props) => {
     }
 
     function showRecallModal(activityId) {
-        dispatch({ type: "SHOW_ACTION_MODAL", activityToModify: activityId, activityType: "RECALL" })
+        dispatch({ type: "SHOW_ACTION_MODAL",system:props.system,  activityToModify: activityId, activityType: "RECALL" })
     }
 
     function showDeleteModal(activityId) {
-        dispatch({ type: "SHOW_ACTION_MODAL", activityToModify: activityId, activityType: "DELETE" })
+        dispatch({ type: "SHOW_ACTION_MODAL",system:props.system, activityToModify: activityId, activityType: "DELETE" })
     }
 
     function showRecallIfno() {
@@ -59,7 +59,7 @@ export const ColumnActions = (props) => {
         {props.row.original.moreActionsVisible ? <div className={s.additional_actions}>
             <div className={s.additional_action_item}>
 
-                <button className={s.recall} onClick={() => showRecallModal(props.row.original.activityId)}>RECALL</button>
+                <button className={s.recall} onClick={() => showRecallModal(props.row.original.activityId)}>{props.system === "S" ? "RECALL" : "DELETE"}</button>
                 <button className={s.question} onClick={showRecallIfno}>?</button>
             </div>
             {/* {userRole === '1' ? <div className={s.additional_action_item}>

@@ -3,7 +3,7 @@ const initialState = {
   isVisible: false,
   activityToModify: null,
   activityType: null,
-  system: null
+  system: null,
 };
 
 export const modalActionReducer = (state = initialState, action) => {
@@ -14,7 +14,7 @@ export const modalActionReducer = (state = initialState, action) => {
         isVisible: true,
         activityToModify: action.activityToModify,
         activityType: action.activityType,
-        system: action.system
+        system: action.system,
       };
     case ModalTypes.HIDE_ACTION_MODAL:
       return {

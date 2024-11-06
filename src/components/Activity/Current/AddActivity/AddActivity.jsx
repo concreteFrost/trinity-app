@@ -112,11 +112,15 @@ export const AddActivity = () => {
     };
 
     dispatch(ShowLoader());
+
+  
     GetRateAPI(token, data)
       .then((res) => {
         if (res.data.message) {
           dispatch(ModalActions.ShowModalMessage(res.data.message));
           dispatch(ActivityActions.isActivitySupplierProvided(false));
+          console.log(res)
+          dispatch(GetBadResponse("get rate error", res, "activity"));
         } else {
           dispatch(ActivityActions.GetActivityRate(res.data));
           dispatch(ActivityActions.isActivitySupplierProvided(true));

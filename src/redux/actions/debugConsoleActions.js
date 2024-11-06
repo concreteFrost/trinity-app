@@ -16,17 +16,17 @@ export function GetResponse(message, response, component) {
   };
 }
 
-export function GetBadResponse(message, response, component) {
+export function GetBadResponse(message, res, component) {
+  const config = res.config;
+
   return {
     type: DebugConsoleTypes.GET_BAD_RESPONSE,
     message: message,
-    responseMessage: response.response.data.error
-      ? response.response.data.error
-      : response.message,
-    status: response.response.status,
-    method: response.config.method,
-    requestData: response.config.data ? response.config.data : "null",
-    requestUrl: response.config.url.split("/api")[1],
+    responseMessage: res.data ? res.data.message : "-",
+    status: res.status,
+    method: config.method,
+    requestData: config.data ? config.data : "null",
+    requestUrl: config.url.split("/api")[1],
     component: component,
   };
 }

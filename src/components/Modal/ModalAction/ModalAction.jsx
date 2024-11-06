@@ -21,7 +21,7 @@ export const ModalAction = () => {
         msg = "Are you sure you want to cancel this shift?";
         break;
       case "RECALL":
-        msg = "Are you sure you want to recall this shift?";
+        msg = "Warning! This action will permanently remove this transaction?";
         break;
       case "DELETE":
         msg = "Are you sure you want to delete this shift?";
@@ -48,14 +48,16 @@ export const ModalAction = () => {
     });
   }
   function Recall() {
-    RecallActivity(token, modalActionReducer.activityToModify).then((res) => {
+    const system = modalActionReducer.system;
+    const activityId = modalActionReducer.activityToModify;
+    RecallActivity(token, system,activityId).then((res) => {
       if (!res.data.success) {
         dispatch(ShowModalMessage(res.data.message));
       } else {
         GetAuthoriseAndNotes(token, "S", dispatch);
         GetAuthoriseAndNotes(token, "A", dispatch);
       }
-      dispatch(GetResponse('recall activity succes', res,'activity'))
+      dispatch(GetResponse('recall activity success', res,'activity'))
     }).catch((e) => {
       dispatch(GetBadResponse('recall activity error', e,'activity'))
     });
