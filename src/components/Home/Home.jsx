@@ -5,6 +5,7 @@ import { Current } from "../Doorstaff/Current/Current";
 import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../contexts/baseUrl";
 import axios from "axios";
+import { GetBadResponse } from "../../redux/actions/debugConsoleActions";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -24,20 +25,31 @@ export const Home = () => {
       .then((res) => {
         if (res.data.reportRecord.length > 0) {
           if (system === "S") {
-            dispatch({ type: "SET_DISPUTED_SIA_COUNT_MODAL", data :res.data.reportRecord.length });
+            dispatch({
+              type: "SET_DISPUTED_SIA_COUNT_MODAL",
+              data: res.data.reportRecord.length,
+            });
           } else {
-            dispatch({ type: "SET_DISPUTED_CC_COUNT_MODAL", data :res.data.reportRecord.length});
+            dispatch({
+              type: "SET_DISPUTED_CC_COUNT_MODAL",
+              data: res.data.reportRecord.length,
+            });
           }
-          dispatch({type:"SET_MODAL_MESSAGE_HEADER", data: "Review disputes"})
-          dispatch({ type: "SHOW_MODAL_MESSAGE", data: ""});
+          dispatch({
+            type: "SET_MODAL_MESSAGE_HEADER",
+            data: "Review disputes",
+          });
+          dispatch({ type: "SHOW_MODAL_MESSAGE", data: "" });
         }
+      })
+      .catch((e) => {
+        dispatch(GetBadResponse("Disputed Activity List", e, "Home"));
       });
   }
-  if (shown===false)
+  if (shown === false)
     Promise.resolve(call("S"))
       .then(call("A"))
-      .finally(() => {
-      });
+      .finally(() => {});
 
   return (
     <div className={s.container}>
