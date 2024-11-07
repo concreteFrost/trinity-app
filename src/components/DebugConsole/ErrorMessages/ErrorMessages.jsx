@@ -4,7 +4,6 @@ import { SendIssueLog } from "../../../services/reportApi";
 import { ShowModalMessage } from "../../../redux/actions/modalActions";
 import { useDispatch } from "react-redux";
 import { DeleteErrorMessage } from "../../../redux/actions/debugConsoleActions";
-import { useEffect } from "react";
 
 function ErrorMessages() {
   const errorMessages = useSelector(
@@ -15,10 +14,6 @@ function ErrorMessages() {
   );
   const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(errorMessages);
-  }, [errorMessages]);
 
   async function sendReport(message) {
     const messageContent = {

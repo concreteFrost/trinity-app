@@ -44,6 +44,7 @@ export const Home = () => {
       })
       .catch((e) => {
         dispatch(GetBadResponse("Disputed Activity List", e, "Home"));
+        console.log("error getting disputed activities", e);
       });
   }
   if (shown === false)
