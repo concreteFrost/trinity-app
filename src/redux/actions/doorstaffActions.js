@@ -1,42 +1,10 @@
 import * as DoorstaffTypes from "../types/doorstaffTypes";
 
 //DOORSTAFF ACTIONS
-
+//#region  doorstaff
 export function GetDoorstaffRecent(reportRecord) {
   return { type: DoorstaffTypes.GET_RECENT_DOORSTAFF, data: reportRecord };
 }
-
-// export function SetSiaData(data) {
-//   return { type: DoorstaffTypes.GET_SIA_DATA, data };
-// }
-
-// export function ClearSiaData() {
-//   return { type: DoorstaffTypes.CLEAR_SIA_DATA };
-// }
-
-// export function GetDoorstaffSupplierOptions(suppliers) {
-//   return { type: DoorstaffTypes.GET_DOORSTAFF_SUPPLIER_OPT, data: suppliers };
-// }
-
-// export function SetDoorstaffCurrentSupplier(supplier) {
-//   return { type: DoorstaffTypes.SET_DOORSTAFF_SUPPLIER, data: supplier };
-// }
-
-// export function GetDoorstaffPositionsOptions(positions) {
-//   return { type: DoorstaffTypes.GET_DOORSTAFF_POSITION_OPT, data: positions };
-// }
-
-// export function SetDoorstaffCurrentPosition(position) {
-//   return { type: DoorstaffTypes.SET_DOORSTAFF_POSITION, data: position };
-// }
-
-// export function GetDooorstaffRateOptions(rates) {
-//   return { type: DoorstaffTypes.GET_DOORSTAFF_RATE_OPT, data: rates };
-// }
-
-// export function SetDoorstaffCurrentRate(rateId) {
-//   return { type: DoorstaffTypes.SET_DOORSTAFF_RATE, data: rateId };
-// }
 
 export function SetDoorStaffList(data) {
   return { type: DoorstaffTypes.GET_DOORSTAFF_LIST, data };
@@ -97,8 +65,10 @@ export function SignOffSelectedDoorstaff(time, date) {
     data: { signOutTime: time, signOutDate: date },
   };
 }
+//#endregion
 
 //SUMMARY ON HOME PAGE
+//#region  summary
 export function GetDoorstaffDaily(summaryRecords) {
   return {
     type: DoorstaffTypes.GET_DOORSTAFF_SUMMARY_DAILY,
@@ -112,9 +82,10 @@ export function GetDoorstaffWeekly(summaryRecords) {
     data: summaryRecords,
   };
 }
+//#endregion
 
 //*DISPUTED
-
+//#region disputed
 export function GetDisputedDoorstaff(reportRecord) {
   return { type: DoorstaffTypes.GET_DISPUTED_DOORSTAFF, data: reportRecord };
 }
@@ -139,3 +110,38 @@ export function GetDoorstaffSummaryMonthly(summaryRecords) {
     data: summaryRecords.slice(0, 3),
   };
 }
+//#endregion
+
+//#region  UNUSED
+// export function SetSiaData(data) {
+//   return { type: DoorstaffTypes.GET_SIA_DATA, data };
+// }
+
+// export function ClearSiaData() {
+//   return { type: DoorstaffTypes.CLEAR_SIA_DATA };
+// }
+
+// export function GetDoorstaffSupplierOptions(suppliers) {
+//   return { type: DoorstaffTypes.GET_DOORSTAFF_SUPPLIER_OPT, data: suppliers };
+// }
+
+// export function SetDoorstaffCurrentSupplier(supplier) {
+//   return { type: DoorstaffTypes.SET_DOORSTAFF_SUPPLIER, data: supplier };
+// }
+
+// export function GetDoorstaffPositionsOptions(positions) {
+//   return { type: DoorstaffTypes.GET_DOORSTAFF_POSITION_OPT, data: positions };
+// }
+
+// export function SetDoorstaffCurrentPosition(position) {
+//   return { type: DoorstaffTypes.SET_DOORSTAFF_POSITION, data: position };
+// }
+
+// export function GetDooorstaffRateOptions(rates) {
+//   return { type: DoorstaffTypes.GET_DOORSTAFF_RATE_OPT, data: rates };
+// }
+
+// export function SetDoorstaffCurrentRate(rateId) {
+//   return { type: DoorstaffTypes.SET_DOORSTAFF_RATE, data: rateId };
+// }
+//#endregion

@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { GetDisputedActivityAPI } from "../../services/disputedApi";
 import * as ActivityActions from "../../redux/actions/activityActions";
-import { GetBadResponse} from "../../redux/actions/debugConsoleActions";
+import { GetBadResponse } from "../../redux/actions/debugConsoleActions";
 import isErrorStatus from "../../utils/checkStatusCode";
 
 export const Activity = () => {
@@ -18,18 +18,20 @@ export const Activity = () => {
 
   const disputedctivity = useSelector((s) => s.getActivityReducer.disputed);
   useEffect(() => {
-    GetDisputedActivityAPI(token, "A").then((res) => {
-      dispatch(ActivityActions.GetDisputedActivity(res.data.reportRecord));
+    GetDisputedActivityAPI(token, "A")
+      .then((res) => {
+        dispatch(ActivityActions.GetDisputedActivity(res.data.reportRecord));
 
-      if(isErrorStatus(res)){
-        dispatch(GetBadResponse('get disputed activity error', res,'activity'))
-      }
-
-    }).catch((e) => { dispatch(GetBadResponse('get disputed activity error', e,'activity')) })
-
+        if (isErrorStatus(res)) {
+          dispatch(
+            GetBadResponse("get disputed activity error", res, "activity")
+          );
+        }
+      })
+      .catch((e) => {
+        dispatch(GetBadResponse("get disputed activity error", e, "activity"));
+      });
   }, []);
-
-
 
   return (
     <div className={s.container}>
