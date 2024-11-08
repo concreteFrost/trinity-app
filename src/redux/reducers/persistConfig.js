@@ -3,7 +3,6 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "redux";
 import { userReducer } from "./userReducer";
-import { siaReducer } from "./siaReducer";
 import { doorstaffReducer } from "./doorstaffReducer";
 import { costsReducer } from "./costsReducer";
 import { activityReducer } from "./activityReducer";
@@ -24,7 +23,6 @@ import { debugConsoleReducer } from "./debugConsoleReducer";
 
 const appReducer = combineReducers({
   userReducer,
-  siaReducer,
   doorstaffReducer,
   costsReducer,
   activityReducer,

@@ -89,21 +89,12 @@ export function GetDoorstaffRatesAPI(token, position, supplier, date) {
 }
 
 export function SignOnMemberAPI(token, sia) {
+  console.log(sia);
   return new Promise((resolve, reject) => {
     axios({
       method: "POST",
       url: `${baseUrl}/Activity/SignOnMember`,
-      data: {
-        staffId: sia.doorstaff.staffId,
-        staffName: sia.doorstaff.firstName + " " + sia.doorstaff.lastName,
-        positionId: parseInt(sia.position),
-        position: sia.position.positionName,
-        locationId: parseInt(token.locationId),
-        supplierId: parseInt(sia.supplier.supplierId),
-        supplierName: sia.supplier.supplierName,
-        startTime: sia.date + "T" + sia.time,
-        rateGroupId: sia.rate,
-      },
+      data: sia,
       headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",

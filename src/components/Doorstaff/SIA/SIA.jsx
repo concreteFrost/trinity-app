@@ -3,50 +3,56 @@ import { useSelector, useDispatch } from "react-redux";
 import { FaSearch } from "react-icons/fa";
 import { HideLoader, ShowLoader } from "../../../redux/actions/loaderActions";
 import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
-import {
-  GetDoorstaffPositionsAPI,
-  GetSiaDataAPI,
-} from "../../../services/activityApi";
+import { GetSiaDataAPI } from "../../../services/activityApi";
 import { ShowModalMessage } from "../../../redux/actions/modalActions";
 import { GetBadResponse } from "../../../redux/actions/debugConsoleActions";
 import isErrorStatus from "../../../utils/checkStatusCode";
 
-export const SIA = () => {
+export const SIA = ({ sia, setSia, clearDoorstaffData }) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.userReducer.user.access_token);
-  const sia = useSelector((state) => state.siaReducer.siaNumber);
+
+  function handleSetSiaNumber(e) {
+    setSia((prev) => {
+      return { ...prev, siaNumber: e.target.value };
+    });
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    clearDoorstaffData();
     dispatch(ShowLoader());
-    GetSiaDataAPI(sia, token)
-      .then((res) => {
-        if (res.data.message !== null) {
-          dispatch(ShowModalMessage(res.data.message));
-          dispatch(DoorstaffActions.ClearSiaData());
-        }
-        dispatch(DoorstaffActions.SetSiaData(res.data));
 
-        if (isErrorStatus(res)) {
-          dispatch(GetBadResponse("get sia data error", res));
-        }
-        GetDoorstaffPositionsAPI(token).then((res) => {
-          dispatch(
-            DoorstaffActions.GetDoorstaffPositionsOptions(res.data.position)
-          );
-          dispatch(
-            DoorstaffActions.SetDoorstaffCurrentPosition(res.data.position[0])
-          );
-        });
-      })
-      .catch((e) => {
-        dispatch(GetBadResponse("get sia data error", e));
-      })
-      .finally(() => {
-        dispatch(HideLoader());
+    try {
+      const res = await GetSiaDataAPI(sia.siaNumber, token);
+      if (res.data.message !== null) {
+        dispatch(ShowModalMessage(res.data.message));
+        return;
+      }
+
+      if (isErrorStatus(res)) {
+        dispatch(GetBadResponse("get sia data error", res));
+        return;
+      }
+
+      setSia((prev) => {
+        return {
+          ...prev,
+          doorstaff: {
+            firstName: res.data.firstName,
+            lastName: res.data.lastName,
+            staffId: res.data.staffId,
+          },
+          siaNumber: res.data.licenceNumber,
+        };
       });
+    } catch (error) {
+      dispatch(GetBadResponse("get sia data error", error));
+    } finally {
+      dispatch(HideLoader());
+    }
   }
+
   return (
     <div className={s.container}>
       <form onSubmit={handleSubmit}>
@@ -55,9 +61,9 @@ export const SIA = () => {
           <input
             type="text"
             name="sia"
-            value={sia || ""}
+            value={sia.siaNumber || ""}
             onChange={(e) => {
-              dispatch({ type: "SET_SIA_NUMBER", data: e.target.value });
+              handleSetSiaNumber(e);
             }}
           />
         </div>

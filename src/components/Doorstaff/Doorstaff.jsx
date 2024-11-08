@@ -11,18 +11,45 @@ import { Route, Routes } from "react-router-dom";
 import { GetDisputedActivityAPI } from "../../services/disputedApi";
 import * as DoorstaffActions from "../../redux/actions/doorstaffActions";
 
+const initialDoorstaff = {
+  siaNumber: 0,
+  doorstaff: { firstName: "", lastName: "", staffId: -1 },
+  position: { positionId: -1, positionName: "" },
+  supplier: {
+    supplierId: -1,
+    supplierName: "",
+  },
+  rateId: -1,
+  date: new Date().toISOString().split("T")[0],
+  time: new Date().toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }),
+  options: {
+    positions: [],
+    suppliers: [],
+    rates: [],
+  },
+};
+
 export const Doorstaff = () => {
   const [view, setView] = useState("current");
 
   const token = useSelector((state) => state.userReducer.user.access_token);
-  
+  const [sia, setSia] = useState(initialDoorstaff);
+
+  function clearDoorstaffData() {
+    setSia(initialDoorstaff);
+  }
+
   const dispatch = useDispatch();
 
   const disputedctivity = useSelector((s) => s.doorstaffReducer.disputed);
   useEffect(() => {
-    GetDisputedActivityAPI(token, 'S').then((res) => {
-      dispatch(DoorstaffActions.GetDisputedDoorstaff(res.data.reportRecord))
-    })
+    GetDisputedActivityAPI(token, "S").then((res) => {
+      dispatch(DoorstaffActions.GetDisputedDoorstaff(res.data.reportRecord));
+    });
   }, []);
 
   return (
@@ -42,14 +69,28 @@ export const Doorstaff = () => {
             element={
               <>
                 {" "}
-                <SIA></SIA>
-                <SignIn></SignIn>
+                <SIA
+                  sia={sia}
+                  setSia={setSia}
+                  clearDoorstaffData={clearDoorstaffData}
+                ></SIA>
+                <SignIn
+                  sia={sia}
+                  setSia={setSia}
+                  clearDoorstaffData={clearDoorstaffData}
+                ></SignIn>
                 <Current isVisible={true}></Current>
               </>
             }
           ></Route>
-          <Route path="recent" element={<Recent isVisible={true}></Recent>}></Route>
-          <Route path="disputed" element={<Disputed data={disputedctivity} system={"S"}></Disputed>}></Route>
+          <Route
+            path="recent"
+            element={<Recent isVisible={true}></Recent>}
+          ></Route>
+          <Route
+            path="disputed"
+            element={<Disputed data={disputedctivity} system={"S"}></Disputed>}
+          ></Route>
         </Routes>
       </main>
     </div>
