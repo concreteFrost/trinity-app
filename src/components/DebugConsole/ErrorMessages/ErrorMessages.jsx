@@ -49,11 +49,14 @@ function ErrorMessages() {
         dispatch(DeleteErrorMessage(message.id));
       }
     } catch (e) {
-      dispatch(
-        ShowModalMessage(
-          "currently you are offline, try to submit this issue later."
-        )
-      );
+      let msg;
+
+      if (e.response.data.message) {
+        msg = e.response.data.message;
+      } else {
+        msg = "Something went wrong";
+      }
+      dispatch(ShowModalMessage(msg));
       console.error("Error sending report:", e);
     }
   }

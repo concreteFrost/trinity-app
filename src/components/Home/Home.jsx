@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../contexts/baseUrl";
 import axios from "axios";
 import { GetBadResponse } from "../../redux/actions/debugConsoleActions";
+import { useEffect } from "react";
 
 export const Home = () => {
   const dispatch = useDispatch();
 
-  const token = useSelector((state) => state.userReducer.user.access_token);
+  const user = useSelector((state) => state.userReducer.user);
 
   const shown = JSON.parse(localStorage.getItem("activityShown"));
 
@@ -18,7 +19,7 @@ export const Home = () => {
     await axios
       .get(baseUrl + "/Disputed/ActivityList?system=" + system, {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + user.access_token,
           "Content-Type": "application/x-www-form-urlencoded",
         },
       })
@@ -47,10 +48,18 @@ export const Home = () => {
         console.log("error getting disputed activities", e);
       });
   }
-  if (shown === false)
-    Promise.resolve(call("S"))
-      .then(call("A"))
-      .finally(() => {});
+
+  useEffect(() => {
+    if (user.userRole === "2") {
+      return;
+    }
+
+    if (shown === false) {
+      Promise.resolve(call("S"))
+        .then(call("A"))
+        .finally(() => {});
+    }
+  }, [shown]);
 
   return (
     <div className={s.container}>
@@ -59,18 +68,23 @@ export const Home = () => {
       </header>
       <main>
         <Summary></Summary>
-        <div>
-          <header>
-            <h2>Doorstaff onsite</h2>
-          </header>
-          <Current></Current>
-        </div>
-        <div>
-          <header>
-            <h2>Activity list</h2>
-          </header>
-          <ActivityTable></ActivityTable>
-        </div>
+        {user.userRole == "2" ? null : (
+          <>
+            {" "}
+            <div>
+              <header>
+                <h2>Doorstaff onsite</h2>
+              </header>
+              <Current></Current>
+            </div>
+            <div>
+              <header>
+                <h2>Activity list</h2>
+              </header>
+              <ActivityTable></ActivityTable>
+            </div>
+          </>
+        )}
       </main>
     </div>
   );

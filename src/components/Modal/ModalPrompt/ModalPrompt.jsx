@@ -17,6 +17,7 @@ export const ModalPrompt = (props) => {
 
   function Submit(e) {
     e.preventDefault();
+    dispatch(ResetModalActivity());
   }
 
   return (
