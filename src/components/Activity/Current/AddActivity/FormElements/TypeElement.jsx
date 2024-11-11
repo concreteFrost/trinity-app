@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { GetActivityTypeOptAPI } from "../../../../../services/activityApi";
 import isErrorStatus from "../../../../../utils/checkStatusCode";
 import { GetBadResponse } from "../../../../../redux/actions/debugConsoleActions";
 
-export default function TypeElement({ options, setOptions }) {
+export default function TypeElement({ options, setOptions, setNewActivity }) {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.userReducer.user.access_token);
@@ -41,6 +40,13 @@ export default function TypeElement({ options, setOptions }) {
         selectedTypeId: e.target.value,
       };
     });
+
+    setNewActivity((prev) => {
+      return {
+        ...prev,
+        cost: { ...prev.cost, costGroupId: e.target.value },
+      };
+    });
   }
 
   return (
@@ -53,10 +59,10 @@ export default function TypeElement({ options, setOptions }) {
         onChange={(e) => {
           setTypeId(e);
         }}
-        defaultValue={null}
+        defaultValue={-1}
         disabled={options.types.length === 0}
       >
-        <option value={null}>Select Type</option>
+        <option value={-1}>Select Type</option>
         {options.types.length > 0
           ? options.types.map((e) => {
               return (

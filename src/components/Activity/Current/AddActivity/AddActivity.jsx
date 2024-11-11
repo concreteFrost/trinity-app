@@ -68,9 +68,11 @@ export const AddActivity = () => {
       const res = await SubmitActivityAPI(token, data);
       if (isErrorStatus(res)) {
         dispatch(GetBadResponse("submit activity error", res, "activity"));
+        dispatch(ModalActions.ShowModalMessage(res.data.message));
       }
       setNewActivity(initialActivity);
     } catch (e) {
+      alert("error");
       dispatch(GetBadResponse("submit activity error", e, "activity"));
     } finally {
       const today = new Date();
@@ -83,6 +85,15 @@ export const AddActivity = () => {
         "C"
       );
     }
+  }
+
+  function isCheckButtonEnabled() {
+    return newActivity.supplierId == -1;
+  }
+
+  function resetActivity() {
+    setNewActivity(initialActivity);
+    setSupplierProvided(false);
   }
 
   async function checkRate(data) {
@@ -113,7 +124,7 @@ export const AddActivity = () => {
         setSupplierProvided(false);
       }
     } catch (e) {
-      dispatch(ModalActions.ShowModalMessage(e.response?.data || "Error"));
+      dispatch(ModalActions.ShowModalMessage(e.response.data));
       setSupplierProvided(false);
       dispatch(GetBadResponse("get rate error", e, "activity"));
     } finally {
@@ -151,6 +162,11 @@ export const AddActivity = () => {
   async function SecondSubmit(e) {
     e.preventDefault();
 
+    if (newActivity.hoursWorked <= 0) {
+      dispatch(ModalActions.ShowModalMessage("hours cant be 0"));
+      return;
+    }
+
     const _data = {
       locationId: parseInt(locationId),
       supplierId: parseInt(newActivity.supplierId),
@@ -164,15 +180,21 @@ export const AddActivity = () => {
     };
 
     console.log(_data);
-    // await SubmitActivity(_data);
-    // await _GetActivityAPI();
+    await SubmitActivity(_data);
+    setNewActivity(initialActivity);
+    setSupplierProvided(false);
+    setNotes("");
   }
 
   return (
     <div className={s.container}>
       <form onSubmit={FirstSubmit} className={s.first_form}>
         <div className={s.general}>
-          <TypeElement options={options} setOptions={setOptions}></TypeElement>
+          <TypeElement
+            options={options}
+            setOptions={setOptions}
+            setNewActivity={setNewActivity}
+          ></TypeElement>
           <SupplierElement
             options={options}
             setOptions={setOptions}
@@ -189,7 +211,12 @@ export const AddActivity = () => {
         ></DateTimeElement>
 
         <div className={s.check_rate}>
-          <button>CHECK RATE</button>
+          <button
+            style={isCheckButtonEnabled() ? { opacity: 0.3 } : { opacity: 1 }}
+            disabled={isCheckButtonEnabled()}
+          >
+            CHECK RATE
+          </button>
         </div>
       </form>
 
@@ -210,7 +237,9 @@ export const AddActivity = () => {
             setNotes={setNotes}
           />
           <div className={s.buttons}>
-            <button className={s.clear}>CLEAR</button>
+            <button className={s.clear} type="button" onClick={resetActivity}>
+              CLEAR
+            </button>
             <button className={s.add}>ADD</button>
           </div>
         </form>

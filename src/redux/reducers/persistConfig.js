@@ -5,7 +5,7 @@ import { combineReducers } from "redux";
 import { userReducer } from "./userReducer";
 import { doorstaffReducer } from "./doorstaffReducer";
 import { costsReducer } from "./costsReducer";
-import { activityReducer } from "./activityReducer";
+// import { activityReducer } from "./activityReducer";
 import { summaryReducer } from "./summaryReducer";
 import { modalMessageReducer } from "./modalMessageReducer";
 import { modalLogoutReducer } from "./modalLogoutReducer";
@@ -25,7 +25,7 @@ const appReducer = combineReducers({
   userReducer,
   doorstaffReducer,
   costsReducer,
-  activityReducer,
+  // activityReducer,
   getActivityReducer,
   authoriseReducer,
   summaryReducer,

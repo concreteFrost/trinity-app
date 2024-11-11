@@ -2,7 +2,6 @@ import React from "react";
 import s from "../AddActivity.module.scss";
 
 export default function RateElement({ rate }) {
-  console.log(rate.rateTypeId);
   return (
     <div className={s.rate}>
       <label>RATE</label>

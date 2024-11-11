@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { SetActivitySupplier } from "../../../../../redux/actions/activityActions";
 import { GetActivitySupplierOptAPI } from "../../../../../services/activityApi";
 import isErrorStatus from "../../../../../utils/checkStatusCode";
 import { GetBadResponse } from "../../../../../redux/actions/debugConsoleActions";
@@ -16,9 +15,14 @@ export default function SupplierElement({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (options.selectedTypeId == -1) return;
-
-    console.log("fetching suppliers");
+    if (options.selectedTypeId == -1) {
+      setOptions((prev) => {
+        {
+          return { ...prev, suppliers: [] };
+        }
+      });
+      return;
+    }
 
     const fetchSuppliers = async () => {
       try {
@@ -68,7 +72,7 @@ export default function SupplierElement({
           setSupplier(e);
         }}
       >
-        <option value={null}>Select Supplier</option>
+        <option value={-1}>Select Supplier</option>
 
         {options.suppliers.length > 0
           ? options.suppliers.map((e) => {
