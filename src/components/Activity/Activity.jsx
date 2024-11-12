@@ -12,6 +12,7 @@ import * as ActivityActions from "redux/actions/activityActions";
 import { GetBadResponse } from "redux/actions/debugConsoleActions";
 import isErrorStatus from "utils/checkStatusCode";
 
+//refactored
 export const Activity = () => {
   const token = useSelector((state) => state.userReducer.user.access_token);
   const dispatch = useDispatch();
