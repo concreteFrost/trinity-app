@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GetActivityTypeOptAPI } from "../../../../../services/activityApi";
-import isErrorStatus from "../../../../../utils/checkStatusCode";
-import { GetBadResponse } from "../../../../../redux/actions/debugConsoleActions";
+import { GetActivityTypeOptAPI } from "services/activityApi";
+import isErrorStatus from "utils/checkStatusCode";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
 
 export default function TypeElement({ options, setOptions, setNewActivity }) {
   const dispatch = useDispatch();

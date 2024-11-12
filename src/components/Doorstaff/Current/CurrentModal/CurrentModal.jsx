@@ -1,12 +1,12 @@
 import s from "./CurrentModal.module.scss";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { SignOffMemberAPI } from "../../../../services/activityApi";
-import { RefreshDoorstaffList } from "../../../../services/utils/activityUtils";
-import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions";
-import * as ModalActions from "../../../../redux/actions/modalActions";
-import { GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
-import isErrorStatus from "../../../../utils/checkStatusCode";
+import { SignOffMemberAPI } from "services/activityApi";
+import { RefreshDoorstaffList } from "services/utils/activityUtils";
+import * as DoorstaffActions from "redux/actions/doorstaffActions";
+import * as ModalActions from "redux/actions/modalActions";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
+import isErrorStatus from "utils/checkStatusCode";
 
 export const CurrentModal = (props) => {
   const [signOffSelectedDate, setSignOffSelectedDate] = useState(

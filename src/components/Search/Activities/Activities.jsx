@@ -1,7 +1,7 @@
 import s from "./Activities.module.scss";
 import { ActivitiesForm } from "./ActivitiesForm/ActivitiesForm";
 import { ActivitiesTable } from "./ActivitiesTable/ActivitiesTable";
-import { SwitchView } from "../../Shared/SwitchView/SwitchView";
+import { SwitchView } from "components/Shared/SwitchView/SwitchView";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
@@ -12,7 +12,9 @@ export const Activities = () => {
     (state) => state.searchActivitiesReducer.searchedActivities
   );
 
-  const centralCosts = useSelector((state) => state.searchActivitiesReducer.searchedCentralCosts)
+  const centralCosts = useSelector(
+    (state) => state.searchActivitiesReducer.searchedCentralCosts
+  );
   return (
     <div className={s.container}>
       <header>
@@ -29,7 +31,11 @@ export const Activities = () => {
           path="activities"
           element={
             <>
-              <ActivitiesForm currentView={"activities"} system={"S"} header={"ACTIVITIES"} />
+              <ActivitiesForm
+                currentView={"activities"}
+                system={"S"}
+                header={"ACTIVITIES"}
+              />
               <ActivitiesTable data={activities}></ActivitiesTable>
             </>
           }
@@ -38,7 +44,11 @@ export const Activities = () => {
           path="central costs"
           element={
             <>
-              <ActivitiesForm currentView={"central costs"} system={"A"} header={"CENTRAL COSTS"} />{" "}
+              <ActivitiesForm
+                currentView={"central costs"}
+                system={"A"}
+                header={"CENTRAL COSTS"}
+              />{" "}
               <ActivitiesTable data={centralCosts}></ActivitiesTable>
             </>
           }

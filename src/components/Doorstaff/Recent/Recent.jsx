@@ -1,13 +1,13 @@
 import s from "./Recent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
-import { GeneratePDF } from "../../../services/utils/reportUtils";
-import { GetDoorstaffRecentAPI } from "../../../services/reportApi";
-import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
-import { GetBadResponse } from "../../../redux/actions/debugConsoleActions";
+import { TableTemplate } from "components/Shared/TableTemplate/TableTemplate";
+import { GeneratePDF } from "services/utils/reportUtils";
+import { GetDoorstaffRecentAPI } from "services/reportApi";
+import * as DoorstaffActions from "redux/actions/doorstaffActions";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
 import moment from "moment/moment";
-import isErrorStatus from "../../../utils/checkStatusCode";
+import isErrorStatus from "utils/checkStatusCode";
 
 export const Recent = (props) => {
   const tableHeader = [

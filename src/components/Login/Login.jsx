@@ -2,12 +2,9 @@ import s from "./Login.module.scss";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  SetErrorOnLogin,
-  SetLoginDetails,
-} from "../../redux/actions/loginActions";
-import { GenerateUniqueReference, GetToken } from "../../services/authApi";
-import { GetBadResponse } from "../../redux/actions/debugConsoleActions";
+import { SetErrorOnLogin, SetLoginDetails } from "redux/actions/loginActions";
+import { GenerateUniqueReference, GetToken } from "services/authApi";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
 
 export const Login = () => {
   const errorMessage = useSelector((state) => state.userReducer.errorOnLogin);

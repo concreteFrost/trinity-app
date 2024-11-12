@@ -1,7 +1,7 @@
 import s from "./ModalPrompt.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_DISPUTED_NOTE } from "../../../redux/types/authoriseTypes";
-import { ResetModalActivity } from "../../../redux/actions/modalActions";
+import { SET_DISPUTED_NOTE } from "redux/types/authoriseTypes";
+import { ResetModalActivity } from "redux/actions/modalActions";
 
 export const ModalPrompt = (props) => {
   const show = useSelector((state) => state.modalPromptReducer);

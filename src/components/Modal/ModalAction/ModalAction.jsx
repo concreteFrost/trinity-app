@@ -1,15 +1,12 @@
 import s from "./ModalAction.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { RecallActivity } from "../../../services/areaManagerApi";
-import { GetAuthoriseAndNotes } from "../../../services/utils/areaManagerUtils";
-import { CancelDoorstaffAPI } from "../../../services/activityApi";
-import { RefreshDoorstaffList } from "../../../services/utils/activityUtils";
-import {
-  HideActionModal,
-  ShowModalMessage,
-} from "../../../redux/actions/modalActions";
-import { GetBadResponse } from "../../../redux/actions/debugConsoleActions";
-import isErrorStatus from "../../../utils/checkStatusCode";
+import { RecallActivity } from "services/areaManagerApi";
+import { GetAuthoriseAndNotes } from "services/utils/areaManagerUtils";
+import { CancelDoorstaffAPI } from "services/activityApi";
+import { RefreshDoorstaffList } from "services/utils/activityUtils";
+import { HideActionModal, ShowModalMessage } from "redux/actions/modalActions";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
+import isErrorStatus from "utils/checkStatusCode";
 
 export const ModalAction = () => {
   const modalActionReducer = useSelector((state) => state.modalActionReducer);

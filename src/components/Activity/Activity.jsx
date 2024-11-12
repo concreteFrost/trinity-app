@@ -1,16 +1,16 @@
 import s from "./Activity.module.scss";
-import { AddActivity } from "./Current/AddActivity/AddActivity";
+import { AddActivity } from "./AddActivity/AddActivity";
 import { ActivityTable } from "./Current/ActivityTable/ActivityTable";
-import { SwitchView } from "../Shared/SwitchView/SwitchView";
+import { SwitchView } from "components/Shared/SwitchView/SwitchView";
 import { Recent } from "./Recent/Recent";
-import { Disputed } from "../Shared/Disputed/Disputed";
+import { Disputed } from "components/Shared/Disputed/Disputed";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { GetDisputedActivityAPI } from "../../services/disputedApi";
-import * as ActivityActions from "../../redux/actions/activityActions";
-import { GetBadResponse } from "../../redux/actions/debugConsoleActions";
-import isErrorStatus from "../../utils/checkStatusCode";
+import { GetDisputedActivityAPI } from "services/disputedApi";
+import * as ActivityActions from "redux/actions/activityActions";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
+import isErrorStatus from "utils/checkStatusCode";
 
 export const Activity = () => {
   const token = useSelector((state) => state.userReducer.user.access_token);

@@ -1,11 +1,11 @@
 import s from "./Home.module.scss";
 import { Summary } from "./Summary/Summary";
-import { ActivityTable } from "../Activity/Current/ActivityTable/ActivityTable";
-import { Current } from "../Doorstaff/Current/Current";
+import { ActivityTable } from "components/Activity/Current/ActivityTable/ActivityTable";
+import { Current } from "components/Doorstaff/Current/Current";
 import { useDispatch, useSelector } from "react-redux";
-import { baseUrl } from "../../contexts/baseUrl";
+import { baseUrl } from "contexts/baseUrl";
 import axios from "axios";
-import { GetBadResponse } from "../../redux/actions/debugConsoleActions";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
 import { useEffect } from "react";
 
 export const Home = () => {

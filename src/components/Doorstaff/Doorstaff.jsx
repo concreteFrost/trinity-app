@@ -5,11 +5,11 @@ import { SIA } from "./SIA/SIA";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Recent } from "./Recent/Recent";
-import { Disputed } from "../Shared/Disputed/Disputed";
-import { SwitchView } from "../Shared/SwitchView/SwitchView";
+import { Disputed } from "components/Shared/Disputed/Disputed";
+import { SwitchView } from "components/Shared/SwitchView/SwitchView";
 import { Route, Routes } from "react-router-dom";
-import { GetDisputedActivityAPI } from "../../services/disputedApi";
-import * as DoorstaffActions from "../../redux/actions/doorstaffActions";
+import { GetDisputedActivityAPI } from "services/disputedApi";
+import * as DoorstaffActions from "redux/actions/doorstaffActions";
 
 const initialDoorstaff = {
   siaNumber: 0,

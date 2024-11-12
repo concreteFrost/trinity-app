@@ -1,10 +1,9 @@
-@import "../../../../scss/mixins.scss";
-@import "../../../../scss/variables.scss";
+@import "scss/mixins.scss";
+@import "scss/variables.scss";
 
 .wrapper {
-  @include table_wrapper
+  @include table_wrapper;
 }
-
 
 .doorstaff_table {
   @include main-tables;
@@ -14,24 +13,18 @@
     max-width: 100px;
 
     @include form-input;
-
   }
 
   button {
     margin-top: 10px;
   }
 
-
   .signoff {
     display: flex;
     align-items: center;
-
   }
 
   .time {
     display: block;
   }
-
-
-
 }

@@ -1,53 +1,50 @@
-import s from "./ActivitiesTable.module.scss"
-import { TableTemplate } from "../../../Shared/TableTemplate/TableTemplate";
-
+import s from "./ActivitiesTable.module.scss";
+import { TableTemplate } from "components/Shared/TableTemplate/TableTemplate";
 
 export const ActivitiesTable = (props) => {
   const tableHeader = [
     {
       Header: "REFERENCE",
-      accessor:"reference",
+      accessor: "reference",
     },
     {
       Header: "LOCATION",
-      accessor:'locationName'
+      accessor: "locationName",
     },
     {
       Header: "SUPPLIER",
-      accessor:"supplierName"
+      accessor: "supplierName",
     },
     {
       Header: "RATE",
-      accessor:"rateGroupName",
-     
+      accessor: "rateGroupName",
     },
     {
       Header: "DATE/TIME",
-      accessor:"start",
+      accessor: "start",
       Cell: ({ value }) => {
-        return value.split('T')[0] + " Time: " + value.split("T")[1];
-      }
+        return value.split("T")[0] + " Time: " + value.split("T")[1];
+      },
     },
     {
       Header: "HOURS WORKED",
-      accessor:"hoursWorked"
+      accessor: "hoursWorked",
     },
     {
       Header: "PRINT REVISION",
-      accessor:"printRevision"
+      accessor: "printRevision",
     },
     {
       Header: "STATUS",
-      accessor:"status"
+      accessor: "status",
     },
 
+    ,
+  ];
 
-    ,]
- 
-  return(
-    <div className={s.container}>   
-     <TableTemplate columns={tableHeader} data={props.data}></TableTemplate>
-  </div>     
-    );
-}
-
+  return (
+    <div className={s.container}>
+      <TableTemplate columns={tableHeader} data={props.data}></TableTemplate>
+    </div>
+  );
+};

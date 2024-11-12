@@ -1,76 +1,78 @@
 import s from "./Recent.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
-import { GeneratePDF } from "../../../services/utils/reportUtils";
-import { RefreshActivityList } from "../../../services/utils/activityUtils";
+import { TableTemplate } from "components/Shared/TableTemplate/TableTemplate";
+import { GeneratePDF } from "services/utils/reportUtils";
+import { RefreshActivityList } from "services/utils/activityUtils";
 
 export const Recent = () => {
-
   const tableHeader = [
     {
       Header: "TIME",
       accessor: "startTime",
       Cell: ({ value }) => {
-        return value.split('T')[0];
-      }
+        return value.split("T")[0];
+      },
     },
     {
       Header: "HOURS WORKED",
-      accessor: 'hoursWorked'
+      accessor: "hoursWorked",
     },
     {
       Header: "COST",
-      accessor: "costValue"
+      accessor: "costValue",
     },
     {
       Header: "SUPPLIER",
-      accessor: "supplierName"
+      accessor: "supplierName",
     },
     {
       Header: "ANALYSIS",
-      accessor: "staffGroupName"
+      accessor: "staffGroupName",
     },
     {
       Header: "STATUS LEVEL",
-      accessor: "paymentStatusDesc"
+      accessor: "paymentStatusDesc",
     },
     {
       Header: "NOTE",
-      accessor: "description"
+      accessor: "description",
     },
     {
       Header: "PRINT",
-      accessor: 'centralCostId',
+      accessor: "centralCostId",
       Cell: ({ row }) => (
         <div>
           <button
-            onClick={() => { getTimesheetData(row.original.centralCostId) }}
+            onClick={() => {
+              getTimesheetData(row.original.centralCostId);
+            }}
           >
             PRINT
           </button>
         </div>
       ),
-    }
-
-    ,]
+    },
+  ];
 
   const token = useSelector((state) => state.userReducer.user.access_token);
 
-  const recentActivity = useSelector(s => s.getActivityReducer.recent)
+  const recentActivity = useSelector((s) => s.getActivityReducer.recent);
   const dispatch = useDispatch();
 
-  const [fromDate, setFromDate] = useState(new Date().toISOString().split("T")[0]);
+  const [fromDate, setFromDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [toDate, setToDate] = useState(new Date().toISOString().split("T")[0]);
 
   function Submit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     const fromDate = new Date(e.target[0].value).toISOString();
     const toDate = new Date(e.target[1].value).toISOString();
 
     if (fromDate.length > 0 && toDate.length > 0)
-      RefreshActivityList(token, fromDate, toDate, dispatch, "R")
+      RefreshActivityList(token, fromDate, toDate, dispatch, "R");
   }
 
   function getTimesheetData(activityId) {
@@ -82,16 +84,33 @@ export const Recent = () => {
       <form onSubmit={Submit}>
         <div>
           <label htmlFor="">FROM</label>
-          <input type="date" name="from-date" id="from-date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
+          <input
+            type="date"
+            name="from-date"
+            id="from-date"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+          />
         </div>
         <div>
           <label htmlFor="">TO</label>
-          <input type="date" name="to-date" id="to-date" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+          <input
+            type="date"
+            name="to-date"
+            id="to-date"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+          />
         </div>
-        <div className={s.view_btn}> <button>VIEW</button></div>
+        <div className={s.view_btn}>
+          {" "}
+          <button>VIEW</button>
+        </div>
       </form>
-      <TableTemplate columns={tableHeader} data={recentActivity}></TableTemplate>
-
+      <TableTemplate
+        columns={tableHeader}
+        data={recentActivity}
+      ></TableTemplate>
     </div>
   );
 };

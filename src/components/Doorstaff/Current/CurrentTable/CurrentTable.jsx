@@ -1,11 +1,11 @@
 import s from "./CurrentTable.module.scss";
 import { useDispatch } from "react-redux/es/exports";
-import { SignOffMemberAPI } from "../../../../services/activityApi";
-import { RefreshDoorstaffList } from "../../../../services/utils/activityUtils";
-import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions";
-import * as ModalActions from "../../../../redux/actions/modalActions";
-import isErrorStatus from "../../../../utils/checkStatusCode";
-import { GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
+import { SignOffMemberAPI } from "services/activityApi";
+import { RefreshDoorstaffList } from "services/utils/activityUtils";
+import * as DoorstaffActions from "redux/actions/doorstaffActions";
+import * as ModalActions from "redux/actions/modalActions";
+import isErrorStatus from "utils/checkStatusCode";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
 
 export const CurrentTable = (props) => {
   const dispatch = useDispatch();

@@ -1,19 +1,12 @@
 import s from "./AddActivity.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import {
-  GetRateAPI,
-  SubmitActivityAPI,
-} from "../../../../services/activityApi";
-import {
-  ShowLoader,
-  HideLoader,
-} from "../../../../redux/actions/loaderActions";
-import * as ActivityActions from "../../../../redux/actions/activityActions";
-import * as ModalActions from "../../../../redux/actions/modalActions";
-import { RefreshActivityList } from "../../../../services/utils/activityUtils";
-import { GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
-import isErrorStatus from "../../../../utils/checkStatusCode";
+import { GetRateAPI, SubmitActivityAPI } from "services/activityApi";
+import { ShowLoader, HideLoader } from "redux/actions/loaderActions";
+import * as ModalActions from "redux/actions/modalActions";
+import { RefreshActivityList } from "services/utils/activityUtils";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
+import isErrorStatus from "utils/checkStatusCode";
 import TypeElement from "./FormElements/TypeElement";
 import SupplierElement from "./FormElements/SupplierElement";
 import DateTimeElement from "./FormElements/DateTimeElement";

@@ -1,6 +1,6 @@
 import s from "./Authorise.module.scss";
 import { CostsAndPayments } from "./CostsAndPayments/CostsAndPayments";
-import { SwitchView } from "../Shared/SwitchView/SwitchView";
+import { SwitchView } from "components/Shared/SwitchView/SwitchView";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
@@ -9,7 +9,6 @@ import { NoteElement } from "./TableElements/NoteElement";
 import { TypeSelect } from "./TypeSelect/TypeSelect";
 
 export const Authorise = () => {
-
   const [_type, setType] = useState("costs");
 
   const doorstaff = useSelector((state) => state.authoriseReducer.doorstaff);
@@ -53,21 +52,26 @@ export const Authorise = () => {
     {
       Header: "NOTES",
       accessor: "disputedNotes",
-      Cell: ({ row }) => (
-        row.original.disputedNotes && row.original.disputedNotes.length >0 ? <NoteElement row={row}></NoteElement> : null
-      ),
+      Cell: ({ row }) =>
+        row.original.disputedNotes && row.original.disputedNotes.length > 0 ? (
+          <NoteElement row={row}></NoteElement>
+        ) : null,
     },
     {
       Header: "ACTIONS",
       accessor: "activityId",
       Cell: ({ row }) => (
-        <ColumnActions row={row} checkMethod={checkMethod} system={system}></ColumnActions>
+        <ColumnActions
+          row={row}
+          checkMethod={checkMethod}
+          system={system}
+        ></ColumnActions>
       ),
     },
   ];
 
   function _setShowAuthLevel(value) {
-    setShowAuthLevel(value)
+    setShowAuthLevel(value);
   }
 
   function _setType(value) {
@@ -78,13 +82,14 @@ export const Authorise = () => {
     <div className={s.container}>
       <header>
         <h1>AUTHORISE</h1>
-        <SwitchView
-          inputs={["doorstaff", "costs"]}
-        ></SwitchView>
+        <SwitchView inputs={["doorstaff", "costs"]}></SwitchView>
       </header>
 
       <main>
-        <TypeSelect setShowAuthLevel={_setShowAuthLevel} setType={_setType} ></TypeSelect>
+        <TypeSelect
+          setShowAuthLevel={_setShowAuthLevel}
+          setType={_setType}
+        ></TypeSelect>
         <div className={s.table}>
           <Routes>
             <Route

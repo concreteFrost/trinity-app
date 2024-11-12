@@ -1,14 +1,11 @@
 import s from "./SummaryForm.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  HideLoader,
-  ShowLoader,
-} from "../../../../redux/actions/loaderActions";
-import { GetSummaryReviewAPI } from "../../../../services/reportApi";
-import * as DoorstaffActions from "../../../../redux/actions/doorstaffActions";
-import * as ActivityActions from "../../../../redux/actions/activityActions";
-import { GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
-import isErrorStatus from "../../../../utils/checkStatusCode";
+import { HideLoader, ShowLoader } from "redux/actions/loaderActions";
+import { GetSummaryReviewAPI } from "services/reportApi";
+import * as DoorstaffActions from "redux/actions/doorstaffActions";
+import * as ActivityActions from "redux/actions/activityActions";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
+import isErrorStatus from "utils/checkStatusCode";
 
 export const SummaryForm = () => {
   const dispatch = useDispatch();

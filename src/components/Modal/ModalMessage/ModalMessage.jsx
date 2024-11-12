@@ -2,7 +2,7 @@ import s from "./ModalMessage.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import {HideModalMessage} from "../../../redux/actions/modalActions"
+import { HideModalMessage } from "redux/actions/modalActions";
 
 export const ModalMessage = (props) => {
   const show = useSelector((state) => state.modalMessageReducer);
@@ -14,13 +14,13 @@ export const ModalMessage = (props) => {
   }
 
   function viewSIAdisputes() {
-    nav('/doorstaff/disputed')
-    dispatch(HideModalMessage())
+    nav("/doorstaff/disputed");
+    dispatch(HideModalMessage());
   }
 
   function viewCCdisputes() {
-    nav('/activity/disputed')
-    dispatch(HideModalMessage())
+    nav("/activity/disputed");
+    dispatch(HideModalMessage());
   }
 
   return (
@@ -33,17 +33,19 @@ export const ModalMessage = (props) => {
             <section>
               {show.DisputedSIA > 0 ? (
                 <div className={s.modal_dispute_activity}>
-                  <span className={s.dispute_count}>{show.DisputedSIA} </span>SIA disputes
+                  <span className={s.dispute_count}>{show.DisputedSIA} </span>
+                  SIA disputes
                   <button onClick={viewSIAdisputes}>view</button>
                 </div>
               ) : null}
               {show.DisputedCC > 0 ? (
-                <div className={s.modal_dispute_activity}><span className={s.dispute_count}>{show.DisputedCC}</span>CC disputes
+                <div className={s.modal_dispute_activity}>
+                  <span className={s.dispute_count}>{show.DisputedCC}</span>CC
+                  disputes
                   <button onClick={viewCCdisputes}>view</button>
                 </div>
               ) : null}
             </section>
-
 
             <div className={s.modal_btn}>
               <button onClick={HideModal}>CLOSE</button>

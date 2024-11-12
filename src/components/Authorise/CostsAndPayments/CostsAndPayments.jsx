@@ -1,16 +1,13 @@
-import { ModalPrompt } from "../../Modal/ModalPrompt/ModalPrompt";
+import { ModalPrompt } from "components/Modal/ModalPrompt/ModalPrompt";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  SendDisputed,
-  ApproveActivity,
-} from "../../../services/areaManagerApi";
+import { SendDisputed, ApproveActivity } from "services/areaManagerApi";
 import { useEffect } from "react";
-import * as AuthoriseActions from "../../../redux/actions/authoriseActions";
-import { TableTemplate } from "../../Shared/TableTemplate/TableTemplate";
-import { GetAuthoriseAndNotes } from "../../../services/utils/areaManagerUtils";
-import * as ModalActions from "../../../redux/actions/modalActions";
-import { GetBadResponse } from "../../../redux/actions/debugConsoleActions";
-import isErrorStatus from "../../../utils/checkStatusCode";
+import * as AuthoriseActions from "redux/actions/authoriseActions";
+import { TableTemplate } from "components/Shared/TableTemplate/TableTemplate";
+import { GetAuthoriseAndNotes } from "services/utils/areaManagerUtils";
+import * as ModalActions from "redux/actions/modalActions";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
+import isErrorStatus from "utils/checkStatusCode";
 
 export const CostsAndPayments = (props) => {
   const toDispute = useSelector((state) => state.modalPromptReducer);

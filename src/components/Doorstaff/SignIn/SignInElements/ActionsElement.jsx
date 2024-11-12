@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import s from "../SignIn.module.scss";
-import { SignOnMemberAPI } from "../../../../services/activityApi";
+import { SignOnMemberAPI } from "services/activityApi";
 import { useDispatch, useSelector } from "react-redux";
-import { ShowModalMessage } from "../../../../redux/actions/modalActions";
-import { RefreshDoorstaffList } from "../../../../services/utils/activityUtils";
-import isErrorStatus from "../../../../utils/checkStatusCode";
-import { GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
+import { ShowModalMessage } from "redux/actions/modalActions";
+import { RefreshDoorstaffList } from "services/utils/activityUtils";
+import isErrorStatus from "utils/checkStatusCode";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
 
 function ActionsElement({ sia, clearDoorstaffData }) {
   const token = useSelector((state) => state.userReducer.user);

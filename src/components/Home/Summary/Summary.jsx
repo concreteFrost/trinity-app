@@ -2,11 +2,11 @@ import React from "react";
 import s from "./Summary.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { GetSummaryReviewAPI } from "../../../services/reportApi";
-import { HideLoader, ShowLoader } from "../../../redux/actions/loaderActions";
-import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
-import { GetBadResponse } from "../../../redux/actions/debugConsoleActions";
-import isErrorStatus from "../../../utils/checkStatusCode";
+import { GetSummaryReviewAPI } from "services/reportApi";
+import { HideLoader, ShowLoader } from "redux/actions/loaderActions";
+import * as DoorstaffActions from "redux/actions/doorstaffActions";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
+import isErrorStatus from "utils/checkStatusCode";
 
 export const Summary = () => {
   const token = useSelector((state) => state.userReducer.user.access_token);

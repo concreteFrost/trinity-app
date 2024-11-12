@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import s from "./ErrorMessages.module.scss";
-import { SendIssueLog } from "../../../services/reportApi";
-import { ShowModalMessage } from "../../../redux/actions/modalActions";
+import { SendIssueLog } from "services/reportApi";
+import { ShowModalMessage } from "redux/actions/modalActions";
 import { useDispatch } from "react-redux";
-import { DeleteErrorMessage } from "../../../redux/actions/debugConsoleActions";
+import { DeleteErrorMessage } from "redux/actions/debugConsoleActions";
 
 function ErrorMessages() {
   const errorMessages = useSelector(

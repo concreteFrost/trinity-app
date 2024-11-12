@@ -5,7 +5,7 @@ import { CurrentFooter } from "./CurrentFooter/CurrentFooter";
 import { CurrentModal } from "./CurrentModal/CurrentModal";
 import { CurrentTable } from "./CurrentTable/CurrentTable";
 import { isVisible } from "@testing-library/user-event/dist/utils";
-import { RefreshDoorstaffList } from "../../../services/utils/activityUtils";
+import { RefreshDoorstaffList } from "services/utils/activityUtils";
 
 export const Current = (props) => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export const Current = (props) => {
   );
 
   useEffect(() => {
-    RefreshDoorstaffList(token.access_token,dispatch);
+    RefreshDoorstaffList(token.access_token, dispatch);
   }, []);
 
   function ShowSignOffSelectedModal() {

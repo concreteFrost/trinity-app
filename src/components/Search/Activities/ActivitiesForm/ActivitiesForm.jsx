@@ -9,11 +9,11 @@ import {
   GetSearchSuppliersAPI,
   GetSearchPaymentStatusGroupAPI,
   GetSearchedDataAPI,
-} from "../../../../services/reportApi";
-import { ShowModalMessage } from "../../../../redux/actions/modalActions";
-import * as SearchActions from "../../../../redux/actions/searchActions";
-import { GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
-import isErrorStatus from "../../../../utils/checkStatusCode";
+} from "services/reportApi";
+import { ShowModalMessage } from "redux/actions/modalActions";
+import * as SearchActions from "redux/actions/searchActions";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
+import isErrorStatus from "utils/checkStatusCode";
 
 export const ActivitiesForm = (props) => {
   const dispatch = useDispatch();

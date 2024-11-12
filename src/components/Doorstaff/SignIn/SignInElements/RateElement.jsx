@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import s from "../SignIn.module.scss";
-import { GetDoorstaffRatesAPI } from "../../../../services/activityApi";
-import { GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
+import { GetDoorstaffRatesAPI } from "services/activityApi";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
 import { useDispatch, useSelector } from "react-redux";
-import isErrorStatus from "../../../../utils/checkStatusCode";
-import { ShowModalMessage } from "../../../../redux/actions/modalActions";
+import isErrorStatus from "utils/checkStatusCode";
+import { ShowModalMessage } from "redux/actions/modalActions";
 
 function RateElement({ sia, handleUpdateSia }) {
   const dispatch = useDispatch();

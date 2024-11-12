@@ -1,12 +1,9 @@
 import s from "./DebugConsole.module.scss";
 import { useState } from "react";
-import SuccessMessages from "./SuccessMessages/SuccessMessages";
 import {
   ClearAllMessages,
-  ClearSuccessMessages,
-  ClearErrorMessages,
   SetCurrentComponent,
-} from "../../redux/actions/debugConsoleActions";
+} from "redux/actions/debugConsoleActions";
 import { useDispatch, useSelector } from "react-redux";
 import ErrorMessages from "./ErrorMessages/ErrorMessages";
 

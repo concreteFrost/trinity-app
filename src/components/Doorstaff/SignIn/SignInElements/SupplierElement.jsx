@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import s from "../SignIn.module.scss";
-import { GetBadResponse } from "../../../../redux/actions/debugConsoleActions";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
 import { useDispatch, useSelector } from "react-redux";
-import isErrorStatus from "../../../../utils/checkStatusCode";
-import { ShowModalMessage } from "../../../../redux/actions/modalActions";
-import { GetDoorstaffSupplierAPI } from "../../../../services/activityApi";
+import isErrorStatus from "utils/checkStatusCode";
+import { ShowModalMessage } from "redux/actions/modalActions";
+import { GetDoorstaffSupplierAPI } from "services/activityApi";
 
 function SupplierElement({ sia, handleUpdateSia }) {
   const dispatch = useDispatch();

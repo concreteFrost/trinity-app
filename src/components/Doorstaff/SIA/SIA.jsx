@@ -1,12 +1,11 @@
 import s from "./SIA.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { FaSearch } from "react-icons/fa";
-import { HideLoader, ShowLoader } from "../../../redux/actions/loaderActions";
-import * as DoorstaffActions from "../../../redux/actions/doorstaffActions";
-import { GetSiaDataAPI } from "../../../services/activityApi";
-import { ShowModalMessage } from "../../../redux/actions/modalActions";
-import { GetBadResponse } from "../../../redux/actions/debugConsoleActions";
-import isErrorStatus from "../../../utils/checkStatusCode";
+import { HideLoader, ShowLoader } from "redux/actions/loaderActions";
+import { GetSiaDataAPI } from "services/activityApi";
+import { ShowModalMessage } from "redux/actions/modalActions";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
+import isErrorStatus from "utils/checkStatusCode";
 
 export const SIA = ({ sia, setSia, clearDoorstaffData }) => {
   const dispatch = useDispatch();

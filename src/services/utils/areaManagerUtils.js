@@ -2,12 +2,9 @@ import { GetAuthorise, GetAreaDisputedNotes } from "../areaManagerApi";
 import {
   GET_AUTHORISE_DOORSTAFF,
   GET_AUTHORISE_COSTS,
-} from "../../redux/types/authoriseTypes";
-import {
-  GetBadResponse,
-  GetResponse,
-} from "../../redux/actions/debugConsoleActions";
-import isErrorStatus from "../../utils/checkStatusCode";
+} from "redux/types/authoriseTypes";
+import { GetBadResponse, GetResponse } from "redux/actions/debugConsoleActions";
+import isErrorStatus from "utils/checkStatusCode";
 
 export function GetAuthoriseAndNotes(token, system, dispatch) {
   GetAuthorise(token, system)

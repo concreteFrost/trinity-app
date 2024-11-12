@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { GetActivitySupplierOptAPI } from "../../../../../services/activityApi";
-import isErrorStatus from "../../../../../utils/checkStatusCode";
-import { GetBadResponse } from "../../../../../redux/actions/debugConsoleActions";
+import { GetActivitySupplierOptAPI } from "services/activityApi";
+import isErrorStatus from "utils/checkStatusCode";
+import { GetBadResponse } from "redux/actions/debugConsoleActions";
 
 export default function SupplierElement({
   options,

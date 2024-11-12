@@ -1,12 +1,9 @@
 import { GetDoorstaffListAPI } from "../activityApi";
-import * as ActivityActions from "../../redux/actions/activityActions";
-import * as DoorstaffAction from "../../redux/actions/doorstaffActions";
+import * as ActivityActions from "redux/actions/activityActions";
+import * as DoorstaffAction from "redux/actions/doorstaffActions";
 import { GetActivityAPI } from "../reportApi";
-import {
-  GetBadResponse,
-  GetResponse,
-} from "../../redux/actions/debugConsoleActions";
-import isErrorStatus from "../../utils/checkStatusCode";
+import { GetBadResponse, GetResponse } from "redux/actions/debugConsoleActions";
+import isErrorStatus from "utils/checkStatusCode";
 
 export function RefreshDoorstaffList(token, dispatch) {
   GetDoorstaffListAPI(token)
