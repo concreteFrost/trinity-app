@@ -8,8 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ErrorMessages from "./ErrorMessages/ErrorMessages";
 
 function DebugConsole() {
-  const [currentView, setCurrentView] = useState("errors");
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const isConsoleVisible = useSelector(
     (state) => state.debugConsoleReducer.isConsoleVisible
   );
@@ -67,7 +66,10 @@ function DebugConsole() {
             <div className={s.messages_list}>
               <ErrorMessages></ErrorMessages>
             </div>
-            <div className={s.footer_btns_container}>
+            <div
+              className={s.footer_btns_container}
+              style={{ marginRight: 10, marginLeft: 10 }}
+            >
               {/* {currentView === "success" ? (
                 <button onClick={() => dispatch(ClearSuccessMessages())}>
                   CLEAR

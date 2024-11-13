@@ -1,8 +1,11 @@
 @import "src/scss/variables.scss";
+@import "src/scss/mixins.scss";
 
 .wrapper {
   position: absolute;
   top: 70px;
+
+  font-family: $font-nav;
 
   .container {
     position: relative;
@@ -46,8 +49,8 @@
     font-weight: bold;
     transform: rotate(90deg);
     position: absolute;
-    right: -62px;
-    top: 15px;
+    right: -64px;
+    top: 17px;
   }
 
   .header_btns_container {
@@ -80,5 +83,9 @@
       width: 100%;
       font-size: 0.7rem;
     }
+  }
+
+  button {
+    @include btn($button-submit);
   }
 }

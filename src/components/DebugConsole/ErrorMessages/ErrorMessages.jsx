@@ -80,7 +80,7 @@ function ErrorMessages() {
                   <h5 className={s.response_desc}>
                     {obj.message.toUpperCase()}
                   </h5>
-                  <div className={s.request_container}>
+                  {/* <div className={s.request_container}>
                     <h5>REQUEST:</h5>
                     <p>
                       <span> endpoint: </span> {obj.request.url}
@@ -110,7 +110,8 @@ function ErrorMessages() {
                       <span>message: </span>
                       {obj.response.message ? obj.response.message : "null"}
                     </p>
-                  </div>
+                  </div> */}
+                  {/*REPORT */}
                   <div
                     className={s.report_container}
                     onClick={() => sendReport(obj)}

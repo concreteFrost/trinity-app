@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const initialState = {
   errorMessages: [],
-  isConsoleVisible: false,
+  isConsoleVisible: true,
   currentComponent: "all",
 };
 

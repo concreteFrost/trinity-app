@@ -89,10 +89,10 @@ export const NavbarList = (props) => {
           AUTHORISE
         </NavLink>
       ) : null}
-      <div className={s.settings_btn} ref={settingsRef}>
+      {/* <div className={s.settings_btn} ref={settingsRef}>
         <GearFill onClick={SetSettingsVisible}></GearFill>
         {isSettingsVisible ? <NavbarSettings></NavbarSettings> : null}
-      </div>
+      </div> */}
 
       <button
         className={s.logout_btn}

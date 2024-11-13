@@ -1,3 +1,6 @@
+@import "src/scss/variables.scss";
+@import "src/scss/mixins.scss";
+
 .response_desc {
   color: red;
   font-weight: bold;
@@ -11,7 +14,7 @@
 }
 
 .request_container {
-  border-bottom: 1px dashed black;
+  // border-bottom: 1px dashed black;
   margin-bottom: 10px;
 }
 
