@@ -86,6 +86,7 @@ export const Footer = () => {
                 X
               </button>
             </div>
+            <span className={s.app_version}>App version: 4.1.3</span>
             <div className={s.help_modal_message}>
               <h3>CONTACT</h3>
               <div>
