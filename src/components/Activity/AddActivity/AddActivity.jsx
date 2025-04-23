@@ -13,6 +13,7 @@ import DateTimeElement from "./FormElements/DateTimeElement";
 import RateElement from "./FormElements/RateElement";
 import HoursWorkedElement from "./FormElements/HoursWorkedElement";
 import NoteElement from "./FormElements/NoteElement";
+import { formatTime, getClosestTime } from "utils/generateTimeOptions";
 
 const initialOptions = {
   suppliers: [],
@@ -39,13 +40,10 @@ export const AddActivity = () => {
   const [options, setOptions] = useState(initialOptions);
 
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
-  const [time, setTime] = useState(
-    new Date().toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    })
-  );
+  const [time, setTime] = useState({
+    hours: getClosestTime().split(":")[0],
+    minutes: getClosestTime().split(":")[1],
+  });
 
   const [notes, setNotes] = useState("");
 
@@ -166,7 +164,7 @@ export const AddActivity = () => {
       costGroupId: parseInt(newActivity.cost.costGroupId),
       rateGroupId: newActivity.rate.rateGroupId,
       rateTypeId: newActivity.rate.rateTypeId,
-      startTime: date + "T" + time + ":00Z",
+      startTime: date + "T" + formatTime(time.hours, time.minutes) + ":00Z",
       costValue: parseFloat(newActivity.cost.costValue),
       description: notes,
       hoursWorked: parseFloat(newActivity.hoursWorked),

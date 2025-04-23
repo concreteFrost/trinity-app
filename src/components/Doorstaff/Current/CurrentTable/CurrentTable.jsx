@@ -6,14 +6,19 @@ import * as DoorstaffActions from "redux/actions/doorstaffActions";
 import * as ModalActions from "redux/actions/modalActions";
 import isErrorStatus from "utils/checkStatusCode";
 import { GetBadResponse } from "redux/actions/debugConsoleActions";
+import { formatTime } from "utils/generateTimeOptions";
 
 export const CurrentTable = (props) => {
   const dispatch = useDispatch();
   function SingleSignOff(e) {
     e.preventDefault();
+
     if (e.target[0].value && e.target[1].value) {
       const data = JSON.parse(e.target.dataset.staff);
-      const signOutTIme = e.target[1].value + "T" + e.target[0].value;
+      const signOutTIme =
+        e.target[2].value +
+        "T" +
+        formatTime(e.target[0].value, e.target[1].value);
 
       SignOffMemberAPI(data, props.token.access_token, signOutTIme)
         .then((res) => {
@@ -52,45 +57,89 @@ export const CurrentTable = (props) => {
         </thead>
         <tbody>
           {props.doorstaff.length > 0 ? (
-            props.doorstaff.map((e) => (
-              <tr key={e.staffId}>
-                <td>{e.staffName}</td>
-                <td>{e.position}</td>
-                <td>{e.startTime.split("T")[1].substring(0, 5)}</td>
-                <td>{e.startTime.split("T")[0]}</td>
+            props.doorstaff.map((doorstaff) => (
+              <tr key={doorstaff.staffId}>
+                <td>{doorstaff.staffName}</td>
+                <td>{doorstaff.position}</td>
+                <td>{doorstaff.startTime.split("T")[1].substring(0, 5)}</td>
+                <td>{doorstaff.startTime.split("T")[0]}</td>
                 {props.isVisible ? (
                   <td>
                     <form
                       onSubmit={SingleSignOff}
-                      data-staff={JSON.stringify(e)}
+                      data-staff={JSON.stringify(doorstaff)}
                     >
                       <div className={s.signoff}>
                         <div className={s.time}>
                           <div>
                             <label>TIME</label>
-                            <input
+                            <div className={s.time_inputs}>
+                              <input
+                                className={s.hours}
+                                type="number"
+                                id="hours"
+                                min="0"
+                                max="23"
+                                placeholder="HH"
+                                value={doorstaff.signOutTime.hour}
+                                onChange={(x) => {
+                                  dispatch(
+                                    DoorstaffActions.SetDoorstaffSignOutTime(
+                                      doorstaff.staffId,
+                                      {
+                                        ...doorstaff.signOutTime,
+                                        hour: x.target.value,
+                                      }
+                                    )
+                                  );
+                                }}
+                              />{" "}
+                              :
+                              <select
+                                className={s.minutes}
+                                id="minutes"
+                                value={doorstaff.signOutTime.minutes}
+                                onChange={(x) => {
+                                  dispatch(
+                                    DoorstaffActions.SetDoorstaffSignOutTime(
+                                      doorstaff.staffId,
+                                      {
+                                        ...doorstaff.signOutTime,
+                                        minutes: x.target.value,
+                                      }
+                                    )
+                                  );
+                                }}
+                              >
+                                <option value="00">00</option>
+                                <option value="15">15</option>
+                                <option value="30">30</option>
+                                <option value="45">45</option>
+                              </select>
+                            </div>
+                            {/* <input
                               type="time"
-                              value={e.signOutTime}
+                              value={doorstaff.signOutTime}
                               onChange={(x) => {
                                 dispatch(
                                   DoorstaffActions.SetDoorstaffSignOutTime(
-                                    e.staffId,
+                                    doorstaff.staffId,
                                     x.target.value
                                   )
                                 );
                               }}
                               required
-                            />
+                            /> */}
                           </div>
                           <div>
                             <label>DATE</label>
                             <input
                               type="date"
-                              value={e.signOutDate}
+                              value={doorstaff.signOutDate}
                               onChange={(x) => {
                                 dispatch(
                                   DoorstaffActions.SetDoorstaffSignOutDate(
-                                    e.staffId,
+                                    doorstaff.staffId,
                                     x.target.value
                                   )
                                 );
@@ -102,11 +151,11 @@ export const CurrentTable = (props) => {
                         <div>
                           <input
                             type="checkbox"
-                            checked={e.isChecked}
+                            checked={doorstaff.isChecked}
                             onChange={() =>
                               dispatch(
                                 DoorstaffActions.ToggleDoorstaffToSignOut(
-                                  e.staffId
+                                  doorstaff.staffId
                                 )
                               )
                             }
@@ -121,7 +170,7 @@ export const CurrentTable = (props) => {
                   <td className={s.cancel_operations}>
                     <button
                       onClick={() => {
-                        showCancelModal(e.activityId);
+                        showCancelModal(doorstaff.activityId);
                       }}
                     >
                       CANCEL

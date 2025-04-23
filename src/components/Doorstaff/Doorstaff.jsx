@@ -10,6 +10,7 @@ import { SwitchView } from "components/Shared/SwitchView/SwitchView";
 import { Route, Routes } from "react-router-dom";
 import { GetDisputedActivityAPI } from "services/disputedApi";
 import * as DoorstaffActions from "redux/actions/doorstaffActions";
+import { getClosestTime } from "utils/generateTimeOptions";
 
 const initialDoorstaff = {
   siaNumber: 0,
@@ -21,11 +22,11 @@ const initialDoorstaff = {
   },
   rateId: -1,
   date: new Date().toISOString().split("T")[0],
-  time: new Date().toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }),
+  time: {
+    hours: getClosestTime().split(":")[0],
+    minutes: getClosestTime().split(":")[1],
+  },
+
   options: {
     positions: [],
     suppliers: [],

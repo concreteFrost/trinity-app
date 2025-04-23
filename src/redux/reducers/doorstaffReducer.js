@@ -1,4 +1,5 @@
-import * as DoorstaffTypes from "../types/doorstaffTypes"
+import { getClosestTime } from "utils/generateTimeOptions";
+import * as DoorstaffTypes from "../types/doorstaffTypes";
 
 const initialState = {
   current: [],
@@ -15,10 +16,10 @@ export const doorstaffReducer = (state = initialState, action) => {
         ...dstaff,
         isChecked: false,
         signOutDate: new Date().toISOString().split("T")[0],
-        signOutTime: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
+        signOutTime: {
+          hour: getClosestTime().split(":")[0],
+          minutes: getClosestTime().split(":")[1],
+        },
       }));
       return {
         ...state,

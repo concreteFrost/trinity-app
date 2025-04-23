@@ -6,6 +6,7 @@ import { ShowModalMessage } from "redux/actions/modalActions";
 import { RefreshDoorstaffList } from "services/utils/activityUtils";
 import isErrorStatus from "utils/checkStatusCode";
 import { GetBadResponse } from "redux/actions/debugConsoleActions";
+import { formatTime } from "utils/generateTimeOptions";
 
 function ActionsElement({ sia, clearDoorstaffData }) {
   const token = useSelector((state) => state.userReducer.user);
@@ -22,7 +23,7 @@ function ActionsElement({ sia, clearDoorstaffData }) {
       locationId: parseInt(token.locationId),
       supplierId: parseInt(sia.supplier.supplierId),
       supplierName: sia.supplier.supplierName,
-      startTime: sia.date + "T" + sia.time,
+      startTime: sia.date + "T" + formatTime(sia.time.hours, sia.time.minutes),
       rateGroupId: sia.rateId,
     };
 
