@@ -35,8 +35,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
 
-   
-
     input {
       min-width: auto;
     }
@@ -45,6 +43,19 @@
   .rate_form {
     margin-top: 10px;
     grid-template-columns: 1fr;
+  }
+
+  .date {
+    .hours_minutes {
+      display: flex;
+      gap: 5px;
+
+      input,
+      select {
+        min-width: 50px;
+        max-width: 50px;
+      }
+    }
   }
 
   .check_rate {
@@ -70,15 +81,12 @@
   @media screen and (max-width: $screen-tablet) {
     textarea {
       max-width: 300px;
-    } 
+    }
   }
 
   @media screen and (max-width: $screen-mobile) {
-    .radio{
+    .radio {
       grid-template-columns: 50px 50px;
-
-      
     }
-    
   }
 }
